@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-export default function RoleCard({ role }) {
+export default function RoleCard({ role }: { role: any }) {
   return (
     <Link href={`/person/${role.persons.id}`}>
       <div className="flex flex-row items-center gap-4 rounded-lg px-4 py-2 dark:bg-slate-700">
