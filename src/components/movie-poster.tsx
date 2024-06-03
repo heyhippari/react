@@ -17,7 +17,7 @@ export default function MoviePoster({ movie }: { movie: any }) {
           <Image
             className="rounded-lg object-cover shadow-md"
             src={`https://images.kanojodb.com/${movie.thumb_url}`}
-            alt={movie.name}
+            alt={movie?.name}
             layout="fill"
             onClick={() => setOpen(true)}
             onError={() => setLoadError(true)}
