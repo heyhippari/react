@@ -31,5 +31,6 @@ export function getPersonRolesCount(
   return client
     .from('roles')
     .select('*', { count: 'exact', head: true })
-    .eq('person_id', personId);
+    .eq('person_id', personId)
+    .throwOnError();
 }

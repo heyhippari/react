@@ -1,5 +1,4 @@
 import { ReactQueryClientProvider } from '@/components/react-query-client-provider';
-import SiteFooter from '@/components/site-footer';
 import SiteHeader from '@/components/site-header';
 import type { Metadata } from 'next';
 import './globals.css';
@@ -23,7 +22,9 @@ export default function RootLayout({
             <main className="flex flex-grow flex-col items-start justify-normal">
               {children}
             </main>
-            <SiteFooter />
+            {
+              //<SiteFooter />
+            }
           </div>
         </body>
       </html>
