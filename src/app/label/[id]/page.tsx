@@ -1,5 +1,5 @@
 import useSupabaseServer from '@/lib/supabase/server';
-import { getMoviesByPrefix } from '@/queries/get-movies-by-prefix';
+import { getLabelById, getLabelMoviesCount } from '@/queries/get-label-by-id';
 import { prefetchQuery } from '@supabase-cache-helpers/postgrest-react-query';
 import {
   HydrationBoundary,
@@ -7,22 +7,23 @@ import {
   dehydrate,
 } from '@tanstack/react-query';
 import { cookies } from 'next/headers';
-import Prefix from './prefix';
+import Label from './label';
 
-export default async function PrefixPage({
+export default async function LabelPage({
   params,
 }: {
-  params: { prefix: string };
+  params: { id: number };
 }) {
   const queryClient = new QueryClient();
   const cookieStore = cookies();
   const supabase = useSupabaseServer(cookieStore);
 
-  await prefetchQuery(queryClient, getMoviesByPrefix(supabase, params.prefix));
+  await prefetchQuery(queryClient, getLabelById(supabase, params.id));
+  await prefetchQuery(queryClient, getLabelMoviesCount(supabase, params.id));
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <Prefix prefix={params.prefix} />
+      <Label id={params.id} />
     </HydrationBoundary>
   );
 }

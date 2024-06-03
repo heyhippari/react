@@ -1,5 +1,8 @@
 import useSupabaseServer from '@/lib/supabase/server';
-import { getMoviesByPrefix } from '@/queries/get-movies-by-prefix';
+import {
+  getStudioById,
+  getStudioMoviesCount,
+} from '@/queries/get-studio-by-id';
 import { prefetchQuery } from '@supabase-cache-helpers/postgrest-react-query';
 import {
   HydrationBoundary,
@@ -7,22 +10,23 @@ import {
   dehydrate,
 } from '@tanstack/react-query';
 import { cookies } from 'next/headers';
-import Prefix from './prefix';
+import Studio from './studio';
 
-export default async function PrefixPage({
+export default async function StudioPage({
   params,
 }: {
-  params: { prefix: string };
+  params: { id: number };
 }) {
   const queryClient = new QueryClient();
   const cookieStore = cookies();
   const supabase = useSupabaseServer(cookieStore);
 
-  await prefetchQuery(queryClient, getMoviesByPrefix(supabase, params.prefix));
+  await prefetchQuery(queryClient, getStudioById(supabase, params.id));
+  await prefetchQuery(queryClient, getStudioMoviesCount(supabase, params.id));
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <Prefix prefix={params.prefix} />
+      <Studio id={params.id} />
     </HydrationBoundary>
   );
 }
