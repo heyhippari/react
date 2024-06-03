@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { Badge } from './ui/badge';
 
-export default function MovieCard({ movie }) {
+export default function MovieCard({ movie }: { movie: any }) {
   return (
     <div className="flex flex-col gap-2">
       <div className="relative aspect-[2/3] w-full">

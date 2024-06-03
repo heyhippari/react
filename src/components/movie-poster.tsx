@@ -4,7 +4,7 @@ import Lightbox from 'yet-another-react-lightbox';
 
 import 'yet-another-react-lightbox/styles.css';
 
-export default function MoviePoster({ movie }) {
+export default function MoviePoster({ movie }: { movie: any }) {
   const [loadError, setLoadError] = useState(false);
   const [open, setOpen] = useState(false);
 
