@@ -7,6 +7,7 @@ import useSupabaseBrowser from '@/lib/supabase/client';
 import { getMovieById } from '@/queries/get-movie-by-id';
 import { useQuery } from '@supabase-cache-helpers/postgrest-react-query';
 import { DateTime } from 'luxon';
+import Link from 'next/link';
 
 export default function Movie({ id }: { id: number }) {
   const supabase = useSupabaseBrowser();
@@ -33,6 +34,41 @@ export default function Movie({ id }: { id: number }) {
                   DateTime.DATE_FULL,
                 )}
               </Badge>
+            ) : null}
+          </div>
+          <div className="flex flex-col">
+            {movie?.series?.id ? (
+              <p className="text-md font-normal text-white">
+                Series:{' '}
+                <Link
+                  className="text-slate-300 hover:text-slate-50 hover:underline"
+                  href={`/series/${movie?.series?.id}`}
+                >
+                  {movie?.series?.name ?? movie?.series?.original_name}
+                </Link>
+              </p>
+            ) : null}
+            {movie?.studios?.id ? (
+              <p className="text-md font-normal text-white">
+                Studio:{' '}
+                <Link
+                  className="text-slate-300 hover:text-slate-50 hover:underline"
+                  href={`/studio/${movie?.studios.id}`}
+                >
+                  {movie?.studios.name ?? movie?.studios.original_name}
+                </Link>
+              </p>
+            ) : null}
+            {movie?.labels?.id ? (
+              <p className="text-md font-normal text-white">
+                Label:{' '}
+                <Link
+                  className="text-slate-300 hover:text-slate-50 hover:underline"
+                  href={`/label/${movie?.labels.id}`}
+                >
+                  {movie?.labels.name ?? movie?.labels.original_name}
+                </Link>
+              </p>
             ) : null}
           </div>
           <h2 className="text-lg font-semibold text-white">Cast</h2>
