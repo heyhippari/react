@@ -1,4 +1,5 @@
-import { createClient } from '@/lib/supabase/server';
+import useSupabaseServer from '@/lib/supabase/server';
+import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 
 export async function GET(request: Request) {
@@ -10,8 +11,10 @@ export async function GET(request: Request) {
   const next = requestUrl.searchParams.get('next') ?? '/';
   const origin = requestUrl.origin;
 
+  const cookieStore = cookies();
+  const supabase = useSupabaseServer(cookieStore);
+
   if (code) {
-    const supabase = createClient();
     const { error } = await supabase.auth.exchangeCodeForSession(code);
 
     // Redirect to the URL specified in the `next` query parameter if successful
