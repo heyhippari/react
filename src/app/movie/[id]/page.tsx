@@ -1,5 +1,5 @@
-import useSupabaseServer from '@/lib/supabase/server';
 import { getMovieById } from '@/queries/get-movie-by-id';
+import useSupabaseServer from '@/utils/supabase/server';
 import { prefetchQuery } from '@supabase-cache-helpers/postgrest-react-query';
 import {
   HydrationBoundary,

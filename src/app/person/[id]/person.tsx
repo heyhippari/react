@@ -2,8 +2,8 @@
 
 import MovieCard from '@/components/movie-card';
 import { Badge } from '@/components/ui/badge';
-import useSupabaseBrowser from '@/lib/supabase/client';
 import { getPersonById, getPersonRolesCount } from '@/queries/get-person-by-id';
+import useSupabaseBrowser from '@/utils/supabase/client';
 import { useQuery } from '@supabase-cache-helpers/postgrest-react-query';
 import { DateTime } from 'luxon';
 import Link from 'next/link';

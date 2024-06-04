@@ -1,4 +1,4 @@
-import { TypedSupabaseClient } from '@/lib/types';
+import { TypedSupabaseClient } from '@/utils/types';
 
 export function getMoviesByPrefix(client: TypedSupabaseClient, prefix: string) {
   return client

@@ -1,8 +1,8 @@
 'use client';
 
 import MovieCard from '@/components/movie-card';
-import useSupabaseBrowser from '@/lib/supabase/client';
 import { getMoviesByPrefix } from '@/queries/get-movies-by-prefix';
+import useSupabaseBrowser from '@/utils/supabase/client';
 import { useQuery } from '@supabase-cache-helpers/postgrest-react-query';
 import Link from 'next/link';
 

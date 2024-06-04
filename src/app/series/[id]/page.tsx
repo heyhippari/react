@@ -1,8 +1,8 @@
-import useSupabaseServer from '@/lib/supabase/server';
 import {
   getSeriesById,
   getSeriesMoviesCount,
 } from '@/queries/get-series-by-id';
+import useSupabaseServer from '@/utils/supabase/server';
 import { prefetchQuery } from '@supabase-cache-helpers/postgrest-react-query';
 import {
   HydrationBoundary,

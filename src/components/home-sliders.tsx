@@ -1,11 +1,11 @@
 'use client';
 
-import useSupabaseBrowser from '@/lib/supabase/client';
 import {
   getMostRecentMovies,
   getRecentlyAddedMovies,
   getRecentlyUpdatedMovies,
 } from '@/queries/homepage';
+import useSupabaseBrowser from '@/utils/supabase/client';
 import { useQuery } from '@supabase-cache-helpers/postgrest-react-query';
 import MovieSlider from './movie-slider';
 

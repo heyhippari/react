@@ -3,8 +3,8 @@
 import MoviePoster from '@/components/movie-poster';
 import RoleCard from '@/components/role-card';
 import { Badge } from '@/components/ui/badge';
-import useSupabaseBrowser from '@/lib/supabase/client';
 import { getMovieById } from '@/queries/get-movie-by-id';
+import useSupabaseBrowser from '@/utils/supabase/client';
 import { useQuery } from '@supabase-cache-helpers/postgrest-react-query';
 import { DateTime } from 'luxon';
 import Link from 'next/link';

@@ -1,7 +1,7 @@
 'use client';
 
-import useSupabaseBrowser from '@/lib/supabase/client';
 import { getMovieCount, getPersonCount } from '@/queries/homepage';
+import useSupabaseBrowser from '@/utils/supabase/client';
 import { useQuery } from '@supabase-cache-helpers/postgrest-react-query';
 
 export default function HomeStats() {

@@ -2,8 +2,8 @@
 
 import MovieCard from '@/components/movie-card';
 import { Badge } from '@/components/ui/badge';
-import useSupabaseBrowser from '@/lib/supabase/client';
 import { getLabelById, getLabelMoviesCount } from '@/queries/get-label-by-id';
+import useSupabaseBrowser from '@/utils/supabase/client';
 import { useQuery } from '@supabase-cache-helpers/postgrest-react-query';
 import Link from 'next/link';
 

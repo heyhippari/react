@@ -1,5 +1,4 @@
 import HomeStats from '@/components/home-stats';
-import useSupabaseServer from '@/lib/supabase/server';
 import {
   getMostRecentMovies,
   getMovieCount,
@@ -7,6 +6,7 @@ import {
   getRecentlyAddedMovies,
   getRecentlyUpdatedMovies,
 } from '@/queries/homepage';
+import useSupabaseServer from '@/utils/supabase/server';
 import { prefetchQuery } from '@supabase-cache-helpers/postgrest-react-query';
 import { QueryClient } from '@tanstack/react-query';
 import { cookies } from 'next/headers';
