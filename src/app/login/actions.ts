@@ -11,7 +11,6 @@ export async function login(formData: FormData) {
   const supabase = useSupabaseServer(cookieStore);
 
   const provider = formData.get('provider') as Provider;
-  const nextUrl = formData.get('next') as string;
 
   // For safety, we only allow supported providers.
   if (!['discord'].includes(provider)) {
@@ -21,7 +20,7 @@ export async function login(formData: FormData) {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: provider,
     options: {
-      redirectTo: `https://next.kanojodb.com/auth/callback?next=${nextUrl || ''}`,
+      redirectTo: 'https://next.kanojodb.com/auth/callback',
     },
   });
 
@@ -30,5 +29,7 @@ export async function login(formData: FormData) {
   }
 
   revalidatePath('/', 'layout');
-  redirect(data.url);
+  if (data.url) {
+    redirect(data.url);
+  }
 }
