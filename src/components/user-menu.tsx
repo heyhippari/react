@@ -24,8 +24,10 @@ export default function UserMenu({ profile }: { profile: any }) {
           </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuLabel>{profile?.username || 'Unknown'}</DropdownMenuLabel>
+      <DropdownMenuContent align="end" className="w-52">
+        <DropdownMenuLabel>
+          <p className="p-2 font-extrabold">{profile?.username || 'Unknown'}</p>
+        </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
           <Link href={'/logout'} prefetch={false}>

@@ -1,4 +1,4 @@
-import { FreeMode, Mousewheel, Scrollbar } from 'swiper/modules';
+import { FreeMode, Mousewheel, Scrollbar, Virtual } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import MovieCard from './movie-card';
 
@@ -6,12 +6,13 @@ import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/mousewheel';
 import 'swiper/css/scrollbar';
+import 'swiper/css/virtual';
 
 export default function MovieSlider({ movies }: { movies: any[] }) {
   return (
     <div className="relative">
       <Swiper
-        modules={[FreeMode, Mousewheel, Scrollbar]}
+        modules={[FreeMode, Mousewheel, Scrollbar, Virtual]}
         freeMode={true}
         mousewheel={{ forceToAxis: true }}
         scrollbar={{ draggable: true }}
@@ -19,10 +20,11 @@ export default function MovieSlider({ movies }: { movies: any[] }) {
         slidesPerGroupAuto={true}
         slidesPerView={'auto'}
       >
-        {movies.map((movie) => (
+        {movies.map((movie, index) => (
           <SwiperSlide
-            key={movie.id}
+            key={index}
             className="mb-2 mr-4 max-w-[100px] md:max-w-[200px]"
+            virtualIndex={index}
           >
             <MovieCard movie={movie} />
           </SwiperSlide>

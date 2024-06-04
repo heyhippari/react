@@ -29,7 +29,7 @@ export function getRecentlyAddedMovies(client: TypedSupabaseClient) {
     .from('movies')
     .select('*')
     .order('create_time', { ascending: false })
-    .limit(100)
+    .limit(25)
     .throwOnError();
 }
 
