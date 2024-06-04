@@ -6,6 +6,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from './ui/dropdown-menu';
 
@@ -25,6 +26,7 @@ export default function UserMenu({ profile }: { profile: any }) {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>{profile?.username || 'Unknown'}</DropdownMenuLabel>
+        <DropdownMenuSeparator />
         <DropdownMenuItem>
           <Link href={'/logout'} prefetch={false}>
             Log out
