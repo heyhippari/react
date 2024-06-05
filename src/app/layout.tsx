@@ -1,5 +1,6 @@
 import { ReactQueryClientProvider } from '@/components/react-query-client-provider';
 import SiteHeader from '@/components/site-header';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata } from 'next';
 import './globals.css';
 
@@ -26,6 +27,7 @@ export default async function RootLayout({
               //<SiteFooter />
             }
           </div>
+          <SpeedInsights />
         </body>
       </html>
     </ReactQueryClientProvider>

@@ -23,11 +23,13 @@ export default function MovieCard({ movie }: { movie: any }) {
         </div>
         <div className="mb-2 flex flex-col">
           <h3 className="text-md line-clamp-1 font-semibold text-white">
-            {movie?.name}
+            {movie?.name ?? movie?.original_name}
           </h3>
-          <p className="line-clamp-1 text-xs font-medium text-white opacity-75">
-            {movie?.original_name}
-          </p>
+          {movie?.name ? (
+            <p className="line-clamp-1 text-xs font-medium text-white opacity-75">
+              {movie?.original_name}
+            </p>
+          ) : null}
         </div>
       </div>
     </Link>
