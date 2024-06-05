@@ -11,6 +11,7 @@ import Movie from './movie';
 
 export async function generateMetadata({ params }: { params: { id: number } }) {
   const cookieStore = cookies();
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const supabase = useSupabaseServer(cookieStore);
 
   const { data: movie } = await getMovieById(supabase, params.id);

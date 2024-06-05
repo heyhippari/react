@@ -11,6 +11,7 @@ import Person from './person';
 
 export async function generateMetadata({ params }: { params: { id: number } }) {
   const cookieStore = cookies();
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const supabase = useSupabaseServer(cookieStore);
 
   const { data: person } = await getPersonById(supabase, params.id);
