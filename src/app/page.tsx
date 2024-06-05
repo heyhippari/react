@@ -19,11 +19,22 @@ export default async function Home() {
   const cookieStore = cookies();
   const supabase = useSupabaseServer(cookieStore);
 
-  await prefetchQuery(queryClient, getMovieCount(supabase));
-  await prefetchQuery(queryClient, getPersonCount(supabase));
-  await prefetchQuery(queryClient, getMostRecentMovies(supabase));
-  await prefetchQuery(queryClient, getRecentlyAddedMovies(supabase));
-  await prefetchQuery(queryClient, getRecentlyUpdatedMovies(supabase));
+  // These should all be cached for a day, as we don't expect them to change often
+  await prefetchQuery(queryClient, getMovieCount(supabase), {
+    staleTime: 1000 * 60 * 60 * 24,
+  });
+  await prefetchQuery(queryClient, getPersonCount(supabase), {
+    staleTime: 1000 * 60 * 60 * 24,
+  });
+  await prefetchQuery(queryClient, getMostRecentMovies(supabase), {
+    staleTime: 1000 * 60 * 60 * 24,
+  });
+  await prefetchQuery(queryClient, getRecentlyAddedMovies(supabase), {
+    staleTime: 1000 * 60 * 60 * 24,
+  });
+  await prefetchQuery(queryClient, getRecentlyUpdatedMovies(supabase), {
+    staleTime: 1000 * 60 * 60 * 24,
+  });
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
