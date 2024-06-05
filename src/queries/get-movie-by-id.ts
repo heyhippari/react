@@ -13,19 +13,27 @@ export function getMovieById(client: TypedSupabaseClient, movieId: number) {
         thumb_url,
         art_url,
         roles (
-          *,
+          age,
           persons (
-            *
+            id,
+            name,
+            original_name
           )
         ),
         studios (
-          *
+          id,
+          name,
+          original_name
         ),
         series (
-          *
+          id,
+          name,
+          original_name
         ),
         labels (
-          *
+          id,
+          name,
+          original_name
         )
       `,
     )
