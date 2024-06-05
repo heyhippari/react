@@ -5,6 +5,8 @@ import { cookies } from 'next/headers';
 
 import HomeSliders from '@/components/home-sliders';
 
+// We want to force static generation for this page.
+export const dynamic = 'force-static';
 // Revalidate the homepage every day.
 export const revalidate = 60 * 60 * 24;
 

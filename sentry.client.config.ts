@@ -19,8 +19,6 @@ Sentry.init({
   // in development and sample at a lower rate in production
   replaysSessionSampleRate: 0.1,
 
-  profilesSampleRate: 1.0,
-
   // You can remove this option if you're not planning to use the Sentry Session Replay feature:
   integrations: [
     Sentry.replayIntegration({
@@ -28,6 +26,5 @@ Sentry.init({
       maskAllText: true,
       blockAllMedia: true,
     }),
-    Sentry.browserProfilingIntegration(),
   ],
 });
