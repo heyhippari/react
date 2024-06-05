@@ -33,11 +33,14 @@ export default async function SiteHeader() {
           className="flex items-center space-x-3 rtl:space-x-reverse"
           href="/"
         >
-          <span className="self-center whitespace-nowrap text-2xl font-semibold dark:text-white">
-            Kanojo
+          <span className="self-center whitespace-nowrap text-4xl font-bold dark:text-white">
+            彼女
           </span>
         </Link>
         <div className="flex space-x-3 md:order-2 md:space-x-0 rtl:space-x-reverse">
+          {
+            //<LocaleMenu />
+          }
           {data.user ? (
             <UserMenu profile={profile} />
           ) : (

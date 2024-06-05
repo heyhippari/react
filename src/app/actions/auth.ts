@@ -5,7 +5,17 @@ import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-export async function login(formData: FormData) {
+export async function logoutAction() {
+  const cookieStore = cookies();
+  const supabase = useSupabaseServer(cookieStore);
+
+  await supabase.auth.signOut();
+
+  revalidatePath('/', 'layout');
+  redirect('/');
+}
+
+export async function loginAction(formData: FormData) {
   const cookieStore = cookies();
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const supabase = useSupabaseServer(cookieStore);

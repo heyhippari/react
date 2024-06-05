@@ -1,6 +1,6 @@
 'use client';
+import { logoutAction } from '@/app/actions/auth';
 import { DropdownMenuLabel } from '@radix-ui/react-dropdown-menu';
-import Link from 'next/link';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import {
   DropdownMenu,
@@ -29,10 +29,8 @@ export default function UserMenu({ profile }: { profile: any }) {
           <p className="p-2 font-extrabold">{profile?.username || 'Unknown'}</p>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <Link href={'/logout'} prefetch={false}>
-            Log out
-          </Link>
+        <DropdownMenuItem onClick={async () => await logoutAction()}>
+          Log out
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
