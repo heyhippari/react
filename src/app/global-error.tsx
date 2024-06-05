@@ -6,12 +6,15 @@ import { useEffect } from 'react';
 
 export default function GlobalError({
   error,
-  reset,
 }: {
   error: Error & { digest?: string };
-  reset: () => void;
 }) {
   useEffect(() => {
+    // If we are in development mode, don't send the error to Sentry.
+    if (process.env.NODE_ENV === 'development') {
+      return;
+    }
+
     Sentry.captureException(error);
   }, [error]);
 
