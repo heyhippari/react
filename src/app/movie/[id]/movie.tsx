@@ -84,6 +84,7 @@ export default function Movie({ id }: { id: number }) {
                 </div>
               ) : null}
             </div>
+            {/*
             <div className="flex w-full flex-col gap-2">
               <p className="text-lg font-semibold leading-loose text-white">
                 Tags
@@ -132,6 +133,7 @@ export default function Movie({ id }: { id: number }) {
                 </div>
               </div>
             </div>
+            */}
           </div>
         </div>
       </div>
@@ -143,20 +145,24 @@ export default function Movie({ id }: { id: number }) {
                 <h2 className="text-lg font-semibold text-white">Cast</h2>
               </Button>
             </TabsTrigger>
-            <TabsTrigger value="crew" asChild>
+            {/*
+              <TabsTrigger value="crew" asChild>
               <Button variant="ghost">
                 <h2 className="text-lg font-semibold text-white">Crew</h2>
               </Button>
             </TabsTrigger>
+            */}
           </TabsList>
           <TabsContent value="cast">
             <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-              {movie?.roles.map((role) => (
-                <RoleCard key={role.id} role={role} />
+              {movie?.roles.map((role, index) => (
+                <RoleCard key={index} role={role} />
               ))}
             </div>
           </TabsContent>
+          {/*
           <TabsContent value="crew">Lorem ipsum</TabsContent>
+          */}
         </Tabs>
       </div>
     </>
