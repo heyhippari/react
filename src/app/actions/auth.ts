@@ -7,6 +7,7 @@ import { redirect } from 'next/navigation';
 
 export async function logoutAction() {
   const cookieStore = cookies();
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const supabase = useSupabaseServer(cookieStore);
 
   await supabase.auth.signOut();
