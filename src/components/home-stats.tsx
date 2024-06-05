@@ -1,14 +1,10 @@
-'use client';
-
-import { getMovieCount, getPersonCount } from '@/queries/homepage';
-import useSupabaseBrowser from '@/utils/supabase/client';
-import { useQuery } from '@supabase-cache-helpers/postgrest-react-query';
-
-export default function HomeStats() {
-  const supabase = useSupabaseBrowser();
-  const { count: movieCount } = useQuery(getMovieCount(supabase));
-  const { count: personCount } = useQuery(getPersonCount(supabase));
-
+export default function HomeStats({
+  movieCount,
+  personCount,
+}: {
+  movieCount: number;
+  personCount: number;
+}) {
   return (
     <div className="container flex h-full flex-row items-center justify-center gap-6 px-4">
       <div className="flex flex-col gap-2">

@@ -1,3 +1,4 @@
+'use client';
 import { FreeMode, Mousewheel, Scrollbar, Virtual } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import MovieCard from './movie-card';

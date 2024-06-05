@@ -1,19 +1,18 @@
-'use client';
-
 import {
   getMostRecentMovies,
   getRecentlyAddedMovies,
   getRecentlyUpdatedMovies,
 } from '@/queries/homepage';
-import useSupabaseBrowser from '@/utils/supabase/client';
-import { useQuery } from '@supabase-cache-helpers/postgrest-react-query';
+import useSupabaseServer from '@/utils/supabase/server';
+import { cookies } from 'next/headers';
 import MovieSlider from './movie-slider';
 
-export default function HomeSliders() {
-  const supabase = useSupabaseBrowser();
-  const { data: recentMovies } = useQuery(getMostRecentMovies(supabase));
-  const { data: addedMovies } = useQuery(getRecentlyAddedMovies(supabase));
-  const { data: updatedMovies } = useQuery(getRecentlyUpdatedMovies(supabase));
+export default async function HomeSliders() {
+  const cookieStore = cookies();
+  const supabase = useSupabaseServer(cookieStore);
+  const { data: recentMovies } = await getMostRecentMovies(supabase);
+  const { data: addedMovies } = await getRecentlyAddedMovies(supabase);
+  const { data: updatedMovies } = await getRecentlyUpdatedMovies(supabase);
 
   return (
     <>
