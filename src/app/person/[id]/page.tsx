@@ -9,6 +9,18 @@ import {
 import { cookies } from 'next/headers';
 import Person from './person';
 
+export async function generateMetadata({ params }: { params: { id: number } }) {
+  const cookieStore = cookies();
+  const supabase = useSupabaseServer(cookieStore);
+
+  const { data: person } = await getPersonById(supabase, params.id);
+
+  return {
+    title: person?.name ?? person?.original_name,
+    description: `Information about ${person?.name ?? person?.original_name} from Kanojo.`,
+  };
+}
+
 export default async function PersonPage({
   params,
 }: {

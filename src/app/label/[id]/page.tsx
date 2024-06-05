@@ -9,6 +9,18 @@ import {
 import { cookies } from 'next/headers';
 import Label from './label';
 
+export async function generateMetadata({ params }: { params: { id: number } }) {
+  const cookieStore = cookies();
+  const supabase = useSupabaseServer(cookieStore);
+
+  const { data: label } = await getLabelById(supabase, params.id);
+
+  return {
+    title: label?.name ?? label?.original_name,
+    description: `Information about ${label?.name ?? label?.original_name} from Kanojo.`,
+  };
+}
+
 export default async function LabelPage({
   params,
 }: {

@@ -9,6 +9,18 @@ import {
 import { cookies } from 'next/headers';
 import Movie from './movie';
 
+export async function generateMetadata({ params }: { params: { id: number } }) {
+  const cookieStore = cookies();
+  const supabase = useSupabaseServer(cookieStore);
+
+  const { data: movie } = await getMovieById(supabase, params.id);
+
+  return {
+    title: movie?.name ?? movie?.original_name,
+    description: `Information about ${movie?.dvd_id} from Kanojo.`,
+  };
+}
+
 export default async function MoviePage({
   params,
 }: {

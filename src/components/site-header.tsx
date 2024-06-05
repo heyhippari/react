@@ -33,8 +33,8 @@ export default async function SiteHeader() {
           className="flex items-center space-x-3 rtl:space-x-reverse"
           href="/"
         >
-          <span className="self-center whitespace-nowrap text-4xl font-bold dark:text-white">
-            彼女
+          <span className="self-center whitespace-nowrap border-l-4 border-l-blue-500 pl-3 text-4xl font-bold dark:text-white">
+            Kanojo
           </span>
         </Link>
         <div className="flex space-x-3 md:order-2 md:space-x-0 rtl:space-x-reverse">

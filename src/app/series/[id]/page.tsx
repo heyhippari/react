@@ -12,6 +12,18 @@ import {
 import { cookies } from 'next/headers';
 import Series from './series';
 
+export async function generateMetadata({ params }: { params: { id: number } }) {
+  const cookieStore = cookies();
+  const supabase = useSupabaseServer(cookieStore);
+
+  const { data: series } = await getSeriesById(supabase, params.id);
+
+  return {
+    title: series?.name ?? series?.original_name,
+    description: `Information about ${series?.name ?? series?.original_name} from Kanojo.`,
+  };
+}
+
 export default async function SeriesPage({
   params,
 }: {

@@ -12,6 +12,18 @@ import {
 import { cookies } from 'next/headers';
 import Studio from './studio';
 
+export async function generateMetadata({ params }: { params: { id: number } }) {
+  const cookieStore = cookies();
+  const supabase = useSupabaseServer(cookieStore);
+
+  const { data: studio } = await getStudioById(supabase, params.id);
+
+  return {
+    title: studio?.name ?? studio?.original_name,
+    description: `Information about ${studio?.name ?? studio?.original_name} from Kanojo.`,
+  };
+}
+
 export default async function StudioPage({
   params,
 }: {
