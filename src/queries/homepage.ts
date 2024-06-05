@@ -17,7 +17,15 @@ export function getPersonCount(client: TypedSupabaseClient) {
 export function getMostRecentMovies(client: TypedSupabaseClient) {
   return client
     .from('movies')
-    .select('*')
+    .select(
+      `
+      id,
+      name,
+      original_name,
+      dvd_id,
+      thumb_url
+    `,
+    )
     .order('release_date', { ascending: false })
     .lte('release_date', new Date().toDateString())
     .limit(25)
@@ -27,7 +35,15 @@ export function getMostRecentMovies(client: TypedSupabaseClient) {
 export function getRecentlyAddedMovies(client: TypedSupabaseClient) {
   return client
     .from('movies')
-    .select('*')
+    .select(
+      `
+      id,
+      name,
+      original_name,
+      dvd_id,
+      thumb_url
+    `,
+    )
     .order('create_time', { ascending: false })
     .limit(25)
     .throwOnError();
@@ -36,7 +52,15 @@ export function getRecentlyAddedMovies(client: TypedSupabaseClient) {
 export function getRecentlyUpdatedMovies(client: TypedSupabaseClient) {
   return client
     .from('movies')
-    .select('*')
+    .select(
+      `
+      id,
+      name,
+      original_name,
+      dvd_id,
+      thumb_url
+    `,
+    )
     .order('update_time', { ascending: false })
     .limit(25)
     .throwOnError();
