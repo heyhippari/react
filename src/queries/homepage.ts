@@ -32,36 +32,23 @@ export function getMostRecentMovies(client: TypedSupabaseClient) {
     .throwOnError();
 }
 
-export function getRecentlyAddedMovies(client: TypedSupabaseClient) {
-  return client
-    .from('movies')
-    .select(
-      `
-      id,
-      name,
-      original_name,
-      dvd_id,
-      thumb_url
-    `,
-    )
-    .order('create_time', { ascending: false })
-    .limit(25)
-    .throwOnError();
+export function getOnThisDay(client: TypedSupabaseClient) {
+  return client.from('onthisday').select('*').throwOnError();
 }
 
-export function getRecentlyUpdatedMovies(client: TypedSupabaseClient) {
+export function getInformationNeeded(client: TypedSupabaseClient) {
   return client
     .from('movies')
     .select(
       `
       id,
-      name,
       original_name,
       dvd_id,
-      thumb_url
+      thumb_url,
+      release_date
     `,
     )
-    .order('update_time', { ascending: false })
+    .eq('release_date', '0001-01-01')
     .limit(25)
     .throwOnError();
 }

@@ -14,48 +14,29 @@ export type Database = {
           create_time: string;
           id: number;
           name: string;
+          parent_id: number | null;
           update_time: string;
         };
         Insert: {
           create_time: string;
           id?: number;
           name: string;
+          parent_id?: number | null;
           update_time: string;
         };
         Update: {
           create_time?: string;
           id?: number;
           name?: string;
+          parent_id?: number | null;
           update_time?: string;
-        };
-        Relationships: [];
-      };
-      category_movies: {
-        Row: {
-          category_id: number;
-          movie_id: number;
-        };
-        Insert: {
-          category_id: number;
-          movie_id: number;
-        };
-        Update: {
-          category_id?: number;
-          movie_id?: number;
         };
         Relationships: [
           {
-            foreignKeyName: 'category_movies_category_id';
-            columns: ['category_id'];
+            foreignKeyName: 'categories_parent_id_fkey';
+            columns: ['parent_id'];
             isOneToOne: false;
             referencedRelation: 'categories';
-            referencedColumns: ['id'];
-          },
-          {
-            foreignKeyName: 'category_movies_movie_id';
-            columns: ['movie_id'];
-            isOneToOne: false;
-            referencedRelation: 'movies';
             referencedColumns: ['id'];
           },
         ];
@@ -85,6 +66,13 @@ export type Database = {
             columns: ['movie_id'];
             isOneToOne: false;
             referencedRelation: 'movies';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'jobs_movies_movie';
+            columns: ['movie_id'];
+            isOneToOne: false;
+            referencedRelation: 'onthisday';
             referencedColumns: ['id'];
           },
           {
@@ -284,6 +272,13 @@ export type Database = {
             referencedColumns: ['id'];
           },
           {
+            foreignKeyName: 'roles_movies_movie';
+            columns: ['movie_id'];
+            isOneToOne: false;
+            referencedRelation: 'onthisday';
+            referencedColumns: ['id'];
+          },
+          {
             foreignKeyName: 'roles_persons_person';
             columns: ['person_id'];
             isOneToOne: false;
@@ -342,9 +337,69 @@ export type Database = {
         };
         Relationships: [];
       };
+      tags: {
+        Row: {
+          category_id: number;
+          movie_id: number;
+        };
+        Insert: {
+          category_id: number;
+          movie_id: number;
+        };
+        Update: {
+          category_id?: number;
+          movie_id?: number;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'category_movies_category_id';
+            columns: ['category_id'];
+            isOneToOne: false;
+            referencedRelation: 'categories';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'category_movies_movie_id';
+            columns: ['movie_id'];
+            isOneToOne: false;
+            referencedRelation: 'movies';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'category_movies_movie_id';
+            columns: ['movie_id'];
+            isOneToOne: false;
+            referencedRelation: 'onthisday';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
     };
     Views: {
-      [_ in never]: never;
+      onthisday: {
+        Row: {
+          dvd_id: string | null;
+          id: number | null;
+          name: string | null;
+          original_name: string | null;
+          thumb_url: string | null;
+        };
+        Insert: {
+          dvd_id?: string | null;
+          id?: number | null;
+          name?: string | null;
+          original_name?: string | null;
+          thumb_url?: string | null;
+        };
+        Update: {
+          dvd_id?: string | null;
+          id?: number | null;
+          name?: string | null;
+          original_name?: string | null;
+          thumb_url?: string | null;
+        };
+        Relationships: [];
+      };
     };
     Functions: {
       persons_movies_count: {

@@ -6,14 +6,18 @@ export default function HomeStats({
   personCount: number;
 }) {
   return (
-    <div className="container flex h-full flex-row items-center justify-center gap-6 px-4">
-      <div className="flex flex-col gap-2">
-        <h2 className="text-xl font-semibold text-white">Movies</h2>
-        <p>{movieCount}</p>
+    <div className="container flex h-full flex-row items-center justify-center gap-8 px-4 text-center">
+      <div className="flex flex-col">
+        <h2 className="text-2xl font-semibold">Movies</h2>
+        <p className="w-fit bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-6xl font-black leading-tight text-transparent">
+          {movieCount}
+        </p>
       </div>
-      <div className="flex flex-col gap-2">
-        <h2 className="text-xl font-semibold text-white">Persons</h2>
-        <p>{personCount}</p>
+      <div className="flex flex-col">
+        <h2 className="text-2xl font-semibold">Persons</h2>
+        <p className="w-fit bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-6xl font-black leading-tight text-transparent">
+          {personCount}
+        </p>
       </div>
     </div>
   );

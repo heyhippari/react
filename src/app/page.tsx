@@ -7,8 +7,10 @@ import HomeSliders from '@/components/home-sliders';
 
 // We want to force static generation for this page.
 export const dynamic = 'force-static';
-// Revalidate the homepage every day.
-export const revalidate = 60 * 60 * 24;
+// Revalidate the homepage every four hours.
+// Four hours is chosen to strike a balance between cache freshness and
+// performance.
+export const revalidate = 60 * 60 * 4;
 
 export default async function Home() {
   const cookieStore = cookies();

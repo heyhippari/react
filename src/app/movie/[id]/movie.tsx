@@ -35,13 +35,16 @@ export default function Movie({ id }: { id: number }) {
             </div>
             <div className="flex flex-row gap-4">
               <Badge variant="default">{movie?.dvd_id}</Badge>
-              {movie?.release_date ? (
+              {movie?.release_date &&
+              movie.release_date.includes('0001') === false ? (
                 <Badge variant="default">
                   {DateTime.fromISO(movie?.release_date).toLocaleString(
                     DateTime.DATE_FULL,
                   )}
                 </Badge>
-              ) : null}
+              ) : (
+                <Badge variant="default">Unknown Release Date</Badge>
+              )}
             </div>
             <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
               {movie?.series?.id ? (
