@@ -19,11 +19,13 @@ export default function Label({ id }: { id: number }) {
           <div className="flex w-full flex-col justify-start gap-2 align-top">
             <div className="flex flex-col gap-0">
               <h1 className="line-clamp-2 w-fit text-ellipsis bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-4xl font-bold leading-tight text-transparent">
-                {label?.name}
+                {label?.name ?? label?.original_name}
               </h1>
-              <p className="line-clamp-2 text-ellipsis text-lg font-semibold text-white opacity-75">
-                {label?.original_name}
-              </p>
+              {label?.name ? (
+                <p className="line-clamp-2 text-ellipsis text-lg font-semibold text-white opacity-75">
+                  {label?.original_name}
+                </p>
+              ) : null}
             </div>
           </div>
         </div>

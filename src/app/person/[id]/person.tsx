@@ -20,11 +20,13 @@ export default function Person({ id }: { id: number }) {
           <div className="flex w-full flex-col justify-start gap-2 align-top">
             <div className="flex flex-col gap-0">
               <h1 className="line-clamp-2 w-fit text-ellipsis bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-4xl font-bold leading-tight text-transparent">
-                {person?.name}
+                {person?.name ?? person?.original_name}
               </h1>
-              <p className="line-clamp-2 text-ellipsis text-lg font-semibold text-white opacity-75">
-                {person?.original_name}
-              </p>
+              {person?.name ? (
+                <p className="line-clamp-2 text-ellipsis text-lg font-semibold text-white opacity-75">
+                  {person?.original_name}
+                </p>
+              ) : null}
             </div>
             <div className="flex flex-row gap-4">
               {person?.birth_date ? (
