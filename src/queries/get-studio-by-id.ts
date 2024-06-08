@@ -5,8 +5,21 @@ export function getStudioById(client: TypedSupabaseClient, studioId: number) {
     .from('studios')
     .select(
       `
-        *,
-        movies(*)
+        name,
+        original_name,
+        movies(
+          id,
+          name,
+          original_name,
+          release_date,
+          dvd_id,
+          movie_images (
+              images (
+                uuid,
+                type
+              )
+            )
+        )
       `,
     )
     .eq('id', studioId)

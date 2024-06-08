@@ -1,3 +1,4 @@
+import { getFrontCover, getFullCover } from '@/utils/images';
 import Image from 'next/image';
 import { useState } from 'react';
 import Lightbox from 'yet-another-react-lightbox';
@@ -16,7 +17,7 @@ export default function MoviePoster({ movie }: { movie: any }) {
         ) : (
           <Image
             className="rounded-lg object-cover shadow-md"
-            src={`https://images.kanojodb.com/${movie.thumb_url}`}
+            src={getFrontCover(movie)}
             alt={movie?.name}
             layout="fill"
             onClick={() => setOpen(true)}
@@ -28,7 +29,11 @@ export default function MoviePoster({ movie }: { movie: any }) {
       <Lightbox
         open={open}
         close={() => setOpen(false)}
-        slides={[{ src: `https://images.kanojodb.com/${movie.art_url}` }]}
+        slides={[
+          {
+            src: `https://kanojodb.com/cdn-cgi/imagedelivery/unbW_XNL55BgTGEc_h7RQA/${getFullCover(movie)}/public`,
+          },
+        ]}
         carousel={{ finite: true }}
         render={{
           buttonPrev: () => null,

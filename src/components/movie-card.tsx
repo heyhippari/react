@@ -1,15 +1,18 @@
+import { getFrontCover } from '@/utils/images';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Badge } from './ui/badge';
 
 export default function MovieCard({ movie }: { movie: any }) {
+  console.debug('front_cover', getFrontCover(movie));
+
   return (
     <Link href={`/movie/${movie.id}`}>
       <div className="flex flex-col gap-2">
         <div className="relative aspect-[2/3] w-full">
           <Image
             className="rounded-lg object-cover shadow-md"
-            src={`https://images.kanojodb.com/${movie?.thumb_url}`}
+            src={getFrontCover(movie)}
             alt={movie?.name}
             placeholder="empty"
             layout="fill"

@@ -5,8 +5,21 @@ export function getSeriesById(client: TypedSupabaseClient, seriesId: number) {
     .from('series')
     .select(
       `
-        *,
-        movies(*)
+        name,
+        original_name,
+        movies(
+          id,
+          name,
+          original_name,
+          release_date,
+          dvd_id,
+          movie_images (
+              images (
+                uuid,
+                type
+              )
+            )
+        )
       `,
     )
     .eq('id', seriesId)

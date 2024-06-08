@@ -10,8 +10,6 @@ export function getMovieById(client: TypedSupabaseClient, movieId: number) {
         original_name,
         release_date,
         dvd_id,
-        thumb_url,
-        art_url,
         roles (
           age,
           persons (
@@ -34,6 +32,12 @@ export function getMovieById(client: TypedSupabaseClient, movieId: number) {
           id,
           name,
           original_name
+        ),
+        movie_images (
+          images (
+            uuid,
+            type
+          )
         )
       `,
     )

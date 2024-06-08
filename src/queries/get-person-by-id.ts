@@ -5,11 +5,22 @@ export function getPersonById(client: TypedSupabaseClient, personId: number) {
     .from('persons')
     .select(
       `
-        *,
+        name,
+        original_name,
+        birth_date,
         roles (
-          *,
           movies (
-            *
+            id,
+            name,
+            original_name,
+            release_date,
+            dvd_id,
+            movie_images (
+                images (
+                  uuid,
+                  type
+                )
+              )
           )
         )
       `,
@@ -30,7 +41,7 @@ export function getPersonRolesCount(
 ) {
   return client
     .from('roles')
-    .select('*', { count: 'exact', head: true })
+    .select('id', { count: 'exact', head: true })
     .eq('person_id', personId)
     .throwOnError();
 }

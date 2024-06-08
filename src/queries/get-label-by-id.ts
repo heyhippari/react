@@ -5,8 +5,20 @@ export function getLabelById(client: TypedSupabaseClient, labelId: number) {
     .from('labels')
     .select(
       `
-        *,
-        movies(*)
+        name,
+        original_name,
+        movies (
+          id,
+          name,
+          original_name,
+          dvd_id,
+          movie_images (
+              images (
+                uuid,
+                type
+              )
+            )
+        )
       `,
     )
     .eq('id', labelId)
@@ -24,7 +36,7 @@ export function getLabelMoviesCount(
 ) {
   return client
     .from('movies')
-    .select('*', { count: 'exact', head: true })
+    .select('id', { count: 'exact', head: true })
     .eq('label_id', labelId)
     .throwOnError();
 }

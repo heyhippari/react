@@ -44,8 +44,8 @@ export default function Person({ id }: { id: number }) {
           <Badge variant="default">{roleCount}</Badge>
         </div>
         <div className="grid grid-cols-3 gap-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-          {person?.roles.map((role) => (
-            <Link key={role.id} href={`/movie/${role.movies?.id}`}>
+          {person?.roles.map((role, index) => (
+            <Link key={index} href={`/movie/${role.movies?.id}`}>
               <MovieCard movie={role.movies} />
             </Link>
           ))}

@@ -1,5 +1,3 @@
-import 'server-only';
-
 import { ImageUploadUrl } from './types';
 
 type DirectUploadResponse = {
@@ -17,6 +15,18 @@ type DirectUploadResponse = {
   }>;
   success: boolean;
 };
+
+export function getFrontCover(movie: any) {
+  return movie.movie_images?.find((movie_image: any) => {
+    return movie_image.images.type === 'front_cover';
+  })?.images.uuid;
+}
+
+export function getFullCover(movie: any) {
+  return movie.movie_images?.find((movie_image: any) => {
+    return movie_image.images.type === 'full_cover';
+  })?.images.uuid;
+}
 
 // Returns a Cloudflare Images upload URL by calling the Cloudflare direct upload API.
 // This function is only available on the server.

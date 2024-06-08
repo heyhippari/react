@@ -23,17 +23,18 @@ export function getMostRecentMovies(client: TypedSupabaseClient) {
       name,
       original_name,
       dvd_id,
-      thumb_url
+      movie_images (
+          images (
+            uuid,
+            type
+          )
+        )
     `,
     )
     .order('release_date', { ascending: false })
     .lte('release_date', new Date().toDateString())
     .limit(25)
     .throwOnError();
-}
-
-export function getOnThisDay(client: TypedSupabaseClient) {
-  return client.from('onthisday').select('*').throwOnError();
 }
 
 export function getInformationNeeded(client: TypedSupabaseClient) {
@@ -44,8 +45,13 @@ export function getInformationNeeded(client: TypedSupabaseClient) {
       id,
       original_name,
       dvd_id,
-      thumb_url,
-      release_date
+      release_date,
+      movie_images (
+          images (
+            uuid,
+            type
+          )
+        )
     `,
     )
     .eq('release_date', '0001-01-01')
