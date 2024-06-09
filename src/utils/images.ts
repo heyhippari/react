@@ -1,3 +1,4 @@
+import { MovieWithImages } from '@/queries/types';
 import { ImageUploadUrl } from './types';
 
 type DirectUploadResponse = {
@@ -16,16 +17,20 @@ type DirectUploadResponse = {
   success: boolean;
 };
 
-export function getFrontCover(movie: any) {
-  return movie.movie_images?.find((movie_image: any) => {
-    return movie_image.images.type === 'front_cover';
-  })?.images.uuid;
+export function getFrontCover(movie: MovieWithImages): string | null {
+  return (
+    movie.movie_images?.find((movie_image: any) => {
+      return movie_image.images.type === 'front_cover';
+    })?.images?.uuid ?? null
+  );
 }
 
-export function getFullCover(movie: any) {
-  return movie.movie_images?.find((movie_image: any) => {
-    return movie_image.images.type === 'full_cover';
-  })?.images.uuid;
+export function getFullCover(movie: MovieWithImages): string | null {
+  return (
+    movie.movie_images?.find((movie_image: any) => {
+      return movie_image.images.type === 'full_cover';
+    })?.images?.uuid ?? null
+  );
 }
 
 // Returns a Cloudflare Images upload URL by calling the Cloudflare direct upload API.

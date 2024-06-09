@@ -1,20 +1,22 @@
+import { MovieWithImages } from '@/queries/types';
 import { getFrontCover } from '@/utils/images';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useMemo } from 'react';
 import { Badge } from './ui/badge';
 
-export default function MovieCard({ movie }: { movie: any }) {
-  console.debug('front_cover', getFrontCover(movie));
+export default function MovieCard({ movie }: { movie: MovieWithImages }) {
+  const frontCover = useMemo(() => getFrontCover(movie), [movie]);
 
   return (
     <Link href={`/movie/${movie.id}`}>
       <div className="flex flex-col gap-2">
         <div className="relative aspect-[2/3] w-full">
-          {getFrontCover(movie) ? (
+          {frontCover ? (
             <Image
               className="rounded-lg object-cover shadow-md"
-              src={getFrontCover(movie)}
-              alt={movie?.name}
+              src={frontCover}
+              alt={movie?.name ?? movie?.original_name}
               placeholder="empty"
               layout="fill"
             />
