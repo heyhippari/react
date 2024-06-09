@@ -6,23 +6,23 @@ import Lightbox from 'yet-another-react-lightbox';
 import 'yet-another-react-lightbox/styles.css';
 
 export default function MoviePoster({ movie }: { movie: any }) {
-  const [loadError, setLoadError] = useState(false);
   const [open, setOpen] = useState(false);
 
   return (
     <>
       <div className="relative aspect-[2/3] w-[200px] md:w-[300px] lg:w-[400px] xl:w-[500px]">
-        {loadError ? (
-          <div>Failed to load image</div>
-        ) : (
+        {getFrontCover(movie) ? (
           <Image
             className="rounded-lg object-cover shadow-md"
             src={getFrontCover(movie)}
             alt={movie?.name}
             layout="fill"
             onClick={() => setOpen(true)}
-            onError={() => setLoadError(true)}
           />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center rounded-lg bg-gray-600 shadow-md">
+            <p className="text-3xl font-black text-slate-400">No Image</p>
+          </div>
         )}
       </div>
 

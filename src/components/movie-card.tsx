@@ -10,13 +10,19 @@ export default function MovieCard({ movie }: { movie: any }) {
     <Link href={`/movie/${movie.id}`}>
       <div className="flex flex-col gap-2">
         <div className="relative aspect-[2/3] w-full">
-          <Image
-            className="rounded-lg object-cover shadow-md"
-            src={getFrontCover(movie)}
-            alt={movie?.name}
-            placeholder="empty"
-            layout="fill"
-          />
+          {getFrontCover(movie) ? (
+            <Image
+              className="rounded-lg object-cover shadow-md"
+              src={getFrontCover(movie)}
+              alt={movie?.name}
+              placeholder="empty"
+              layout="fill"
+            />
+          ) : (
+            <div className="flex h-full w-full items-center justify-center rounded-lg bg-gray-700 shadow-md">
+              <p className="text-3xl font-black text-slate-500">No Image</p>
+            </div>
+          )}
           <div className="absolute left-0 top-0 flex h-full w-full flex-col justify-between">
             <div />
             <div className="p-2">
