@@ -5,14 +5,21 @@ import Link from 'next/link';
 import { useMemo } from 'react';
 import { Badge } from './ui/badge';
 
-export default function MovieCard({ movie }: { movie: MovieWithImages }) {
-  const frontCover = useMemo(() => getFrontCover(movie), [movie]);
+export default function MovieCard({
+  movie,
+}: {
+  movie: MovieWithImages | null | undefined;
+}) {
+  const frontCover = useMemo(
+    () => (movie ? getFrontCover(movie) : null),
+    [movie],
+  );
 
   return (
-    <Link href={`/movie/${movie.id}`}>
+    <Link href={`/movie/${movie?.id}`}>
       <div className="flex flex-col gap-2">
         <div className="relative aspect-[2/3] w-full">
-          {frontCover ? (
+          {movie && frontCover ? (
             <Image
               className="rounded-lg object-cover shadow-md"
               src={frontCover}

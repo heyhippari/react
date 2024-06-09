@@ -6,15 +6,25 @@ import Lightbox from 'yet-another-react-lightbox';
 
 import 'yet-another-react-lightbox/styles.css';
 
-export default function MoviePoster({ movie }: { movie: MovieWithImages }) {
+export default function MoviePoster({
+  movie,
+}: {
+  movie: MovieWithImages | null | undefined;
+}) {
   const [open, setOpen] = useState(false);
-  const frontCover = useMemo(() => getFrontCover(movie), [movie]);
-  const fullCover = useMemo(() => getFullCover(movie), [movie]);
+  const frontCover = useMemo(
+    () => (movie ? getFrontCover(movie) : null),
+    [movie],
+  );
+  const fullCover = useMemo(
+    () => (movie ? getFullCover(movie) : null),
+    [movie],
+  );
 
   return (
     <>
       <div className="relative aspect-[2/3] w-[200px] md:w-[300px] lg:w-[400px] xl:w-[500px]">
-        {frontCover ? (
+        {movie && frontCover ? (
           <Image
             className="rounded-lg object-cover shadow-md"
             src={frontCover}
