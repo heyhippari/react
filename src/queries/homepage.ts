@@ -37,6 +37,26 @@ export function getMostRecentMovies(client: TypedSupabaseClient) {
     .throwOnError();
 }
 
+export function getReleasedOnThisDay(client: TypedSupabaseClient) {
+  return client
+    .from('movies_released_today')
+    .select(
+      `
+      id,
+      name,
+      original_name,
+      dvd_id,
+      movie_images (
+          images (
+            uuid,
+            type
+          )
+        )
+    `,
+    )
+    .throwOnError();
+}
+
 export function getInformationNeeded(client: TypedSupabaseClient) {
   return client
     .from('movies')

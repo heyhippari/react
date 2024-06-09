@@ -90,6 +90,13 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "jobs_movies_movie"
+            columns: ["movie_id"]
+            isOneToOne: false
+            referencedRelation: "movies_released_today"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "jobs_persons_person"
             columns: ["person_id"]
             isOneToOne: false
@@ -151,6 +158,13 @@ export type Database = {
             columns: ["movie_id"]
             isOneToOne: false
             referencedRelation: "movies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "movie_images_movie_id_fkey"
+            columns: ["movie_id"]
+            isOneToOne: false
+            referencedRelation: "movies_released_today"
             referencedColumns: ["id"]
           },
         ]
@@ -313,6 +327,13 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "roles_movies_movie"
+            columns: ["movie_id"]
+            isOneToOne: false
+            referencedRelation: "movies_released_today"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "roles_persons_person"
             columns: ["person_id"]
             isOneToOne: false
@@ -399,11 +420,55 @@ export type Database = {
             referencedRelation: "movies"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "category_movies_movie_id"
+            columns: ["movie_id"]
+            isOneToOne: false
+            referencedRelation: "movies_released_today"
+            referencedColumns: ["id"]
+          },
         ]
       }
     }
     Views: {
-      [_ in never]: never
+      movies_released_today: {
+        Row: {
+          create_time: string | null
+          dvd_id: string | null
+          id: number | null
+          label_id: number | null
+          length: number | null
+          name: string | null
+          original_name: string | null
+          release_date: string | null
+          series_id: number | null
+          studio_id: number | null
+          update_time: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "movies_labels_movies"
+            columns: ["label_id"]
+            isOneToOne: false
+            referencedRelation: "labels"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "movies_series_movies"
+            columns: ["series_id"]
+            isOneToOne: false
+            referencedRelation: "series"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "movies_studios_movies"
+            columns: ["studio_id"]
+            isOneToOne: false
+            referencedRelation: "studios"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
       persons_movies_count: {
