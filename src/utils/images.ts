@@ -33,6 +33,22 @@ export function getFullCover(movie: MovieWithImages): string | null {
   );
 }
 
+export function getFrontCoverUrl(movie: MovieWithImages): string | null {
+  const uuid = getFrontCover(movie);
+
+  return uuid
+    ? `https://kanojodb.com/cdn-cgi/imagedelivery/unbW_XNL55BgTGEc_h7RQA/${uuid}/public`
+    : null;
+}
+
+export function getFullCoverUrl(movie: MovieWithImages): string | null {
+  const uuid = getFullCover(movie);
+
+  return uuid
+    ? `https://kanojodb.com/cdn-cgi/imagedelivery/unbW_XNL55BgTGEc_h7RQA/${uuid}/public`
+    : null;
+}
+
 // Returns a Cloudflare Images upload URL by calling the Cloudflare direct upload API.
 // This function is only available on the server.
 export async function getImageUploadUrl(): Promise<ImageUploadUrl> {

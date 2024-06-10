@@ -1,5 +1,5 @@
 import { MovieWithImages } from '@/queries/types';
-import { getFrontCover, getFullCover } from '@/utils/images';
+import { getFrontCover, getFullCoverUrl } from '@/utils/images';
 import Image from 'next/image';
 import { useMemo, useState } from 'react';
 import Lightbox from 'yet-another-react-lightbox';
@@ -17,7 +17,7 @@ export default function MoviePoster({
     [movie],
   );
   const fullCover = useMemo(
-    () => (movie ? getFullCover(movie) : null),
+    () => (movie ? getFullCoverUrl(movie) : null),
     [movie],
   );
 
@@ -45,7 +45,7 @@ export default function MoviePoster({
           close={() => setOpen(false)}
           slides={[
             {
-              src: `https://kanojodb.com/cdn-cgi/imagedelivery/unbW_XNL55BgTGEc_h7RQA/${fullCover}/public`,
+              src: fullCover,
             },
           ]}
           carousel={{ finite: true }}
