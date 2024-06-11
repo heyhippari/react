@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Define variables */
+:root {
+  --swiper-scrollbar-sides-offset: 0;
+  --swiper-scrollbar-drag-bg-color: #64748b;
+  --swiper-scrollbar-bg-color: #334155;
+}
+
+.swiper-horizontal > .swiper-scrollbar, .swiper-scrollbar.swiper-scrollbar-horizontal {
+  width: 100% !important;
+}
