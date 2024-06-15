@@ -1,6 +1,9 @@
 import { TypedSupabaseClient } from '@/utils/types';
 
-export function getPersonById(client: TypedSupabaseClient, personId: number) {
+export function getPersonById(
+  client: TypedSupabaseClient,
+  personId: string | number,
+) {
   return client
     .from('persons')
     .select(
@@ -37,7 +40,7 @@ export function getPersonById(client: TypedSupabaseClient, personId: number) {
 
 export function getPersonRolesCount(
   client: TypedSupabaseClient,
-  personId: number,
+  personId: string | number,
 ) {
   return client
     .from('roles')

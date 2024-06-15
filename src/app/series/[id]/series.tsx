@@ -10,7 +10,7 @@ import useSupabaseBrowser from '@/utils/supabase/client';
 import { useQuery } from '@supabase-cache-helpers/postgrest-react-query';
 import Link from 'next/link';
 
-export default function Series({ id }: { id: number }) {
+export default function Series({ id }: { id: string }) {
   const supabase = useSupabaseBrowser();
   const { data: series } = useQuery(getSeriesById(supabase, id));
   const { count: moviesCount } = useQuery(getSeriesMoviesCount(supabase, id));

@@ -7,6 +7,7 @@ import {
   dehydrate,
 } from '@tanstack/react-query';
 import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 import Label from './label';
 
 export async function generateMetadata({ params }: { params: { id: number } }) {
@@ -25,11 +26,16 @@ export async function generateMetadata({ params }: { params: { id: number } }) {
 export default async function LabelPage({
   params,
 }: {
-  params: { id: number };
+  params: { id: string };
 }) {
   const queryClient = new QueryClient();
   const cookieStore = cookies();
   const supabase = useSupabaseServer(cookieStore);
+
+  // If the id contains anything other than numbers, redirect to 404
+  if (!/^\d+$/.test(params.id)) {
+    return redirect('/404');
+  }
 
   await prefetchQuery(queryClient, getLabelById(supabase, params.id));
   await prefetchQuery(queryClient, getLabelMoviesCount(supabase, params.id));

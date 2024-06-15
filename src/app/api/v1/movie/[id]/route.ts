@@ -6,6 +6,11 @@ import { cookies } from 'next/headers';
 export async function GET(_: Request, { params }: { params: { id: string } }) {
   const { id } = params;
 
+  // If the id contains anything other than numbers, redirect to 404
+  if (!/^\d+$/.test(id)) {
+    return new Response(null, { status: 400 });
+  }
+
   const cookieStore = cookies();
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const supabase = useSupabaseServer(cookieStore);

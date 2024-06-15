@@ -1,6 +1,9 @@
 import { TypedSupabaseClient } from '@/utils/types';
 
-export function getSeriesById(client: TypedSupabaseClient, seriesId: number) {
+export function getSeriesById(
+  client: TypedSupabaseClient,
+  seriesId: string | number,
+) {
   return client
     .from('series')
     .select(
@@ -33,7 +36,7 @@ export function getSeriesById(client: TypedSupabaseClient, seriesId: number) {
 
 export function getSeriesMoviesCount(
   client: TypedSupabaseClient,
-  seriesId: number,
+  seriesId: string | number,
 ) {
   return client
     .from('movies')

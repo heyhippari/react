@@ -8,7 +8,7 @@ import { useQuery } from '@supabase-cache-helpers/postgrest-react-query';
 import { DateTime } from 'luxon';
 import Link from 'next/link';
 
-export default function Person({ id }: { id: number }) {
+export default function Person({ id }: { id: string }) {
   const supabase = useSupabaseBrowser();
   const { data: person } = useQuery(getPersonById(supabase, id));
   const { count: roleCount } = useQuery(getPersonRolesCount(supabase, id));

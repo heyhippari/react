@@ -7,7 +7,7 @@ import useSupabaseBrowser from '@/utils/supabase/client';
 import { useQuery } from '@supabase-cache-helpers/postgrest-react-query';
 import Link from 'next/link';
 
-export default function Label({ id }: { id: number }) {
+export default function Label({ id }: { id: string }) {
   const supabase = useSupabaseBrowser();
   const { data: label } = useQuery(getLabelById(supabase, id));
   const { count: moviesCount } = useQuery(getLabelMoviesCount(supabase, id));

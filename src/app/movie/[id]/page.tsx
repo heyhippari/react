@@ -7,9 +7,15 @@ import {
   dehydrate,
 } from '@tanstack/react-query';
 import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 import Movie from './movie';
 
-export async function generateMetadata({ params }: { params: { id: number } }) {
+export async function generateMetadata({ params }: { params: { id: string } }) {
+  // If the id contains anything other than numbers, redirect to 404
+  if (!/^\d+$/.test(params.id)) {
+    return redirect('/404');
+  }
+
   const cookieStore = cookies();
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const supabase = useSupabaseServer(cookieStore);
