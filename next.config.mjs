@@ -6,6 +6,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
+    unoptimized: true,
     loader: 'custom',
     loaderFile: './src/utils/image-loader.ts',
     remotePatterns: [
