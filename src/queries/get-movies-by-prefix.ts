@@ -18,6 +18,6 @@ export function getMoviesByPrefix(client: TypedSupabaseClient, prefix: string) {
       `,
     )
     .ilike('dvd_id', `${prefix}-%`)
-    .order('release_date', { ascending: false })
+    .order('dvd_id', { ascending: false })
     .throwOnError();
 }
