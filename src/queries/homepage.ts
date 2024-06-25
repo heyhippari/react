@@ -59,7 +59,7 @@ export function getReleasedOnThisDay(client: TypedSupabaseClient) {
 
 export function getInformationNeeded(client: TypedSupabaseClient) {
   return client
-    .from('movies')
+    .from('movies_missing_info')
     .select(
       `
       id,
@@ -74,7 +74,6 @@ export function getInformationNeeded(client: TypedSupabaseClient) {
         )
     `,
     )
-    .eq('release_date', '0001-01-01')
     .limit(25)
     .throwOnError();
 }
