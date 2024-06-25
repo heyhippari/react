@@ -93,6 +93,13 @@ export type Database = {
             foreignKeyName: "jobs_movies_movie"
             columns: ["movie_id"]
             isOneToOne: false
+            referencedRelation: "movies_missing_info"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "jobs_movies_movie"
+            columns: ["movie_id"]
+            isOneToOne: false
             referencedRelation: "movies_released_today"
             referencedColumns: ["id"]
           },
@@ -158,6 +165,13 @@ export type Database = {
             columns: ["movie_id"]
             isOneToOne: false
             referencedRelation: "movies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "movie_images_movie_id_fkey"
+            columns: ["movie_id"]
+            isOneToOne: false
+            referencedRelation: "movies_missing_info"
             referencedColumns: ["id"]
           },
           {
@@ -330,6 +344,13 @@ export type Database = {
             foreignKeyName: "roles_movies_movie"
             columns: ["movie_id"]
             isOneToOne: false
+            referencedRelation: "movies_missing_info"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "roles_movies_movie"
+            columns: ["movie_id"]
+            isOneToOne: false
             referencedRelation: "movies_released_today"
             referencedColumns: ["id"]
           },
@@ -424,6 +445,13 @@ export type Database = {
             foreignKeyName: "category_movies_movie_id"
             columns: ["movie_id"]
             isOneToOne: false
+            referencedRelation: "movies_missing_info"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "category_movies_movie_id"
+            columns: ["movie_id"]
+            isOneToOne: false
             referencedRelation: "movies_released_today"
             referencedColumns: ["id"]
           },
@@ -431,6 +459,36 @@ export type Database = {
       }
     }
     Views: {
+      dvd_id_prefixes: {
+        Row: {
+          prefix: string | null
+        }
+        Relationships: []
+      }
+      movies_missing_info: {
+        Row: {
+          dvd_id: string | null
+          id: number | null
+          name: string | null
+          original_name: string | null
+          release_date: string | null
+        }
+        Insert: {
+          dvd_id?: string | null
+          id?: number | null
+          name?: string | null
+          original_name?: string | null
+          release_date?: string | null
+        }
+        Update: {
+          dvd_id?: string | null
+          id?: number | null
+          name?: string | null
+          original_name?: string | null
+          release_date?: string | null
+        }
+        Relationships: []
+      }
       movies_released_today: {
         Row: {
           create_time: string | null

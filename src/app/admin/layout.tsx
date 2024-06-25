@@ -1,11 +1,9 @@
 import { ReactQueryClientProvider } from '@/components/react-query-client-provider';
-import SiteFooter from '@/components/site-footer';
-import SiteHeader from '@/components/site-header';
 import type { Metadata, Viewport } from 'next';
 import { Noto_Sans_JP } from 'next/font/google';
 import resolveConfig from 'tailwindcss/resolveConfig';
-import tailwindConfig from '../../tailwind.config';
-import './globals.css';
+import tailwindConfig from '../../../tailwind.config';
+import '../globals.css';
 
 const fullConfig = resolveConfig(tailwindConfig);
 
@@ -36,11 +34,10 @@ export default async function RootLayout({
       <html lang="en" className={`${NotoSansJP.className} dark`}>
         <body className="bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-white">
           <div className="flex min-h-screen flex-col items-stretch">
-            <SiteHeader />
-            <main className="flex flex-grow flex-col items-start justify-normal">
-              {children}
-            </main>
-            <SiteFooter />
+            {children}
+            {
+              //<SiteFooter />
+            }
           </div>
         </body>
       </html>
