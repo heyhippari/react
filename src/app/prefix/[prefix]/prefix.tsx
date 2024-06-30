@@ -27,7 +27,9 @@ export default function Prefix({ prefix }: { prefix: string }) {
           <h2 className="text-lg font-semibold text-white">Movies</h2>
         </div>
         <div className="grid grid-cols-3 gap-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-          {movies?.map((movie) => <MovieCard movie={movie} />)}
+          {movies?.map((movie, index) => (
+            <MovieCard key={index} movie={movie} />
+          ))}
         </div>
       </div>
     </>

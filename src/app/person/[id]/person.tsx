@@ -1,6 +1,7 @@
 'use client';
 
 import MovieCard from '@/components/movie-card';
+import PersonPoster from '@/components/person-poster';
 import { Badge } from '@/components/ui/badge';
 import { getPersonById, getPersonRolesCount } from '@/queries/get-person-by-id';
 import useSupabaseBrowser from '@/utils/supabase/client';
@@ -13,9 +14,10 @@ export default function Person({ id }: { id: string }) {
   const { count: roleCount } = useQuery(getPersonRolesCount(supabase, id));
 
   return (
-    <>
-      <div className="w-full bg-slate-100 p-4 dark:bg-slate-700">
-        <div className="container flex flex-col gap-6 px-4 md:flex-row">
+    <div className="container flex flex-col justify-stretch gap-2 px-4 md:flex-row">
+      <div className="flex-grow bg-slate-100 p-4 dark:bg-slate-700">
+        <div className="container flex flex-col gap-6 px-4">
+          <PersonPoster person={person} />
           <div className="flex w-full flex-col justify-start gap-2 align-top">
             <div className="flex flex-col gap-0">
               <h1 className="line-clamp-2 w-fit text-ellipsis bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-4xl font-bold leading-tight text-transparent">
@@ -42,17 +44,17 @@ export default function Person({ id }: { id: string }) {
           </div>
         </div>
       </div>
-      <div className="container flex flex-col gap-4 p-4">
+      <div className="flex flex-col gap-4 p-4">
         <div className="flex flex-row gap-2">
-          <h2 className="text-lg font-semibold text-white">Roles</h2>
+          <h2 className="text-lg font-semibold text-white">Movies</h2>
           <Badge variant="default">{roleCount}</Badge>
         </div>
-        <div className="grid grid-cols-3 gap-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+        <div className="grid grid-cols-3 gap-4 md:grid-cols-4 lg:grid-cols-5">
           {person?.roles.map((role, index) => (
-            <MovieCard movie={role?.movies} />
+            <MovieCard key={index} movie={role?.movies} />
           ))}
         </div>
       </div>
-    </>
+    </div>
   );
 }

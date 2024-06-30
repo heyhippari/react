@@ -24,7 +24,7 @@ export function getMostRecentMovies(client: TypedSupabaseClient) {
       original_name,
       dvd_id,
       movie_images (
-          images (
+          image: images (
             uuid,
             type
           )
@@ -47,7 +47,7 @@ export function getReleasedOnThisDay(client: TypedSupabaseClient) {
       original_name,
       dvd_id,
       movie_images (
-          images (
+          image: images (
             uuid,
             type
           )
@@ -67,7 +67,7 @@ export function getInformationNeeded(client: TypedSupabaseClient) {
       dvd_id,
       release_date,
       movie_images (
-          images (
+          image: images (
             uuid,
             type
           )

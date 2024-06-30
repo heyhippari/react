@@ -1,32 +1,24 @@
-import { MovieWithImages } from '@/queries/types';
-import { getFrontCover, getFullCoverUrl } from '@/utils/images';
+import { getProfile } from '@/utils/images';
 import Image from 'next/image';
 import { useMemo, useState } from 'react';
 import Lightbox from 'yet-another-react-lightbox';
 
 import 'yet-another-react-lightbox/styles.css';
 
-export default function MoviePoster({ movie }: { movie: MovieWithImages }) {
+export default function PersonPoster({ person }: { person: any }) {
   const [open, setOpen] = useState(false);
-  const frontCover = useMemo(
-    () => (movie ? getFrontCover(movie) : null),
-    [movie],
-  );
-  const fullCover = useMemo(
-    () => (movie ? getFullCoverUrl(movie) : null),
-    [movie],
-  );
+  const profile = useMemo(() => (person ? getProfile(person) : null), [person]);
 
   return (
     <>
-      <div className="relative aspect-[2/3] w-[350px]">
-        {movie && frontCover ? (
+      <div className="relative aspect-[2/3] w-[300px]">
+        {person && profile ? (
           <Image
             className="rounded-lg object-cover shadow-md"
-            src={frontCover}
-            alt={movie?.name ?? movie?.original_name}
+            src={profile}
+            alt={person?.name ?? person?.original_name}
             layout="fill"
-            onClick={() => (fullCover ? setOpen(true) : null)}
+            onClick={() => (profile ? setOpen(true) : null)}
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center rounded-lg bg-gray-600 shadow-md">
@@ -35,13 +27,13 @@ export default function MoviePoster({ movie }: { movie: MovieWithImages }) {
         )}
       </div>
 
-      {fullCover ? (
+      {profile ? (
         <Lightbox
           open={open}
           close={() => setOpen(false)}
           slides={[
             {
-              src: fullCover,
+              src: profile,
             },
           ]}
           carousel={{ finite: true }}

@@ -1,5 +1,6 @@
 'use client';
 import { logoutAction } from '@/app/actions/auth';
+import { UserProfile } from '@/queries/types';
 import { DropdownMenuLabel } from '@radix-ui/react-dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import {
@@ -10,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from './ui/dropdown-menu';
 
-export default function UserMenu({ profile }: { profile: any }) {
+export default function UserMenu({ profile }: { profile: UserProfile }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>

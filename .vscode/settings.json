@@ -2,5 +2,6 @@
   "files.associations": {
     "*.css": "postcss"
   },
-  "cSpell.words": ["Supabase"]
+  "cSpell.words": ["Supabase"],
+  "eslint.lintTask.enable": true
 }

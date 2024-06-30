@@ -38,7 +38,9 @@ export default function Series({ id }: { id: string }) {
           <Badge variant="default">{moviesCount}</Badge>
         </div>
         <div className="grid grid-cols-3 gap-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-          {series?.movies.map((movie) => <MovieCard movie={movie} />)}
+          {series?.movies.map((movie, index) => (
+            <MovieCard key={index} movie={movie} />
+          ))}
         </div>
       </div>
     </>

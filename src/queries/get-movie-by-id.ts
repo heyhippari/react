@@ -16,13 +16,14 @@ export function getMovieById(
         length,
         roles (
           age,
-          persons (
+          person: persons (
             id,
             name,
-            original_name
+            original_name,
+            birth_date
           )
         ),
-        studios (
+        studio: studios (
           id,
           name,
           original_name
@@ -32,13 +33,13 @@ export function getMovieById(
           name,
           original_name
         ),
-        labels (
+        label: labels (
           id,
           name,
           original_name
         ),
         movie_images (
-          images (
+          image: images (
             uuid,
             type
           )

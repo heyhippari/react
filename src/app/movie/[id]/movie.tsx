@@ -68,29 +68,29 @@ export default function Movie({ id }: { id: number }) {
                   </Link>
                 </div>
               ) : null}
-              {movie?.studios?.id ? (
+              {movie?.studio?.id ? (
                 <div className="flex flex-col">
                   <p className="text-lg font-semibold leading-loose text-white">
                     Studio
                   </p>
                   <Link
                     className="text-slate-300 hover:text-slate-50 hover:underline"
-                    href={`/studio/${movie?.studios.id}`}
+                    href={`/studio/${movie?.studio.id}`}
                   >
-                    {movie?.studios.name ?? movie?.studios.original_name}
+                    {movie?.studio.name ?? movie?.studio.original_name}
                   </Link>
                 </div>
               ) : null}
-              {movie?.labels?.id ? (
+              {movie?.label?.id ? (
                 <div className="flex flex-col">
                   <p className="text-lg font-semibold leading-loose text-white">
                     Label
                   </p>
                   <Link
                     className="text-slate-300 hover:text-slate-50 hover:underline"
-                    href={`/label/${movie?.labels.id}`}
+                    href={`/label/${movie?.label.id}`}
                   >
-                    {movie?.labels.name ?? movie?.labels.original_name}
+                    {movie?.label.name ?? movie?.label.original_name}
                   </Link>
                 </div>
               ) : null}

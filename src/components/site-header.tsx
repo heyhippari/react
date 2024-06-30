@@ -41,7 +41,7 @@ export default async function SiteHeader() {
           {
             //<LocaleMenu />
           }
-          {data.user ? (
+          {profile ? (
             <UserMenu profile={profile} />
           ) : (
             <Link className={buttonVariants()} href="/login">

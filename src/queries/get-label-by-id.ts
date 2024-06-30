@@ -16,7 +16,7 @@ export function getLabelById(
           original_name,
           dvd_id,
           movie_images (
-              images (
+              image: images (
                 uuid,
                 type
               )

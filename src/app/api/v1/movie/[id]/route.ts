@@ -21,6 +21,10 @@ export async function GET(_: Request, { params }: { params: { id: string } }) {
     return new Response(error.message, { status: 500 });
   }
 
+  if (!data) {
+    return new Response(null, { status: 404 });
+  }
+
   return new Response(JSON.stringify(getApiMovieObject(data), omitNulls), {
     headers: {
       'content-type': 'application/json',

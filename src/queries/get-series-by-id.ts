@@ -10,14 +10,14 @@ export function getSeriesById(
       `
         name,
         original_name,
-        movies(
+        movies (
           id,
           name,
           original_name,
           release_date,
           dvd_id,
           movie_images (
-              images (
+              image: images (
                 uuid,
                 type
               )
@@ -40,7 +40,7 @@ export function getSeriesMoviesCount(
 ) {
   return client
     .from('movies')
-    .select('*', { count: 'exact', head: true })
+    .select('id', { count: 'exact', head: true })
     .eq('series_id', seriesId)
     .throwOnError();
 }

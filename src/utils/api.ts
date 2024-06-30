@@ -1,9 +1,10 @@
+import { MovieWithImagesStudioAndRoles, RoleWithPerson } from '@/queries/types';
 import { getFrontCoverUrl, getFullCoverUrl } from './images';
 
 export const omitNulls = (_: string, value: any) =>
   value === null ? undefined : value;
 
-export function getApiMovieObject(movie: any) {
+export function getApiMovieObject(movie: MovieWithImagesStudioAndRoles) {
   return {
     id: movie.id,
     title: movie.name,
@@ -11,16 +12,17 @@ export function getApiMovieObject(movie: any) {
     dvd_id: movie.dvd_id,
     release_date: movie.release_date,
     runtime: movie.length,
-    studio: {
-      id: movie.studio_id,
-      name: movie.studios.name,
-      original_name: movie.studios.original_name,
-    },
-    roles: movie.roles.map((role: any) => ({
-      id: role.persons.id,
-      name: role.persons.name,
-      original_name: role.persons.original_name,
-      birth_date: role.persons.birth_date,
+    studio: movie.studio
+      ? {
+          id: movie.studio.id,
+          name: movie.studio.name,
+          original_name: movie.studio.original_name,
+        }
+      : undefined,
+    roles: movie.roles.map((role: RoleWithPerson) => ({
+      id: role.person?.id,
+      name: role.person?.name,
+      original_name: role.person?.original_name,
       age: role.age,
       age_string: role.age ? `${role.age} years old` : 'Unknown',
     })),

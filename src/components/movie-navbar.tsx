@@ -1,3 +1,4 @@
+import { MovieWithAll } from '@/queries/types';
 import Link from 'next/link';
 import { useMemo } from 'react';
 import { Badge } from './ui/badge';
@@ -5,7 +6,7 @@ import { Button, buttonVariants } from './ui/button';
 import { DropdownMenuSeparator } from './ui/dropdown-menu';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from './ui/hover-card';
 
-export default function MovieNavbar({ movie }: { movie: any }) {
+export default function MovieNavbar({ movie }: { movie: MovieWithAll }) {
   const isServer = typeof window === 'undefined';
 
   const supportsShareAPI = useMemo(() => {

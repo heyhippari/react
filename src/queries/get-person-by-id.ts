@@ -19,7 +19,7 @@ export function getPersonById(
             release_date,
             dvd_id,
             movie_images (
-                images (
+                image: images (
                   uuid,
                   type
                 )

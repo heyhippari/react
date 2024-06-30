@@ -5,11 +5,7 @@ import Link from 'next/link';
 import { useMemo } from 'react';
 import { Badge } from './ui/badge';
 
-export default function MovieCard({
-  movie,
-}: {
-  movie: MovieWithImages | null | undefined;
-}) {
+export default function MovieCard({ movie }: { movie: MovieWithImages }) {
   const frontCover = useMemo(
     () => (movie ? getFrontCover(movie) : null),
     [movie],
