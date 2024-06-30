@@ -14,9 +14,9 @@ export default async function ChangelogPage() {
       <h1 className="line-clamp-2 w-fit text-ellipsis bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-4xl font-bold leading-relaxed text-transparent">
         Changelog
       </h1>
-      <Accordion type="single" collapsible>
+      <Accordion type="single" collapsible defaultValue="0">
         {changelogs.map((changelog: any, index: number) => (
-          <AccordionItem key={index} value={changelog._id}>
+          <AccordionItem key={index} value={index.toString()}>
             <AccordionTrigger>
               <h2 className="text-xl font-bold">{changelog.date}</h2>
             </AccordionTrigger>
