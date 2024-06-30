@@ -45,6 +45,11 @@ export default function Movie({ id }: { id: number }) {
               ) : (
                 <Badge variant="default">Unknown Release Date</Badge>
               )}
+              {movie?.length ? (
+                <Badge variant="default">{movie?.length} minutes</Badge>
+              ) : (
+                <Badge variant="default">Unknown Duration</Badge>
+              )}
             </div>
             <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
               {movie?.series?.id ? (
