@@ -6,7 +6,6 @@ import { getPersonById, getPersonRolesCount } from '@/queries/get-person-by-id';
 import useSupabaseBrowser from '@/utils/supabase/client';
 import { useQuery } from '@supabase-cache-helpers/postgrest-react-query';
 import { DateTime } from 'luxon';
-import Link from 'next/link';
 
 export default function Person({ id }: { id: string }) {
   const supabase = useSupabaseBrowser();
@@ -50,9 +49,7 @@ export default function Person({ id }: { id: string }) {
         </div>
         <div className="grid grid-cols-3 gap-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
           {person?.roles.map((role, index) => (
-            <Link key={index} href={`/movie/${role.movies?.id}`}>
-              <MovieCard movie={role?.movies} />
-            </Link>
+            <MovieCard movie={role?.movies} />
           ))}
         </div>
       </div>

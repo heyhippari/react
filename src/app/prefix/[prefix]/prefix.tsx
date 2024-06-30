@@ -4,7 +4,6 @@ import MovieCard from '@/components/movie-card';
 import { getMoviesByPrefix } from '@/queries/get-movies-by-prefix';
 import useSupabaseBrowser from '@/utils/supabase/client';
 import { useQuery } from '@supabase-cache-helpers/postgrest-react-query';
-import Link from 'next/link';
 
 export default function Prefix({ prefix }: { prefix: string }) {
   const supabase = useSupabaseBrowser();
@@ -28,11 +27,7 @@ export default function Prefix({ prefix }: { prefix: string }) {
           <h2 className="text-lg font-semibold text-white">Movies</h2>
         </div>
         <div className="grid grid-cols-3 gap-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-          {movies?.map((movie) => (
-            <Link key={movie.id} href={`/movie/${movie?.id}`}>
-              <MovieCard movie={movie} />
-            </Link>
-          ))}
+          {movies?.map((movie) => <MovieCard movie={movie} />)}
         </div>
       </div>
     </>

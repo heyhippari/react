@@ -5,7 +5,6 @@ import { Badge } from '@/components/ui/badge';
 import { getLabelById, getLabelMoviesCount } from '@/queries/get-label-by-id';
 import useSupabaseBrowser from '@/utils/supabase/client';
 import { useQuery } from '@supabase-cache-helpers/postgrest-react-query';
-import Link from 'next/link';
 
 export default function Label({ id }: { id: string }) {
   const supabase = useSupabaseBrowser();
@@ -36,11 +35,7 @@ export default function Label({ id }: { id: string }) {
           <Badge variant="default">{moviesCount}</Badge>
         </div>
         <div className="grid grid-cols-3 gap-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-          {label?.movies.map((movie) => (
-            <Link key={movie.id} href={`/movie/${movie.id}`}>
-              <MovieCard movie={movie} />
-            </Link>
-          ))}
+          {label?.movies.map((movie) => <MovieCard movie={movie} />)}
         </div>
       </div>
     </>
