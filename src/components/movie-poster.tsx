@@ -23,7 +23,7 @@ export default function MoviePoster({
 
   return (
     <>
-      <div className="relative aspect-[2/3] w-[200px] md:w-[300px] lg:w-[400px] xl:w-[500px]">
+      <div className="relative aspect-[2/3] w-[350px]">
         {movie && frontCover ? (
           <Image
             className="rounded-lg object-cover shadow-md"
