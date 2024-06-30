@@ -14,7 +14,7 @@ export default function Person({ id }: { id: string }) {
 
   return (
     <>
-      <div className="w-full p-4">
+      <div className="w-full bg-slate-100 p-4 dark:bg-slate-700">
         <div className="container flex flex-col gap-6 px-4 md:flex-row">
           <div className="flex w-full flex-col justify-start gap-2 align-top">
             <div className="flex flex-col gap-0">
@@ -42,7 +42,7 @@ export default function Person({ id }: { id: string }) {
           </div>
         </div>
       </div>
-      <div className="container flex flex-col gap-4 px-4">
+      <div className="container flex flex-col gap-4 p-4">
         <div className="flex flex-row gap-2">
           <h2 className="text-lg font-semibold text-white">Roles</h2>
           <Badge variant="default">{roleCount}</Badge>
