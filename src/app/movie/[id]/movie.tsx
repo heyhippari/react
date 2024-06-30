@@ -40,6 +40,9 @@ export default function Movie({ id }: { id: number }) {
                 <Badge variant="default">
                   {DateTime.fromISO(movie?.release_date).toLocaleString(
                     DateTime.DATE_FULL,
+                    {
+                      locale: 'en-US',
+                    },
                   )}
                 </Badge>
               ) : (

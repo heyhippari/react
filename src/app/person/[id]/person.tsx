@@ -33,6 +33,9 @@ export default function Person({ id }: { id: string }) {
                 <Badge variant="default">
                   {DateTime.fromISO(person?.birth_date).toLocaleString(
                     DateTime.DATE_FULL,
+                    {
+                      locale: 'en-US',
+                    },
                   )}
                 </Badge>
               ) : null}
