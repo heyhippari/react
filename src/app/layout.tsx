@@ -19,8 +19,12 @@ export const viewport: Viewport = {
   colorScheme: 'dark',
 };
 
+const defaultUrl = process.env.VERCEL_URL
+  ? `https://${process.env.VERCEL_URL}`
+  : 'http://localhost:3000';
+
 export const metadata: Metadata = {
-  metadataBase: new URL('https://next.kanojodb.com/'),
+  metadataBase: new URL(defaultUrl),
   title: { default: 'Kanojo', template: '%s | Kanojo' },
   description: 'A community-run database for gravure idols.',
   keywords: ['gravure', 'idol', 'database', 'community', 'kanojo'],
