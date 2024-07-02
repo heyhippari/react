@@ -13,6 +13,10 @@ export default function Person({ id }: { id: string }) {
   const { data: person } = useQuery(getPersonById(supabase, id));
   const { count: roleCount } = useQuery(getPersonRolesCount(supabase, id));
 
+  if (!person) {
+    return null;
+  }
+
   return (
     <div className="container flex flex-col justify-stretch gap-2 px-4 md:flex-row">
       <div className="flex-grow bg-slate-100 p-4 dark:bg-slate-700">

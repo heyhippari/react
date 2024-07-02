@@ -8,6 +8,7 @@ export function getPersonById(
     .from('persons')
     .select(
       `
+        id,
         name,
         original_name,
         birth_date,
