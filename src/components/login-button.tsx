@@ -11,7 +11,7 @@ export default function LoginButton(props: {
     <form>
       <input type="hidden" name="provider" value={props.provider} />
       <input type="hidden" name="next" value={props.nextUrl} />
-      <Button variant="default" formAction={loginAction}>
+      <Button variant="default" formAction={() => loginAction}>
         Login with {props.provider}
       </Button>
     </form>

@@ -1,47 +1,40 @@
+import { jwtDecode, type JwtPayload } from 'jwt-decode';
 import { useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import resolveConfig from 'tailwindcss/resolveConfig';
-import tailwindConfig from '../../tailwind.config.js';
+import tailwindConfig from '../../tailwind.config';
+import useSupabaseBrowser from './supabase/client';
+
+type AuthJwtPayload = JwtPayload & { user_role: string };
 
 export function useWindowSize() {
   // Initialize state with undefined width/height so server and client renders match
   // Learn more here: https://joshwcomeau.com/react/the-perils-of-rehydration/
-  const [windowSize, setWindowSize] = useState({
+  const [windowSize, setWindowSize] = useState<{
+    width: number | undefined;
+    height: number | undefined;
+  }>({
     width: undefined,
     height: undefined,
   });
 
+  function handleResize() {
+    // Set window width/height to state
+    setWindowSize({
+      width: window.innerWidth,
+      height: window.innerHeight,
+    });
+  }
+
   useEffect(() => {
-    // only execute all the code below in client side
     if (typeof window !== 'undefined') {
-      // Handler to call on window resize
-
-      // eslint-disable-next-line
-      // @ts-ignore
-      function handleResize() {
-        // Set window width/height to state
-        // eslint-disable-next-line
-        // @ts-ignore
-        setWindowSize({
-          // eslint-disable-next-line
-          // @ts-ignore
-          width: window.innerWidth,
-          // eslint-disable-next-line
-          // @ts-ignore
-          height: window.innerHeight,
-        });
-      }
-
-      // Add event listener
       window.addEventListener('resize', handleResize);
 
-      // Call handler right away so state gets updated with initial window size
       handleResize();
 
-      // Remove event listener on cleanup
       return () => window.removeEventListener('resize', handleResize);
     }
-  }, []); // Empty array ensures that effect is only run on mount
+  }, []);
   return windowSize;
 }
 
@@ -58,4 +51,25 @@ export function useBreakpoint<K extends BreakpointKey>(breakpoint: K) {
   return {
     [`is${capitalizedKey}`]: bool,
   } as Record<Key, boolean>;
+}
+
+export function useUserRole() {
+  const supabase = useSupabaseBrowser();
+
+  const [userRole, setUserRole] = useState<string | null>(null);
+
+  supabase.auth
+    .getSession()
+    .then(({ data: { session } }) => {
+      if (session) {
+        const jwt = jwtDecode<AuthJwtPayload>(session?.access_token);
+
+        setUserRole(jwt.user_role);
+      }
+    })
+    .catch((error) => {
+      console.error('Error getting session', error);
+    });
+
+  return userRole;
 }

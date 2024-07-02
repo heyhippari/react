@@ -4,10 +4,22 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import { getChangelogs } from '@/utils/sanity/query';
+import { sanityFetch } from '@/utils/sanity/lib/client';
+import { GetChangelogsQueryResult } from '@/utils/sanity/sanity.types';
+import { groq } from 'next-sanity';
 
 export default async function ChangelogPage() {
-  const changelogs = await getChangelogs();
+  const getChangelogsQuery = groq`
+            *[_type == "changelog"] | order(date desc) {
+            _id,
+            date,
+            changes
+            }
+        `;
+
+  const changelogs = await sanityFetch<GetChangelogsQueryResult>({
+    query: getChangelogsQuery,
+  });
 
   return (
     <div className="container flex flex-col gap-4 p-4">
@@ -15,14 +27,14 @@ export default async function ChangelogPage() {
         Changelog
       </h1>
       <Accordion type="single" collapsible defaultValue="0">
-        {changelogs.map((changelog: any, index: number) => (
-          <AccordionItem key={index} value={index.toString()}>
+        {changelogs.map((changelog, index: number) => (
+          <AccordionItem key={changelog._id} value={index.toString()}>
             <AccordionTrigger>
               <h2 className="text-xl font-bold">{changelog.date}</h2>
             </AccordionTrigger>
             <AccordionContent>
               <ul className="list-inside list-disc">
-                {changelog.changes.map((change: any, index: number) => (
+                {changelog.changes?.map((change, index: number) => (
                   <li key={index}>{change}</li>
                 ))}
               </ul>

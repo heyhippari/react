@@ -2,7 +2,10 @@ import { Tables } from '@/utils/database.types';
 
 type Role = Omit<Tables<'roles'>, 'id' | 'movie_id' | 'person_id'>;
 // Person only has id, name, and original_name fields
-type Person = Pick<Tables<'persons'>, 'id' | 'name' | 'original_name'> | null;
+export type Person = Pick<
+  Tables<'persons'>,
+  'id' | 'name' | 'original_name'
+> | null;
 
 export type RoleWithPerson = Role & {
   person: Person;

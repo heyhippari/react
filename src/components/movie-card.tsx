@@ -21,7 +21,8 @@ export default function MovieCard({ movie }: { movie: MovieWithImages }) {
               src={frontCover}
               alt={movie?.name ?? movie?.original_name}
               placeholder="empty"
-              layout="fill"
+              fill
+              sizes="200px"
             />
           ) : (
             <div className="flex h-full w-full items-center justify-center rounded-lg bg-gray-700 shadow-md">

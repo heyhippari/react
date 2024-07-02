@@ -110,7 +110,7 @@ export default function MovieNavbar({ movie }: { movie: MovieWithAll }) {
           </HoverCardContent>
         </HoverCard>
 
-        <Button variant={'ghost'} onClick={handleShare}>
+        <Button variant={'ghost'} onClick={() => handleShare}>
           Share
         </Button>
       </div>

@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   keywords: ['gravure', 'idol', 'database', 'community', 'kanojo'],
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

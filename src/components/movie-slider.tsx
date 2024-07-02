@@ -3,13 +3,14 @@ import { FreeMode, Mousewheel, Scrollbar, Virtual } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import MovieCard from './movie-card';
 
+import { MovieWithImages } from '@/queries/types';
 import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/mousewheel';
 import 'swiper/css/scrollbar';
 import 'swiper/css/virtual';
 
-export default function MovieSlider({ movies }: { movies: any[] }) {
+export default function MovieSlider({ movies }: { movies: MovieWithImages[] }) {
   return (
     <div className="relative">
       <Swiper

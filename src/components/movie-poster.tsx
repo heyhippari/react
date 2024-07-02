@@ -25,8 +25,9 @@ export default function MoviePoster({ movie }: { movie: MovieWithImages }) {
             className="rounded-lg object-cover shadow-md"
             src={frontCover}
             alt={movie?.name ?? movie?.original_name}
-            layout="fill"
             onClick={() => (fullCover ? setOpen(true) : null)}
+            fill
+            sizes="350px"
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center rounded-lg bg-gray-600 shadow-md">

@@ -1,7 +1,13 @@
 import { searchMovieByDvdId } from '@/queries/search-movie-by-dvd-id';
 import { omitNulls } from '@/utils/api';
+import { Tables } from '@/utils/database.types';
 import useSupabaseServer from '@/utils/supabase/server';
 import { cookies } from 'next/headers';
+
+type MovieSearchResult = Pick<
+  Tables<'movies'>,
+  'id' | 'name' | 'original_name' | 'dvd_id' | 'release_date'
+>;
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -23,7 +29,7 @@ export async function GET(request: Request) {
 
   return new Response(
     JSON.stringify(
-      data.map((movie: any) => ({
+      data.map((movie: MovieSearchResult) => ({
         id: movie.id,
         title: movie.name,
         original_title: movie.original_name,

@@ -1,8 +1,11 @@
 import { MovieWithImagesStudioAndRoles, RoleWithPerson } from '@/queries/types';
 import { getFrontCoverUrl, getFullCoverUrl } from './images';
 
-export const omitNulls = (_: string, value: any) =>
-  value === null ? undefined : value;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Replacers need to be any
+export function omitNulls(this: any, key: string, value: any) {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return -- Replacers need to return any
+  return value ?? undefined;
+}
 
 export function getApiMovieObject(movie: MovieWithImagesStudioAndRoles) {
   return {

@@ -3,7 +3,7 @@ import { SupabaseClient } from '@supabase/supabase-js';
 
 export type TypedSupabaseClient = SupabaseClient<Database>;
 
-export type ImageUploadUrl = {
+export interface ImageUploadUrl {
   id: string;
   uploadUrl: string;
-};
+}

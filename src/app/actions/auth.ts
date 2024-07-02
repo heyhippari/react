@@ -17,6 +17,10 @@ export async function logoutAction() {
 }
 
 export async function loginAction(formData: FormData) {
+  const defaultUrl = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : 'http://localhost:3000';
+
   const cookieStore = cookies();
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const supabase = useSupabaseServer(cookieStore);
@@ -31,7 +35,7 @@ export async function loginAction(formData: FormData) {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: provider,
     options: {
-      redirectTo: 'https://next.kanojodb.com/auth/callback',
+      redirectTo: `${defaultUrl}/auth/callback`,
     },
   });
 
@@ -41,6 +45,7 @@ export async function loginAction(formData: FormData) {
 
   revalidatePath('/', 'layout');
   if (data.url) {
+    revalidatePath(data.url, 'layout');
     redirect(data.url);
   }
 }
