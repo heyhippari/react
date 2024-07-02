@@ -1,3 +1,7 @@
+const normalizeSrc = (src: string) => {
+  return src.startsWith('/') ? src.slice(1) : src;
+};
+
 export default function cloudflareLoader({
   src,
   width,
@@ -7,7 +11,14 @@ export default function cloudflareLoader({
   width: number;
   quality?: number;
 }) {
-  const params = [`width=${width}`, `quality=${quality ?? 75}`, 'format=auto'];
+  //return `https://kanojodb.com/cdn-cgi/imagedelivery/unbW_XNL55BgTGEc_h7RQA/${src}/public`;
+  const params = [`width=${width}`];
+  if (quality) {
+    params.push(`quality=${quality}`);
+  }
+  const paramsString = params.join(',');
 
-  return `https://kanojodb.com/cdn-cgi/imagedelivery/unbW_XNL55BgTGEc_h7RQA/${src}/public`;
+  const origin = process.env.VERCEL_URL ? '' : 'https://kanojodb.com';
+
+  return `${origin}/cdn-cgi/image/${paramsString}/${normalizeSrc(src)}`;
 }

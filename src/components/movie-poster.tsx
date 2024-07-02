@@ -1,5 +1,5 @@
 import { MovieWithImages } from '@/queries/types';
-import { getFrontCover, getFullCoverUrl } from '@/utils/images';
+import { getFrontCoverUrl, getFullCoverUrl } from '@/utils/images';
 import Image from 'next/image';
 import { useMemo, useState } from 'react';
 import Lightbox from 'yet-another-react-lightbox';
@@ -9,7 +9,7 @@ import 'yet-another-react-lightbox/styles.css';
 export default function MoviePoster({ movie }: { movie: MovieWithImages }) {
   const [open, setOpen] = useState(false);
   const frontCover = useMemo(
-    () => (movie ? getFrontCover(movie) : null),
+    () => (movie ? getFrontCoverUrl(movie) : null),
     [movie],
   );
   const fullCover = useMemo(
