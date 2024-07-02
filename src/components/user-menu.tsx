@@ -37,14 +37,10 @@ export default function UserMenu() {
       console.error('Error getting user', error);
     });
 
-  console.debug('User:', user);
-
   if (user) {
     void getProfileById(supabase, user?.id || '').then(
       ({ data: profile, error }) => {
         if (error) {
-          console.error('Error getting profile:', error);
-
           return;
         }
 
@@ -53,8 +49,6 @@ export default function UserMenu() {
         return profile;
       },
     );
-
-    console.debug('Profile:', profile);
   }
 
   return (

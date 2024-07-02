@@ -18,7 +18,6 @@ import {
 
 export default function LocaleMenu() {
   const handleLocaleChange = (value: string) => {
-    console.log('Selected locale:', value);
     switchLocaleAction(value);
   };
 
