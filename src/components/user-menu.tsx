@@ -68,8 +68,10 @@ export default function UserMenu() {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-52">
             <DropdownMenuLabel>
-              <p className="p-2 font-extrabold">{profile.username}</p>
-              <Badge>{userRole}</Badge>
+              <div className="flex flex-row items-center">
+                <p className="p-2 font-extrabold">{profile.username}</p>
+                {userRole ? <Badge>{userRole}</Badge> : null}
+              </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => void logoutAction()}>
