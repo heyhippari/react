@@ -8,10 +8,10 @@ export default function LoginButton(props: {
   provider: Provider;
 }) {
   return (
-    <form>
+    <form action={loginAction}>
       <input type="hidden" name="provider" value={props.provider} />
       <input type="hidden" name="next" value={props.nextUrl} />
-      <Button variant="default" formAction={void loginAction}>
+      <Button variant="default" type="submit">
         Login with {props.provider}
       </Button>
     </form>

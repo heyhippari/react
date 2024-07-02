@@ -43,5 +43,15 @@ export default tseslint.config(
         tsconfigRootDir: import.meta.dirname,
       },
     },
+    rules: {
+      '@typescript-eslint/no-misused-promises': [
+        2,
+        {
+          checksVoidReturn: {
+            attributes: false,
+          },
+        },
+      ],
+    },
   },
 );
