@@ -18,7 +18,7 @@ export async function logoutAction() {
 
 export async function loginAction(formData: FormData) {
   const defaultUrl = process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`
+    ? `https://kanojodb.com`
     : 'http://localhost:3000';
 
   const cookieStore = cookies();

@@ -20,7 +20,7 @@ export const viewport: Viewport = {
 };
 
 const defaultUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
+  ? `https://kanojodb.com`
   : 'http://localhost:3000';
 
 export const metadata: Metadata = {
