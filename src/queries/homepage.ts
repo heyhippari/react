@@ -1,3 +1,4 @@
+import { MovieWithImages } from '@/queries/types';
 import { TypedSupabaseClient } from '@/utils/types';
 
 export function getMovieCount(client: TypedSupabaseClient) {
@@ -54,6 +55,7 @@ export function getReleasedOnThisDay(client: TypedSupabaseClient) {
         )
     `,
     )
+    .returns<MovieWithImages[]>()
     .throwOnError();
 }
 
@@ -75,5 +77,6 @@ export function getInformationNeeded(client: TypedSupabaseClient) {
     `,
     )
     .limit(25)
+    .returns<MovieWithImages[]>()
     .throwOnError();
 }
