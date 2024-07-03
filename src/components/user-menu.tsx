@@ -11,12 +11,10 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { UserProfile } from '@/queries/types';
 import { useUserRole } from '@/utils/hooks';
-import useSupabaseBrowser from '@/utils/supabase/client';
 import { DropdownMenuLabel } from '@radix-ui/react-dropdown-menu';
 
 export default function UserMenu({ profile }: { profile: UserProfile }) {
-  const supabase = useSupabaseBrowser();
-  const userRole = useUserRole(supabase);
+  const userRole = useUserRole();
 
   return (
     <DropdownMenu>

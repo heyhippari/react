@@ -28,6 +28,7 @@ export default function MoviePoster({ movie }: { movie: MovieWithImages }) {
             onClick={() => (fullCover ? setOpen(true) : null)}
             fill
             sizes="350px"
+            priority
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center rounded-lg bg-gray-600 shadow-md">

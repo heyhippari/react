@@ -1,18 +1,16 @@
+'use client';
 import { MovieWithAll } from '@/queries/types';
+import { useUserRole } from '@/utils/hooks';
 import Link from 'next/link';
-import { useMemo } from 'react';
 import { Badge } from './ui/badge';
 import { Button, buttonVariants } from './ui/button';
 import { DropdownMenuSeparator } from './ui/dropdown-menu';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from './ui/hover-card';
 
 export default function MovieNavbar({ movie }: { movie: MovieWithAll }) {
-  const isServer = typeof window === 'undefined';
+  const supportsShareAPI = navigator?.share !== undefined;
 
-  const supportsShareAPI = useMemo(() => {
-    if (isServer) return false;
-    return navigator?.share !== undefined;
-  }, [isServer]);
+  const userRole = useUserRole();
 
   const handleShare = async () => {
     if (supportsShareAPI) {
@@ -113,6 +111,24 @@ export default function MovieNavbar({ movie }: { movie: MovieWithAll }) {
         <Button variant={'ghost'} onClick={void handleShare}>
           Share
         </Button>
+
+        {['admin', 'moderator'].includes(userRole ?? '') ? (
+          <HoverCard openDelay={0} closeDelay={0}>
+            <HoverCardTrigger>
+              <Button variant={'ghost'} className="text-red-500">
+                Manage
+              </Button>
+            </HoverCardTrigger>
+            <HoverCardContent align="center" className="w-44 p-2">
+              <Link
+                href={`/movie/${movie?.dvd_id}`}
+                className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-start')} w-full text-red-500`}
+              >
+                Delete
+              </Link>
+            </HoverCardContent>
+          </HoverCard>
+        ) : null}
       </div>
     </nav>
   );

@@ -13,8 +13,6 @@ export default async function UserMenuServer() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  console.log('user', user);
-
   let profile: UserProfile | null = null;
   if (user) {
     const { data } = await getProfileById(supabase, user?.id || '');
@@ -23,8 +21,6 @@ export default async function UserMenuServer() {
       profile = data;
     }
   }
-
-  console.log('profile', profile);
 
   return user && profile ? (
     <UserMenu profile={profile} />

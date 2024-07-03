@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import resolveConfig from 'tailwindcss/resolveConfig';
 import tailwindConfig from '../../tailwind.config';
-import { TypedSupabaseClient } from './types';
+import useSupabaseBrowser from './supabase/client';
 
 type AuthJwtPayload = JwtPayload & { user_role: string };
 
@@ -53,21 +53,25 @@ export function useBreakpoint<K extends BreakpointKey>(breakpoint: K) {
   } as Record<Key, boolean>;
 }
 
-export function useUserRole(supabase: TypedSupabaseClient) {
+export function useUserRole() {
   const [userRole, setUserRole] = useState<string | null>(null);
+  const supabase = useSupabaseBrowser();
 
-  supabase.auth
-    .getSession()
-    .then(({ data: { session } }) => {
+  useEffect(() => {
+    async function fetchUserRole() {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
       if (session) {
         const jwt = jwtDecode<AuthJwtPayload>(session?.access_token);
 
         setUserRole(jwt.user_role);
       }
-    })
-    .catch((error) => {
-      console.error('Error getting session', error);
-    });
+    }
+
+    void fetchUserRole();
+  }, [supabase]);
 
   return userRole;
 }
