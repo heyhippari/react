@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import UserMenu from './user-menu';
+import UserMenuServer from './user-menu-server';
 
 export default function SiteHeader() {
   return (
@@ -17,7 +17,7 @@ export default function SiteHeader() {
           {
             //<LocaleMenu />
           }
-          <UserMenu />
+          <UserMenuServer />
         </div>
       </div>
     </nav>

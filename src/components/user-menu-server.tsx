@@ -1,0 +1,34 @@
+import LoginButton from '@/components/login-button';
+import { getProfileById } from '@/queries/get-profile-by-id';
+import { UserProfile } from '@/queries/types';
+import useSupabaseServer from '@/utils/supabase/server';
+import { cookies } from 'next/headers';
+import UserMenu from './user-menu';
+
+export default async function UserMenuServer() {
+  const cookieStore = cookies();
+  const supabase = useSupabaseServer(cookieStore);
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  console.log('user', user);
+
+  let profile: UserProfile | null = null;
+  if (user) {
+    const { data } = await getProfileById(supabase, user?.id || '');
+
+    if (data) {
+      profile = data;
+    }
+  }
+
+  console.log('profile', profile);
+
+  return user && profile ? (
+    <UserMenu profile={profile} />
+  ) : (
+    <LoginButton provider="discord" />
+  );
+}

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import resolveConfig from 'tailwindcss/resolveConfig';
 import tailwindConfig from '../../tailwind.config';
-import useSupabaseBrowser from './supabase/client';
+import { TypedSupabaseClient } from './types';
 
 type AuthJwtPayload = JwtPayload & { user_role: string };
 
@@ -53,9 +53,7 @@ export function useBreakpoint<K extends BreakpointKey>(breakpoint: K) {
   } as Record<Key, boolean>;
 }
 
-export function useUserRole() {
-  const supabase = useSupabaseBrowser();
-
+export function useUserRole(supabase: TypedSupabaseClient) {
   const [userRole, setUserRole] = useState<string | null>(null);
 
   supabase.auth
