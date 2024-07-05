@@ -65,6 +65,7 @@ export function getInformationNeeded(client: TypedSupabaseClient) {
     .select(
       `
       id,
+      name,
       original_name,
       dvd_id,
       release_date,
