@@ -26,7 +26,7 @@ export function getMovieById(
                   uuid,
                   type
                 )
-              ),
+              )
           )
         ),
         studio: studios (
