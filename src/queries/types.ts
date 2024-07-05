@@ -1,5 +1,15 @@
 import { Tables } from '@/utils/database.types';
 
+type Images = Pick<Tables<'images'>, 'uuid' | 'type'> | null;
+export type MovieImage = Omit<
+  Tables<'movie_images'>,
+  'id' | 'movie_id' | 'image_id'
+> & { image: Images };
+export type PersonImage = Omit<
+  Tables<'person_images'>,
+  'id' | 'person_id' | 'image_id'
+> & { image: Images };
+
 type Role = Omit<Tables<'roles'>, 'id' | 'movie_id' | 'person_id'>;
 // Person only has id, name, and original_name fields
 export type Person = Pick<
@@ -11,12 +21,14 @@ export type RoleWithPerson = Role & {
   person: Person;
 };
 
+export type PersonWithImage =
+  | (Person & {
+      person_images: PersonImage[];
+    })
+  | null
+  | undefined;
+
 type Movie = Pick<Tables<'movies'>, 'id' | 'name' | 'original_name' | 'dvd_id'>;
-type Images = Pick<Tables<'images'>, 'uuid' | 'type'> | null;
-export type MovieImage = Omit<
-  Tables<'movie_images'>,
-  'id' | 'movie_id' | 'image_id'
-> & { image: Images };
 
 export type MovieWithImages =
   | (Movie & {

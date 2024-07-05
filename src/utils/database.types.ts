@@ -247,6 +247,39 @@ export type Database = {
           },
         ]
       }
+      person_images: {
+        Row: {
+          id: number
+          image_id: number
+          person_id: number
+        }
+        Insert: {
+          id?: number
+          image_id: number
+          person_id: number
+        }
+        Update: {
+          id?: number
+          image_id?: number
+          person_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "person_images_image_id_fkey"
+            columns: ["image_id"]
+            isOneToOne: false
+            referencedRelation: "images"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "person_images_person_id_fkey"
+            columns: ["person_id"]
+            isOneToOne: false
+            referencedRelation: "persons"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       persons: {
         Row: {
           art_url: string | null
@@ -312,6 +345,24 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      role_permissions: {
+        Row: {
+          id: number
+          permission: Database["public"]["Enums"]["app_permission"]
+          role: Database["public"]["Enums"]["app_role"]
+        }
+        Insert: {
+          id?: number
+          permission: Database["public"]["Enums"]["app_permission"]
+          role: Database["public"]["Enums"]["app_role"]
+        }
+        Update: {
+          id?: number
+          permission?: Database["public"]["Enums"]["app_permission"]
+          role?: Database["public"]["Enums"]["app_role"]
+        }
+        Relationships: []
       }
       roles: {
         Row: {
@@ -457,6 +508,32 @@ export type Database = {
           },
         ]
       }
+      user_roles: {
+        Row: {
+          id: number
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: number
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: number
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_roles_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       dvd_id_prefixes: {
@@ -529,6 +606,18 @@ export type Database = {
       }
     }
     Functions: {
+      authorize: {
+        Args: {
+          requested_permission: Database["public"]["Enums"]["app_permission"]
+        }
+        Returns: boolean
+      }
+      custom_access_token_hook: {
+        Args: {
+          event: Json
+        }
+        Returns: Json
+      }
       persons_movies_count: {
         Args: {
           "": unknown
@@ -549,11 +638,24 @@ export type Database = {
       }
     }
     Enums: {
+      app_permission:
+        | "movie.delete"
+        | "person.delete"
+        | "series.delete"
+        | "studio.delete"
+        | "category.delete"
+        | "label.delete"
+        | "image.delete"
+        | "job.delete"
+        | "role.delete"
+        | "tag.delete"
+      app_role: "admin" | "moderator" | "user" | "banned"
       image_type:
         | "front_cover"
         | "full_cover"
         | "art"
         | "disc"
+        | "profile"
         | "logo"
         | "screenshot"
     }
