@@ -18,7 +18,7 @@ export type Person = Pick<
 > | null;
 
 export type RoleWithPerson = Role & {
-  person: Person;
+  person: PersonWithImage;
 };
 
 export type PersonWithImage =

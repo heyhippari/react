@@ -12,6 +12,12 @@ export function getPersonById(
         name,
         original_name,
         birth_date,
+        person_images (
+                image: images (
+                  uuid,
+                  type
+                )
+              ),
         roles (
           movies (
             id,

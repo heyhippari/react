@@ -1,4 +1,4 @@
-import { Person } from '@/queries/types';
+import { PersonWithImage } from '@/queries/types';
 import { getProfile } from '@/utils/images';
 import Image from 'next/image';
 import { useMemo, useState } from 'react';
@@ -6,9 +6,9 @@ import Lightbox from 'yet-another-react-lightbox';
 
 import 'yet-another-react-lightbox/styles.css';
 
-export default function PersonPoster({ person }: { person: Person }) {
+export default function PersonPoster({ person }: { person: PersonWithImage }) {
   const [open, setOpen] = useState(false);
-  const profile = useMemo(() => (person ? getProfile(person) : null), [person]);
+  const profile = useMemo(() => getProfile(person), [person]);
 
   return (
     <>
@@ -24,7 +24,9 @@ export default function PersonPoster({ person }: { person: Person }) {
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center rounded-lg bg-gray-600 shadow-md">
-            <p className="text-3xl font-black text-slate-400">No Image</p>
+            <p className="select-none text-3xl font-black text-slate-400">
+              No Image
+            </p>
           </div>
         )}
       </div>

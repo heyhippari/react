@@ -8,14 +8,8 @@ import 'yet-another-react-lightbox/styles.css';
 
 export default function MoviePoster({ movie }: { movie: MovieWithImages }) {
   const [open, setOpen] = useState(false);
-  const frontCover = useMemo(
-    () => (movie ? getFrontCoverUrl(movie) : null),
-    [movie],
-  );
-  const fullCover = useMemo(
-    () => (movie ? getFullCoverUrl(movie) : null),
-    [movie],
-  );
+  const frontCover = useMemo(() => getFrontCoverUrl(movie), [movie]);
+  const fullCover = useMemo(() => getFullCoverUrl(movie), [movie]);
 
   return (
     <>
@@ -32,7 +26,9 @@ export default function MoviePoster({ movie }: { movie: MovieWithImages }) {
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center rounded-lg bg-gray-600 shadow-md">
-            <p className="text-3xl font-black text-slate-400">No Image</p>
+            <p className="select-none text-3xl font-black text-slate-400">
+              No Image
+            </p>
           </div>
         )}
       </div>

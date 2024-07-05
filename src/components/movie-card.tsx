@@ -6,10 +6,7 @@ import { useMemo } from 'react';
 import { Badge } from './ui/badge';
 
 export default function MovieCard({ movie }: { movie: MovieWithImages }) {
-  const frontCover = useMemo(
-    () => (movie ? getFrontCoverUrl(movie) : null),
-    [movie],
-  );
+  const frontCover = useMemo(() => getFrontCoverUrl(movie), [movie]);
 
   return (
     <Link href={`/movie/${movie?.id}`}>
@@ -26,7 +23,9 @@ export default function MovieCard({ movie }: { movie: MovieWithImages }) {
             />
           ) : (
             <div className="flex h-full w-full items-center justify-center rounded-lg bg-gray-700 shadow-md">
-              <p className="text-3xl font-black text-slate-500">No Image</p>
+              <p className="select-none text-3xl font-black text-slate-500">
+                No Image
+              </p>
             </div>
           )}
           <div className="absolute left-0 top-0 flex h-full w-full flex-col justify-between">
