@@ -14,10 +14,14 @@ export default function useSupabaseServer(
           return cookieStore.getAll();
         },
         setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) =>
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument -- Following the Supabase example
-            cookieStore.set(name, value, options),
-          );
+          cookiesToSet.forEach(({ name, value, options }) => {
+            try {
+              cookieStore.set(name, value, options);
+            } catch {
+              // This was called in a server context, so we can't set cookies.
+              // Since the middleware will set the cookies for us, we can ignore this error.
+            }
+          });
         },
       },
     },
