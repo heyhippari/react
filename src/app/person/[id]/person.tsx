@@ -18,7 +18,7 @@ export default function Person({ id }: { id: string }) {
   }
 
   return (
-    <div className="container flex flex-col justify-stretch gap-2 px-4 md:flex-row">
+    <div className="container flex flex-col justify-stretch gap-2 px-4 lg:flex-row">
       <div className="flex-grow bg-slate-100 p-4 dark:bg-slate-700">
         <div className="container flex flex-col gap-6 px-4">
           <PersonPoster person={person} />
@@ -53,7 +53,7 @@ export default function Person({ id }: { id: string }) {
           <h2 className="text-lg font-semibold text-white">Movies</h2>
           <Badge variant="default">{roleCount}</Badge>
         </div>
-        <div className="grid grid-cols-3 gap-4 md:grid-cols-4 lg:grid-cols-5">
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {person?.roles.map((role, index) => (
             <MovieCard key={index} movie={role?.movies} />
           ))}

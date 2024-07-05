@@ -12,7 +12,7 @@ export default function PersonPoster({ person }: { person: PersonWithImage }) {
 
   return (
     <>
-      <div className="relative aspect-[2/3] w-[300px]">
+      <div className="relative aspect-[2/3] w-[150px] lg:w-[300px]">
         {person && profile ? (
           <Image
             className="rounded-lg object-cover shadow-md"

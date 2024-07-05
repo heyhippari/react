@@ -13,7 +13,7 @@ export default function MoviePoster({ movie }: { movie: MovieWithImages }) {
 
   return (
     <>
-      <div className="relative aspect-[2/3] w-[350px]">
+      <div className="relative aspect-[2/3] w-[150px] lg:w-[300px]">
         {movie && frontCover ? (
           <Image
             className="rounded-lg object-cover shadow-md"
