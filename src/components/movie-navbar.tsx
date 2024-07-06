@@ -1,7 +1,9 @@
 'use client';
+import { deleteMovieAction } from '@/app/actions/movie';
 import { MovieWithAll } from '@/queries/types';
 import { useUserRole } from '@/utils/hooks';
 import Link from 'next/link';
+import { useMemo } from 'react';
 import { Badge } from './ui/badge';
 import { Button, buttonVariants } from './ui/button';
 import { DropdownMenuSeparator } from './ui/dropdown-menu';
@@ -11,6 +13,20 @@ export default function MovieNavbar({ movie }: { movie: MovieWithAll }) {
   const supportsShareAPI = navigator?.share !== undefined;
 
   const userRole = useUserRole();
+
+  const frontCoverCount = useMemo(
+    () =>
+      movie?.movie_images.filter((image) => image.image?.type === 'front_cover')
+        .length,
+    [movie],
+  );
+
+  const fullCoverCount = useMemo(
+    () =>
+      movie?.movie_images.filter((image) => image.image?.type === 'full_cover')
+        .length,
+    [movie],
+  );
 
   const handleShare = async () => {
     if (supportsShareAPI) {
@@ -72,7 +88,7 @@ export default function MovieNavbar({ movie }: { movie: MovieWithAll }) {
               className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-between')} w-full`}
             >
               Poster
-              <Badge variant="outline">0</Badge>
+              <Badge variant="outline">{frontCoverCount ?? 0}</Badge>
             </Link>
 
             <Link
@@ -80,7 +96,7 @@ export default function MovieNavbar({ movie }: { movie: MovieWithAll }) {
               className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-between')} w-full`}
             >
               Backdrop
-              <Badge variant="outline">0</Badge>
+              <Badge variant="outline">{fullCoverCount ?? 0}</Badge>
             </Link>
           </HoverCardContent>
         </HoverCard>
@@ -120,12 +136,12 @@ export default function MovieNavbar({ movie }: { movie: MovieWithAll }) {
               </Button>
             </HoverCardTrigger>
             <HoverCardContent align="center" className="w-44 p-2">
-              <Link
-                href={`/movie/${movie?.dvd_id}`}
+              <button
+                onClick={async () => await deleteMovieAction(movie?.id)}
                 className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-start')} w-full text-red-500`}
               >
                 Delete
-              </Link>
+              </button>
             </HoverCardContent>
           </HoverCard>
         ) : null}
