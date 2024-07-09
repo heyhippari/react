@@ -2,11 +2,12 @@ import { MovieWithImages } from '@/queries/types';
 import { getFrontCoverUrl } from '@/utils/images';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Badge } from './ui/badge';
 
 export default function MovieCard({ movie }: { movie: MovieWithImages }) {
   const frontCover = useMemo(() => getFrontCoverUrl(movie), [movie]);
+  const [imageIsLoaded, setImageIsLoaded] = useState(false);
 
   return (
     <Link href={`/movie/${movie?.id}`}>
@@ -14,12 +15,18 @@ export default function MovieCard({ movie }: { movie: MovieWithImages }) {
         <div className="relative aspect-[2/3] w-full">
           {movie && frontCover ? (
             <Image
-              className="rounded-lg object-cover shadow-md"
+              className={`rounded-lg object-cover shadow-md transition-opacity ${imageIsLoaded ? 'opacity-100' : 'opacity-0'}`}
               src={frontCover}
               alt={movie?.name ?? movie?.original_name}
               placeholder="empty"
               fill
               sizes="200px"
+              onLoad={(event) => {
+                if (event.currentTarget.src.includes('data:image/gif;base64'))
+                  return;
+
+                setImageIsLoaded(true);
+              }}
             />
           ) : (
             <div className="flex h-full w-full items-center justify-center rounded-lg bg-gray-700 shadow-md">
