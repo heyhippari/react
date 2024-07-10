@@ -11,11 +11,6 @@ import { redirect } from 'next/navigation';
 import Movie from './movie';
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
-  // If the id contains anything other than numbers, redirect to 404
-  if (!/^\d+$/.test(params.id)) {
-    return redirect('/404');
-  }
-
   const cookieStore = cookies();
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const supabase = useSupabaseServer(cookieStore);
@@ -31,11 +26,16 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 export default async function MoviePage({
   params,
 }: {
-  params: { id: number };
+  params: { id: string };
 }) {
   const queryClient = new QueryClient();
   const cookieStore = cookies();
   const supabase = useSupabaseServer(cookieStore);
+
+  // If the id contains anything other than numbers, redirect to 404
+  if (!/^\d+$/.test(params.id)) {
+    return redirect('/404');
+  }
 
   await prefetchQuery(queryClient, getMovieById(supabase, params.id));
 

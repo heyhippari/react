@@ -1,6 +1,7 @@
 import { ReactQueryClientProvider } from '@/components/react-query-client-provider';
 import SiteFooter from '@/components/site-footer';
 import SiteHeader from '@/components/site-header';
+import { Toaster } from '@/components/ui/toaster';
 import type { Metadata, Viewport } from 'next';
 import { Noto_Sans_JP } from 'next/font/google';
 import resolveConfig from 'tailwindcss/resolveConfig';
@@ -46,6 +47,7 @@ export default function RootLayout({
             </main>
             <SiteFooter />
           </div>
+          <Toaster />
         </body>
       </html>
     </ReactQueryClientProvider>

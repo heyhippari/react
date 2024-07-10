@@ -1,5 +1,6 @@
 import { createServerClient } from '@supabase/ssr';
 import type { cookies } from 'next/headers';
+import 'server-only';
 import { Database } from '../database.types';
 
 export default function useSupabaseServer(

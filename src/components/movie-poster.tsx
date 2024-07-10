@@ -15,15 +15,18 @@ export default function MoviePoster({ movie }: { movie: MovieWithImages }) {
     <>
       <div className="relative aspect-[2/3] w-[150px] lg:w-[300px]">
         {movie && frontCover ? (
-          <Image
-            className="rounded-lg object-cover shadow-md"
-            src={frontCover}
-            alt={movie?.name ?? movie?.original_name}
-            onClick={() => (fullCover ? setOpen(true) : null)}
-            fill
-            sizes="350px"
-            priority
-          />
+          <>
+            <Image
+              className="aspect-[2/3] rounded-lg object-cover shadow-md"
+              src={frontCover}
+              alt={movie?.name ?? movie?.original_name}
+              onClick={() => (fullCover ? setOpen(true) : null)}
+              width={300}
+              height={450}
+              sizes="(max-width: 1024px) 150w, 300w"
+              priority
+            />
+          </>
         ) : (
           <div className="flex h-full w-full items-center justify-center rounded-lg bg-gray-600 shadow-md">
             <p className="select-none text-3xl font-black text-slate-400">

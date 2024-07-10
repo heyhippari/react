@@ -8,10 +8,11 @@ import { Badge } from './ui/badge';
 import { Button, buttonVariants } from './ui/button';
 import { DropdownMenuSeparator } from './ui/dropdown-menu';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from './ui/hover-card';
+import { useToast } from './ui/use-toast';
 
 export default function MovieNavbar({ movie }: { movie: MovieWithAll }) {
   const supportsShareAPI = navigator?.share !== undefined;
-
+  const { toast } = useToast();
   const userRole = useUserRole();
 
   const frontCoverCount = useMemo(
@@ -137,7 +138,16 @@ export default function MovieNavbar({ movie }: { movie: MovieWithAll }) {
             </HoverCardTrigger>
             <HoverCardContent align="center" className="w-44 p-2">
               <button
-                onClick={async () => await deleteMovieAction(movie?.id)}
+                onClick={async () => {
+                  try {
+                    await deleteMovieAction(movie?.id);
+                  } catch (error) {
+                    toast({
+                      variant: 'destructive',
+                      description: (error as Error).message,
+                    });
+                  }
+                }}
                 className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-start')} w-full text-red-500`}
               >
                 Delete

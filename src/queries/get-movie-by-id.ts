@@ -53,6 +53,5 @@ export function getMovieById(
       `,
     )
     .eq('id', movieId)
-    .throwOnError()
     .single();
 }

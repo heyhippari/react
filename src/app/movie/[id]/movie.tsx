@@ -11,10 +11,15 @@ import useSupabaseBrowser from '@/utils/supabase/client';
 import { useQuery } from '@supabase-cache-helpers/postgrest-react-query';
 import { DateTime } from 'luxon';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 
-export default function Movie({ id }: { id: number }) {
+export default function Movie({ id }: { id: string }) {
   const supabase = useSupabaseBrowser();
-  const { data: movie } = useQuery(getMovieById(supabase, id));
+  const { data: movie, error } = useQuery(getMovieById(supabase, id));
+
+  if (error) {
+    return redirect('/404');
+  }
 
   return (
     <>
@@ -165,7 +170,7 @@ export default function Movie({ id }: { id: number }) {
             */}
           </TabsList>
           <TabsContent value="cast">
-            <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+            <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
               {movie?.roles.map((role, index) => (
                 <RoleCard key={index} role={role} />
               ))}
