@@ -1,4 +1,6 @@
 import { withSentryConfig } from '@sentry/nextjs';
+import Icons from 'unplugin-icons/webpack';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   optimizeFonts: true,
@@ -17,6 +19,16 @@ const nextConfig = {
   },
   experimental: {
     swcPlugins: [['@lingui/swc-plugin', {}]],
+  },
+  webpack(config) {
+    config.plugins.push(
+      Icons({
+        compiler: 'jsx',
+        jsx: 'react',
+      }),
+    );
+
+    return config;
   },
 };
 

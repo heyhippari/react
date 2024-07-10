@@ -12,7 +12,7 @@ export default function MovieCard({ movie }: { movie: MovieWithImages }) {
   return (
     <Link href={`/movie/${movie?.id}`}>
       <div className="flex flex-col gap-2">
-        <div className="relative aspect-[2/3] w-full overflow-hidden rounded-lg bg-stone-700 shadow-md">
+        <div className="relative aspect-[2/3] w-full overflow-hidden rounded-lg bg-pink-200 shadow-md dark:bg-pink-900">
           {movie && frontCover ? (
             <Image
               className={`object-cover shadow-md transition-opacity ${imageIsLoaded ? 'opacity-100' : 'opacity-0'}`}
@@ -30,7 +30,7 @@ export default function MovieCard({ movie }: { movie: MovieWithImages }) {
             />
           ) : (
             <div className="flex h-full w-full items-center justify-center">
-              <p className="select-none text-3xl font-black text-stone-500">
+              <p className="select-none text-3xl font-black text-pink-300 dark:text-pink-800">
                 No Image
               </p>
             </div>
@@ -38,16 +38,21 @@ export default function MovieCard({ movie }: { movie: MovieWithImages }) {
           <div className="absolute left-0 top-0 flex h-full w-full flex-col justify-between">
             <div />
             <div className="p-2">
-              <Badge variant="default">{movie?.dvd_id}</Badge>
+              <Badge
+                variant="default"
+                className="bg-pink-500 hover:bg-pink-400 dark:bg-pink-400 dark:hover:bg-pink-500"
+              >
+                {movie?.dvd_id}
+              </Badge>
             </div>
           </div>
         </div>
         <div className="mb-2 flex flex-col">
-          <h3 className="text-md line-clamp-1 font-semibold text-white">
+          <h3 className="text-md line-clamp-1 font-semibold dark:text-pink-50">
             {movie?.name ?? movie?.original_name}
           </h3>
           {movie?.name ? (
-            <p className="line-clamp-1 text-xs font-medium text-white opacity-75">
+            <p className="line-clamp-1 text-xs font-medium opacity-75 dark:text-pink-50">
               {movie?.original_name}
             </p>
           ) : null}

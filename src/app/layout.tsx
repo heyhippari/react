@@ -3,6 +3,7 @@ import SiteFooter from '@/components/site-footer';
 import SiteHeader from '@/components/site-header';
 import { Toaster } from '@/components/ui/toaster';
 import type { Metadata, Viewport } from 'next';
+import { ThemeProvider } from 'next-themes';
 import { Noto_Sans_JP } from 'next/font/google';
 import resolveConfig from 'tailwindcss/resolveConfig';
 import tailwindConfig from '../../tailwind.config';
@@ -38,16 +39,22 @@ export default function RootLayout({
 }>) {
   return (
     <ReactQueryClientProvider>
-      <html lang="en" className={`${NotoSansJP.className} dark`}>
-        <body className="bg-stone-100 text-stone-900 dark:bg-stone-800 dark:text-white">
-          <div className="flex min-h-screen flex-col items-stretch">
-            <SiteHeader />
-            <main className="flex flex-grow flex-col items-start justify-normal">
-              {children}
-            </main>
-            <SiteFooter />
-          </div>
-          <Toaster />
+      <html
+        lang="en"
+        className={`${NotoSansJP.className}`}
+        suppressHydrationWarning
+      >
+        <body className="bg-white text-stone-900 dark:bg-stone-900 dark:text-white">
+          <ThemeProvider attribute="class">
+            <div className="flex min-h-screen flex-col items-stretch">
+              <SiteHeader />
+              <main className="flex flex-grow flex-col items-start justify-normal">
+                {children}
+              </main>
+              <SiteFooter />
+            </div>
+            <Toaster />
+          </ThemeProvider>
         </body>
       </html>
     </ReactQueryClientProvider>

@@ -12,19 +12,20 @@ export default function PersonPoster({ person }: { person: PersonWithImage }) {
 
   return (
     <>
-      <div className="relative aspect-[2/3] w-[150px] lg:w-[300px]">
+      <div className="relative aspect-[2/3] w-[150px] overflow-hidden rounded-lg bg-pink-200 shadow-md dark:bg-pink-900 lg:w-[250px]">
         {person && profile ? (
           <Image
             className="rounded-lg object-cover shadow-md"
             src={profile}
             alt={person?.name ?? person?.original_name}
             onClick={() => (profile ? setOpen(true) : null)}
-            fill
-            sizes="300px"
+            width={250}
+            height={375}
+            sizes="(max-width: 1024px) 150w, 250w"
           />
         ) : (
-          <div className="flex h-full w-full items-center justify-center rounded-lg bg-stone-600 shadow-md">
-            <p className="select-none text-3xl font-black text-stone-400">
+          <div className="flex h-full w-full items-center justify-center">
+            <p className="select-none text-3xl font-black text-pink-300 dark:text-pink-800">
               No Image
             </p>
           </div>

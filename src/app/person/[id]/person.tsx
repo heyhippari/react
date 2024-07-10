@@ -19,7 +19,7 @@ export default function Person({ id }: { id: string }) {
 
   return (
     <div className="container flex flex-grow flex-col gap-2 px-4 lg:flex-row">
-      <div className="flex-grow bg-stone-100 p-4 dark:bg-stone-700">
+      <div className="flex-grow bg-pink-100 p-4 dark:bg-pink-950">
         <div className="container flex flex-col gap-6 px-4">
           <PersonPoster person={person} />
           <div className="flex w-full flex-col justify-start gap-2 align-top">
@@ -28,14 +28,17 @@ export default function Person({ id }: { id: string }) {
                 {person?.name ?? person?.original_name}
               </h1>
               {person?.name ? (
-                <p className="line-clamp-2 text-ellipsis text-lg font-semibold text-white opacity-75">
+                <p className="line-clamp-2 text-ellipsis text-lg font-semibold">
                   {person?.original_name}
                 </p>
               ) : null}
             </div>
             <div className="flex flex-row gap-4">
               {person?.birth_date ? (
-                <Badge variant="default">
+                <Badge
+                  variant="default"
+                  className="bg-pink-500 hover:bg-pink-400 dark:bg-pink-400 dark:hover:bg-pink-500"
+                >
                   {DateTime.fromISO(person?.birth_date).toLocaleString(
                     DateTime.DATE_FULL,
                     {
@@ -50,8 +53,13 @@ export default function Person({ id }: { id: string }) {
       </div>
       <div className="flex flex-col gap-4 p-4">
         <div className="flex flex-row gap-2">
-          <h2 className="text-lg font-semibold text-white">Movies</h2>
-          <Badge variant="default">{roleCount}</Badge>
+          <h2 className="text-lg font-semibold">Movies</h2>
+          <Badge
+            variant="default"
+            className="bg-pink-500 hover:bg-pink-400 dark:bg-pink-400 dark:hover:bg-pink-500"
+          >
+            {roleCount}
+          </Badge>
         </div>
         <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {person?.roles.map((role, index) => (

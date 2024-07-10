@@ -44,7 +44,7 @@ export default function MovieNavbar({ movie }: { movie: MovieWithAll }) {
   };
 
   return (
-    <nav className="start-0 top-0 z-20 w-full border-b border-stone-200 bg-stone-100 p-2 dark:border-stone-700 dark:bg-stone-600">
+    <nav className="start-0 top-0 z-20 w-full border-b bg-pink-300 p-2 dark:border-stone-700 dark:bg-stone-600">
       <div className="container mx-auto flex items-center justify-center gap-2 overflow-x-scroll px-4 md:overflow-auto">
         <HoverCard openDelay={0} closeDelay={0}>
           <HoverCardTrigger>

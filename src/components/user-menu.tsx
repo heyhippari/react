@@ -33,7 +33,11 @@ export default function UserMenu({ profile }: { profile: UserProfile }) {
         <DropdownMenuLabel>
           <div className="flex flex-row items-center">
             <p className="p-2 font-extrabold">{profile.username}</p>
-            {userRole ? <Badge>{userRole}</Badge> : null}
+            {userRole ? (
+              <Badge className="bg-pink-500 hover:bg-pink-400 dark:bg-pink-400 dark:hover:bg-pink-500">
+                {userRole}
+              </Badge>
+            ) : null}
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />

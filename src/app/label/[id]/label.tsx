@@ -13,7 +13,7 @@ export default function Label({ id }: { id: string }) {
 
   return (
     <>
-      <div className="w-full bg-stone-100 p-4 dark:bg-stone-700">
+      <div className="w-full bg-pink-100 p-4 dark:bg-stone-700">
         <div className="container flex flex-col gap-6 px-4 md:flex-row">
           <div className="flex w-full flex-col justify-start gap-2 align-top">
             <div className="flex flex-col gap-0">
@@ -21,7 +21,7 @@ export default function Label({ id }: { id: string }) {
                 {label?.name ?? label?.original_name}
               </h1>
               {label?.name ? (
-                <p className="line-clamp-2 text-ellipsis text-lg font-semibold text-white opacity-75">
+                <p className="line-clamp-2 text-ellipsis text-lg font-semibold">
                   {label?.original_name}
                 </p>
               ) : null}
@@ -31,7 +31,7 @@ export default function Label({ id }: { id: string }) {
       </div>
       <div className="container flex flex-col gap-4 p-4">
         <div className="flex flex-row gap-2">
-          <h2 className="text-lg font-semibold text-white">Movies</h2>
+          <h2 className="text-lg font-semibold">Movies</h2>
           <Badge variant="default">{moviesCount}</Badge>
         </div>
         <div className="grid grid-cols-3 gap-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
