@@ -23,7 +23,7 @@ export default async function ChangelogPage() {
 
   return (
     <div className="container flex flex-col gap-4 p-4">
-      <h1 className="line-clamp-2 w-fit text-ellipsis bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-4xl font-bold leading-relaxed text-transparent">
+      <h1 className="line-clamp-2 w-fit text-ellipsis bg-gradient-to-r from-pink-600 to-rose-400 bg-clip-text text-4xl font-bold leading-relaxed text-transparent">
         Changelog
       </h1>
       <Accordion type="single" collapsible defaultValue="0">

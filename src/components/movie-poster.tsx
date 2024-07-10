@@ -28,8 +28,8 @@ export default function MoviePoster({ movie }: { movie: MovieWithImages }) {
             />
           </>
         ) : (
-          <div className="flex h-full w-full items-center justify-center rounded-lg bg-gray-600 shadow-md">
-            <p className="select-none text-3xl font-black text-slate-400">
+          <div className="flex h-full w-full items-center justify-center rounded-lg bg-stone-600 shadow-md">
+            <p className="select-none text-3xl font-black text-stone-400">
               No Image
             </p>
           </div>

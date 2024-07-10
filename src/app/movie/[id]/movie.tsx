@@ -24,12 +24,12 @@ export default function Movie({ id }: { id: string }) {
   return (
     <>
       <MovieNavbar movie={movie} />
-      <div className="w-full bg-slate-100 p-4 dark:bg-slate-700">
+      <div className="w-full bg-stone-100 p-4 dark:bg-stone-700">
         <div className="container flex flex-col gap-6 px-4 md:flex-row">
           <MoviePoster movie={movie} />
           <div className="flex w-full flex-col justify-start gap-2 align-top">
             <div className="flex flex-col gap-0">
-              <h1 className="line-clamp-2 w-fit text-ellipsis bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-4xl font-bold leading-tight text-transparent">
+              <h1 className="line-clamp-2 w-fit text-ellipsis bg-gradient-to-r from-pink-600 to-rose-400 bg-clip-text text-4xl font-bold leading-tight text-transparent">
                 {movie?.name ?? movie?.original_name}
               </h1>
               {movie?.name ? (
@@ -66,7 +66,7 @@ export default function Movie({ id }: { id: string }) {
                     Series
                   </p>
                   <Link
-                    className="text-slate-300 hover:text-slate-50 hover:underline"
+                    className="text-stone-300 hover:text-stone-50 hover:underline"
                     href={`/series/${movie?.series?.id}`}
                   >
                     {movie?.series?.name ?? movie?.series?.original_name}
@@ -79,7 +79,7 @@ export default function Movie({ id }: { id: string }) {
                     Studio
                   </p>
                   <Link
-                    className="text-slate-300 hover:text-slate-50 hover:underline"
+                    className="text-stone-300 hover:text-stone-50 hover:underline"
                     href={`/studio/${movie?.studio.id}`}
                   >
                     {movie?.studio.name ?? movie?.studio.original_name}
@@ -92,7 +92,7 @@ export default function Movie({ id }: { id: string }) {
                     Label
                   </p>
                   <Link
-                    className="text-slate-300 hover:text-slate-50 hover:underline"
+                    className="text-stone-300 hover:text-stone-50 hover:underline"
                     href={`/label/${movie?.label.id}`}
                   >
                     {movie?.label.name ?? movie?.label.original_name}
@@ -106,7 +106,7 @@ export default function Movie({ id }: { id: string }) {
                 Tags
               </p>
               <div className="flex flex-row items-center gap-6">
-                <p className="w-24 pb-1 text-sm font-semibold text-slate-400">
+                <p className="w-24 pb-1 text-sm font-semibold text-stone-400">
                   Appearance
                 </p>
                 <div className="flex flex-grow flex-row flex-wrap gap-2">
@@ -116,7 +116,7 @@ export default function Movie({ id }: { id: string }) {
                 </div>
               </div>
               <div className="flex flex-row items-center gap-6">
-                <p className="w-24 pb-1 text-sm font-semibold text-slate-400">
+                <p className="w-24 pb-1 text-sm font-semibold text-stone-400">
                   Attire
                 </p>
                 <div className="flex flex-grow flex-row flex-wrap gap-2">
@@ -125,7 +125,7 @@ export default function Movie({ id }: { id: string }) {
                 </div>
               </div>
               <div className="flex flex-row items-center gap-6">
-                <p className="w-24 pb-1 text-sm font-semibold text-slate-400">
+                <p className="w-24 pb-1 text-sm font-semibold text-stone-400">
                   Objects
                 </p>
                 <div className="flex flex-grow flex-row flex-wrap gap-2">
@@ -133,7 +133,7 @@ export default function Movie({ id }: { id: string }) {
                 </div>
               </div>
               <div className="flex flex-row items-center gap-6">
-                <p className="w-24 pb-1 text-sm font-semibold text-slate-400">
+                <p className="w-24 pb-1 text-sm font-semibold text-stone-400">
                   Places
                 </p>
                 <div className="flex flex-grow flex-row flex-wrap gap-2">
@@ -141,7 +141,7 @@ export default function Movie({ id }: { id: string }) {
                 </div>
               </div>
               <div className="flex flex-row items-center gap-6">
-                <p className="w-24 pb-1 text-sm font-semibold text-slate-400">
+                <p className="w-24 pb-1 text-sm font-semibold text-stone-400">
                   Actions
                 </p>
                 <div className="flex flex-grow flex-row flex-wrap gap-2">

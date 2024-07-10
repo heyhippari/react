@@ -16,7 +16,7 @@ const NotoSansJP = Noto_Sans_JP({
 });
 
 export const viewport: Viewport = {
-  themeColor: fullConfig.theme.colors.slate[900],
+  themeColor: fullConfig.theme.colors.stone[900],
   colorScheme: 'dark',
 };
 
@@ -39,7 +39,7 @@ export default function RootLayout({
   return (
     <ReactQueryClientProvider>
       <html lang="en" className={`${NotoSansJP.className} dark`}>
-        <body className="bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-white">
+        <body className="bg-stone-100 text-stone-900 dark:bg-stone-800 dark:text-white">
           <div className="flex min-h-screen flex-col items-stretch">
             <SiteHeader />
             <main className="flex flex-grow flex-col items-start justify-normal">

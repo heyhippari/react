@@ -15,7 +15,7 @@ export default function RootLayout({
   return (
     <ReactQueryClientProvider>
       <html lang="en" className={`${NotoSansJP.className} dark`}>
-        <body className="bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-white">
+        <body className="text-stone-900 dark:text-stone-100">
           <div className="flex min-h-screen flex-col items-stretch">
             {children}
             {

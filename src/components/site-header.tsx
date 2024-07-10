@@ -3,13 +3,13 @@ import UserMenuServer from './user-menu-server';
 
 export default function SiteHeader() {
   return (
-    <nav className="start-0 top-0 z-20 w-full border-b border-gray-200 bg-white p-4 dark:border-gray-600 dark:bg-gray-900">
+    <nav className="start-0 top-0 z-20 w-full border-b border-stone-200 bg-white p-4 dark:border-stone-600 dark:bg-stone-900">
       <div className="container mx-auto flex flex-wrap items-center justify-between px-4">
         <Link
           className="flex items-center space-x-3 rtl:space-x-reverse"
           href="/"
         >
-          <span className="self-center whitespace-nowrap border-l-4 border-l-blue-500 pl-3 text-4xl font-bold dark:text-white">
+          <span className="self-center whitespace-nowrap border-l-4 border-l-pink-500 pl-3 text-4xl font-bold dark:text-white">
             Kanojo
           </span>
         </Link>

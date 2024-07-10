@@ -12,10 +12,10 @@ export default function MovieCard({ movie }: { movie: MovieWithImages }) {
   return (
     <Link href={`/movie/${movie?.id}`}>
       <div className="flex flex-col gap-2">
-        <div className="relative aspect-[2/3] w-full">
+        <div className="relative aspect-[2/3] w-full overflow-hidden rounded-lg bg-stone-700 shadow-md">
           {movie && frontCover ? (
             <Image
-              className={`rounded-lg object-cover shadow-md transition-opacity ${imageIsLoaded ? 'opacity-100' : 'opacity-0'}`}
+              className={`object-cover shadow-md transition-opacity ${imageIsLoaded ? 'opacity-100' : 'opacity-0'}`}
               src={frontCover}
               alt={movie?.name ?? movie?.original_name}
               placeholder="empty"
@@ -29,8 +29,8 @@ export default function MovieCard({ movie }: { movie: MovieWithImages }) {
               }}
             />
           ) : (
-            <div className="flex h-full w-full items-center justify-center rounded-lg bg-gray-700 shadow-md">
-              <p className="select-none text-3xl font-black text-slate-500">
+            <div className="flex h-full w-full items-center justify-center">
+              <p className="select-none text-3xl font-black text-stone-500">
                 No Image
               </p>
             </div>

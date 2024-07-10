@@ -18,13 +18,13 @@ export default function Person({ id }: { id: string }) {
   }
 
   return (
-    <div className="container flex flex-col justify-stretch gap-2 px-4 lg:flex-row">
-      <div className="flex-grow bg-slate-100 p-4 dark:bg-slate-700">
+    <div className="container flex flex-grow flex-col gap-2 px-4 lg:flex-row">
+      <div className="flex-grow bg-stone-100 p-4 dark:bg-stone-700">
         <div className="container flex flex-col gap-6 px-4">
           <PersonPoster person={person} />
           <div className="flex w-full flex-col justify-start gap-2 align-top">
             <div className="flex flex-col gap-0">
-              <h1 className="line-clamp-2 w-fit text-ellipsis bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-4xl font-bold leading-tight text-transparent">
+              <h1 className="line-clamp-2 w-fit text-ellipsis bg-gradient-to-r from-pink-600 to-rose-400 bg-clip-text text-4xl font-bold leading-tight text-transparent">
                 {person?.name ?? person?.original_name}
               </h1>
               {person?.name ? (
