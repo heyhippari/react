@@ -4,5 +4,6 @@
   },
   "cSpell.words": ["Supabase"],
   "eslint.lintTask.enable": true,
-  "eslint.useFlatConfig": true
+  "eslint.useFlatConfig": true,
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

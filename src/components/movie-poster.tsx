@@ -17,7 +17,7 @@ export default function MoviePoster({ movie }: { movie: MovieWithImages }) {
         {movie && frontCover ? (
           <>
             <Image
-              className="aspect-[2/3] rounded-lg object-cover"
+              className="aspect-[2/3] object-cover"
               src={frontCover}
               alt={movie?.name ?? movie?.original_name}
               onClick={() => (fullCover ? setOpen(true) : null)}

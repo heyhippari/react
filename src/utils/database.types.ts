@@ -121,11 +121,11 @@ export type Database = {
           update_time: string
         }
         Insert: {
-          create_time: string
+          create_time?: string
           id?: number
           name?: string | null
           original_name: string
-          update_time: string
+          update_time?: string
         }
         Update: {
           create_time?: string
@@ -198,7 +198,7 @@ export type Database = {
           update_time: string
         }
         Insert: {
-          create_time: string
+          create_time?: string
           dvd_id?: string | null
           id?: number
           label_id?: number | null
@@ -208,7 +208,7 @@ export type Database = {
           release_date?: string | null
           series_id?: number | null
           studio_id?: number | null
-          update_time: string
+          update_time?: string
         }
         Update: {
           create_time?: string
@@ -295,12 +295,12 @@ export type Database = {
         Insert: {
           art_url?: string | null
           birth_date?: string | null
-          create_time: string
+          create_time?: string
           id?: number
           name?: string | null
           original_name: string
           thumb_url?: string | null
-          update_time: string
+          update_time?: string
         }
         Update: {
           art_url?: string | null
@@ -313,6 +313,35 @@ export type Database = {
           update_time?: string
         }
         Relationships: []
+      }
+      persons_aliases: {
+        Row: {
+          id: number
+          name: string | null
+          original_name: string | null
+          person_id: number
+        }
+        Insert: {
+          id?: number
+          name?: string | null
+          original_name?: string | null
+          person_id: number
+        }
+        Update: {
+          id?: number
+          name?: string | null
+          original_name?: string | null
+          person_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "persons_aliases_person_id_fkey"
+            columns: ["person_id"]
+            isOneToOne: false
+            referencedRelation: "persons"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       profiles: {
         Row: {
@@ -424,11 +453,11 @@ export type Database = {
           series_movies_count: number | null
         }
         Insert: {
-          create_time: string
+          create_time?: string
           id?: number
           name?: string | null
           original_name: string
-          update_time: string
+          update_time?: string
         }
         Update: {
           create_time?: string
@@ -449,11 +478,11 @@ export type Database = {
           studio_movies_count: number | null
         }
         Insert: {
-          create_time: string
+          create_time?: string
           id?: number
           name?: string | null
           original_name: string
-          update_time: string
+          update_time?: string
         }
         Update: {
           create_time?: string
@@ -536,12 +565,6 @@ export type Database = {
       }
     }
     Views: {
-      dvd_id_prefixes: {
-        Row: {
-          prefix: string | null
-        }
-        Relationships: []
-      }
       movies_missing_info: {
         Row: {
           dvd_id: string | null
@@ -603,6 +626,25 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      movies_without_images: {
+        Row: {
+          dvd_id: string | null
+        }
+        Insert: {
+          dvd_id?: string | null
+        }
+        Update: {
+          dvd_id?: string | null
+        }
+        Relationships: []
+      }
+      roles_by_age: {
+        Row: {
+          age: number | null
+          count: number | null
+        }
+        Relationships: []
       }
     }
     Functions: {

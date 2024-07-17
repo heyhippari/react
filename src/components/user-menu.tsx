@@ -19,7 +19,7 @@ export default function UserMenu({ profile }: { profile: UserProfile }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <Avatar>
+        <Avatar className="border-2 border-pink-400 bg-pink-300 dark:border-pink-400 dark:bg-pink-700">
           <AvatarImage
             src={profile.avatar_url ?? ''}
             alt={profile.username ?? ''}

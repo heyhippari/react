@@ -18,12 +18,19 @@ export async function generateMetadata({ params }: { params: { id: number } }) {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const supabase = useSupabaseServer(cookieStore);
 
-  const { data: series } = await getSeriesById(supabase, params.id);
+  try {
+    const { data: series } = await getSeriesById(supabase, params.id);
 
-  return {
-    title: series?.name ?? series?.original_name,
-    description: `Information about ${series?.name ?? series?.original_name} from Kanojo.`,
-  };
+    return {
+      title: series?.name ?? series?.original_name,
+      description: `Information about ${series?.name ?? series?.original_name} from Kanojo.`,
+    };
+  } catch {
+    return {
+      title: 'Series',
+      description: 'Information about a series from Kanojo.',
+    };
+  }
 }
 
 export default async function SeriesPage({

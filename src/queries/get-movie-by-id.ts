@@ -22,11 +22,11 @@ export function getMovieById(
             original_name,
             birth_date,
             person_images (
-                image: images (
-                  uuid,
-                  type
-                )
+              image: images (
+                uuid,
+                type
               )
+            )
           )
         ),
         studio: studios (

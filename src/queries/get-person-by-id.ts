@@ -13,11 +13,15 @@ export function getPersonById(
         original_name,
         birth_date,
         person_images (
-                image: images (
-                  uuid,
-                  type
-                )
-              ),
+          image: images (
+            uuid,
+            type
+          )
+        ),
+        aliases: persons_aliases (
+          name,
+          original_name
+        ),
         roles (
           movies (
             id,
@@ -26,11 +30,11 @@ export function getPersonById(
             release_date,
             dvd_id,
             movie_images (
-                image: images (
-                  uuid,
-                  type
-                )
+              image: images (
+                uuid,
+                type
               )
+            )
           )
         )
       `,

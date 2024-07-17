@@ -15,12 +15,19 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const supabase = useSupabaseServer(cookieStore);
 
-  const { data: movie } = await getMovieById(supabase, params.id);
+  try {
+    const { data: movie } = await getMovieById(supabase, params.id);
 
-  return {
-    title: movie?.name ?? movie?.original_name,
-    description: `Information about ${movie?.dvd_id} from Kanojo.`,
-  };
+    return {
+      title: movie?.name ?? movie?.original_name,
+      description: `Information about ${movie?.dvd_id} from Kanojo.`,
+    };
+  } catch {
+    return {
+      title: 'Movie',
+      description: 'Information about a movie from Kanojo.',
+    };
+  }
 }
 
 export default async function MoviePage({

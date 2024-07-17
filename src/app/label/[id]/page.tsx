@@ -15,12 +15,19 @@ export async function generateMetadata({ params }: { params: { id: number } }) {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const supabase = useSupabaseServer(cookieStore);
 
-  const { data: label } = await getLabelById(supabase, params.id);
+  try {
+    const { data: label } = await getLabelById(supabase, params.id);
 
-  return {
-    title: label?.name ?? label?.original_name,
-    description: `Information about ${label?.name ?? label?.original_name} from Kanojo.`,
-  };
+    return {
+      title: label?.name ?? label?.original_name,
+      description: `Information about ${label?.name ?? label?.original_name} from Kanojo.`,
+    };
+  } catch {
+    return {
+      title: 'Label',
+      description: 'Information about a label from Kanojo.',
+    };
+  }
 }
 
 export default async function LabelPage({
