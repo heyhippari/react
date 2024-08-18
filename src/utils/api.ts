@@ -7,7 +7,7 @@ export function omitNulls(this: any, key: string, value: any) {
   return value ?? undefined;
 }
 
-export function getApiMovieObject(movie: MovieWithImagesStudioAndRoles) {
+export function getApiMovieObject(movie: any) {
   return {
     id: movie.id,
     title: movie.name,
