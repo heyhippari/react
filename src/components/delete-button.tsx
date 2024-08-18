@@ -9,7 +9,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { useFormStatus } from 'react-dom';
 
 export default function DeleteButton({
   onDelete,
@@ -21,8 +20,6 @@ export default function DeleteButton({
   title: string
   description: string
 }) {
-  const [ pending ] = useForm
-
   return (
     <AlertDialog>
       <AlertDialogTrigger>
