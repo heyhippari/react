@@ -1,12 +1,12 @@
 import { MovieWithImages } from '@/queries/types';
-import { getFrontCoverUrl } from '@/utils/images';
-import Image from 'next/image';
+import { getFrontCover } from '@/utils/images';
+import { CldImage } from 'next-cloudinary';
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import { Badge } from './ui/badge';
 
-export default function MovieCard({ movie }: { movie: MovieWithImages }) {
-  const frontCover = useMemo(() => getFrontCoverUrl(movie), [movie]);
+export default function MovieCard({ movie }: Readonly<{ movie: MovieWithImages }>) {
+  const frontCover = useMemo(() => getFrontCover(movie), [movie]);
   const [imageIsLoaded, setImageIsLoaded] = useState(false);
 
   return (
@@ -14,13 +14,13 @@ export default function MovieCard({ movie }: { movie: MovieWithImages }) {
       <div className="flex flex-col gap-2">
         <div className="relative aspect-[2/3] w-full overflow-hidden rounded-lg bg-pink-200 shadow-md dark:bg-pink-900">
           {movie && frontCover ? (
-            <Image
-              className={`object-cover shadow-md transition-opacity ${imageIsLoaded ? 'opacity-100' : 'opacity-0'}`}
+            <CldImage
+              className={`w-full h-full object-cover shadow-md transition-opacity ${imageIsLoaded ? 'opacity-100' : 'opacity-0'}`}
               src={frontCover}
               alt={movie?.name ?? movie?.original_name}
               placeholder="empty"
-              fill
-              sizes="200px"
+              width={220}
+              height={322}
               onLoad={(event) => {
                 if (event.currentTarget.src.includes('data:image/gif;base64'))
                   return;

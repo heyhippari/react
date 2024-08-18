@@ -1,6 +1,6 @@
 import { PersonWithImage } from '@/queries/types';
 import { getProfile } from '@/utils/images';
-import Image from 'next/image';
+import { CldImage } from 'next-cloudinary';
 import { useMemo, useState } from 'react';
 import Lightbox from 'yet-another-react-lightbox';
 
@@ -14,7 +14,7 @@ export default function PersonPoster({ person }: { person: PersonWithImage }) {
     <>
       <div className="relative aspect-[2/3] w-[150px] overflow-hidden rounded-lg bg-pink-200 shadow-md dark:bg-pink-900 lg:w-[250px]">
         {person && profile ? (
-          <Image
+          <CldImage
             className="rounded-lg object-cover shadow-md"
             src={profile}
             alt={person?.name ?? person?.original_name}
@@ -38,7 +38,7 @@ export default function PersonPoster({ person }: { person: PersonWithImage }) {
           close={() => setOpen(false)}
           slides={[
             {
-              src: profile,
+              src: `https://res.cloudinary.com/dmkkeggvt/image/upload/${profile}.jpg`,
             },
           ]}
           carousel={{ finite: true }}

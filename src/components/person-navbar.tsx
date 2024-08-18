@@ -1,6 +1,6 @@
 'use client';
 import { deleteMovieAction } from '@/app/actions/movie';
-import { MovieWithAll } from '@/queries/types';
+import { PersonWithImage } from '@/queries/types';
 import { useUserRole } from '@/utils/hooks';
 import Link from 'next/link';
 import { useMemo } from 'react';
@@ -10,31 +10,25 @@ import { DropdownMenuSeparator } from './ui/dropdown-menu';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from './ui/hover-card';
 import { useToast } from './ui/use-toast';
 
-export default function MovieNavbar({ movie }: { movie: MovieWithAll }) {
+export default function PersonNavbar({ person }: { person: PersonWithImage }) {
   const supportsShareAPI = navigator?.share !== undefined;
   const { toast } = useToast();
   const userRole = useUserRole();
 
-  const frontCoverCount = useMemo(
+  const profileCount = useMemo(
     () =>
-      movie?.movie_images.filter((image) => image.image?.type === 'front_cover')
-        .length,
-    [movie],
-  );
-
-  const fullCoverCount = useMemo(
-    () =>
-      movie?.movie_images.filter((image) => image.image?.type === 'full_cover')
-        .length,
-    [movie],
+      person?.person_images.filter(
+        (image) => image.image?.type === 'front_cover',
+      ).length,
+    [person],
   );
 
   const handleShare = async () => {
     if (supportsShareAPI) {
       try {
         await navigator.share({
-          title: `${movie?.dvd_id} (${movie?.name ?? movie?.original_name})`,
-          text: `Find out more about ${movie?.dvd_id} on Kanojo`,
+          title: `${person?.name ?? person?.original_name}`,
+          text: `Find out more about ${person?.name ?? person?.original_name} on Kanojo`,
           url: window.location.href,
         });
       } catch (error) {
@@ -52,26 +46,26 @@ export default function MovieNavbar({ movie }: { movie: MovieWithAll }) {
           </HoverCardTrigger>
           <HoverCardContent align="center" className="w-44 p-2">
             <Link
-              href={`/movie/${movie?.id}`}
+              href={`/movie/${person?.id}`}
               className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-start')} w-full`}
             >
               Main
             </Link>
             <DropdownMenuSeparator />
             <Link
-              href={`/movie/${movie?.id}`}
+              href={`/movie/${person?.id}`}
               className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-start')} w-full`}
             >
               Changes
             </Link>
             <Link
-              href={`/movie/${movie?.id}`}
+              href={`/movie/${person?.id}`}
               className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-start')} w-full`}
             >
               Report
             </Link>
             <Link
-              href={`/movie/${movie?.id}`}
+              href={`/movie/${person?.id}`}
               className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-start')} w-full`}
             >
               Edit
@@ -85,19 +79,11 @@ export default function MovieNavbar({ movie }: { movie: MovieWithAll }) {
           </HoverCardTrigger>
           <HoverCardContent align="center" className="w-44 p-2">
             <Link
-              href={`/movie/${movie?.id}`}
+              href={`/movie/${person?.id}`}
               className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-between')} w-full`}
             >
-              Poster
-              <Badge variant="outline">{frontCoverCount ?? 0}</Badge>
-            </Link>
-
-            <Link
-              href={`/movie/${movie?.id}`}
-              className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-between')} w-full`}
-            >
-              Backdrop
-              <Badge variant="outline">{fullCoverCount ?? 0}</Badge>
+              Profiles
+              <Badge variant="outline">{profileCount ?? 0}</Badge>
             </Link>
           </HoverCardContent>
         </HoverCard>
@@ -108,18 +94,10 @@ export default function MovieNavbar({ movie }: { movie: MovieWithAll }) {
           </HoverCardTrigger>
           <HoverCardContent align="center" className="w-44 p-2">
             <Link
-              href={`/movie/${movie?.id}`}
+              href={`/movie/${person?.id}`}
               className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-between')} w-full`}
             >
               Discussions
-              <Badge variant="outline">0</Badge>
-            </Link>
-
-            <Link
-              href={`/movie/${movie?.id}`}
-              className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-between')} w-full`}
-            >
-              Reviews
               <Badge variant="outline">0</Badge>
             </Link>
           </HoverCardContent>
@@ -140,7 +118,7 @@ export default function MovieNavbar({ movie }: { movie: MovieWithAll }) {
               <button
                 onClick={async () => {
                   try {
-                    await deleteMovieAction(movie?.id);
+                    await deleteMovieAction(person?.id);
                   } catch (error) {
                     toast({
                       variant: 'destructive',

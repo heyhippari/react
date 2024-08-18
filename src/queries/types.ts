@@ -1,6 +1,6 @@
 import { Tables } from '@/utils/database.types';
 
-type Images = Pick<Tables<'images'>, 'uuid' | 'type'> | null;
+export type Images = Pick<Tables<'images'>, 'uuid' | 'type'> | null;
 export type MovieImage = Omit<
   Tables<'movie_images'>,
   'id' | 'movie_id' | 'image_id'
@@ -28,7 +28,10 @@ export type PersonWithImage =
   | null
   | undefined;
 
-type Movie = Pick<Tables<'movies'>, 'id' | 'name' | 'original_name' | 'dvd_id'>;
+export type Movie = Pick<
+  Tables<'movies'>,
+  'id' | 'name' | 'original_name' | 'dvd_id'
+>;
 
 export type MovieWithImages =
   | (Movie & {

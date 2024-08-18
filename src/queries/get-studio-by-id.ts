@@ -10,6 +10,7 @@ export function getStudioById(
       `
         name,
         original_name,
+        homepage,
         movies (
           id,
           name,
