@@ -47,7 +47,7 @@ export type MovieWithImagesStudioAndRoles = Pick<
   movie_images: MovieImage[];
   studio: Omit<
     Tables<'studios'>,
-    'create_time' | 'update_time' | 'studio_movies_count'
+    'create_time' | 'update_time' | 'studio_movies_count' | 'homepage'
   > | null;
   roles: RoleWithPerson[];
 };
