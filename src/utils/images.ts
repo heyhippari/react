@@ -45,7 +45,7 @@ export function getFrontCoverUrl(movie: MovieWithImages): string | null {
   const uuid = getFrontCover(movie);
 
   return uuid
-    ? `https://kanojodb.com/cdn-cgi/imagedelivery/unbW_XNL55BgTGEc_h7RQA/${uuid}/public`
+    ? `https://res.cloudinary.com/dmkkeggvt/image/upload/${uuid}.jpg`
     : null;
 }
 
@@ -53,7 +53,7 @@ export function getFullCoverUrl(movie: MovieWithImages): string | null {
   const uuid = getFullCover(movie);
 
   return uuid
-    ? `https://kanojodb.com/cdn-cgi/imagedelivery/unbW_XNL55BgTGEc_h7RQA/${uuid}/public`
+    ? `https://res.cloudinary.com/dmkkeggvt/image/upload/${uuid}.jpg`
     : null;
 }
 
