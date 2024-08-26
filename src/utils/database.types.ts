@@ -282,28 +282,34 @@ export type Database = {
       }
       persons: {
         Row: {
+          art_url: string | null
           birth_date: string | null
           create_time: string
           id: number
           name: string | null
           original_name: string
+          thumb_url: string | null
           update_time: string
           persons_movies_count: number | null
         }
         Insert: {
+          art_url?: string | null
           birth_date?: string | null
           create_time?: string
           id?: number
           name?: string | null
           original_name: string
+          thumb_url?: string | null
           update_time?: string
         }
         Update: {
+          art_url?: string | null
           birth_date?: string | null
           create_time?: string
           id?: number
           name?: string | null
           original_name?: string
+          thumb_url?: string | null
           update_time?: string
         }
         Relationships: []
@@ -465,7 +471,6 @@ export type Database = {
       studios: {
         Row: {
           create_time: string
-          homepage: string | null
           id: number
           name: string | null
           original_name: string
@@ -474,7 +479,6 @@ export type Database = {
         }
         Insert: {
           create_time?: string
-          homepage?: string | null
           id?: number
           name?: string | null
           original_name: string
@@ -482,7 +486,6 @@ export type Database = {
         }
         Update: {
           create_time?: string
-          homepage?: string | null
           id?: number
           name?: string | null
           original_name?: string

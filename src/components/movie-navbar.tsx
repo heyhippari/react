@@ -52,26 +52,26 @@ export default function MovieNavbar({ movie }: { movie: MovieWithAll }) {
           </HoverCardTrigger>
           <HoverCardContent align="center" className="w-44 p-2">
             <Link
-              href={`/movie/${movie?.id}`}
+              href={`/movie/${movie?.dvd_id}`}
               className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-start')} w-full`}
             >
               Main
             </Link>
             <DropdownMenuSeparator />
             <Link
-              href={`/movie/${movie?.id}`}
+              href={`/movie/${movie?.dvd_id}`}
               className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-start')} w-full`}
             >
               Changes
             </Link>
             <Link
-              href={`/movie/${movie?.id}`}
+              href={`/movie/${movie?.dvd_id}`}
               className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-start')} w-full`}
             >
               Report
             </Link>
             <Link
-              href={`/movie/${movie?.id}`}
+              href={`/movie/${movie?.dvd_id}`}
               className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-start')} w-full`}
             >
               Edit
@@ -85,7 +85,7 @@ export default function MovieNavbar({ movie }: { movie: MovieWithAll }) {
           </HoverCardTrigger>
           <HoverCardContent align="center" className="w-44 p-2">
             <Link
-              href={`/movie/${movie?.id}`}
+              href={`/movie/${movie?.dvd_id}`}
               className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-between')} w-full`}
             >
               Poster
@@ -93,7 +93,7 @@ export default function MovieNavbar({ movie }: { movie: MovieWithAll }) {
             </Link>
 
             <Link
-              href={`/movie/${movie?.id}`}
+              href={`/movie/${movie?.dvd_id}`}
               className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-between')} w-full`}
             >
               Backdrop
@@ -108,7 +108,7 @@ export default function MovieNavbar({ movie }: { movie: MovieWithAll }) {
           </HoverCardTrigger>
           <HoverCardContent align="center" className="w-44 p-2">
             <Link
-              href={`/movie/${movie?.id}`}
+              href={`/movie/${movie?.dvd_id}`}
               className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-between')} w-full`}
             >
               Discussions
@@ -116,7 +116,7 @@ export default function MovieNavbar({ movie }: { movie: MovieWithAll }) {
             </Link>
 
             <Link
-              href={`/movie/${movie?.id}`}
+              href={`/movie/${movie?.dvd_id}`}
               className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-between')} w-full`}
             >
               Reviews

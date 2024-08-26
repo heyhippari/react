@@ -1,29 +1,28 @@
 import { RoleWithPerson } from '@/queries/types';
-import { getProfile } from '@/utils/images';
-import { CldImage } from 'next-cloudinary';
+import { getProfileUrl } from '@/utils/images';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useMemo } from 'react';
 
 export default function RoleCard({ role }: { role: RoleWithPerson }) {
-  const profile = useMemo(() => getProfile(role.person), [role.person]);
+  const profile = useMemo(() => getProfileUrl(role.person), [role.person]);
 
   return (
     <Link href={`/person/${role.person?.id}`}>
       <div className="flex h-24 flex-row items-center gap-4 rounded-lg bg-pink-100 px-4 py-2 text-pink-700 dark:bg-pink-800 dark:text-pink-300">
         {role.person && profile ? (
-          <CldImage
+          <Image
             className="rounded-full object-cover"
             src={profile}
             alt={role.person?.name ?? role.person?.original_name}
             placeholder="empty"
-            width={64}
-            height={64}
+            fill
             sizes="64px"
           />
         ) : (
           <div className="relative inline-flex h-16 w-16 items-center justify-center overflow-hidden rounded-full bg-pink-200 text-pink-400 dark:bg-pink-300 dark:text-pink-500">
             <span className="text-4xl font-medium">
-              {role.person?.name?.[0] ?? role.person?.original_name?.[0]}
+              {role.person?.name?.[0]}
             </span>
           </div>
         )}
