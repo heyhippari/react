@@ -26,7 +26,7 @@
     "@radix-ui/react-tabs": "^1.1.0",
     "@radix-ui/react-toast": "^1.2.1",
     "@sanity/image-url": "^1.0.2",
-    "@sanity/vision": "^3.54.0",
+    "@sanity/vision": "^3.56.0",
     "@sentry/nextjs": "^8.26.0",
     "@sentry/profiling-node": "^8.26.0",
     "@supabase-cache-helpers/postgrest-react-query": "^1.8.1",
