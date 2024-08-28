@@ -1,5 +1,0 @@
-{
-  "path": "./src/**/*.{ts,tsx,js,jsx}",
-  "schema": "./src/utils/sanity/schema.json",
-  "generates": "./src/utils/sanity/sanity.types.ts"
-}
