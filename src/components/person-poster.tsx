@@ -1,14 +1,16 @@
 import { PersonWithImage } from '@/queries/types';
-import { getProfile } from '@/utils/images';
+import { getProfileUrl } from '@/utils/images';
 import Image from 'next/image';
 import { useMemo, useState } from 'react';
 import Lightbox from 'yet-another-react-lightbox';
 
 import 'yet-another-react-lightbox/styles.css';
 
-export default function PersonPoster({ person }: { person: PersonWithImage }) {
+export default function PersonPoster({
+  person,
+}: Readonly<{ person: PersonWithImage }>) {
   const [open, setOpen] = useState(false);
-  const profile = useMemo(() => getProfile(person), [person]);
+  const profile = useMemo(() => getProfileUrl(person, 'poster'), [person]);
 
   return (
     <>
@@ -18,10 +20,10 @@ export default function PersonPoster({ person }: { person: PersonWithImage }) {
             className="rounded-lg object-cover shadow-md"
             src={profile}
             alt={person?.name ?? person?.original_name}
-            onClick={() => (profile ? setOpen(true) : null)}
+            unoptimized
             width={250}
             height={375}
-            sizes="(max-width: 1024px) 150w, 250w"
+            onClick={() => (profile ? setOpen(true) : null)}
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center">

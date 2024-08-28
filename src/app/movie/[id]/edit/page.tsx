@@ -8,27 +8,8 @@ import {
 } from '@tanstack/react-query';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import Movie from './movie';
+import Edit from './edit';
 
-export async function generateMetadata({ params }: { params: { id: string } }) {
-  const cookieStore = cookies();
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const supabase = useSupabaseServer(cookieStore);
-
-  try {
-    const { data: movie } = await getMovieById(supabase, params.id);
-
-    return {
-      title: movie?.name ?? movie?.original_name,
-      description: `Information about ${movie?.dvd_id} from Kanojo.`,
-    };
-  } catch {
-    return {
-      title: 'Movie',
-      description: 'Information about a movie from Kanojo.',
-    };
-  }
-}
 
 export default async function MoviePage({
   params,
@@ -39,6 +20,12 @@ export default async function MoviePage({
   const cookieStore = cookies();
   const supabase = useSupabaseServer(cookieStore);
 
+  // If we are not logged in, redirect to login
+  const { data, error } = await supabase.auth.getUser()
+  if (error || !data?.user) {
+    redirect('/login')
+  }
+
   // If the id contains anything other than numbers, redirect to 404
   if (!/^\d+$/.test(params.id)) {
     return redirect('/404');
@@ -48,7 +35,7 @@ export default async function MoviePage({
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <Movie id={params.id} />
+      <Edit id={params.id} />
     </HydrationBoundary>
   );
 }

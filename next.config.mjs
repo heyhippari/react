@@ -10,12 +10,6 @@ const nextConfig = {
   images: {
     loader: 'custom',
     loaderFile: './src/utils/image-loader.ts',
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'images.kanojodb.com',
-      },
-    ],
   },
   experimental: {
     swcPlugins: [['@lingui/swc-plugin', {}]],

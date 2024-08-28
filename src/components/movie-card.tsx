@@ -5,8 +5,10 @@ import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import { Badge } from './ui/badge';
 
-export default function MovieCard({ movie }: { movie: MovieWithImages }) {
-  const frontCover = useMemo(() => getFrontCoverUrl(movie), [movie]);
+export default function MovieCard({
+  movie,
+}: Readonly<{ movie: MovieWithImages }>) {
+  const frontCover = useMemo(() => getFrontCoverUrl(movie, 'card'), [movie]);
   const [imageIsLoaded, setImageIsLoaded] = useState(false);
 
   return (
@@ -20,6 +22,7 @@ export default function MovieCard({ movie }: { movie: MovieWithImages }) {
               alt={movie?.name ?? movie?.original_name}
               placeholder="empty"
               fill
+              unoptimized
               sizes="200px"
               onLoad={(event) => {
                 if (event.currentTarget.src.includes('data:image/gif;base64'))

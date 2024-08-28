@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useMemo } from 'react';
 
-export default function RoleCard({ role }: { role: RoleWithPerson }) {
+export default function RoleCard({ role }: Readonly<{ role: RoleWithPerson }>) {
   const profile = useMemo(() => getProfileUrl(role.person), [role.person]);
 
   return (
@@ -15,9 +15,10 @@ export default function RoleCard({ role }: { role: RoleWithPerson }) {
             className="rounded-full object-cover"
             src={profile}
             alt={role.person?.name ?? role.person?.original_name}
+            unoptimized
             placeholder="empty"
-            fill
-            sizes="64px"
+            width={64}
+            height={64}
           />
         ) : (
           <div className="relative inline-flex h-16 w-16 items-center justify-center overflow-hidden rounded-full bg-pink-200 text-pink-400 dark:bg-pink-300 dark:text-pink-500">

@@ -14,6 +14,10 @@ export function getMovieById(
         release_date,
         dvd_id,
         length,
+        studio_id,
+        series_id,
+        label_id,
+        has_nudity,
         roles (
           age,
           person: persons (

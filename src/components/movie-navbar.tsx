@@ -10,7 +10,9 @@ import { DropdownMenuSeparator } from './ui/dropdown-menu';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from './ui/hover-card';
 import { useToast } from './ui/use-toast';
 
-export default function MovieNavbar({ movie }: { movie: MovieWithAll }) {
+export default function MovieNavbar({
+  movie,
+}: Readonly<{ movie: MovieWithAll }>) {
   const supportsShareAPI = navigator?.share !== undefined;
   const { toast } = useToast();
   const userRole = useUserRole();
@@ -52,26 +54,26 @@ export default function MovieNavbar({ movie }: { movie: MovieWithAll }) {
           </HoverCardTrigger>
           <HoverCardContent align="center" className="w-44 p-2">
             <Link
-              href={`/movie/${movie?.dvd_id}`}
+              href={`/movie/${movie?.id}`}
               className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-start')} w-full`}
             >
               Main
             </Link>
             <DropdownMenuSeparator />
             <Link
-              href={`/movie/${movie?.dvd_id}`}
+              href={`/movie/${movie?.id}`}
               className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-start')} w-full`}
             >
               Changes
             </Link>
             <Link
-              href={`/movie/${movie?.dvd_id}`}
+              href={`/movie/${movie?.id}`}
               className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-start')} w-full`}
             >
               Report
             </Link>
             <Link
-              href={`/movie/${movie?.dvd_id}`}
+              href={`/movie/${movie?.id}/edit`}
               className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-start')} w-full`}
             >
               Edit
@@ -85,7 +87,7 @@ export default function MovieNavbar({ movie }: { movie: MovieWithAll }) {
           </HoverCardTrigger>
           <HoverCardContent align="center" className="w-44 p-2">
             <Link
-              href={`/movie/${movie?.dvd_id}`}
+              href={`/movie/${movie?.id}`}
               className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-between')} w-full`}
             >
               Poster
@@ -93,7 +95,7 @@ export default function MovieNavbar({ movie }: { movie: MovieWithAll }) {
             </Link>
 
             <Link
-              href={`/movie/${movie?.dvd_id}`}
+              href={`/movie/${movie?.id}`}
               className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-between')} w-full`}
             >
               Backdrop
@@ -108,7 +110,7 @@ export default function MovieNavbar({ movie }: { movie: MovieWithAll }) {
           </HoverCardTrigger>
           <HoverCardContent align="center" className="w-44 p-2">
             <Link
-              href={`/movie/${movie?.dvd_id}`}
+              href={`/movie/${movie?.id}`}
               className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-between')} w-full`}
             >
               Discussions
@@ -116,7 +118,7 @@ export default function MovieNavbar({ movie }: { movie: MovieWithAll }) {
             </Link>
 
             <Link
-              href={`/movie/${movie?.dvd_id}`}
+              href={`/movie/${movie?.id}`}
               className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-between')} w-full`}
             >
               Reviews
@@ -125,7 +127,7 @@ export default function MovieNavbar({ movie }: { movie: MovieWithAll }) {
           </HoverCardContent>
         </HoverCard>
 
-        <Button variant={'ghost'} onClick={void handleShare}>
+        <Button variant={'ghost'} onClick={handleShare}>
           Share
         </Button>
 
