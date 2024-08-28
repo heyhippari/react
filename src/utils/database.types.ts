@@ -468,6 +468,7 @@ export type Database = {
       studios: {
         Row: {
           create_time: string
+          fts_doc: unknown | null
           homepage: string | null
           id: number
           name: string | null
@@ -477,6 +478,7 @@ export type Database = {
         }
         Insert: {
           create_time?: string
+          fts_doc?: unknown | null
           homepage?: string | null
           id?: number
           name?: string | null
@@ -485,6 +487,7 @@ export type Database = {
         }
         Update: {
           create_time?: string
+          fts_doc?: unknown | null
           homepage?: string | null
           id?: number
           name?: string | null
