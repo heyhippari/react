@@ -62,7 +62,7 @@
   "devDependencies": {
     "@eslint/compat": "^1.1.1",
     "@iconify-json/mdi": "^1.1.68",
-    "@lingui/cli": "^4.11.3",
+    "@lingui/cli": "^4.11.4",
     "@lingui/swc-plugin": "^4.0.8",
     "@next/eslint-plugin-next": "^14.2.5",
     "@svgr/core": "^8.1.0",
