@@ -51,7 +51,7 @@
     "react-virtualized": "^9.22.5",
     "sanity": "^3.54.0",
     "server-only": "^0.0.1",
-    "styled-components": "^6.1.12",
+    "styled-components": "^6.1.13",
     "swiper": "^11.1.9",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
