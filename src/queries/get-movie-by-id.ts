@@ -19,6 +19,7 @@ export function getMovieById(
         label_id,
         has_nudity,
         front_cover_url,
+        full_cover_url,
         roles (
           age,
           person: persons (

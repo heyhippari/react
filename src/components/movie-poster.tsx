@@ -33,7 +33,7 @@ export default function MoviePoster({
             height={375}
             sizes="(max-width: 1024px) 150w, 250w"
             priority
-            onClick={() => (fullCover ? setOpen(true) : null)}
+            onClick={() => (fullCover && !small ? setOpen(true) : null)}
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center">
