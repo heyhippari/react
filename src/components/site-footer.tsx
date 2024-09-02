@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import ThemeToggle from './theme-toggle';
 
 export default function SiteFooter() {
@@ -9,13 +8,6 @@ export default function SiteFooter() {
           &copy; 2024 Kanojo. All rights reserved.
         </span>
         <div className="flex flex-row">
-          <ul className="mt-3 flex flex-wrap items-center text-sm font-medium text-pink-800 dark:text-pink-200 sm:mt-0">
-            <li>
-              <Link href="/changelog" className="me-4 hover:underline md:me-6">
-                Changelog
-              </Link>
-            </li>
-          </ul>
           <ThemeToggle />
         </div>
       </div>
