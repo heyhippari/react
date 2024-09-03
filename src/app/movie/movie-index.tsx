@@ -26,6 +26,8 @@ export default function MovieIndex({ page }: { page: number }) {
   const router = useRouter();
 
   function handleSearch(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
     const newSearchParams = new URLSearchParams(searchParams);
 
     if ((event.currentTarget.q as HTMLInputElement).value) {

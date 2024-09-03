@@ -6,6 +6,8 @@ export function SearchInput() {
   const router = useRouter();
 
   function handleSearch(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
     router.push(
       `/movie?q=${(event.currentTarget.q as HTMLInputElement).value}`,
       {
