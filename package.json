@@ -28,7 +28,7 @@
     "@radix-ui/react-tabs": "^1.1.0",
     "@radix-ui/react-toast": "^1.2.1",
     "@sentry/nextjs": "^8.26.0",
-    "@sentry/profiling-node": "^8.26.0",
+    "@sentry/profiling-node": "^8.28.0",
     "@supabase-cache-helpers/postgrest-react-query": "^1.9.0",
     "@supabase/postgrest-js": "^1.16.0",
     "@supabase/ssr": "^0.5.1",
