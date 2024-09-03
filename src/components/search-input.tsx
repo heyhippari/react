@@ -19,7 +19,7 @@ export function SearchInput() {
       <Input
         name="q"
         placeholder="Search an ID... (ABC-123)"
-        className="border-pink-400 bg-pink-100 shadow-none"
+        className="border-pink-400 bg-pink-100 shadow-none dark:border-pink-900 dark:bg-pink-700"
       />
     </form>
   );
