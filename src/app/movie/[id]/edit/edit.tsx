@@ -3,8 +3,8 @@ import { useQuery } from '@supabase-cache-helpers/postgrest-react-query';
 
 import MovieNavbar from '@/components/movie-navbar';
 import MoviePoster from '@/components/movie-poster';
+import { TwoColumnLayout } from '@/components/two-column-layout';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Form,
   FormControl,
@@ -85,28 +85,58 @@ export default function Movie({ id }: Readonly<{ id: string }>) {
           </Link>
         </div>
       </div>
-      <div className="container flex flex-row gap-4 p-4">
-        <Card className="hidden flex-col overflow-hidden bg-pink-50 dark:border-pink-900 dark:bg-pink-950 lg:flex lg:w-64">
-          <CardHeader className="bg-pink-200 dark:bg-pink-700">
-            <CardTitle>Edit</CardTitle>
-          </CardHeader>
-          <CardContent className="flex flex-col p-2 pt-3">
+      <TwoColumnLayout
+        sidebarTitle="Edit"
+        sidebarContent={
+          <>
             <Button variant="ghost" className="justify-start">
               Primary Facts
             </Button>
-          </CardContent>
-        </Card>
-        <div className="flex-grow">
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          </>
+        }
+      >
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <FormField
+              control={form.control}
+              name="originalName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Original Title</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Original Title" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Translated Title</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Translated Title" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className="grid gap-4 md:grid-cols-2">
               <FormField
                 control={form.control}
-                name="originalName"
+                name="dvd_id"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Original Title</FormLabel>
+                    <FormLabel>DVD ID</FormLabel>
                     <FormControl>
-                      <Input placeholder="Original Title" {...field} />
+                      <Input
+                        placeholder="DVD ID"
+                        disabled
+                        readOnly
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -114,111 +144,78 @@ export default function Movie({ id }: Readonly<{ id: string }>) {
               />
               <FormField
                 control={form.control}
-                name="name"
+                name="studio_id"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Translated Title</FormLabel>
+                    <FormLabel>Studio</FormLabel>
                     <FormControl>
-                      <Input placeholder="Translated Title" {...field} />
+                      <Input placeholder="Studio ID" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <div className="grid gap-4 md:grid-cols-2">
-                <FormField
-                  control={form.control}
-                  name="dvd_id"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>DVD ID</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="DVD ID"
-                          disabled
-                          readOnly
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="studio_id"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Studio</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Studio ID" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <div className="grid gap-4 md:grid-cols-2">
-                <FormField
-                  control={form.control}
-                  name="label_id"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Label</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Label ID" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="series_id"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Series</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Series ID" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <div className="grid gap-4 md:grid-cols-2">
-                <FormField
-                  control={form.control}
-                  name="release_date"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Release Date</FormLabel>
-                      <FormControl>
-                        <Input type="date" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="runtime"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Runtime</FormLabel>
-                      <FormControl>
-                        <Input type="number" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <Button type="submit">Submit</Button>
-            </form>
-          </Form>
-        </div>
-      </div>
+            </div>
+            <div className="grid gap-4 md:grid-cols-2">
+              <FormField
+                control={form.control}
+                name="label_id"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Label</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Label ID" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="series_id"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Series</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Series ID" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="grid gap-4 md:grid-cols-2">
+              <FormField
+                control={form.control}
+                name="release_date"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Release Date</FormLabel>
+                    <FormControl>
+                      <Input type="date" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="runtime"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Runtime</FormLabel>
+                    <FormControl>
+                      <Input type="number" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <Button type="submit">Submit</Button>
+          </form>
+        </Form>
+      </TwoColumnLayout>
     </>
   );
 }

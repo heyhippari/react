@@ -1,32 +1,19 @@
-import {
-  MovieImage,
-  MovieWithImages,
-  PersonImage,
-  PersonWithImage,
-} from '@/queries/types';
+import { MovieWithImages, PersonImage, PersonWithImage } from '@/queries/types';
 
 export function getFrontCover(movie: MovieWithImages): string | null {
-  if (!movie?.movie_images) {
+  if (!movie?.front_cover_url) {
     return null;
   }
 
-  return (
-    movie.movie_images?.find((movie_image: MovieImage) => {
-      return movie_image.image?.type === 'front_cover';
-    })?.image?.uuid ?? null
-  );
+  return movie.front_cover_url;
 }
 
 export function getFullCover(movie: MovieWithImages): string | null {
-  if (!movie?.movie_images) {
+  if (!movie?.full_cover_url) {
     return null;
   }
 
-  return (
-    movie.movie_images?.find((movie_image: MovieImage) => {
-      return movie_image.image?.type === 'full_cover';
-    })?.image?.uuid ?? null
-  );
+  return movie.full_cover_url;
 }
 
 export function getProfile(person: PersonWithImage): string | null {
@@ -41,7 +28,10 @@ export function getProfile(person: PersonWithImage): string | null {
   );
 }
 
-export function getFrontCoverUrl(movie: MovieWithImages, variant="public"): string | null {
+export function getFrontCoverUrl(
+  movie: MovieWithImages,
+  variant = 'public',
+): string | null {
   const uuid = getFrontCover(movie);
 
   return uuid
@@ -49,7 +39,10 @@ export function getFrontCoverUrl(movie: MovieWithImages, variant="public"): stri
     : null;
 }
 
-export function getFullCoverUrl(movie: MovieWithImages, variant="public"): string | null {
+export function getFullCoverUrl(
+  movie: MovieWithImages,
+  variant = 'public',
+): string | null {
   const uuid = getFullCover(movie);
 
   return uuid
@@ -57,7 +50,10 @@ export function getFullCoverUrl(movie: MovieWithImages, variant="public"): strin
     : null;
 }
 
-export function getProfileUrl(person: PersonWithImage, variant="public"): string | null {
+export function getProfileUrl(
+  person: PersonWithImage,
+  variant = 'public',
+): string | null {
   const uuid = getProfile(person);
 
   return uuid

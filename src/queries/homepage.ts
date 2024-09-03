@@ -24,12 +24,7 @@ export function getMostRecentMovies(client: TypedSupabaseClient) {
       name,
       original_name,
       dvd_id,
-      movie_images (
-          image: images (
-            uuid,
-            type
-          )
-        )
+      front_cover_url
     `,
     )
     .order('release_date', { ascending: false })
@@ -47,12 +42,7 @@ export function getReleasedOnThisDay(client: TypedSupabaseClient) {
       name,
       original_name,
       dvd_id,
-      movie_images (
-          image: images (
-            uuid,
-            type
-          )
-        )
+      front_cover_url
     `,
     )
     .returns<MovieWithImages[]>()
@@ -69,12 +59,7 @@ export function getInformationNeeded(client: TypedSupabaseClient) {
       original_name,
       dvd_id,
       release_date,
-      movie_images (
-          image: images (
-            uuid,
-            type
-          )
-        )
+      front_cover_url
     `,
     )
     .limit(25)

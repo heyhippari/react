@@ -15,12 +15,7 @@ export function getLabelById(
           name,
           original_name,
           dvd_id,
-          movie_images (
-              image: images (
-                uuid,
-                type
-              )
-            )
+          front_cover_url
         )
       `,
     )

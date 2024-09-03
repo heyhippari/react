@@ -9,12 +9,7 @@ export function getMoviesByPrefix(client: TypedSupabaseClient, prefix: string) {
       name,
       original_name,
       dvd_id,
-      movie_images (
-          image: images (
-            uuid,
-            type
-          )
-        )
+      front_cover_url
       `,
     )
     .ilike('dvd_id', `${prefix}-%`)
