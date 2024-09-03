@@ -54,11 +54,22 @@ export default function MovieIndex({ page }: { page: number }) {
         </>
       }
     >
-      <PaginationLinks page={page} pageCount={pageCount} />
-      <div className="grid grid-cols-3 gap-4 md:grid-cols-4 lg:grid-cols-5">
-        {movies?.map((movie, index) => <MovieCard key={index} movie={movie} />)}
-      </div>
-      <PaginationLinks page={page} pageCount={pageCount} />
+      {(moviesCount ?? 0 > 0) ? (
+        <>
+          <PaginationLinks page={page} pageCount={pageCount} />
+          <div className="grid grid-cols-3 gap-4 md:grid-cols-4 lg:grid-cols-5">
+            {movies?.map((movie, index) => (
+              <MovieCard key={index} movie={movie} />
+            ))}
+          </div>
+          <PaginationLinks page={page} pageCount={pageCount} />
+        </>
+      ) : (
+        <>
+          <h1 className="text-2xl font-semibold">No movies found</h1>
+          <p>Try changing your search query or adjusting the filters.</p>
+        </>
+      )}
     </TwoColumnLayout>
   );
 }
