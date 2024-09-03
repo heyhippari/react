@@ -27,10 +27,10 @@ export default function LocaleMenu() {
         <Button variant={'ghost'}>Locale</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="flex w-72 flex-col gap-4 p-4">
-        <h2 className="text-lg font-semibold text-stone-900 dark:text-stone-50">
+        <h2 className="text-lg font-semibold text-pink-900 dark:text-pink-50">
           Language Preferences
         </h2>
-        <h3 className="text-sm font-semibold text-stone-600 dark:text-stone-400">
+        <h3 className="text-sm font-semibold text-pink-600 dark:text-pink-400">
           Default Language
         </h3>
         <Select onValueChange={handleLocaleChange}>

@@ -41,7 +41,7 @@ NavigationMenuList.displayName = NavigationMenuPrimitive.List.displayName;
 const NavigationMenuItem = NavigationMenuPrimitive.Item;
 
 const navigationMenuTriggerStyle = cva(
-  'group inline-flex h-9 w-max items-center justify-center rounded-md bg-white px-4 py-2 text-sm font-medium transition-colors hover:bg-stone-100 hover:text-stone-900 focus:bg-stone-100 focus:text-stone-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-stone-100/50 data-[state=open]:bg-stone-100/50 dark:bg-stone-950 dark:hover:bg-stone-800 dark:hover:text-stone-50 dark:focus:bg-stone-800 dark:focus:text-stone-50 dark:data-[active]:bg-stone-800/50 dark:data-[state=open]:bg-stone-800/50',
+  'group inline-flex h-9 w-max items-center justify-center rounded-md bg-white px-4 py-2 text-sm font-medium transition-colors hover:bg-pink-100 hover:text-pink-900 focus:bg-pink-100 focus:text-pink-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-pink-100/50 data-[state=open]:bg-pink-100/50 dark:bg-pink-950 dark:hover:bg-pink-800 dark:hover:text-pink-50 dark:focus:bg-pink-800 dark:focus:text-pink-50 dark:data-[active]:bg-pink-800/50 dark:data-[state=open]:bg-pink-800/50',
 );
 
 const NavigationMenuTrigger = React.forwardRef<
@@ -87,7 +87,7 @@ const NavigationMenuViewport = React.forwardRef<
   <div className={cn('absolute left-0 top-full flex justify-center')}>
     <NavigationMenuPrimitive.Viewport
       className={cn(
-        'origin-top-center relative mt-1.5 h-[var(--radix-navigation-menu-viewport-height)] w-full overflow-hidden rounded-md border border-stone-200 bg-white text-stone-950 shadow data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-90 dark:border-stone-800 dark:bg-stone-950 dark:text-stone-50 md:w-[var(--radix-navigation-menu-viewport-width)]',
+        'origin-top-center relative mt-1.5 h-[var(--radix-navigation-menu-viewport-height)] w-full overflow-hidden rounded-md border border-pink-200 bg-white text-pink-950 shadow data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-90 dark:border-pink-800 dark:bg-pink-950 dark:text-pink-50 md:w-[var(--radix-navigation-menu-viewport-width)]',
         className,
       )}
       ref={ref}
@@ -110,7 +110,7 @@ const NavigationMenuIndicator = React.forwardRef<
     )}
     {...props}
   >
-    <div className="relative top-[60%] h-2 w-2 rotate-45 rounded-tl-sm bg-stone-200 shadow-md dark:bg-stone-800" />
+    <div className="relative top-[60%] h-2 w-2 rotate-45 rounded-tl-sm bg-pink-200 shadow-md dark:bg-pink-800" />
   </NavigationMenuPrimitive.Indicator>
 ));
 NavigationMenuIndicator.displayName =
@@ -124,6 +124,6 @@ export {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  NavigationMenuViewport,
   navigationMenuTriggerStyle,
+  NavigationMenuViewport,
 };

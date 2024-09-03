@@ -24,7 +24,7 @@ import { z } from 'zod';
 import MdiArrowLeft from '~icons/mdi/arrow-left.jsx';
 
 const movieEditFormSchema = z.object({
-  originalName: z.string(),
+  original_name: z.string(),
   name: z.string(),
   release_date: z.string(),
   runtime: z.number(),
@@ -32,7 +32,6 @@ const movieEditFormSchema = z.object({
   label_id: z.number(),
   series_id: z.number(),
   studio_id: z.number(),
-  has_nudity: z.boolean(),
 });
 
 export default function Movie({ id }: Readonly<{ id: string }>) {
@@ -47,15 +46,14 @@ export default function Movie({ id }: Readonly<{ id: string }>) {
   const form = useForm<z.infer<typeof movieEditFormSchema>>({
     resolver: zodResolver(movieEditFormSchema),
     defaultValues: {
-      originalName: movie?.original_name,
+      original_name: movie?.original_name ?? undefined,
       name: movie?.name ?? undefined,
       release_date: movie?.release_date ?? undefined,
-      runtime: movie?.length ?? undefined,
+      runtime: movie?.length ?? 0,
       dvd_id: movie?.dvd_id ?? undefined,
       label_id: movie?.label_id ?? undefined,
       series_id: movie?.series_id ?? undefined,
       studio_id: movie?.studio_id ?? undefined,
-      has_nudity: movie?.has_nudity ?? false,
     },
   });
 
@@ -66,7 +64,7 @@ export default function Movie({ id }: Readonly<{ id: string }>) {
   return (
     <>
       <MovieNavbar movie={movie} />
-      <div className="w-full bg-pink-100 p-4 dark:bg-stone-700">
+      <div className="w-full bg-pink-100 p-4 dark:bg-pink-700">
         <div className="container flex flex-col gap-6 px-4 md:flex-row">
           <Link
             href={`/movie/${movie?.id}`}
@@ -99,7 +97,7 @@ export default function Movie({ id }: Readonly<{ id: string }>) {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
               control={form.control}
-              name="originalName"
+              name="original_name"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Original Title</FormLabel>

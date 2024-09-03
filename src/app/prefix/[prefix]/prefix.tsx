@@ -11,7 +11,7 @@ export default function Prefix({ prefix }: { prefix: string }) {
 
   return (
     <>
-      <div className="w-full bg-pink-100 p-4 dark:bg-stone-700">
+      <div className="w-full bg-pink-100 p-4 dark:bg-pink-700">
         <div className="container flex flex-col gap-6 px-4 md:flex-row">
           <div className="flex w-full flex-col justify-start gap-2 align-top">
             <div className="flex flex-col gap-0">

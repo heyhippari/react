@@ -14,7 +14,7 @@ export default async function Home() {
 
   return (
     <>
-      <div className="h-48 w-full bg-pink-100 dark:bg-pink-950">
+      <div className="h-48 w-full bg-pink-100 dark:bg-pink-800">
         <HomeStats
           movieCount={movieCount ?? 0}
           personCount={personCount ?? 0}

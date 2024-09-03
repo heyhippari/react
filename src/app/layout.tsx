@@ -16,10 +16,11 @@ const NotoSansJP = Noto_Sans_JP({
   preload: false, // https://github.com/vercel/next.js/pull/44594
 });
 
-export const viewport: Viewport = {
-  themeColor: fullConfig.theme.colors.stone[900],
-  colorScheme: 'dark',
-};
+export function generateViewport(): Viewport {
+  return {
+    themeColor: fullConfig.theme.colors.pink[700],
+  };
+}
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://kanojodb.com`
@@ -44,7 +45,7 @@ export default function RootLayout({
         className={`${NotoSansJP.className}`}
         suppressHydrationWarning
       >
-        <body className="bg-white text-stone-900 dark:bg-stone-900 dark:text-white">
+        <body className="bg-white text-pink-900 dark:bg-pink-950 dark:text-white">
           <ThemeProvider attribute="class">
             <div className="flex min-h-screen flex-col items-stretch">
               <SiteHeader />

@@ -20,10 +20,11 @@ export function PaginationLinks({
   const searchParams = useSearchParams();
 
   function getPaginationPageLink(page: number): string {
-    // Should take existing searchParams into account when generating the link
-    const search = searchParams.get('q');
-    const searchParam = search ? `&q=${search}` : '';
-    return `${pathname}?page=${page}${searchParam}`;
+    const newSearchParams = new URLSearchParams(searchParams);
+
+    newSearchParams.set('page', page.toString());
+
+    return `${pathname}?${newSearchParams.toString()}`;
   }
 
   return (
