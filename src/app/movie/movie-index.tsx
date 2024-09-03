@@ -11,10 +11,20 @@ import {
 } from '@/queries/get-movies-paginated';
 import useSupabaseBrowser from '@/utils/supabase/client';
 import { useQuery } from '@supabase-cache-helpers/postgrest-react-query';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function MovieIndex({ page }: { page: number }) {
   const searchParams = useSearchParams();
+  const router = useRouter();
+
+  function handleSearch(event: React.FormEvent<HTMLFormElement>) {
+    router.push(
+      `/movie?q=${(event.currentTarget.q as HTMLInputElement).value}`,
+      {
+        scroll: false,
+      },
+    );
+  }
 
   const supabase = useSupabaseBrowser();
   const { data: movies } = useQuery(
@@ -33,11 +43,14 @@ export default function MovieIndex({ page }: { page: number }) {
       sidebarTitle="Search"
       sidebarContent={
         <>
-          <Input
-            placeholder="Search"
-            defaultValue={searchParams.get('q') ?? ''}
-          />
-          <Button>Search</Button>
+          <form className="flex flex-col gap-2" onSubmit={handleSearch}>
+            <Input
+              name="q"
+              placeholder="Search"
+              defaultValue={searchParams.get('q') ?? ''}
+            />
+            <Button type="submit">Search</Button>
+          </form>
         </>
       }
     >
