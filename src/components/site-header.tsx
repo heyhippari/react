@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { SearchInput } from './search-input';
 import UserMenuServer from './user-menu-server';
 
 export default function SiteHeader() {
@@ -13,10 +14,8 @@ export default function SiteHeader() {
             Kanojo
           </span>
         </Link>
-        <div className="flex space-x-3 md:order-2 md:space-x-0 rtl:space-x-reverse">
-          {
-            //<LocaleMenu />
-          }
+        <div className="flex items-center gap-2 space-x-3 md:order-2 md:space-x-0 rtl:space-x-reverse">
+          <SearchInput />
           <UserMenuServer />
         </div>
       </div>

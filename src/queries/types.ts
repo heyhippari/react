@@ -32,7 +32,8 @@ type Movie = Pick<Tables<'movies'>, 'id' | 'name' | 'original_name' | 'dvd_id'>;
 
 export type MovieWithImages =
   | (Movie & {
-      movie_images: MovieImage[];
+      front_cover_url?: string | null;
+      full_cover_url?: string | null;
     })
   | null
   | undefined;
@@ -44,7 +45,11 @@ export type MovieWithImagesStudioAndRoles = Pick<
   movie_images: MovieImage[];
   studio: Omit<
     Tables<'studios'>,
-    'create_time' | 'update_time' | 'studio_movies_count' | 'homepage' | 'fts_doc'
+    | 'create_time'
+    | 'update_time'
+    | 'studio_movies_count'
+    | 'homepage'
+    | 'fts_doc'
   > | null;
   roles: RoleWithPerson[];
 };
@@ -52,6 +57,7 @@ export type MovieWithImagesStudioAndRoles = Pick<
 export type MovieWithAll =
   | (MovieWithImages & {
       roles: RoleWithPerson[];
+      movie_images: MovieImage[];
     })
   | null
   | undefined;

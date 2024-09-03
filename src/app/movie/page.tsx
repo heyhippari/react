@@ -23,9 +23,16 @@ export default async function MoviePage({
 
   // Parse the page into a number, defaulting to 1
   const currentPage = searchParams?.page ? parseInt(searchParams.page, 10) : 1;
+  const searchQuery = searchParams?.q;
 
-  await prefetchQuery(queryClient, getPaginatedMovies(supabase, currentPage));
-  await prefetchQuery(queryClient, getMoviePageCount(supabase));
+  await prefetchQuery(
+    queryClient,
+    getPaginatedMovies(supabase, currentPage, 25, { search: searchQuery }),
+  );
+  await prefetchQuery(
+    queryClient,
+    getMoviePageCount(supabase, { search: searchQuery }),
+  );
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

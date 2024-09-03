@@ -187,6 +187,8 @@ export type Database = {
         Row: {
           create_time: string
           dvd_id: string | null
+          front_cover_url: string | null
+          full_cover_url: string | null
           has_nudity: boolean
           id: number
           label_id: number | null
@@ -201,6 +203,8 @@ export type Database = {
         Insert: {
           create_time?: string
           dvd_id?: string | null
+          front_cover_url?: string | null
+          full_cover_url?: string | null
           has_nudity?: boolean
           id?: number
           label_id?: number | null
@@ -215,6 +219,8 @@ export type Database = {
         Update: {
           create_time?: string
           dvd_id?: string | null
+          front_cover_url?: string | null
+          full_cover_url?: string | null
           has_nudity?: boolean
           id?: number
           label_id?: number | null
@@ -571,6 +577,7 @@ export type Database = {
       movies_missing_info: {
         Row: {
           dvd_id: string | null
+          front_cover_url: string | null
           id: number | null
           name: string | null
           original_name: string | null
@@ -578,6 +585,7 @@ export type Database = {
         }
         Insert: {
           dvd_id?: string | null
+          front_cover_url?: string | null
           id?: number | null
           name?: string | null
           original_name?: string | null
@@ -585,6 +593,7 @@ export type Database = {
         }
         Update: {
           dvd_id?: string | null
+          front_cover_url?: string | null
           id?: number | null
           name?: string | null
           original_name?: string | null
@@ -596,6 +605,7 @@ export type Database = {
         Row: {
           create_time: string | null
           dvd_id: string | null
+          front_cover_url: string | null
           id: number | null
           label_id: number | null
           length: number | null

@@ -16,12 +16,7 @@ export function getStudioById(
           original_name,
           release_date,
           dvd_id,
-          movie_images (
-              image: images (
-                uuid,
-                type
-              )
-            )
+          front_cover_url
         )
       `,
     )
