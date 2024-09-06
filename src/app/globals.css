@@ -5,8 +5,14 @@
 /* Define variables */
 :root {
   --swiper-scrollbar-sides-offset: 0;
-  --swiper-scrollbar-drag-bg-color: #64748b;
-  --swiper-scrollbar-bg-color: #334155;
+  --swiper-scrollbar-drag-bg-color: #ec4899;
+  --swiper-scrollbar-bg-color: #fbcfe8;
+}
+
+/* Also for dark mode. Handled through a class on body */
+.dark {
+  --swiper-scrollbar-drag-bg-color: #fbcfe8;
+  --swiper-scrollbar-bg-color: #ec4899;
 }
 
 .swiper-horizontal > .swiper-scrollbar, .swiper-scrollbar.swiper-scrollbar-horizontal {
