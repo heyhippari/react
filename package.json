@@ -50,7 +50,7 @@
     "react-hook-form": "^7.52.2",
     "react-responsive": "^10.0.0",
     "react-virtualized": "^9.22.5",
-    "sanity": "^3.54.0",
+    "sanity": "^3.57.4",
     "server-only": "^0.0.1",
     "styled-components": "^6.1.13",
     "swiper": "^11.1.12",
