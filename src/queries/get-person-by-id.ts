@@ -12,12 +12,7 @@ export function getPersonById(
         name,
         original_name,
         birth_date,
-        person_images (
-          image: images (
-            uuid,
-            type
-          )
-        ),
+        profile_url,
         aliases: persons_aliases (
           name,
           original_name

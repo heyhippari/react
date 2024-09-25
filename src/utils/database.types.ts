@@ -292,28 +292,43 @@ export type Database = {
       persons: {
         Row: {
           birth_date: string | null
+          bust_size: number | null
           create_time: string
+          height: number | null
+          hips_size: number | null
           id: number
           name: string | null
           original_name: string
+          profile_url: string | null
           update_time: string
+          waist_size: number | null
           persons_movies_count: number | null
         }
         Insert: {
           birth_date?: string | null
+          bust_size?: number | null
           create_time?: string
+          height?: number | null
+          hips_size?: number | null
           id?: number
           name?: string | null
           original_name: string
+          profile_url?: string | null
           update_time?: string
+          waist_size?: number | null
         }
         Update: {
           birth_date?: string | null
+          bust_size?: number | null
           create_time?: string
+          height?: number | null
+          hips_size?: number | null
           id?: number
           name?: string | null
           original_name?: string
+          profile_url?: string | null
           update_time?: string
+          waist_size?: number | null
         }
         Relationships: []
       }

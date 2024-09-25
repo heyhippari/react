@@ -1,4 +1,4 @@
-import { MovieWithImages, PersonImage, PersonWithImage } from '@/queries/types';
+import { MovieWithImages, PersonWithImage } from '@/queries/types';
 
 export function getFrontCover(movie: MovieWithImages): string | null {
   if (!movie?.front_cover_url) {
@@ -17,15 +17,11 @@ export function getFullCover(movie: MovieWithImages): string | null {
 }
 
 export function getProfile(person: PersonWithImage): string | null {
-  if (!person?.person_images) {
+  if (!person?.profile_url) {
     return null;
   }
 
-  return (
-    person.person_images?.find((person_image: PersonImage) => {
-      return person_image.image?.type === 'profile';
-    })?.image?.uuid ?? null
-  );
+  return person.profile_url;
 }
 
 export function getFrontCoverUrl(
