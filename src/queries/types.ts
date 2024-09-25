@@ -22,13 +22,13 @@ export type RoleWithPerson = Role & {
 };
 
 export type PersonWithImage =
-  | (Person & {
-      person_images: PersonImage[];
-    })
+  | (Person & Pick<Tables<'persons'>, 'profile_url'>)
   | null
   | undefined;
 
 type Movie = Pick<Tables<'movies'>, 'id' | 'name' | 'original_name' | 'dvd_id'>;
+
+type Series = Pick<Tables<'series'>, 'id' | 'name' | 'original_name'>;
 
 export type MovieWithImages =
   | (Movie & {
@@ -58,7 +58,17 @@ export type MovieWithAll =
   | (MovieWithImages & {
       roles: RoleWithPerson[];
       movie_images: MovieImage[];
-    })
+    } & Pick<Tables<'movies'>, 'release_date' | 'length'> & {
+        series: Series | null;
+        studio: Omit<
+          Tables<'studios'>,
+          | 'create_time'
+          | 'update_time'
+          | 'studio_movies_count'
+          | 'homepage'
+          | 'fts_doc'
+        > | null;
+      })
   | null
   | undefined;
 

@@ -1,5 +1,5 @@
-import { MovieWithImagesStudioAndRoles, RoleWithPerson } from '@/queries/types';
-import { getFrontCoverUrl, getFullCoverUrl } from './images';
+import { MovieWithAll, RoleWithPerson } from '@/queries/types';
+import { getFrontCoverUrl, getFullCoverUrl, getProfileUrl } from './images';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Replacers need to be any
 export function omitNulls(this: any, key: string, value: any) {
@@ -7,7 +7,7 @@ export function omitNulls(this: any, key: string, value: any) {
   return value ?? undefined;
 }
 
-export function getApiMovieObject(movie: MovieWithImagesStudioAndRoles) {
+export function getApiMovieObject(movie: NonNullable<MovieWithAll>) {
   return {
     id: movie.id,
     title: movie.name,
@@ -15,6 +15,13 @@ export function getApiMovieObject(movie: MovieWithImagesStudioAndRoles) {
     dvd_id: movie.dvd_id,
     release_date: movie.release_date,
     runtime: movie.length,
+    series: movie.series
+      ? {
+          id: movie.series.id,
+          name: movie.series.name,
+          original_name: movie.series.original_name,
+        }
+      : undefined,
     studio: movie.studio
       ? {
           id: movie.studio.id,
@@ -28,6 +35,7 @@ export function getApiMovieObject(movie: MovieWithImagesStudioAndRoles) {
       original_name: role.person?.original_name,
       age: role.age,
       age_string: role.age ? `${role.age} years old` : 'Unknown',
+      profile_url: getProfileUrl(role.person),
     })),
     thumb_url: getFrontCoverUrl(movie),
     art_url: getFullCoverUrl(movie),
