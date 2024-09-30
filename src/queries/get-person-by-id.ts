@@ -18,6 +18,7 @@ export function getPersonById(
           original_name
         ),
         roles (
+          id,
           movies (
             id,
             name,

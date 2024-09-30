@@ -5,6 +5,7 @@ import { fixupConfigRules } from '@eslint/compat';
 import { FlatCompat } from '@eslint/eslintrc';
 import eslint from '@eslint/js';
 import prettierConfig from 'eslint-config-prettier';
+import reactPlugin from 'eslint-plugin-react';
 import tseslint from 'typescript-eslint';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -43,12 +44,32 @@ export default tseslint.config(
       },
     },
     rules: {
+      ...reactPlugin.configs.flat.recommended.rules,
+      ...reactPlugin.configs.flat['jsx-runtime'].rules,
       '@typescript-eslint/no-misused-promises': [
         2,
         {
           checksVoidReturn: {
             attributes: false,
           },
+        },
+      ],
+    },
+  },
+  {
+    files: ['**/components/ui/*.tsx'],
+    rules: {
+      'react/prop-types': [
+        2,
+        {
+          ignore: [
+            'className',
+            'position',
+            'align',
+            'checked',
+            'sideOffset',
+            'type',
+          ],
         },
       ],
     },

@@ -8,7 +8,7 @@ import useSupabaseBrowser from '@/utils/supabase/client';
 import { useQuery } from '@supabase-cache-helpers/postgrest-react-query';
 import { DateTime } from 'luxon';
 
-export default function Person({ id }: { id: string }) {
+export default function Person({ id }: Readonly<{ id: string }>) {
   const supabase = useSupabaseBrowser();
   const { data: person } = useQuery(getPersonById(supabase, id));
   const { count: roleCount } = useQuery(getPersonRolesCount(supabase, id));
@@ -51,10 +51,11 @@ export default function Person({ id }: { id: string }) {
             {person?.aliases.length > 0 ? (
               <div className="flex flex-col gap-2">
                 <h2 className="text-lg font-semibold">Aliases</h2>
-                {person?.aliases.map((alias, index) => (
-                  <p key={index}>
-                    {`${alias.name} (${alias.original_name})` ??
-                      alias.original_name}
+                {person?.aliases.map((alias) => (
+                  <p key={alias.original_name}>
+                    {alias.name
+                      ? `${alias.name} (${alias.original_name})`
+                      : alias.original_name}
                   </p>
                 ))}
               </div>
@@ -73,8 +74,8 @@ export default function Person({ id }: { id: string }) {
           </Badge>
         </div>
         <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-          {person?.roles.map((role, index) => (
-            <MovieCard key={index} movie={role?.movies} />
+          {person?.roles.map((role) => (
+            <MovieCard key={role.id} movie={role?.movies} />
           ))}
         </div>
       </div>

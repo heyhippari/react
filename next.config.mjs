@@ -12,7 +12,7 @@ const nextConfig = {
     loaderFile: './src/utils/image-loader.ts',
   },
   experimental: {
-    swcPlugins: [['@lingui/swc-plugin', {}]],
+    // swcPlugins: [['@lingui/swc-plugin', {}]],
   },
   webpack(config) {
     config.plugins.push(
