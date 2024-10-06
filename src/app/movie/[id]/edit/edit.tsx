@@ -1,9 +1,11 @@
 'use client';
 import { useQuery } from '@supabase-cache-helpers/postgrest-react-query';
 
+import { updateMovieAction } from '@/app/actions/movie';
 import MovieNavbar from '@/components/movie-navbar';
 import MoviePoster from '@/components/movie-poster';
 import { TwoColumnLayout } from '@/components/two-column-layout';
+import { AutoComplete } from '@/components/ui/autocomplete';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -14,42 +16,55 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import {
+  searchLabelByName,
+  searchSeriesByName,
+  searchStudioByName,
+} from '@/queries/autocomplete';
 import { getMovieById } from '@/queries/get-movie-by-id';
 import useSupabaseBrowser from '@/utils/supabase/client';
+import {
+  MovieEditFormSchema,
+  movieEditFormSchema,
+} from '@/utils/validation/movie-update';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import MdiArrowLeft from '~icons/mdi/arrow-left.jsx';
-
-const movieEditFormSchema = z.object({
-  original_name: z.string(),
-  name: z.string(),
-  release_date: z.string(),
-  runtime: z.number(),
-  dvd_id: z.string(),
-  label_id: z.number(),
-  series_id: z.number(),
-  studio_id: z.number(),
-});
 
 export default function Movie({ id }: Readonly<{ id: string }>) {
   const supabase = useSupabaseBrowser();
-  const { data: movie, error } = useQuery(getMovieById(supabase, id));
+  const { data: movie } = useQuery(getMovieById(supabase, id));
 
-  if (error) {
-    return redirect('/404');
-  }
+  const [studioSearchValue, setStudioSearchValue] = useState(
+    movie?.studio?.name ?? movie?.studio?.original_name ?? '',
+  );
+  const [labelSearchValue, setLabelSearchValue] = useState(
+    movie?.label?.name ?? movie?.label?.original_name ?? '',
+  );
+  const [seriesSearchValue, setSeriesSearchValue] = useState(
+    movie?.series?.name ?? movie?.series?.original_name ?? '',
+  );
+
+  const { data: studios, isLoading: isStudioLoading } = useQuery(
+    searchStudioByName(supabase, studioSearchValue),
+  );
+  const { data: labels, isLoading: isLabelLoading } = useQuery(
+    searchLabelByName(supabase, labelSearchValue),
+  );
+  const { data: series, isLoading: isSeriesLoading } = useQuery(
+    searchSeriesByName(supabase, seriesSearchValue),
+  );
 
   // eslint-disable-next-line react-hooks/rules-of-hooks -- Only for error handling
-  const form = useForm<z.infer<typeof movieEditFormSchema>>({
+  const form = useForm<MovieEditFormSchema>({
     resolver: zodResolver(movieEditFormSchema),
     defaultValues: {
       original_name: movie?.original_name ?? undefined,
       name: movie?.name ?? undefined,
       release_date: movie?.release_date ?? undefined,
-      runtime: movie?.length ?? 0,
+      length: movie?.length ?? 0,
       dvd_id: movie?.dvd_id ?? undefined,
       label_id: movie?.label_id ?? undefined,
       series_id: movie?.series_id ?? undefined,
@@ -57,9 +72,11 @@ export default function Movie({ id }: Readonly<{ id: string }>) {
     },
   });
 
-  function onSubmit(values: z.infer<typeof movieEditFormSchema>) {
-    console.log(values);
-  }
+  const onSubmit: SubmitHandler<MovieEditFormSchema> = async (data) => {
+    if (movie?.id) {
+      await updateMovieAction(movie?.id, data);
+    }
+  };
 
   return (
     <>
@@ -147,7 +164,25 @@ export default function Movie({ id }: Readonly<{ id: string }>) {
                   <FormItem>
                     <FormLabel>Studio</FormLabel>
                     <FormControl>
-                      <Input placeholder="Studio ID" {...field} />
+                      <AutoComplete
+                        selectedValue={field.value?.toString() ?? ''}
+                        onSelectedValueChange={(value) =>
+                          form.setValue('studio_id', parseInt(value, 10))
+                        }
+                        searchValue={studioSearchValue}
+                        onSearchValueChange={(value) => {
+                          setStudioSearchValue(value);
+                        }}
+                        items={
+                          studios?.map((studio) => ({
+                            value: studio.id.toString(),
+                            label: studio.name ?? studio.original_name,
+                          })) ?? []
+                        }
+                        isLoading={isStudioLoading}
+                        emptyMessage="No studios found."
+                        placeholder="Search for a studio..."
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -162,7 +197,25 @@ export default function Movie({ id }: Readonly<{ id: string }>) {
                   <FormItem>
                     <FormLabel>Label</FormLabel>
                     <FormControl>
-                      <Input placeholder="Label ID" {...field} />
+                      <AutoComplete
+                        selectedValue={field.value?.toString() ?? ''}
+                        onSelectedValueChange={(value) =>
+                          form.setValue('label_id', parseInt(value, 10))
+                        }
+                        searchValue={labelSearchValue}
+                        onSearchValueChange={(value) => {
+                          setLabelSearchValue(value);
+                        }}
+                        items={
+                          labels?.map((label) => ({
+                            value: label.id.toString(),
+                            label: label.name ?? label.original_name,
+                          })) ?? []
+                        }
+                        isLoading={isLabelLoading}
+                        emptyMessage="No labels found."
+                        placeholder="Search for a label..."
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -175,7 +228,25 @@ export default function Movie({ id }: Readonly<{ id: string }>) {
                   <FormItem>
                     <FormLabel>Series</FormLabel>
                     <FormControl>
-                      <Input placeholder="Series ID" {...field} />
+                      <AutoComplete
+                        selectedValue={field.value?.toString() ?? ''}
+                        onSelectedValueChange={(value) =>
+                          form.setValue('series_id', parseInt(value, 10))
+                        }
+                        searchValue={seriesSearchValue}
+                        onSearchValueChange={(value) =>
+                          setSeriesSearchValue(value)
+                        }
+                        items={
+                          series?.map((series) => ({
+                            value: series.id.toString(),
+                            label: series.name ?? series.original_name,
+                          })) ?? []
+                        }
+                        isLoading={isSeriesLoading}
+                        emptyMessage="No series found."
+                        placeholder="Search for a series..."
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -198,7 +269,7 @@ export default function Movie({ id }: Readonly<{ id: string }>) {
               />
               <FormField
                 control={form.control}
-                name="runtime"
+                name="length"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Runtime</FormLabel>
@@ -210,7 +281,9 @@ export default function Movie({ id }: Readonly<{ id: string }>) {
                 )}
               />
             </div>
-            <Button type="submit">Submit</Button>
+            <Button type="submit" disabled={form.formState.isSubmitting}>
+              Submit
+            </Button>
           </form>
         </Form>
       </TwoColumnLayout>
