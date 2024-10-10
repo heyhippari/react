@@ -2,7 +2,7 @@
 import { useQuery } from '@supabase-cache-helpers/postgrest-react-query';
 
 import { updateMovieAction } from '@/app/actions/movie';
-import MovieNavbar from '@/components/movie-navbar';
+import ItemNavbar from '@/components/item-navbar';
 import MoviePoster from '@/components/movie-poster';
 import { TwoColumnLayout } from '@/components/two-column-layout';
 import { AutoComplete } from '@/components/ui/autocomplete';
@@ -33,7 +33,7 @@ import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import MdiArrowLeft from '~icons/mdi/arrow-left.jsx';
 
-export default function Movie({ id }: Readonly<{ id: string }>) {
+export default function MovieEdit({ id }: Readonly<{ id: string }>) {
   const supabase = useSupabaseBrowser();
   const { data: movie } = useQuery(getMovieById(supabase, id));
 
@@ -80,7 +80,7 @@ export default function Movie({ id }: Readonly<{ id: string }>) {
 
   return (
     <>
-      <MovieNavbar movie={movie} />
+      <ItemNavbar item={movie} />
       <div className="w-full bg-pink-100 p-4 dark:bg-pink-700">
         <div className="container flex flex-col gap-6 px-4 md:flex-row">
           <Link

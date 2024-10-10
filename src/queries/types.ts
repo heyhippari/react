@@ -10,7 +10,7 @@ export type PersonImage = Omit<
   'id' | 'person_id' | 'image_id'
 > & { image: Images };
 
-type Role = Omit<Tables<'roles'>, 'id' | 'movie_id' | 'person_id'>;
+export type Role = Omit<Tables<'roles'>, 'id' | 'movie_id' | 'person_id'>;
 // Person only has id, name, and original_name fields
 export type Person = Pick<
   Tables<'persons'>,
@@ -26,9 +26,12 @@ export type PersonWithImage =
   | null
   | undefined;
 
-type Movie = Pick<Tables<'movies'>, 'id' | 'name' | 'original_name' | 'dvd_id'>;
+export type Movie = Pick<
+  Tables<'movies'>,
+  'id' | 'name' | 'original_name' | 'dvd_id'
+>;
 
-type Series = Pick<Tables<'series'>, 'id' | 'name' | 'original_name'>;
+export type Series = Pick<Tables<'series'>, 'id' | 'name' | 'original_name'>;
 
 export type MovieWithImages =
   | (Movie & {
@@ -72,4 +75,11 @@ export type MovieWithAll =
   | null
   | undefined;
 
+export type PersonWithAll = PersonWithImage & {
+  person_images: PersonImage[];
+  roles: Role[];
+};
+
 export type UserProfile = Tables<'profiles'>;
+
+export type Item = MovieWithAll | PersonWithAll | Series;

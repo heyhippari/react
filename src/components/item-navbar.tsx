@@ -1,47 +1,121 @@
 'use client';
 import { deleteMovieAction } from '@/app/actions/movie';
-import { MovieWithAll } from '@/queries/types';
+import { Item } from '@/queries/types';
 import { useUserRole } from '@/utils/hooks';
+import { getShareTitle } from '@/utils/share';
+import { isMovie, isPerson } from '@/utils/types';
 import Link from 'next/link';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Badge } from './ui/badge';
 import { Button, buttonVariants } from './ui/button';
 import { DropdownMenuSeparator } from './ui/dropdown-menu';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from './ui/hover-card';
 import { useToast } from './ui/use-toast';
 
-export default function MovieNavbar({
-  movie,
-}: Readonly<{ movie: MovieWithAll }>) {
-  const supportsShareAPI = navigator?.share !== undefined;
+export default function ItemNavbar({ item }: Readonly<{ item: Item }>) {
+  const [supportsShareAPI, setSupportsShareAPI] = useState(
+    navigator?.share !== undefined,
+  );
   const { toast } = useToast();
   const userRole = useUserRole();
 
-  const frontCoverCount = useMemo(
-    () =>
-      movie?.movie_images.filter((image) => image.image?.type === 'front_cover')
-        .length,
-    [movie],
-  );
+  const frontCoverCount = useMemo(() => {
+    if (isMovie(item)) {
+      return item?.movie_images.filter(
+        (image) => image.image?.type === 'front_cover',
+      ).length;
+    } else {
+      return 0;
+    }
+  }, [item]);
 
-  const fullCoverCount = useMemo(
-    () =>
-      movie?.movie_images.filter((image) => image.image?.type === 'full_cover')
-        .length,
-    [movie],
-  );
+  const fullCoverCount = useMemo(() => {
+    if (isMovie(item)) {
+      return item?.movie_images.filter(
+        (image) => image.image?.type === 'full_cover',
+      ).length;
+    } else {
+      return 0;
+    }
+  }, [item]);
+
+  const profileCount = useMemo(() => {
+    if (isPerson(item)) {
+      return item?.person_images.filter(
+        (image) => image.image?.type === 'profile',
+      ).length;
+    } else {
+      return 0;
+    }
+  }, [item]);
+
+  const itemPath = useMemo(() => {
+    if (isMovie(item)) {
+      return `/movie/${item?.id}`;
+    } else {
+      return `/person/${item?.id}`;
+    }
+  }, [item]);
+
+  const imageLinks = useMemo(() => {
+    if (isMovie(item)) {
+      return (
+        <>
+          <Link
+            href={itemPath}
+            className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-between')} w-full`}
+          >
+            Poster
+            <Badge variant="outline">{frontCoverCount ?? 0}</Badge>
+          </Link>
+
+          <Link
+            href={itemPath}
+            className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-between')} w-full`}
+          >
+            Backdrop
+            <Badge variant="outline">{fullCoverCount ?? 0}</Badge>
+          </Link>
+        </>
+      );
+    } else if (isPerson(item)) {
+      return (
+        <>
+          <Link
+            href={itemPath}
+            className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-between')} w-full`}
+          >
+            Profile
+            <Badge variant="outline">{profileCount ?? 0}</Badge>
+          </Link>
+        </>
+      );
+    } else {
+      return null;
+    }
+  }, [frontCoverCount, fullCoverCount, item, itemPath]);
 
   const handleShare = async () => {
     if (supportsShareAPI) {
       try {
         await navigator.share({
-          title: `${movie?.dvd_id} (${movie?.name ?? movie?.original_name})`,
-          text: `Find out more about ${movie?.dvd_id} on Kanojo`,
+          title: getShareTitle(item),
+          text: getShareTitle(item),
           url: window.location.href,
         });
-      } catch (error) {
-        console.error('Error sharing:', error);
+      } catch {
+        toast({
+          variant: 'destructive',
+          description: 'An error occurred while sharing',
+        });
+        setSupportsShareAPI(false);
       }
+    } else {
+      // TODO: Implement fallback share
+      toast({
+        variant: 'destructive',
+        description: 'Sharing is not supported on this device',
+      });
     }
   };
 
@@ -54,26 +128,26 @@ export default function MovieNavbar({
           </HoverCardTrigger>
           <HoverCardContent align="center" className="w-44 p-2">
             <Link
-              href={`/movie/${movie?.id}`}
+              href={itemPath}
               className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-start')} w-full`}
             >
               Main
             </Link>
             <DropdownMenuSeparator />
             <Link
-              href={`/movie/${movie?.id}`}
+              href={itemPath}
               className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-start')} w-full`}
             >
               Changes
             </Link>
             <Link
-              href={`/movie/${movie?.id}`}
+              href={itemPath}
               className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-start')} w-full`}
             >
               Report
             </Link>
             <Link
-              href={`/movie/${movie?.id}/edit`}
+              href={`${itemPath}/edit`}
               className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-start')} w-full`}
             >
               Edit
@@ -81,28 +155,16 @@ export default function MovieNavbar({
           </HoverCardContent>
         </HoverCard>
 
-        <HoverCard openDelay={0} closeDelay={0}>
-          <HoverCardTrigger>
-            <Button variant={'ghost'}>Media</Button>
-          </HoverCardTrigger>
-          <HoverCardContent align="center" className="w-44 p-2">
-            <Link
-              href={`/movie/${movie?.id}`}
-              className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-between')} w-full`}
-            >
-              Poster
-              <Badge variant="outline">{frontCoverCount ?? 0}</Badge>
-            </Link>
-
-            <Link
-              href={`/movie/${movie?.id}`}
-              className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-between')} w-full`}
-            >
-              Backdrop
-              <Badge variant="outline">{fullCoverCount ?? 0}</Badge>
-            </Link>
-          </HoverCardContent>
-        </HoverCard>
+        {imageLinks ? (
+          <HoverCard openDelay={0} closeDelay={0}>
+            <HoverCardTrigger>
+              <Button variant={'ghost'}>Media</Button>
+            </HoverCardTrigger>
+            <HoverCardContent align="center" className="w-44 p-2">
+              {imageLinks}
+            </HoverCardContent>
+          </HoverCard>
+        ) : null}
 
         <HoverCard openDelay={0} closeDelay={0}>
           <HoverCardTrigger>
@@ -110,7 +172,7 @@ export default function MovieNavbar({
           </HoverCardTrigger>
           <HoverCardContent align="center" className="w-44 p-2">
             <Link
-              href={`/movie/${movie?.id}`}
+              href={itemPath}
               className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-between')} w-full`}
             >
               Discussions
@@ -118,7 +180,7 @@ export default function MovieNavbar({
             </Link>
 
             <Link
-              href={`/movie/${movie?.id}`}
+              href={itemPath}
               className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-between')} w-full`}
             >
               Reviews
@@ -142,7 +204,7 @@ export default function MovieNavbar({
               <button
                 onClick={async () => {
                   try {
-                    await deleteMovieAction(movie?.id);
+                    await deleteMovieAction(item?.id);
                   } catch (error) {
                     toast({
                       variant: 'destructive',

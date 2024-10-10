@@ -1,4 +1,4 @@
-import { getMovieById } from '@/queries/get-movie-by-id';
+import { getPersonById } from '@/queries/get-person-by-id';
 import useSupabaseServer from '@/utils/supabase/server';
 import { prefetchQuery } from '@supabase-cache-helpers/postgrest-react-query';
 import {
@@ -8,9 +8,9 @@ import {
 } from '@tanstack/react-query';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import MovieEdit from './edit';
+import PersonEdit from './edit';
 
-export default async function MovieEditPage({
+export default async function PersonEditPage({
   params,
 }: Readonly<{
   params: { id: string };
@@ -30,11 +30,11 @@ export default async function MovieEditPage({
     return redirect('/404');
   }
 
-  await prefetchQuery(queryClient, getMovieById(supabase, params.id));
+  await prefetchQuery(queryClient, getPersonById(supabase, params.id));
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <MovieEdit id={params.id} />
+      <PersonEdit id={params.id} />
     </HydrationBoundary>
   );
 }
