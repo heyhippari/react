@@ -21,7 +21,10 @@ export default function MoviePoster({
   return (
     <>
       <div
-        className={`relative aspect-[2/3] overflow-hidden rounded-lg bg-pink-200 shadow-md dark:bg-pink-900 ${small ? 'w-[50px]' : 'w-[150px] lg:w-[250px]'}`}
+        className={cn(
+          'relative aspect-[2/3] overflow-hidden rounded-lg bg-pink-200 shadow-md dark:bg-pink-900',
+          small ? 'w-[50px]' : 'w-[150px] lg:w-[250px]',
+        )}
       >
         {movie && frontCover ? (
           <Image

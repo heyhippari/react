@@ -12,6 +12,10 @@ export function getPersonById(
         name,
         original_name,
         birth_date,
+        height,
+        bust_size,
+        waist_size,
+        hips_size,
         profile_url,
         aliases: persons_aliases (
           name,
@@ -26,6 +30,12 @@ export function getPersonById(
             release_date,
             dvd_id,
             front_cover_url
+          )
+        ),
+        person_images (
+          image: images (
+            uuid,
+            type
           )
         )
       `,
