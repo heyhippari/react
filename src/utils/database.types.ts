@@ -587,6 +587,30 @@ export type Database = {
           },
         ]
       }
+      views: {
+        Row: {
+          client_hash: string | null
+          date: string
+          id: number
+          item_id: number | null
+          item_type: string | null
+        }
+        Insert: {
+          client_hash?: string | null
+          date?: string
+          id?: number
+          item_id?: number | null
+          item_type?: string | null
+        }
+        Update: {
+          client_hash?: string | null
+          date?: string
+          id?: number
+          item_id?: number | null
+          item_type?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       movies_missing_info: {
@@ -710,15 +734,35 @@ export type Database = {
     Enums: {
       app_permission:
         | "movie.delete"
+        | "movie.update"
+        | "movie.create"
         | "person.delete"
+        | "person.update"
+        | "person.create"
         | "series.delete"
+        | "series.update"
+        | "series.create"
         | "studio.delete"
+        | "studio.update"
+        | "studio.create"
         | "category.delete"
+        | "category.update"
+        | "category.create"
         | "label.delete"
+        | "label.update"
+        | "label.create"
         | "image.delete"
+        | "image.update"
+        | "image.create"
         | "job.delete"
+        | "job.update"
+        | "job.create"
         | "role.delete"
+        | "role.update"
+        | "role.create"
         | "tag.delete"
+        | "tag.update"
+        | "tag.create"
       app_role: "admin" | "moderator" | "user" | "banned"
       image_type:
         | "front_cover"

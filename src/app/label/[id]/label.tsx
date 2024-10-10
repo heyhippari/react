@@ -1,16 +1,38 @@
 'use client';
 
+import { registerViewAction } from '@/app/actions/view';
 import MovieCard from '@/components/movie-card';
 import { Badge } from '@/components/ui/badge';
 import { getLabelById, getLabelMoviesCount } from '@/queries/get-label-by-id';
 import useSupabaseBrowser from '@/utils/supabase/client';
 import { useQuery } from '@supabase-cache-helpers/postgrest-react-query';
+import { redirect } from 'next/navigation';
+import { useEffect } from 'react';
 
-export default function Label({ id }: { id: string }) {
+export default function Label({ id }: Readonly<{ id: string }>) {
   const supabase = useSupabaseBrowser();
 
   const { data: label } = useQuery(getLabelById(supabase, id));
   const { count: moviesCount } = useQuery(getLabelMoviesCount(supabase, id));
+
+  // On initial load, register the visit
+  useEffect(() => {
+    const registerView = async () => {
+      if (label) {
+        try {
+          await registerViewAction(label.id, 'label');
+        } catch {
+          // Just ignore the error, we don't want to block the page load
+        }
+      }
+    };
+
+    void registerView();
+  }, [label]);
+
+  if (!label) {
+    return redirect('/404');
+  }
 
   return (
     <>

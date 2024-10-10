@@ -8,6 +8,7 @@ export function getLabelById(
     .from('labels')
     .select(
       `
+        id,
         name,
         original_name,
         movies (

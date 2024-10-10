@@ -8,6 +8,7 @@ export function getSeriesById(
     .from('series')
     .select(
       `
+        id,
         name,
         original_name,
         movies (

@@ -1,5 +1,6 @@
 'use client';
 
+import { registerViewAction } from '@/app/actions/view';
 import ItemNavbar from '@/components/item-navbar';
 import MoviePoster from '@/components/movie-poster';
 import RoleCard from '@/components/role-card';
@@ -12,10 +13,26 @@ import { useQuery } from '@supabase-cache-helpers/postgrest-react-query';
 import { DateTime } from 'luxon';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
+import { useEffect } from 'react';
 
-export default function Movie({ id }: { id: string }) {
+export default function Movie({ id }: Readonly<{ id: string }>) {
   const supabase = useSupabaseBrowser();
   const { data: movie, error } = useQuery(getMovieById(supabase, id));
+
+  // On initial load, register the visit
+  useEffect(() => {
+    const registerView = async () => {
+      if (movie) {
+        try {
+          await registerViewAction(movie.id, 'movie');
+        } catch {
+          // Just ignore the error, we don't want to block the page load
+        }
+      }
+    };
+
+    void registerView();
+  }, [movie]);
 
   if (error) {
     return redirect('/404');

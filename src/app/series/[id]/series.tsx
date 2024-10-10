@@ -1,5 +1,6 @@
 'use client';
 
+import { registerViewAction } from '@/app/actions/view';
 import MovieCard from '@/components/movie-card';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -8,11 +9,32 @@ import {
 } from '@/queries/get-series-by-id';
 import useSupabaseBrowser from '@/utils/supabase/client';
 import { useQuery } from '@supabase-cache-helpers/postgrest-react-query';
+import { redirect } from 'next/navigation';
+import { useEffect } from 'react';
 
-export default function Series({ id }: { id: string }) {
+export default function Series({ id }: Readonly<{ id: string }>) {
   const supabase = useSupabaseBrowser();
   const { data: series } = useQuery(getSeriesById(supabase, id));
   const { count: moviesCount } = useQuery(getSeriesMoviesCount(supabase, id));
+
+  // On initial load, register the visit
+  useEffect(() => {
+    const registerView = async () => {
+      if (series) {
+        try {
+          await registerViewAction(series.id, 'series');
+        } catch {
+          // Just ignore the error, we don't want to block the page load
+        }
+      }
+    };
+
+    void registerView();
+  }, [series]);
+
+  if (!series) {
+    return redirect('/404');
+  }
 
   return (
     <>

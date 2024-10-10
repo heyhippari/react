@@ -8,6 +8,7 @@ export function getStudioById(
     .from('studios')
     .select(
       `
+        id,
         name,
         original_name,
         movies (

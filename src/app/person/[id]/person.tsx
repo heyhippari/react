@@ -1,5 +1,6 @@
 'use client';
 
+import { registerViewAction } from '@/app/actions/view';
 import ItemNavbar from '@/components/item-navbar';
 import MovieCard from '@/components/movie-card';
 import PersonPoster from '@/components/person-poster';
@@ -8,14 +9,31 @@ import { getPersonById, getPersonRolesCount } from '@/queries/get-person-by-id';
 import useSupabaseBrowser from '@/utils/supabase/client';
 import { useQuery } from '@supabase-cache-helpers/postgrest-react-query';
 import { DateTime } from 'luxon';
+import { redirect } from 'next/navigation';
+import { useEffect } from 'react';
 
 export default function Person({ id }: Readonly<{ id: string }>) {
   const supabase = useSupabaseBrowser();
   const { data: person } = useQuery(getPersonById(supabase, id));
   const { count: roleCount } = useQuery(getPersonRolesCount(supabase, id));
 
+  // On initial load, register the visit
+  useEffect(() => {
+    const registerView = async () => {
+      if (person) {
+        try {
+          await registerViewAction(person.id, 'person');
+        } catch {
+          // Just ignore the error, we don't want to block the page load
+        }
+      }
+    };
+
+    void registerView();
+  }, [person]);
+
   if (!person) {
-    return null;
+    return redirect('/404');
   }
 
   return (
