@@ -57,7 +57,7 @@ export default function Movie({ id }: Readonly<{ id: string }>) {
                 </p>
               ) : null}
             </div>
-            <div className="flex flex-row gap-4">
+            <div className="flex flex-row items-start justify-start gap-4">
               <Badge
                 variant="default"
                 className="bg-pink-500 hover:bg-pink-400 dark:bg-pink-400 dark:hover:bg-pink-500"
