@@ -43,7 +43,7 @@ export default function MovieCard({
             <div className="p-2">
               <Badge
                 variant="default"
-                className="bg-pink-500 hover:bg-pink-400 dark:bg-pink-400 dark:hover:bg-pink-500"
+                className="bg-pink-600 hover:bg-pink-500 dark:bg-pink-400 dark:hover:bg-pink-500"
               >
                 {movie?.dvd_id}
               </Badge>
