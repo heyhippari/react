@@ -44,7 +44,6 @@ export function getMostPopularPersons(client: TypedSupabaseClient) {
       profile_url
     `,
     )
-    .limit(25)
     .returns<PersonWithImage[]>()
     .throwOnError();
 }
@@ -61,6 +60,7 @@ export function getReleasedOnThisDay(client: TypedSupabaseClient) {
       front_cover_url
     `,
     )
+    .limit(25)
     .returns<MovieWithImages[]>()
     .throwOnError();
 }

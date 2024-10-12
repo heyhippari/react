@@ -28,7 +28,7 @@ export default function MovieSlider({
       >
         {items.map((item, index) => (
           <SwiperSlide
-            key={item?.id ?? index}
+            key={item?.id}
             className="mb-2 mr-4 max-w-[100px] md:max-w-[200px]"
             virtualIndex={index}
           >

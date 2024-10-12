@@ -32,7 +32,7 @@ export function isPerson(item: Item): item is PersonWithAll {
     return false;
   }
 
-  return 'birth_date' in item;
+  return 'birth_date' in item || 'profile_url' in item;
 }
 
 /**
