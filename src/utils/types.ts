@@ -1,4 +1,10 @@
-import { Item, MovieWithAll, PersonWithAll, Series } from '@/queries/types';
+import {
+  Item,
+  MediaFormat,
+  MovieWithAll,
+  PersonWithAll,
+  Series,
+} from '@/queries/types';
 import type { Database } from '@/utils/database.types';
 import { SupabaseClient } from '@supabase/supabase-js';
 
@@ -46,4 +52,20 @@ export function isSeries(item: Item): item is Series {
   }
 
   return !('dvd_id' in item) && !('birth_date' in item);
+}
+
+export function isMediaFormat(format: unknown): format is MediaFormat {
+  return (
+    typeof format === 'string' &&
+    Object.values([
+      'DVD',
+      'Blu-ray',
+      'Blu-ray 4K',
+      'Digital',
+      'VHS',
+      'LaserDisc',
+      'UMD Video',
+      'Video CD',
+    ]).includes(format as MediaFormat)
+  );
 }

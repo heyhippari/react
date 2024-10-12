@@ -17,6 +17,13 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import {
   searchLabelByName,
   searchSeriesByName,
   searchStudioByName,
@@ -36,6 +43,8 @@ import MdiArrowLeft from '~icons/mdi/arrow-left.jsx';
 export default function MovieEdit({ id }: Readonly<{ id: string }>) {
   const supabase = useSupabaseBrowser();
   const { data: movie } = useQuery(getMovieById(supabase, id));
+
+  console.log(movie);
 
   const [studioSearchValue, setStudioSearchValue] = useState(
     movie?.studio?.name ?? movie?.studio?.original_name ?? '',
@@ -63,12 +72,14 @@ export default function MovieEdit({ id }: Readonly<{ id: string }>) {
     defaultValues: {
       original_name: movie?.original_name ?? undefined,
       name: movie?.name ?? undefined,
-      release_date: movie?.release_date ?? undefined,
+      release_date: movie?.release_date?.split('T')[0] ?? undefined,
       length: movie?.length ?? 0,
       dvd_id: movie?.dvd_id ?? undefined,
       label_id: movie?.label_id ?? undefined,
       series_id: movie?.series_id ?? undefined,
       studio_id: movie?.studio_id ?? undefined,
+      barcode: (movie?.barcode as string) ?? undefined,
+      format: movie?.format ?? 'Unknown',
     },
   });
 
@@ -81,7 +92,7 @@ export default function MovieEdit({ id }: Readonly<{ id: string }>) {
   return (
     <>
       <ItemNavbar item={movie} />
-      <div className="w-full bg-pink-100 p-4 dark:bg-pink-700">
+      <div className="w-full bg-pink-100 p-4 dark:bg-pink-800">
         <div className="container flex flex-col gap-6 px-4 md:flex-row">
           <Link
             href={`/movie/${movie?.id}`}
@@ -92,7 +103,7 @@ export default function MovieEdit({ id }: Readonly<{ id: string }>) {
               <h1 className="line-clamp-2 w-fit text-ellipsis bg-gradient-to-r from-pink-600 to-rose-400 bg-clip-text text-4xl font-bold leading-tight text-transparent">
                 {movie?.name ?? movie?.original_name}
               </h1>
-              <div className="flex flex-row items-center gap-1 text-pink-800">
+              <div className="flex flex-row items-center gap-1 text-pink-300">
                 <MdiArrowLeft />
                 <p className="font-bold">Back to main</p>
               </div>
@@ -274,7 +285,59 @@ export default function MovieEdit({ id }: Readonly<{ id: string }>) {
                   <FormItem>
                     <FormLabel>Runtime</FormLabel>
                     <FormControl>
-                      <Input type="number" {...field} />
+                      <Input
+                        type="number"
+                        value={field.value}
+                        onChange={(e) =>
+                          form.setValue('length', e.target.valueAsNumber)
+                        }
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="grid gap-4 md:grid-cols-2">
+              <FormField
+                control={form.control}
+                name="barcode"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Barcode</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Barcode" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="format"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Format</FormLabel>
+                    <FormControl>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a format" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Unknown">Unknown</SelectItem>
+                          <SelectItem value="DVD">DVD</SelectItem>
+                          <SelectItem value="Blu-ray">Blu-ray</SelectItem>
+                          <SelectItem value="Blu-ray 4K">Blu-ray 4K</SelectItem>
+                          <SelectItem value="Digital">Digital</SelectItem>
+                          <SelectItem value="VHS">VHS</SelectItem>
+                          <SelectItem value="LaserDisc">LaserDisc</SelectItem>
+                          <SelectItem value="UMD Video">UMD Video</SelectItem>
+                          <SelectItem value="Video CD">Video CD</SelectItem>
+                        </SelectContent>
+                      </Select>
                     </FormControl>
                     <FormMessage />
                   </FormItem>

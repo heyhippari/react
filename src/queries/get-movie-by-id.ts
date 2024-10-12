@@ -17,6 +17,8 @@ export function getMovieById(
         studio_id,
         series_id,
         label_id,
+        barcode,
+        format,
         has_nudity,
         front_cover_url,
         full_cover_url,

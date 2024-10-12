@@ -1,4 +1,4 @@
-import { Tables } from '@/utils/database.types';
+import { Enums, Tables } from '@/utils/database.types';
 
 type Images = Pick<Tables<'images'>, 'uuid' | 'type'> | null;
 export type MovieImage = Omit<
@@ -84,3 +84,5 @@ export type UserProfile = Tables<'profiles'>;
 
 export type ItemWithImages = MovieWithImages | PersonWithImage;
 export type Item = MovieWithAll | PersonWithAll | Series;
+
+export type MediaFormat = Enums<'media_format'>;

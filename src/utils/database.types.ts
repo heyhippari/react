@@ -206,8 +206,10 @@ export type Database = {
       }
       movies: {
         Row: {
+          barcode: unknown | null
           create_time: string
           dvd_id: string | null
+          format: Database["public"]["Enums"]["media_format"] | null
           front_cover_url: string | null
           full_cover_url: string | null
           has_nudity: boolean
@@ -222,8 +224,10 @@ export type Database = {
           update_time: string
         }
         Insert: {
+          barcode?: unknown | null
           create_time?: string
           dvd_id?: string | null
+          format?: Database["public"]["Enums"]["media_format"] | null
           front_cover_url?: string | null
           full_cover_url?: string | null
           has_nudity?: boolean
@@ -238,8 +242,10 @@ export type Database = {
           update_time?: string
         }
         Update: {
+          barcode?: unknown | null
           create_time?: string
           dvd_id?: string | null
+          format?: Database["public"]["Enums"]["media_format"] | null
           front_cover_url?: string | null
           full_cover_url?: string | null
           has_nudity?: boolean
@@ -774,6 +780,291 @@ export type Database = {
         }
         Returns: Json
       }
+      ean13_in: {
+        Args: {
+          "": unknown
+        }
+        Returns: unknown
+      }
+      ean13_out:
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: unknown
+          }
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: unknown
+          }
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: unknown
+          }
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: unknown
+          }
+      hashean13: {
+        Args: {
+          "": unknown
+        }
+        Returns: number
+      }
+      hashisbn: {
+        Args: {
+          "": unknown
+        }
+        Returns: number
+      }
+      hashisbn13: {
+        Args: {
+          "": unknown
+        }
+        Returns: number
+      }
+      hashismn: {
+        Args: {
+          "": unknown
+        }
+        Returns: number
+      }
+      hashismn13: {
+        Args: {
+          "": unknown
+        }
+        Returns: number
+      }
+      hashissn: {
+        Args: {
+          "": unknown
+        }
+        Returns: number
+      }
+      hashissn13: {
+        Args: {
+          "": unknown
+        }
+        Returns: number
+      }
+      hashupc: {
+        Args: {
+          "": unknown
+        }
+        Returns: number
+      }
+      is_valid:
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: boolean
+          }
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: boolean
+          }
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: boolean
+          }
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: boolean
+          }
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: boolean
+          }
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: boolean
+          }
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: boolean
+          }
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: boolean
+          }
+      isbn: {
+        Args: {
+          "": unknown
+        }
+        Returns: unknown
+      }
+      isbn_in: {
+        Args: {
+          "": unknown
+        }
+        Returns: unknown
+      }
+      isbn13: {
+        Args: {
+          "": unknown
+        }
+        Returns: unknown
+      }
+      isbn13_in: {
+        Args: {
+          "": unknown
+        }
+        Returns: unknown
+      }
+      ismn: {
+        Args: {
+          "": unknown
+        }
+        Returns: unknown
+      }
+      ismn_in: {
+        Args: {
+          "": unknown
+        }
+        Returns: unknown
+      }
+      ismn13: {
+        Args: {
+          "": unknown
+        }
+        Returns: unknown
+      }
+      ismn13_in: {
+        Args: {
+          "": unknown
+        }
+        Returns: unknown
+      }
+      isn_out:
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: unknown
+          }
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: unknown
+          }
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: unknown
+          }
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: unknown
+          }
+      isn_weak:
+        | {
+            Args: Record<PropertyKey, never>
+            Returns: boolean
+          }
+        | {
+            Args: {
+              "": boolean
+            }
+            Returns: boolean
+          }
+      issn: {
+        Args: {
+          "": unknown
+        }
+        Returns: unknown
+      }
+      issn_in: {
+        Args: {
+          "": unknown
+        }
+        Returns: unknown
+      }
+      issn13: {
+        Args: {
+          "": unknown
+        }
+        Returns: unknown
+      }
+      issn13_in: {
+        Args: {
+          "": unknown
+        }
+        Returns: unknown
+      }
+      make_valid:
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: unknown
+          }
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: unknown
+          }
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: unknown
+          }
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: unknown
+          }
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: unknown
+          }
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: unknown
+          }
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: unknown
+          }
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: unknown
+          }
       persons_movies_count: {
         Args: {
           "": unknown
@@ -791,6 +1082,18 @@ export type Database = {
           "": unknown
         }
         Returns: number
+      }
+      upc: {
+        Args: {
+          "": unknown
+        }
+        Returns: unknown
+      }
+      upc_in: {
+        Args: {
+          "": unknown
+        }
+        Returns: unknown
       }
       update_person_popularity: {
         Args: Record<PropertyKey, never>
@@ -838,6 +1141,15 @@ export type Database = {
         | "profile"
         | "logo"
         | "screenshot"
+      media_format:
+        | "DVD"
+        | "Blu-ray"
+        | "Blu-ray 4K"
+        | "Digital"
+        | "VHS"
+        | "LaserDisc"
+        | "UMD Video"
+        | "Video CD"
     }
     CompositeTypes: {
       [_ in never]: never

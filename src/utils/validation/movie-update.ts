@@ -13,6 +13,20 @@ export const movieEditFormSchema = z.object({
   label_id: z.coerce.number().optional(),
   series_id: z.coerce.number().optional(),
   studio_id: z.coerce.number().optional(),
+  barcode: z.string().optional(),
+  format: z
+    .union([
+      z.literal('Unknown'),
+      z.literal('DVD'),
+      z.literal('Blu-ray'),
+      z.literal('Blu-ray 4K'),
+      z.literal('Digital'),
+      z.literal('VHS'),
+      z.literal('LaserDisc'),
+      z.literal('UMD Video'),
+      z.literal('Video CD'),
+    ])
+    .optional(),
 });
 
 export type MovieEditFormSchema = z.infer<typeof movieEditFormSchema>;
