@@ -2,15 +2,21 @@
 import { FreeMode, Mousewheel, Scrollbar, Virtual } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import MovieCard from './movie-card';
+import PersonCard from './person-card';
 
-import { MovieWithImages } from '@/queries/types';
+import { MovieWithImages, PersonWithImage } from '@/queries/types';
+import { isMovie, isPerson } from '@/utils/types';
 import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/mousewheel';
 import 'swiper/css/scrollbar';
 import 'swiper/css/virtual';
 
-export default function MovieSlider({ movies }: { movies: MovieWithImages[] }) {
+export default function MovieSlider({
+  items,
+}: {
+  items: MovieWithImages[] | PersonWithImage[];
+}) {
   return (
     <div className="relative">
       <Swiper
@@ -22,13 +28,17 @@ export default function MovieSlider({ movies }: { movies: MovieWithImages[] }) {
         slidesPerGroupAuto={true}
         slidesPerView={'auto'}
       >
-        {movies.map((movie, index) => (
+        {items.map((item, index) => (
           <SwiperSlide
             key={index}
             className="mb-2 mr-4 max-w-[100px] md:max-w-[200px]"
             virtualIndex={index}
           >
-            <MovieCard movie={movie} />
+            {isMovie(item) ? (
+              <MovieCard movie={item} />
+            ) : isPerson(item) ? (
+              <PersonCard person={item} />
+            ) : null}
           </SwiperSlide>
         ))}
       </Swiper>

@@ -33,6 +33,21 @@ export function getMostRecentMovies(client: TypedSupabaseClient) {
     .throwOnError();
 }
 
+export function getMostPopularPersons(client: TypedSupabaseClient) {
+  return client
+    .from('most_popular_persons')
+    .select(
+      `
+      id,
+      name,
+      original_name,
+      profile_url
+    `,
+    )
+    .limit(25)
+    .throwOnError();
+}
+
 export function getReleasedOnThisDay(client: TypedSupabaseClient) {
   return client
     .from('movies_released_today')

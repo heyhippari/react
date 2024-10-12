@@ -107,6 +107,13 @@ export type Database = {
             foreignKeyName: "jobs_persons_person"
             columns: ["person_id"]
             isOneToOne: false
+            referencedRelation: "most_popular_persons"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "jobs_persons_person"
+            columns: ["person_id"]
+            isOneToOne: false
             referencedRelation: "persons"
             referencedColumns: ["id"]
           },
@@ -284,6 +291,13 @@ export type Database = {
             foreignKeyName: "person_images_person_id_fkey"
             columns: ["person_id"]
             isOneToOne: false
+            referencedRelation: "most_popular_persons"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "person_images_person_id_fkey"
+            columns: ["person_id"]
+            isOneToOne: false
             referencedRelation: "persons"
             referencedColumns: ["id"]
           },
@@ -299,6 +313,7 @@ export type Database = {
           id: number
           name: string | null
           original_name: string
+          popularity: number | null
           profile_url: string | null
           update_time: string
           waist_size: number | null
@@ -313,6 +328,7 @@ export type Database = {
           id?: number
           name?: string | null
           original_name: string
+          popularity?: number | null
           profile_url?: string | null
           update_time?: string
           waist_size?: number | null
@@ -326,6 +342,7 @@ export type Database = {
           id?: number
           name?: string | null
           original_name?: string
+          popularity?: number | null
           profile_url?: string | null
           update_time?: string
           waist_size?: number | null
@@ -352,6 +369,13 @@ export type Database = {
           person_id?: number
         }
         Relationships: [
+          {
+            foreignKeyName: "persons_aliases_person_id_fkey"
+            columns: ["person_id"]
+            isOneToOne: false
+            referencedRelation: "most_popular_persons"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "persons_aliases_person_id_fkey"
             columns: ["person_id"]
@@ -450,6 +474,13 @@ export type Database = {
             columns: ["movie_id"]
             isOneToOne: false
             referencedRelation: "movies_released_today"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "roles_persons_person"
+            columns: ["person_id"]
+            isOneToOne: false
+            referencedRelation: "most_popular_persons"
             referencedColumns: ["id"]
           },
           {
@@ -613,6 +644,16 @@ export type Database = {
       }
     }
     Views: {
+      most_popular_persons: {
+        Row: {
+          id: number | null
+          name: string | null
+          original_name: string | null
+          popularity: number | null
+          profile_url: string | null
+        }
+        Relationships: []
+      }
       movies_missing_info: {
         Row: {
           dvd_id: string | null
@@ -729,6 +770,10 @@ export type Database = {
           "": unknown
         }
         Returns: number
+      }
+      update_person_popularity: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
       }
     }
     Enums: {

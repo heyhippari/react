@@ -13,6 +13,12 @@ export async function registerViewAction(
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const supabase = useSupabaseServer(cookieStore);
 
+  // If this is a development environment, we don't want to register views
+  // since it will mess up production data.
+  if (process.env.NODE_ENV === 'development') {
+    return true;
+  }
+
   if (!itemId) {
     throw new Error('No item ID provided');
   }
