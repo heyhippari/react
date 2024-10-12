@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import MovieCard from './movie-card';
 import PersonCard from './person-card';
 
-import { MovieWithImages, PersonWithImage } from '@/queries/types';
+import { ItemWithImages } from '@/queries/types';
 import { isMovie, isPerson } from '@/utils/types';
 import 'swiper/css';
 import 'swiper/css/free-mode';
@@ -14,9 +14,7 @@ import 'swiper/css/virtual';
 
 export default function MovieSlider({
   items,
-}: {
-  items: MovieWithImages[] | PersonWithImage[];
-}) {
+}: Readonly<{ items: ItemWithImages[] }>) {
   return (
     <div className="relative">
       <Swiper
@@ -30,15 +28,12 @@ export default function MovieSlider({
       >
         {items.map((item, index) => (
           <SwiperSlide
-            key={index}
+            key={item?.id ?? index}
             className="mb-2 mr-4 max-w-[100px] md:max-w-[200px]"
             virtualIndex={index}
           >
-            {isMovie(item) ? (
-              <MovieCard movie={item} />
-            ) : isPerson(item) ? (
-              <PersonCard person={item} />
-            ) : null}
+            {isMovie(item) ? <MovieCard movie={item} /> : null}
+            {isPerson(item) ? <PersonCard person={item} /> : null}
           </SwiperSlide>
         ))}
       </Swiper>

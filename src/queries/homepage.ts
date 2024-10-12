@@ -1,4 +1,4 @@
-import { MovieWithImages } from '@/queries/types';
+import { MovieWithImages, PersonWithImage } from '@/queries/types';
 import { TypedSupabaseClient } from '@/utils/types';
 
 export function getMovieCount(client: TypedSupabaseClient) {
@@ -45,6 +45,7 @@ export function getMostPopularPersons(client: TypedSupabaseClient) {
     `,
     )
     .limit(25)
+    .returns<PersonWithImage[]>()
     .throwOnError();
 }
 

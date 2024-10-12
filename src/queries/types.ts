@@ -82,4 +82,5 @@ export type PersonWithAll = PersonWithImage & {
 
 export type UserProfile = Tables<'profiles'>;
 
+export type ItemWithImages = MovieWithImages | PersonWithImage;
 export type Item = MovieWithAll | PersonWithAll | Series;
