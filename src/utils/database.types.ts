@@ -100,6 +100,13 @@ export type Database = {
             foreignKeyName: "jobs_movies_movie"
             columns: ["movie_id"]
             isOneToOne: false
+            referencedRelation: "movies_recently_released"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "jobs_movies_movie"
+            columns: ["movie_id"]
+            isOneToOne: false
             referencedRelation: "movies_released_today"
             referencedColumns: ["id"]
           },
@@ -179,6 +186,13 @@ export type Database = {
             columns: ["movie_id"]
             isOneToOne: false
             referencedRelation: "movies_missing_info"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "movie_images_movie_id_fkey"
+            columns: ["movie_id"]
+            isOneToOne: false
+            referencedRelation: "movies_recently_released"
             referencedColumns: ["id"]
           },
           {
@@ -473,6 +487,13 @@ export type Database = {
             foreignKeyName: "roles_movies_movie"
             columns: ["movie_id"]
             isOneToOne: false
+            referencedRelation: "movies_recently_released"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "roles_movies_movie"
+            columns: ["movie_id"]
+            isOneToOne: false
             referencedRelation: "movies_released_today"
             referencedColumns: ["id"]
           },
@@ -587,6 +608,13 @@ export type Database = {
             foreignKeyName: "category_movies_movie_id"
             columns: ["movie_id"]
             isOneToOne: false
+            referencedRelation: "movies_recently_released"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "category_movies_movie_id"
+            columns: ["movie_id"]
+            isOneToOne: false
             referencedRelation: "movies_released_today"
             referencedColumns: ["id"]
           },
@@ -644,6 +672,17 @@ export type Database = {
       }
     }
     Views: {
+      current_counts: {
+        Row: {
+          label_count: number | null
+          movie_count: number | null
+          person_count: number | null
+          series_count: number | null
+          studio_count: number | null
+          tag_count: number | null
+        }
+        Relationships: []
+      }
       most_popular_persons: {
         Row: {
           id: number | null
@@ -663,21 +702,15 @@ export type Database = {
           original_name: string | null
           release_date: string | null
         }
-        Insert: {
-          dvd_id?: string | null
-          front_cover_url?: string | null
-          id?: number | null
-          name?: string | null
-          original_name?: string | null
-          release_date?: string | null
-        }
-        Update: {
-          dvd_id?: string | null
-          front_cover_url?: string | null
-          id?: number | null
-          name?: string | null
-          original_name?: string | null
-          release_date?: string | null
+        Relationships: []
+      }
+      movies_recently_released: {
+        Row: {
+          dvd_id: string | null
+          front_cover_url: string | null
+          id: number | null
+          name: string | null
+          original_name: string | null
         }
         Relationships: []
       }
@@ -719,18 +752,6 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
-      }
-      movies_without_images: {
-        Row: {
-          dvd_id: string | null
-        }
-        Insert: {
-          dvd_id?: string | null
-        }
-        Update: {
-          dvd_id?: string | null
-        }
-        Relationships: []
       }
       roles_by_age: {
         Row: {

@@ -1,23 +1,9 @@
 import { MovieWithImages, PersonWithImage } from '@/queries/types';
 import { TypedSupabaseClient } from '@/utils/types';
 
-export function getMovieCount(client: TypedSupabaseClient) {
-  return client
-    .from('movies')
-    .select('id', { count: 'exact', head: true })
-    .throwOnError();
-}
-
-export function getPersonCount(client: TypedSupabaseClient) {
-  return client
-    .from('persons')
-    .select('id', { count: 'exact', head: true })
-    .throwOnError();
-}
-
 export function getMostRecentMovies(client: TypedSupabaseClient) {
   return client
-    .from('movies')
+    .from('movies_recently_released')
     .select(
       `
       id,
@@ -27,9 +13,8 @@ export function getMostRecentMovies(client: TypedSupabaseClient) {
       front_cover_url
     `,
     )
-    .order('release_date', { ascending: false })
-    .lte('release_date', new Date().toDateString())
     .limit(25)
+    .returns<MovieWithImages[]>()
     .throwOnError();
 }
 
@@ -44,6 +29,7 @@ export function getMostPopularPersons(client: TypedSupabaseClient) {
       profile_url
     `,
     )
+    .limit(25)
     .returns<PersonWithImage[]>()
     .throwOnError();
 }
@@ -81,4 +67,8 @@ export function getInformationNeeded(client: TypedSupabaseClient) {
     .limit(25)
     .returns<MovieWithImages[]>()
     .throwOnError();
+}
+
+export function getCurrentCounts(client: TypedSupabaseClient) {
+  return client.from('current_counts').select('*').single().throwOnError();
 }

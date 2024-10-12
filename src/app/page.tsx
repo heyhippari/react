@@ -1,5 +1,5 @@
 import HomeStats from '@/components/home-stats';
-import { getMovieCount, getPersonCount } from '@/queries/homepage';
+import { getCurrentCounts } from '@/queries/homepage';
 import useSupabaseServer from '@/utils/supabase/server';
 import { cookies } from 'next/headers';
 
@@ -9,16 +9,12 @@ export default async function Home() {
   const cookieStore = cookies();
   const supabase = useSupabaseServer(cookieStore);
 
-  const { count: movieCount } = await getMovieCount(supabase);
-  const { count: personCount } = await getPersonCount(supabase);
+  const { data: currentCounts } = await getCurrentCounts(supabase);
 
   return (
     <>
-      <div className="h-48 w-full bg-pink-100 dark:bg-pink-800">
-        <HomeStats
-          movieCount={movieCount ?? 0}
-          personCount={personCount ?? 0}
-        />
+      <div className="flex h-fit w-full flex-col items-center justify-center bg-pink-100 py-4 dark:bg-pink-800 md:h-80 md:py-0 lg:h-72">
+        <HomeStats counts={currentCounts} />
       </div>
       <div className="container flex flex-col gap-4 p-4">
         <HomeSliders />

@@ -80,20 +80,18 @@ export default function ItemNavbar({ item }: Readonly<{ item: Item }>) {
       );
     } else if (isPerson(item)) {
       return (
-        <>
-          <Link
-            href={itemPath}
-            className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-between')} w-full`}
-          >
-            Profile
-            <Badge variant="outline">{profileCount ?? 0}</Badge>
-          </Link>
-        </>
+        <Link
+          href={itemPath}
+          className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-between')} w-full`}
+        >
+          Profile
+          <Badge variant="outline">{profileCount ?? 0}</Badge>
+        </Link>
       );
     } else {
       return null;
     }
-  }, [frontCoverCount, fullCoverCount, item, itemPath]);
+  }, [frontCoverCount, fullCoverCount, item, itemPath, profileCount]);
 
   const handleShare = async () => {
     if (supportsShareAPI) {
@@ -121,7 +119,7 @@ export default function ItemNavbar({ item }: Readonly<{ item: Item }>) {
 
   return (
     <nav className="start-0 top-0 z-20 w-full border-b bg-pink-300 p-2 dark:border-pink-700 dark:bg-pink-600">
-      <div className="container mx-auto flex items-center justify-center gap-2 overflow-x-scroll px-4 md:overflow-auto">
+      <div className="container mx-auto flex items-center gap-2 overflow-x-scroll px-4 md:justify-center md:overflow-auto">
         <HoverCard openDelay={0} closeDelay={0}>
           <HoverCardTrigger>
             <Button variant={'ghost'}>Overview</Button>

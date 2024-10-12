@@ -32,8 +32,8 @@ export default function MovieCard({
               }}
             />
           ) : (
-            <div className="flex h-full w-full items-center justify-center">
-              <p className="select-none text-3xl font-black text-pink-300 dark:text-pink-800">
+            <div className="flex h-full w-full items-center justify-center p-2 text-center">
+              <p className="select-none text-xl font-black text-pink-300 dark:text-pink-800 md:text-3xl">
                 No Image
               </p>
             </div>

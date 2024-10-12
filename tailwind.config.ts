@@ -1,5 +1,7 @@
 import type { Config } from 'tailwindcss';
 import tailwindCssAnimate from 'tailwindcss-animate';
+// @ts-expect-error - TailwindCSS Logical is not typed
+import tailwindLogical from 'tailwindcss-logical';
 
 const config = {
   darkMode: 'class',
@@ -35,7 +37,7 @@ const config = {
       },
     },
   },
-  plugins: [tailwindCssAnimate],
+  plugins: [tailwindCssAnimate, tailwindLogical],
 } satisfies Config;
 
 export default config;
