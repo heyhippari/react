@@ -1,10 +1,8 @@
-import { TwoColumnLayout } from '@/components/two-column-layout';
-
 import ItemNavbar from '@/components/item-navbar';
-import MoviePoster from '@/components/movie-poster';
-
-import SidebarMovieEdit from '@/components/sidebar-movie-edit';
-import { getMovieById } from '@/queries/get-movie-by-id';
+import PersonPoster from '@/components/person-poster';
+import SidebarPersonEdit from '@/components/sidebar-person-edit';
+import { TwoColumnLayout } from '@/components/two-column-layout';
+import { getPersonById } from '@/queries/get-person-by-id';
 import createClient from '@/utils/supabase/server';
 import { cookies } from 'next/headers';
 import Link from 'next/link';
@@ -19,21 +17,21 @@ export default async function Layout({
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
 
-  const { data: movie } = await getMovieById(supabase, id);
+  const { data: person } = await getPersonById(supabase, id);
 
   return (
     <>
-      <ItemNavbar item={movie} />
+      <ItemNavbar item={person} />
       <div className="w-full bg-pink-100 p-4 dark:bg-pink-800">
         <div className="container flex flex-col gap-6 px-4 md:flex-row">
           <Link
-            href={`/movie/${movie?.id}`}
+            href={`/person/${person?.id}`}
             className="flex flex-col items-center gap-4 md:flex-row"
           >
-            <MoviePoster movie={movie} small />
+            <PersonPoster person={person} small />
             <div className="flex flex-col gap-2">
               <h1 className="line-clamp-2 w-fit text-ellipsis bg-gradient-to-r from-pink-600 to-rose-400 bg-clip-text text-4xl font-bold leading-tight text-transparent dark:from-pink-400 dark:to-rose-400">
-                {movie?.name ?? movie?.original_name}
+                {person?.name ?? person?.original_name}
               </h1>
               <div className="flex flex-row items-center gap-1 text-pink-600 dark:text-pink-300">
                 <MdiArrowLeft />
@@ -45,7 +43,7 @@ export default async function Layout({
       </div>
       <TwoColumnLayout
         sidebarTitle="Edit"
-        sidebarContent={<SidebarMovieEdit movie={movie} />}
+        sidebarContent={<SidebarPersonEdit person={person} />}
       >
         {children}
       </TwoColumnLayout>

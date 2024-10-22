@@ -1,3 +1,4 @@
+'use client';
 import { PersonWithImage } from '@/queries/types';
 import { getProfileUrl } from '@/utils/images';
 import { cn } from '@/utils/ui';

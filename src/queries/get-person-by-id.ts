@@ -23,6 +23,7 @@ export function getPersonById(
         ),
         roles (
           id,
+          age,
           movies (
             id,
             name,

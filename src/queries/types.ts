@@ -75,10 +75,13 @@ export type MovieWithAll =
   | null
   | undefined;
 
-export type PersonWithAll = PersonWithImage & {
-  person_images: PersonImage[];
-  roles: Role[];
-};
+export type PersonWithAll = 
+  | (PersonWithImage & {
+    person_images: PersonImage[];
+    roles: Role[];
+  })
+  | null
+  | undefined;
 
 export type UserProfile = Tables<'profiles'>;
 
