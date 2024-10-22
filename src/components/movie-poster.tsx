@@ -1,3 +1,4 @@
+'use client';
 import { MovieWithImages } from '@/queries/types';
 import { getFrontCoverUrl, getFullCoverUrl } from '@/utils/images';
 import { cn } from '@/utils/ui';
