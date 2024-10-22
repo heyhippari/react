@@ -45,7 +45,7 @@ export default function Person({ id }: Readonly<{ id: string }>) {
             <PersonPoster person={person} />
             <div className="flex w-full flex-col justify-start gap-4 align-top">
               <div className="flex flex-col gap-0">
-                <h1 className="line-clamp-2 w-fit text-ellipsis bg-gradient-to-r from-pink-600 to-rose-400 bg-clip-text text-4xl font-bold leading-tight text-transparent">
+                <h1 className="line-clamp-2 w-fit text-ellipsis bg-gradient-to-r from-pink-600 to-rose-400 bg-clip-text text-4xl font-bold leading-tight text-transparent dark:from-pink-400 dark:to-rose-400">
                   {person?.name ?? person?.original_name}
                 </h1>
                 {person?.name ? (

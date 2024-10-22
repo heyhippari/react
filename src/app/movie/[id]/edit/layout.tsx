@@ -10,12 +10,12 @@ import { cookies } from 'next/headers';
 import Link from 'next/link';
 import MdiArrowLeft from '~icons/mdi/arrow-left.jsx';
 
-export default async function Layout(props: Readonly<{ children: React.ReactNode; params: { id: string } }>) {
+export default async function Layout(
+  props: Readonly<{ children: React.ReactNode; params: { id: string } }>,
+) {
   const params = await props.params;
 
-  const {
-    children
-  } = props;
+  const { children } = props;
 
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
@@ -33,7 +33,7 @@ export default async function Layout(props: Readonly<{ children: React.ReactNode
           >
             <MoviePoster movie={movie} small />
             <div className="flex flex-col gap-2">
-              <h1 className="line-clamp-2 w-fit text-ellipsis bg-gradient-to-r from-pink-600 to-rose-400 bg-clip-text text-4xl font-bold leading-tight text-transparent">
+              <h1 className="line-clamp-2 w-fit text-ellipsis bg-gradient-to-r from-pink-600 to-rose-400 bg-clip-text text-4xl font-bold leading-tight text-transparent dark:from-pink-400 dark:to-rose-400">
                 {movie?.name ?? movie?.original_name}
               </h1>
               <div className="flex flex-row items-center gap-1 text-pink-300">

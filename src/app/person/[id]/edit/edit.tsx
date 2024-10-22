@@ -53,7 +53,7 @@ export default function Movie({ id }: Readonly<{ id: string }>) {
   return (
     <>
       <ItemNavbar item={person} />
-      <div className="w-full bg-pink-100 p-4 dark:bg-pink-700">
+      <div className="w-full bg-pink-100 p-4 dark:bg-pink-800">
         <div className="container flex flex-col gap-6 px-4 md:flex-row">
           <Link
             href={`/person/${person?.id}`}
@@ -61,7 +61,7 @@ export default function Movie({ id }: Readonly<{ id: string }>) {
           >
             <PersonPoster person={person} small />
             <div className="flex flex-col gap-2">
-              <h1 className="line-clamp-2 w-fit text-ellipsis bg-gradient-to-r from-pink-600 to-rose-400 bg-clip-text text-4xl font-bold leading-tight text-transparent">
+              <h1 className="line-clamp-2 w-fit text-ellipsis bg-gradient-to-r from-pink-600 to-rose-400 bg-clip-text text-4xl font-bold leading-tight text-transparent dark:from-pink-400 dark:to-rose-400">
                 {person?.name ?? person?.original_name}
               </h1>
               <div className="flex flex-row items-center gap-1 text-pink-800">
@@ -131,7 +131,16 @@ export default function Movie({ id }: Readonly<{ id: string }>) {
                   <FormItem>
                     <FormLabel>Height</FormLabel>
                     <FormControl>
-                      <Input type="number" {...field} />
+                      <Input
+                        type="number"
+                        value={field.value}
+                        onChange={(event) =>
+                          form.setValue(
+                            'height',
+                            event.currentTarget.valueAsNumber,
+                          )
+                        }
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -146,7 +155,16 @@ export default function Movie({ id }: Readonly<{ id: string }>) {
                   <FormItem>
                     <FormLabel>Bust Size</FormLabel>
                     <FormControl>
-                      <Input type="number" {...field} />
+                      <Input
+                        type="number"
+                        value={field.value}
+                        onChange={(event) =>
+                          form.setValue(
+                            'bust_size',
+                            event.currentTarget.valueAsNumber,
+                          )
+                        }
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -159,7 +177,16 @@ export default function Movie({ id }: Readonly<{ id: string }>) {
                   <FormItem>
                     <FormLabel>Waist Size</FormLabel>
                     <FormControl>
-                      <Input type="number" {...field} />
+                      <Input
+                        type="number"
+                        value={field.value}
+                        onChange={(event) =>
+                          form.setValue(
+                            'waist_size',
+                            event.currentTarget.valueAsNumber,
+                          )
+                        }
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -174,7 +201,16 @@ export default function Movie({ id }: Readonly<{ id: string }>) {
                   <FormItem>
                     <FormLabel>Hips Size</FormLabel>
                     <FormControl>
-                      <Input type="number" {...field} />
+                      <Input
+                        type="number"
+                        value={field.value}
+                        onChange={(event) =>
+                          form.setValue(
+                            'hips_size',
+                            event.currentTarget.valueAsNumber,
+                          )
+                        }
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
