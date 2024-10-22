@@ -33,8 +33,6 @@ export async function updateMovieAction(
     throw new Error('Error fetching movie');
   }
 
-  console.log('Updating movie', movieId, formData);
-
   const { error: updateError } = await supabase
     .from('movies')
     .update({

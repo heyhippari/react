@@ -23,7 +23,7 @@ export default function RoleCard({ role }: Readonly<{ role: RoleWithPerson }>) {
         ) : (
           <div className="relative inline-flex h-16 w-16 items-center justify-center overflow-hidden rounded-full bg-pink-200 text-pink-400 dark:bg-pink-300 dark:text-pink-500">
             <span className="text-4xl font-medium">
-              {role.person?.name?.[0]}
+              {role.person?.name?.[0] ?? role.person?.original_name?.[0]}
             </span>
           </div>
         )}

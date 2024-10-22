@@ -41,14 +41,14 @@ export default function Movie({ id }: Readonly<{ id: string }>) {
   return (
     <>
       <ItemNavbar item={movie} />
-      <div className="w-full bg-pink-100 p-4 dark:bg-pink-700">
+      <div className="w-full bg-pink-100 p-4 dark:bg-pink-800">
         <div className="container flex flex-col gap-6 px-4 md:flex-row">
           <div className="flex flex-col gap-4">
             <MoviePoster movie={movie} />
           </div>
           <div className="flex w-full flex-col justify-start gap-2 align-top">
             <div className="flex flex-col gap-0">
-              <h1 className="line-clamp-2 w-fit text-ellipsis bg-gradient-to-r from-pink-600 to-rose-400 bg-clip-text text-4xl font-bold leading-tight text-transparent">
+              <h1 className="line-clamp-2 w-fit text-ellipsis bg-gradient-to-r from-pink-600 to-rose-400 bg-clip-text text-4xl font-bold leading-tight text-transparent dark:from-pink-400 dark:to-rose-400">
                 {movie?.name ?? movie?.original_name}
               </h1>
               {movie?.name ? (
@@ -97,11 +97,11 @@ export default function Movie({ id }: Readonly<{ id: string }>) {
             <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
               {movie?.series?.id ? (
                 <div className="flex flex-col">
-                  <p className="text-lg font-semibold leading-loose text-pink-600">
+                  <p className="text-lg font-semibold leading-loose text-pink-600 dark:text-pink-400">
                     Series
                   </p>
                   <Link
-                    className="text-pink-500 hover:text-pink-400 hover:underline"
+                    className="text-pink-500 hover:text-pink-400 hover:underline dark:text-pink-300 dark:hover:text-pink-400"
                     href={`/series/${movie?.series?.id}`}
                   >
                     {movie?.series?.name ?? movie?.series?.original_name}
@@ -110,11 +110,11 @@ export default function Movie({ id }: Readonly<{ id: string }>) {
               ) : null}
               {movie?.studio?.id ? (
                 <div className="flex flex-col">
-                  <p className="text-lg font-semibold leading-loose text-pink-600">
+                  <p className="text-lg font-semibold leading-loose text-pink-600 dark:text-pink-400">
                     Studio
                   </p>
                   <Link
-                    className="text-pink-500 hover:text-pink-400 hover:underline"
+                    className="text-pink-500 hover:text-pink-400 hover:underline dark:text-pink-300 dark:hover:text-pink-400"
                     href={`/studio/${movie?.studio.id}`}
                   >
                     {movie?.studio.name ?? movie?.studio.original_name}
@@ -123,11 +123,11 @@ export default function Movie({ id }: Readonly<{ id: string }>) {
               ) : null}
               {movie?.label?.id ? (
                 <div className="flex flex-col">
-                  <p className="text-lg font-semibold leading-loose text-pink-600">
+                  <p className="text-lg font-semibold leading-loose text-pink-600 dark:text-pink-400">
                     Label
                   </p>
                   <Link
-                    className="text-pink-500 hover:text-pink-400 hover:underline"
+                    className="text-pink-500 hover:text-pink-400 hover:underline dark:text-pink-300 dark:hover:text-pink-400"
                     href={`/label/${movie?.label.id}`}
                   >
                     {movie?.label.name ?? movie?.label.original_name}

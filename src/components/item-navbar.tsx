@@ -118,7 +118,7 @@ export default function ItemNavbar({ item }: Readonly<{ item: Item }>) {
   };
 
   return (
-    <nav className="start-0 top-0 z-20 w-full border-b bg-pink-300 p-2 dark:border-pink-700 dark:bg-pink-600">
+    <nav className="start-0 top-0 z-20 w-full border-b bg-pink-300 p-2 dark:border-pink-700 dark:bg-pink-700">
       <div className="container mx-auto flex items-center gap-2 overflow-x-scroll px-4 md:justify-center md:overflow-auto">
         <HoverCard openDelay={0} closeDelay={0}>
           <HoverCardTrigger>
