@@ -4,13 +4,13 @@ import {
   getMostRecentMovies,
   getReleasedOnThisDay,
 } from '@/queries/homepage';
-import useSupabaseServer from '@/utils/supabase/server';
+import createClient from '@/utils/supabase/server';
 import { cookies } from 'next/headers';
 import MovieSlider from './movie-slider';
 
 export default async function HomeSliders() {
-  const cookieStore = cookies();
-  const supabase = useSupabaseServer(cookieStore);
+  const cookieStore = await cookies();
+  const supabase = createClient(cookieStore);
   const { data: recentMovies } = await getMostRecentMovies(supabase);
   const { data: informationNeeded } = await getInformationNeeded(supabase);
   const { data: releasedOnThisDay } = await getReleasedOnThisDay(supabase);

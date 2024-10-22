@@ -1,9 +1,10 @@
 import { getMovieById } from '@/queries/get-movie-by-id';
 import { getApiMovieObject, omitNulls } from '@/utils/api';
-import useSupabaseServer from '@/utils/supabase/server';
+import createClient from '@/utils/supabase/server';
 import { cookies } from 'next/headers';
 
-export async function GET(_: Request, { params }: { params: { id: string } }) {
+export async function GET(_: Request, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const { id } = params;
 
   // If the id contains anything other than numbers, redirect to 404
@@ -11,9 +12,9 @@ export async function GET(_: Request, { params }: { params: { id: string } }) {
     return new Response(null, { status: 400 });
   }
 
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const supabase = useSupabaseServer(cookieStore);
+  const supabase = createClient(cookieStore);
 
   const { data, error } = await getMovieById(supabase, Number(id));
 

@@ -2,7 +2,7 @@ import {
   getMoviePageCount,
   getPaginatedMovies,
 } from '@/queries/get-movies-paginated';
-import useSupabaseServer from '@/utils/supabase/server';
+import createClient from '@/utils/supabase/server';
 import { prefetchQuery } from '@supabase-cache-helpers/postgrest-react-query';
 import {
   HydrationBoundary,
@@ -12,14 +12,15 @@ import {
 import { cookies } from 'next/headers';
 import MovieIndex from './movie-index';
 
-export default async function MoviePage({
-  searchParams,
-}: {
-  searchParams?: Record<string, string | undefined>;
-}) {
+export default async function MoviePage(
+  props: {
+    searchParams?: Promise<Record<string, string | undefined>>;
+  }
+) {
+  const searchParams = await props.searchParams;
   const queryClient = new QueryClient();
-  const cookieStore = cookies();
-  const supabase = useSupabaseServer(cookieStore);
+  const cookieStore = await cookies();
+  const supabase = createClient(cookieStore);
 
   // Parse the page into a number, defaulting to 1
   const currentPage = searchParams?.page ? parseInt(searchParams.page, 10) : 1;

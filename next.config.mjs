@@ -3,10 +3,8 @@ import Icons from 'unplugin-icons/webpack';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  optimizeFonts: true,
   compress: true,
   reactStrictMode: true,
-  swcMinify: true,
   images: {
     loader: 'custom',
     loaderFile: './src/utils/image-loader.ts',

@@ -1,5 +1,5 @@
 import { getLabelById, getLabelMoviesCount } from '@/queries/get-label-by-id';
-import useSupabaseServer from '@/utils/supabase/server';
+import createClient from '@/utils/supabase/server';
 import { prefetchQuery } from '@supabase-cache-helpers/postgrest-react-query';
 import {
   HydrationBoundary,
@@ -10,10 +10,11 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import Label from './label';
 
-export async function generateMetadata({ params }: { params: { id: number } }) {
-  const cookieStore = cookies();
+export async function generateMetadata(props: { params: Promise<{ id: number }> }) {
+  const params = await props.params;
+  const cookieStore = await cookies();
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const supabase = useSupabaseServer(cookieStore);
+  const supabase = createClient(cookieStore);
 
   try {
     const { data: label } = await getLabelById(supabase, params.id);
@@ -30,14 +31,15 @@ export async function generateMetadata({ params }: { params: { id: number } }) {
   }
 }
 
-export default async function LabelPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+export default async function LabelPage(
+  props: {
+    params: Promise<{ id: string }>;
+  }
+) {
+  const params = await props.params;
   const queryClient = new QueryClient();
-  const cookieStore = cookies();
-  const supabase = useSupabaseServer(cookieStore);
+  const cookieStore = await cookies();
+  const supabase = createClient(cookieStore);
 
   // If the id contains anything other than numbers, redirect to 404
   if (!/^\d+$/.test(params.id)) {

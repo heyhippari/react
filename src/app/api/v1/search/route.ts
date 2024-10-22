@@ -1,7 +1,7 @@
 import { searchMovieByDvdId } from '@/queries/search-movie-by-dvd-id';
 import { omitNulls } from '@/utils/api';
 import { Tables } from '@/utils/database.types';
-import useSupabaseServer from '@/utils/supabase/server';
+import createClient from '@/utils/supabase/server';
 import { cookies } from 'next/headers';
 
 type MovieSearchResult = Pick<
@@ -17,9 +17,9 @@ export async function GET(request: Request) {
     return new Response('Missing search query', { status: 400 });
   }
 
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const supabase = useSupabaseServer(cookieStore);
+  const supabase = createClient(cookieStore);
 
   const { data, error } = await searchMovieByDvdId(supabase, query);
 

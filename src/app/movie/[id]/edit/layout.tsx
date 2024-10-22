@@ -5,17 +5,20 @@ import MoviePoster from '@/components/movie-poster';
 
 import SidebarMovieEdit from '@/components/sidebar-movie-edit';
 import { getMovieById } from '@/queries/get-movie-by-id';
-import useSupabaseServer from '@/utils/supabase/server';
+import createClient from '@/utils/supabase/server';
 import { cookies } from 'next/headers';
 import Link from 'next/link';
 import MdiArrowLeft from '~icons/mdi/arrow-left.jsx';
 
-export default async function Layout({
-  children,
-  params,
-}: Readonly<{ children: React.ReactNode; params: { id: string } }>) {
-  const cookieStore = cookies();
-  const supabase = useSupabaseServer(cookieStore);
+export default async function Layout(props: Readonly<{ children: React.ReactNode; params: { id: string } }>) {
+  const params = await props.params;
+
+  const {
+    children
+  } = props;
+
+  const cookieStore = await cookies();
+  const supabase = createClient(cookieStore);
 
   const { data: movie } = await getMovieById(supabase, params.id);
 

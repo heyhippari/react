@@ -2,7 +2,7 @@
   "files.associations": {
     "*.css": "postcss"
   },
-  "cSpell.words": ["Supabase"],
+  "editor.formatOnSave": true,
   "eslint.lintTask.enable": true,
   "eslint.useFlatConfig": true,
   "typescript.tsdk": "node_modules/typescript/lib"

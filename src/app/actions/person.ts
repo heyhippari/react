@@ -1,7 +1,7 @@
 'use server';
 import { getPersonById } from '@/queries/get-person-by-id';
 import { cloudflare } from '@/utils/cloudflare';
-import useSupabaseServer from '@/utils/supabase/server';
+import createClient from '@/utils/supabase/server';
 import { PersonEditFormSchema } from '@/utils/validation/person-update';
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
@@ -11,9 +11,9 @@ export async function updatePersonAction(
   personId: number,
   formData: PersonEditFormSchema,
 ) {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const supabase = useSupabaseServer(cookieStore);
+  const supabase = createClient(cookieStore);
 
   if (!personId) {
     throw new Error('No person ID provided');
@@ -52,9 +52,9 @@ export async function updatePersonAction(
 }
 
 export async function deletePersonAction(id: number | undefined) {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const supabase = useSupabaseServer(cookieStore);
+  const supabase = createClient(cookieStore);
 
   if (!id) {
     throw new Error('No person ID provided');

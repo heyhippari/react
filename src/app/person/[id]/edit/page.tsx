@@ -1,5 +1,5 @@
 import { getPersonById } from '@/queries/get-person-by-id';
-import useSupabaseServer from '@/utils/supabase/server';
+import createClient from '@/utils/supabase/server';
 import { prefetchQuery } from '@supabase-cache-helpers/postgrest-react-query';
 import {
   HydrationBoundary,
@@ -10,14 +10,15 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import PersonEdit from './edit';
 
-export default async function PersonEditPage({
-  params,
-}: Readonly<{
-  params: { id: string };
-}>) {
+export default async function PersonEditPage(
+  props: Readonly<{
+    params: { id: string };
+  }>
+) {
+  const params = await props.params;
   const queryClient = new QueryClient();
-  const cookieStore = cookies();
-  const supabase = useSupabaseServer(cookieStore);
+  const cookieStore = await cookies();
+  const supabase = createClient(cookieStore);
 
   // If we are not logged in, redirect to login
   const { data, error } = await supabase.auth.getUser();

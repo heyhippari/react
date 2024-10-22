@@ -2,16 +2,16 @@
 
 import { registerItemView } from '@/queries/views';
 import { sha256 } from '@/utils/hash';
-import useSupabaseServer from '@/utils/supabase/server';
+import createClient from '@/utils/supabase/server';
 import { cookies, headers } from 'next/headers';
 
 export async function registerViewAction(
   itemId: number | string,
   itemType: 'movie' | 'person' | 'series' | 'studio' | 'label',
 ) {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const supabase = useSupabaseServer(cookieStore);
+  const supabase = createClient(cookieStore);
 
   // If this is a development environment, we don't want to register views
   // since it will mess up production data.
@@ -39,11 +39,11 @@ export async function registerViewAction(
   // NEVER store this as-is, since it's PII. Always hash it with other data
   // before storing it.
   const clientIp =
-    headers().get('x-forwarded-for') ??
-    headers().get('cf-connecting-ip') ??
-    headers().get('x-real-ip') ??
-    headers().get('x-forwarded-host');
-  const userAgent = headers().get('user-agent');
+    (await headers()).get('x-forwarded-for') ??
+    (await headers()).get('cf-connecting-ip') ??
+    (await headers()).get('x-real-ip') ??
+    (await headers()).get('x-forwarded-host');
+  const userAgent = (await headers()).get('user-agent');
   const currentDate = new Date().toISOString().split('T')[0];
 
   // We hash the client IP, user agent, and current date to create a unique

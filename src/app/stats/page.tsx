@@ -1,11 +1,11 @@
 import ChartRolesByAge from '@/components/chart-roles-by-age';
 import { getRolesByAge } from '@/queries/stats';
-import useSupabaseServer from '@/utils/supabase/server';
+import createClient from '@/utils/supabase/server';
 import { cookies } from 'next/headers';
 
 export default async function StatsPage() {
-  const cookieStore = cookies();
-  const supabase = useSupabaseServer(cookieStore);
+  const cookieStore = await cookies();
+  const supabase = createClient(cookieStore);
 
   const { data: rolesByAge } = await getRolesByAge(supabase);
 

@@ -1,14 +1,13 @@
 'use server';
-import useSupabaseServer from '@/utils/supabase/server';
+import createClient from '@/utils/supabase/server';
 import { Provider } from '@supabase/supabase-js';
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 export async function logoutAction() {
-  const cookieStore = cookies();
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const supabase = useSupabaseServer(cookieStore);
+  const cookieStore = await cookies();
+  const supabase = createClient(cookieStore);
 
   await supabase.auth.signOut();
 
@@ -17,13 +16,12 @@ export async function logoutAction() {
 }
 
 export async function loginAction(formData: FormData) {
+  const cookieStore = await cookies();
+  const supabase = createClient(cookieStore);
+
   const defaultUrl = process.env.VERCEL_URL
     ? `https://kanojodb.com`
     : 'http://localhost:3000';
-
-  const cookieStore = cookies();
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const supabase = useSupabaseServer(cookieStore);
 
   const provider = formData.get('provider') as Provider;
 

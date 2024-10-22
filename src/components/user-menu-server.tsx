@@ -1,13 +1,13 @@
 import LoginButton from '@/components/login-button';
 import { getProfileById } from '@/queries/get-profile-by-id';
 import { UserProfile } from '@/queries/types';
-import useSupabaseServer from '@/utils/supabase/server';
+import createClient from '@/utils/supabase/server';
 import { cookies } from 'next/headers';
 import UserMenu from './user-menu';
 
 export default async function UserMenuServer() {
-  const cookieStore = cookies();
-  const supabase = useSupabaseServer(cookieStore);
+  const cookieStore = await cookies();
+  const supabase = createClient(cookieStore);
 
   const {
     data: { user },
