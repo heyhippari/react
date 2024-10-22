@@ -13,8 +13,10 @@ import PersonEdit from './edit';
 export default async function PersonEditPage({
   params,
 }: Readonly<{
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }>) {
+  const { id } = await params;
+
   const queryClient = new QueryClient();
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
@@ -26,15 +28,15 @@ export default async function PersonEditPage({
   }
 
   // If the id contains anything other than numbers, redirect to 404
-  if (!/^\d+$/.test(params.id)) {
+  if (!/^\d+$/.test(id)) {
     return redirect('/404');
   }
 
-  await prefetchQuery(queryClient, getPersonById(supabase, params.id));
+  await prefetchQuery(queryClient, getPersonById(supabase, id));
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <PersonEdit id={params.id} />
+      <PersonEdit id={id} />
     </HydrationBoundary>
   );
 }

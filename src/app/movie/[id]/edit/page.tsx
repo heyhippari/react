@@ -13,8 +13,10 @@ import MovieEdit from './edit';
 export default async function MovieEditPage({
   params,
 }: Readonly<{
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }>) {
+  const { id } = await params;
+
   const queryClient = new QueryClient();
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
@@ -26,15 +28,15 @@ export default async function MovieEditPage({
   }
 
   // If the id contains anything other than numbers, redirect to 404
-  if (!/^\d+$/.test(params.id)) {
+  if (!/^\d+$/.test(id)) {
     return redirect('/404');
   }
 
-  await prefetchQuery(queryClient, getMovieById(supabase, params.id));
+  await prefetchQuery(queryClient, getMovieById(supabase, id));
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <MovieEdit id={params.id} />
+      <MovieEdit id={id} />
     </HydrationBoundary>
   );
 }

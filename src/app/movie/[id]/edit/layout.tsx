@@ -13,11 +13,13 @@ import MdiArrowLeft from '~icons/mdi/arrow-left.jsx';
 export default async function Layout({
   params,
   children,
-}: Readonly<{ children: React.ReactNode; params: { id: string } }>) {
+}: Readonly<{ children: React.ReactNode; params: Promise<{ id: string }> }>) {
+  const { id } = await params;
+
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
 
-  const { data: movie } = await getMovieById(supabase, params.id);
+  const { data: movie } = await getMovieById(supabase, id);
 
   return (
     <>
