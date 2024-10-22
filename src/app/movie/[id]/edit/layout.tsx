@@ -10,13 +10,10 @@ import { cookies } from 'next/headers';
 import Link from 'next/link';
 import MdiArrowLeft from '~icons/mdi/arrow-left.jsx';
 
-export default async function Layout(
-  props: Readonly<{ children: React.ReactNode; params: { id: string } }>,
-) {
-  const params = await props.params;
-
-  const { children } = props;
-
+export default async function Layout({
+  params,
+  children,
+}: Readonly<{ children: React.ReactNode; params: { id: string } }>) {
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
 

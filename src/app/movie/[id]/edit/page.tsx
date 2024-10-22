@@ -10,12 +10,11 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import MovieEdit from './edit';
 
-export default async function MovieEditPage(
-  props: Readonly<{
-    params: { id: string };
-  }>
-) {
-  const params = await props.params;
+export default async function MovieEditPage({
+  params,
+}: Readonly<{
+  params: { id: string };
+}>) {
   const queryClient = new QueryClient();
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);

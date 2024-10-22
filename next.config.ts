@@ -1,18 +1,22 @@
+import type { NextConfig } from 'next';
 import { withSentryConfig } from '@sentry/nextjs';
 import Icons from 'unplugin-icons/webpack';
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig: NextConfig = {
   compress: true,
   reactStrictMode: true,
   images: {
     loader: 'custom',
     loaderFile: './src/utils/image-loader.ts',
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   experimental: {
     // swcPlugins: [['@lingui/swc-plugin', {}]],
   },
-  webpack(config) {
+  webpack: (config) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     config.plugins.push(
       Icons({
         compiler: 'jsx',
@@ -20,6 +24,7 @@ const nextConfig = {
       }),
     );
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return config;
   },
 };

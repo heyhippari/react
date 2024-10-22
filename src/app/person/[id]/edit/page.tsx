@@ -10,12 +10,11 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import PersonEdit from './edit';
 
-export default async function PersonEditPage(
-  props: Readonly<{
-    params: { id: string };
-  }>
-) {
-  const params = await props.params;
+export default async function PersonEditPage({
+  params,
+}: Readonly<{
+  params: { id: string };
+}>) {
   const queryClient = new QueryClient();
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
