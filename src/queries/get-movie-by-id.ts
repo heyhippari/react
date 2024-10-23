@@ -23,6 +23,7 @@ export function getMovieById(
         front_cover_url,
         full_cover_url,
         roles (
+          id,
           age,
           person: persons (
             id,

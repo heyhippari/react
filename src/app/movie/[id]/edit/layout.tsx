@@ -6,6 +6,7 @@ import ItemPoster from '@/components/item-poster';
 import SidebarMovieEdit from '@/components/sidebar-movie-edit';
 import { getMovieById } from '@/queries/get-movie-by-id';
 import createClient from '@/utils/supabase/server';
+import { getUrlForItem } from '@/utils/types';
 import { cookies } from 'next/headers';
 import Link from 'next/link';
 import MdiArrowLeft from '~icons/mdi/arrow-left.jsx';
@@ -27,7 +28,7 @@ export default async function Layout({
       <div className="w-full bg-pink-100 p-4 dark:bg-pink-800">
         <div className="container flex flex-col gap-6 px-4 md:flex-row">
           <Link
-            href={`/movie/${movie?.id}`}
+            href={getUrlForItem(movie)}
             className="flex flex-col items-center gap-4 md:flex-row"
           >
             <ItemPoster item={movie} small />

@@ -86,15 +86,15 @@ export function getUrlForItem(item: Item, path = '/', differenciator?: 'series' 
   }
 
   if (isMovie(item)) {
-    return `/movie/${item.id}${path ? `/${path}` : ''}`;
+    return `/movie/${item.id}${path ? `${path}` : ''}`;
   } else if (isPerson(item)) {
-    return `/person/${item.id}${path ? `/${path}` : ''}`;
+    return `/person/${item.id}${path ? `${path}` : ''}`;
   } else if (differenciator === 'series') {
-    return `/series/${(item as Series).id}${path ? `/${path}` : ''}`;
+    return `/series/${(item as Series).id}${path ? `${path}` : ''}`;
   } else if (differenciator === 'label') {
-    return `/label/${(item as Label).id}${path ? `/${path}` : ''}`;
+    return `/label/${(item as Label).id}${path ? `${path}` : ''}`;
   } else if (differenciator === 'studio') {
-    return `/studio/${(item as Studio).id}${path ? `/${path}` : ''}`;
+    return `/studio/${(item as Studio).id}${path ? `${path}` : ''}`;
   }
 
   return '/';

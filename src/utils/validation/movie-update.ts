@@ -30,3 +30,9 @@ export const movieEditFormSchema = z.object({
 });
 
 export type MovieEditFormSchema = z.infer<typeof movieEditFormSchema>;
+
+export const movieRoleAddFormSchema = z.object({
+  person_id: z.coerce.number(),
+});
+
+export type MovieRoleAddFormSchema = z.infer<typeof movieRoleAddFormSchema>;

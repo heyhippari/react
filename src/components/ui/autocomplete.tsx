@@ -104,7 +104,7 @@ export function AutoComplete<T extends string>({
                 e.preventDefault();
               }
             }}
-            className="w-[--radix-popover-trigger-width] p-0"
+            className="z-50 w-[--radix-popover-trigger-width] p-0"
           >
             <CommandList>
               {items.length > 0 && !isLoading ? (
