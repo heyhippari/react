@@ -1,6 +1,6 @@
 'use client';
 
-import MovieCard from '@/components/movie-card';
+import ItemCard from '@/components/item-card';
 import { PaginationLinks } from '@/components/pagination-links';
 import { TwoColumnLayout } from '@/components/two-column-layout';
 import { Button } from '@/components/ui/button';
@@ -122,7 +122,7 @@ export default function MovieIndex({ page }: { page: number }) {
           <PaginationLinks page={page} pageCount={pageCount} />
           <div className="grid grid-cols-3 gap-4 md:grid-cols-4 lg:grid-cols-5">
             {movies?.map((movie, index) => (
-              <MovieCard key={index} movie={movie} />
+              <ItemCard key={index} item={movie} />
             ))}
           </div>
           <PaginationLinks page={page} pageCount={pageCount} />

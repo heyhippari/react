@@ -3,7 +3,7 @@ import { deleteMovieAction } from '@/app/actions/movie';
 import { Item } from '@/queries/types';
 import { useUserRole } from '@/utils/hooks';
 import { getShareTitle } from '@/utils/share';
-import { isMovie, isPerson } from '@/utils/types';
+import { getUrlForItem, isMovie, isPerson } from '@/utils/types';
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import { Badge } from './ui/badge';
@@ -49,20 +49,12 @@ export default function ItemNavbar({ item }: Readonly<{ item: Item }>) {
     }
   }, [item]);
 
-  const itemPath = useMemo(() => {
-    if (isMovie(item)) {
-      return `/movie/${item?.id}`;
-    } else {
-      return `/person/${item?.id}`;
-    }
-  }, [item]);
-
   const imageLinks = useMemo(() => {
     if (isMovie(item)) {
       return (
         <>
           <Link
-            href={itemPath}
+            href={getUrlForItem(item)}
             className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-between')} w-full`}
           >
             Poster
@@ -70,7 +62,7 @@ export default function ItemNavbar({ item }: Readonly<{ item: Item }>) {
           </Link>
 
           <Link
-            href={itemPath}
+            href={getUrlForItem(item)}
             className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-between')} w-full`}
           >
             Backdrop
@@ -81,7 +73,7 @@ export default function ItemNavbar({ item }: Readonly<{ item: Item }>) {
     } else if (isPerson(item)) {
       return (
         <Link
-          href={itemPath}
+          href={getUrlForItem(item)}
           className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-between')} w-full`}
         >
           Profile
@@ -91,7 +83,7 @@ export default function ItemNavbar({ item }: Readonly<{ item: Item }>) {
     } else {
       return null;
     }
-  }, [frontCoverCount, fullCoverCount, item, itemPath, profileCount]);
+  }, [frontCoverCount, fullCoverCount, item, profileCount]);
 
   const handleShare = async () => {
     if (supportsShareAPI) {
@@ -126,26 +118,26 @@ export default function ItemNavbar({ item }: Readonly<{ item: Item }>) {
           </HoverCardTrigger>
           <HoverCardContent align="center" className="w-44 p-2">
             <Link
-              href={itemPath}
+              href={getUrlForItem(item)}
               className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-start')} w-full`}
             >
               Main
             </Link>
             <DropdownMenuSeparator />
             <Link
-              href={itemPath}
+              href={getUrlForItem(item)}
               className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-start')} w-full`}
             >
               Changes
             </Link>
             <Link
-              href={itemPath}
+              href={getUrlForItem(item)}
               className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-start')} w-full`}
             >
               Report
             </Link>
             <Link
-              href={`${itemPath}/edit`}
+              href={`${getUrlForItem(item)}/edit`}
               className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-start')} w-full`}
             >
               Edit
@@ -170,7 +162,7 @@ export default function ItemNavbar({ item }: Readonly<{ item: Item }>) {
           </HoverCardTrigger>
           <HoverCardContent align="center" className="w-44 p-2">
             <Link
-              href={itemPath}
+              href={getUrlForItem(item)}
               className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-between')} w-full`}
             >
               Discussions
@@ -178,7 +170,7 @@ export default function ItemNavbar({ item }: Readonly<{ item: Item }>) {
             </Link>
 
             <Link
-              href={itemPath}
+              href={getUrlForItem(item)}
               className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-between')} w-full`}
             >
               Reviews

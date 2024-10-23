@@ -1,5 +1,5 @@
 import ItemNavbar from '@/components/item-navbar';
-import PersonPoster from '@/components/person-poster';
+import ItemPoster from '@/components/item-poster';
 import SidebarPersonEdit from '@/components/sidebar-person-edit';
 import { TwoColumnLayout } from '@/components/two-column-layout';
 import { getPersonById } from '@/queries/get-person-by-id';
@@ -28,7 +28,7 @@ export default async function Layout({
             href={`/person/${person?.id}`}
             className="flex flex-col items-center gap-4 md:flex-row"
           >
-            <PersonPoster person={person} small />
+            <ItemPoster item={person} small />
             <div className="flex flex-col gap-2">
               <h1 className="line-clamp-2 w-fit text-ellipsis bg-gradient-to-r from-pink-600 to-rose-400 bg-clip-text text-4xl font-bold leading-tight text-transparent dark:from-pink-400 dark:to-rose-400">
                 {person?.name ?? person?.original_name}

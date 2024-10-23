@@ -1,6 +1,11 @@
 'use client';
-import { PersonWithImage } from '@/queries/types';
-import { getProfileUrl } from '@/utils/images';
+import { MovieWithImages, PersonWithImage } from '@/queries/types';
+import {
+  getFrontCoverUrl,
+  getFullCoverUrl,
+  getProfileUrl,
+} from '@/utils/images';
+import { isMovie, isPerson } from '@/utils/types';
 import { cn } from '@/utils/ui';
 import Image from 'next/image';
 import { useMemo, useState } from 'react';
@@ -8,12 +13,31 @@ import Lightbox from 'yet-another-react-lightbox';
 
 import 'yet-another-react-lightbox/styles.css';
 
-export default function PersonPoster({
-  person,
+export default function ItemPoster({
+  item,
   small = false,
-}: Readonly<{ person: PersonWithImage; small?: boolean }>) {
+}: Readonly<{
+  item: MovieWithImages | PersonWithImage;
+  small?: boolean;
+}>) {
   const [open, setOpen] = useState(false);
-  const profile = useMemo(() => getProfileUrl(person, 'poster'), [person]);
+
+  const image = useMemo(() => {
+    if (isMovie(item)) {
+      return getFrontCoverUrl(item, 'poster');
+    } else if (isPerson(item)) {
+      return getProfileUrl(item, 'poster');
+    }
+
+    return null;
+  }, [item]);
+  const fullImage = useMemo(() => {
+    if (isMovie(item)) {
+      return getFullCoverUrl(item);
+    }
+
+    return null;
+  }, [item]);
 
   return (
     <>
@@ -23,15 +47,17 @@ export default function PersonPoster({
           small ? 'w-[50px]' : 'w-[150px] lg:w-[250px]',
         )}
       >
-        {person && profile ? (
+        {item && image ? (
           <Image
-            className="rounded-lg object-cover shadow-md"
-            src={profile}
-            alt={person?.name ?? person?.original_name}
+            className="aspect-[2/3] object-cover"
+            src={image}
+            alt={item?.name ?? item?.original_name}
             unoptimized
             width={250}
             height={375}
-            onClick={() => (profile && !small ? setOpen(true) : null)}
+            sizes="(max-width: 1024px) 150w, 250w"
+            priority
+            onClick={() => (fullImage && !small ? setOpen(true) : null)}
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center">
@@ -47,13 +73,13 @@ export default function PersonPoster({
         )}
       </div>
 
-      {profile && !small ? (
+      {fullImage && !small ? (
         <Lightbox
           open={open}
           close={() => setOpen(false)}
           slides={[
             {
-              src: profile,
+              src: fullImage,
             },
           ]}
           carousel={{ finite: true }}

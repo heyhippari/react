@@ -33,6 +33,10 @@ export type Movie = Pick<
 
 export type Series = Pick<Tables<'series'>, 'id' | 'name' | 'original_name'>;
 
+export type Label = Pick<Tables<'labels'>, 'id' | 'name' | 'original_name'>;
+
+export type Studio = Pick<Tables<'studios'>, 'id' | 'name' | 'original_name'>;
+
 export type MovieWithImages =
   | (Movie & {
       front_cover_url?: string | null;
@@ -86,6 +90,6 @@ export type PersonWithAll =
 export type UserProfile = Tables<'profiles'>;
 
 export type ItemWithImages = MovieWithImages | PersonWithImage;
-export type Item = MovieWithAll | PersonWithAll | Series;
+export type Item = MovieWithAll | PersonWithAll | Series | Studio | Label;
 
 export type MediaFormat = Enums<'media_format'>;

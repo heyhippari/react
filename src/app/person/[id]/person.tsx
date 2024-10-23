@@ -1,9 +1,9 @@
 'use client';
 
 import { registerViewAction } from '@/app/actions/view';
+import ItemCard from '@/components/item-card';
 import ItemNavbar from '@/components/item-navbar';
-import MovieCard from '@/components/movie-card';
-import PersonPoster from '@/components/person-poster';
+import ItemPoster from '@/components/item-poster';
 import { Badge } from '@/components/ui/badge';
 import { getPersonById, getPersonRolesCount } from '@/queries/get-person-by-id';
 import useSupabaseBrowser from '@/utils/supabase/client';
@@ -42,7 +42,7 @@ export default function Person({ id }: Readonly<{ id: string }>) {
       <div className="container flex flex-grow flex-col gap-2 px-4 lg:flex-row">
         <div className="flex-grow bg-pink-100 p-4 dark:bg-pink-950">
           <div className="container flex flex-col gap-6 px-4">
-            <PersonPoster person={person} />
+            <ItemPoster item={person} />
             <div className="flex w-full flex-col justify-start gap-4 align-top">
               <div className="flex flex-col gap-0">
                 <h1 className="line-clamp-2 w-fit text-ellipsis bg-gradient-to-r from-pink-600 to-rose-400 bg-clip-text text-4xl font-bold leading-tight text-transparent dark:from-pink-400 dark:to-rose-400">
@@ -96,7 +96,7 @@ export default function Person({ id }: Readonly<{ id: string }>) {
           </div>
           <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {person?.roles.map((role) => (
-              <MovieCard key={role.id} movie={role?.movies} />
+              <ItemCard key={role.id} item={role?.movies} />
             ))}
           </div>
         </div>

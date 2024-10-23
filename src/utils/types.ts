@@ -1,9 +1,11 @@
 import {
   Item,
+  Label,
   MediaFormat,
   MovieWithAll,
   PersonWithAll,
   Series,
+  Studio,
 } from '@/queries/types';
 import type { Database } from '@/utils/database.types';
 import { SupabaseClient } from '@supabase/supabase-js';
@@ -25,7 +27,7 @@ export function isMovie(item: Item): item is MovieWithAll {
     return false;
   }
 
-  return 'dvd_id' in item;
+  return 'dvd_id' in item || 'barcode' in item;
 }
 
 /**
@@ -68,4 +70,32 @@ export function isMediaFormat(format: unknown): format is MediaFormat {
       'Video CD',
     ]).includes(format as MediaFormat)
   );
+}
+
+/**
+ * Returns the given item's URL, optionally with a path.
+ * 
+ * @param item The item to get the URL for.
+ * @param path The path to append to the URL. Defaults to `/`.
+ * @param differenciator The differenciator to use for the URL.
+ * @returns The URL for the item.
+ **/
+export function getUrlForItem(item: Item, path = '/', differenciator?: 'series' | 'label' | 'studio'): string {
+  if (!item) {
+    return '/';
+  }
+
+  if (isMovie(item)) {
+    return `/movie/${item.id}${path ? `/${path}` : ''}`;
+  } else if (isPerson(item)) {
+    return `/person/${item.id}${path ? `/${path}` : ''}`;
+  } else if (differenciator === 'series') {
+    return `/series/${(item as Series).id}${path ? `/${path}` : ''}`;
+  } else if (differenciator === 'label') {
+    return `/label/${(item as Label).id}${path ? `/${path}` : ''}`;
+  } else if (differenciator === 'studio') {
+    return `/studio/${(item as Studio).id}${path ? `/${path}` : ''}`;
+  }
+
+  return '/';
 }

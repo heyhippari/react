@@ -1,7 +1,7 @@
 'use client';
 
 import { registerViewAction } from '@/app/actions/view';
-import MovieCard from '@/components/movie-card';
+import ItemCard from '@/components/item-card';
 import { Badge } from '@/components/ui/badge';
 import { getLabelById, getLabelMoviesCount } from '@/queries/get-label-by-id';
 import useSupabaseBrowser from '@/utils/supabase/client';
@@ -59,7 +59,7 @@ export default function Label({ id }: Readonly<{ id: string }>) {
         </div>
         <div className="grid grid-cols-3 gap-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
           {label?.movies.map((movie, index) => (
-            <MovieCard key={index} movie={movie} />
+            <ItemCard key={index} item={movie} />
           ))}
         </div>
       </div>

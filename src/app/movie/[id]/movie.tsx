@@ -2,7 +2,7 @@
 
 import { registerViewAction } from '@/app/actions/view';
 import ItemNavbar from '@/components/item-navbar';
-import MoviePoster from '@/components/movie-poster';
+import ItemPoster from '@/components/item-poster';
 import RoleCard from '@/components/role-card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -44,7 +44,7 @@ export default function Movie({ id }: Readonly<{ id: string }>) {
       <div className="w-full bg-pink-100 p-4 dark:bg-pink-800">
         <div className="container flex flex-col gap-6 px-4 md:flex-row">
           <div className="flex flex-col gap-4">
-            <MoviePoster movie={movie} />
+            <ItemPoster item={movie} />
           </div>
           <div className="flex w-full flex-col justify-start gap-2 align-top">
             <div className="flex flex-col gap-0">

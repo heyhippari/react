@@ -1,11 +1,9 @@
 'use client';
 import { FreeMode, Mousewheel, Scrollbar, Virtual } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import MovieCard from './movie-card';
-import PersonCard from './person-card';
+import ItemCard from './item-card';
 
 import { ItemWithImages } from '@/queries/types';
-import { isMovie, isPerson } from '@/utils/types';
 import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/mousewheel';
@@ -32,8 +30,7 @@ export default function MovieSlider({
             className="mb-2 mr-4 max-w-[100px] md:max-w-[200px]"
             virtualIndex={index}
           >
-            {isMovie(item) ? <MovieCard movie={item} /> : null}
-            {isPerson(item) ? <PersonCard person={item} /> : null}
+            <ItemCard item={item} />
           </SwiperSlide>
         ))}
       </Swiper>

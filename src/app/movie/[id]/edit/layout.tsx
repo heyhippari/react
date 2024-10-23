@@ -1,7 +1,7 @@
 import { TwoColumnLayout } from '@/components/two-column-layout';
 
 import ItemNavbar from '@/components/item-navbar';
-import MoviePoster from '@/components/movie-poster';
+import ItemPoster from '@/components/item-poster';
 
 import SidebarMovieEdit from '@/components/sidebar-movie-edit';
 import { getMovieById } from '@/queries/get-movie-by-id';
@@ -30,7 +30,7 @@ export default async function Layout({
             href={`/movie/${movie?.id}`}
             className="flex flex-col items-center gap-4 md:flex-row"
           >
-            <MoviePoster movie={movie} small />
+            <ItemPoster item={movie} small />
             <div className="flex flex-col gap-2">
               <h1 className="line-clamp-2 w-fit text-ellipsis bg-gradient-to-r from-pink-600 to-rose-400 bg-clip-text text-4xl font-bold leading-tight text-transparent dark:from-pink-400 dark:to-rose-400">
                 {movie?.name ?? movie?.original_name}

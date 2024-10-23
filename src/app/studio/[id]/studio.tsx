@@ -1,7 +1,7 @@
 'use client';
 
 import { registerViewAction } from '@/app/actions/view';
-import MovieCard from '@/components/movie-card';
+import ItenCard from '@/components/item-card';
 import { Badge } from '@/components/ui/badge';
 import {
   getStudioById,
@@ -66,7 +66,7 @@ export default function Studio({ id }: Readonly<{ id: string }>) {
         </div>
         <div className="grid grid-cols-3 gap-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
           {studio?.movies.map((movie, index) => (
-            <MovieCard key={index} movie={movie} />
+            <ItenCard key={index} item={movie} />
           ))}
         </div>
       </div>
