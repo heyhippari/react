@@ -68,7 +68,7 @@
     "@iconify-json/simple-icons": "^1.2.7",
     "@lingui/cli": "^4.11.4",
     "@lingui/swc-plugin": "^4.0.8",
-    "@next/eslint-plugin-next": "15.0.0",
+    "@next/eslint-plugin-next": "15.0.1",
     "@svgr/core": "^8.1.0",
     "@svgr/plugin-jsx": "^8.1.0",
     "@types/cookie": "^0.6.0",
