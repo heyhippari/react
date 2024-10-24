@@ -60,7 +60,7 @@
     "tailwindcss-animate": "^1.0.7",
     "yet-another-react-lightbox": "^3.21.4",
     "zod": "^3.23.8",
-    "zustand": "^4.5.5"
+    "zustand": "^5.0.0"
   },
   "devDependencies": {
     "@eslint/compat": "^1.1.1",
