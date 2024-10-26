@@ -155,16 +155,19 @@ export type Database = {
           id: number
           image_id: number
           movie_id: number
+          sequence: number | null
         }
         Insert: {
           id?: number
           image_id: number
           movie_id: number
+          sequence?: number | null
         }
         Update: {
           id?: number
           image_id?: number
           movie_id?: number
+          sequence?: number | null
         }
         Relationships: [
           {
@@ -218,6 +221,7 @@ export type Database = {
           length: number | null
           name: string | null
           original_name: string
+          popularity: number | null
           release_date: string | null
           series_id: number | null
           studio_id: number | null
@@ -236,6 +240,7 @@ export type Database = {
           length?: number | null
           name?: string | null
           original_name: string
+          popularity?: number | null
           release_date?: string | null
           series_id?: number | null
           studio_id?: number | null
@@ -254,6 +259,7 @@ export type Database = {
           length?: number | null
           name?: string | null
           original_name?: string
+          popularity?: number | null
           release_date?: string | null
           series_id?: number | null
           studio_id?: number | null
@@ -328,6 +334,7 @@ export type Database = {
           birth_date: string | null
           bust_size: number | null
           create_time: string
+          cup_size: Database["public"]["Enums"]["bra_size"] | null
           height: number | null
           hips_size: number | null
           id: number
@@ -343,6 +350,7 @@ export type Database = {
           birth_date?: string | null
           bust_size?: number | null
           create_time?: string
+          cup_size?: Database["public"]["Enums"]["bra_size"] | null
           height?: number | null
           hips_size?: number | null
           id?: number
@@ -357,6 +365,7 @@ export type Database = {
           birth_date?: string | null
           bust_size?: number | null
           create_time?: string
+          cup_size?: Database["public"]["Enums"]["bra_size"] | null
           height?: number | null
           hips_size?: number | null
           id?: number
@@ -427,15 +436,7 @@ export type Database = {
           id?: string
           username?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "profiles_id_fkey"
-            columns: ["id"]
-            isOneToOne: true
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       role_permissions: {
         Row: {
@@ -758,6 +759,15 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      persons_ordered_by_roles: {
+        Row: {
+          birth_date: string | null
+          name: string | null
+          original_name: string | null
+          role_count: number | null
+        }
+        Relationships: []
       }
       roles_by_age: {
         Row: {
@@ -1133,6 +1143,21 @@ export type Database = {
         | "tag.update"
         | "tag.create"
       app_role: "admin" | "moderator" | "user" | "banned"
+      bra_size:
+        | "AA"
+        | "A"
+        | "B"
+        | "C"
+        | "D"
+        | "E"
+        | "F"
+        | "G"
+        | "H"
+        | "I"
+        | "J"
+        | "K"
+        | "L"
+        | "M"
       image_type:
         | "front_cover"
         | "full_cover"
@@ -1237,4 +1262,19 @@ export type Enums<
   ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
   : PublicEnumNameOrOptions extends keyof PublicSchema["Enums"]
     ? PublicSchema["Enums"][PublicEnumNameOrOptions]
+    : never
+
+export type CompositeTypes<
+  PublicCompositeTypeNameOrOptions extends
+    | keyof PublicSchema["CompositeTypes"]
+    | { schema: keyof Database },
+  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
+    schema: keyof Database
+  }
+    ? keyof Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
+    : never = never,
+> = PublicCompositeTypeNameOrOptions extends { schema: keyof Database }
+  ? Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof PublicSchema["CompositeTypes"]
+    ? PublicSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
     : never
