@@ -71,8 +71,8 @@ export default function Studio({ id }: Readonly<{ id: string }>) {
           </Badge>
         </div>
         <div className="grid grid-cols-3 gap-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-          {studio?.movies.map((movie, index) => (
-            <ItenCard item={movie} key={index} />
+          {studio?.movies.map((movie) => (
+            <ItenCard item={movie} key={movie.id} />
           ))}
         </div>
       </div>

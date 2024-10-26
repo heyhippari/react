@@ -212,8 +212,8 @@ export default function Movie({ id }: Readonly<{ id: string }>) {
           </TabsList>
           <TabsContent value="cast">
             <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {movie?.roles.map((role, index) => (
-                <RoleCard key={index} role={role} />
+              {movie?.roles.map((role) => (
+                <RoleCard key={role.id} role={role} />
               ))}
             </div>
           </TabsContent>

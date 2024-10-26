@@ -71,8 +71,8 @@ export default function Series({ id }: Readonly<{ id: string }>) {
           </Badge>
         </div>
         <div className="grid grid-cols-3 gap-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-          {series?.movies.map((movie, index) => (
-            <ItemCard item={movie} key={index} />
+          {series?.movies.map((movie) => (
+            <ItemCard item={movie} key={movie.id} />
           ))}
         </div>
       </div>
