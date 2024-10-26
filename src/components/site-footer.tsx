@@ -1,7 +1,7 @@
-import ThemeToggle from './theme-toggle';
-
 import { cn } from '@/utils/ui';
 import SIGithub from '~icons/simple-icons/github';
+
+import ThemeToggle from './theme-toggle';
 import { buttonVariants } from './ui/button';
 
 export default function SiteFooter() {
@@ -14,14 +14,14 @@ export default function SiteFooter() {
         <div className="flex flex-row justify-end gap-2">
           <a
             className={cn(
-              buttonVariants({ variant: 'outline', size: 'icon' }),
+              buttonVariants({ size: 'icon', variant: 'outline' }),
               'rounded-full bg-pink-100 text-pink-950 hover:bg-pink-200 dark:border-pink-700 dark:bg-pink-900 dark:text-pink-50 dark:hover:bg-pink-800',
             )}
             href="https://github.com/heyhippari/react/"
-            target="_blank"
             rel="noopener noreferrer"
+            target="_blank"
           >
-            <SIGithub className="h-[1.2rem] w-[1.2rem] text-pink-800 hover:text-pink-900 dark:text-pink-200 dark:hover:text-pink-100" />
+            <SIGithub className="size-[1.2rem] text-pink-800 hover:text-pink-900 dark:text-pink-200 dark:hover:text-pink-100" />
           </a>
           <ThemeToggle />
         </div>

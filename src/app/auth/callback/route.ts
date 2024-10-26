@@ -2,8 +2,13 @@ import createClient from '@/utils/supabase/server';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 
+/**
+ * Handle the OAuth callback from Supabase.
+ * @param request The incoming request.
+ * @returns The response to send back to the client.
+ */
 export async function GET(request: Request) {
-  const { searchParams, origin } = new URL(request.url);
+  const { origin, searchParams } = new URL(request.url);
   const code = searchParams.get('code');
   const next = searchParams.get('next') ?? '/';
 

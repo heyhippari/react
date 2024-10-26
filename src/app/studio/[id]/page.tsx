@@ -5,40 +5,40 @@ import {
 import createClient from '@/utils/supabase/server';
 import { prefetchQuery } from '@supabase-cache-helpers/postgrest-react-query';
 import {
+  dehydrate,
   HydrationBoundary,
   QueryClient,
-  dehydrate,
 } from '@tanstack/react-query';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+
 import Studio from './studio';
 
-export async function generateMetadata(props: { params: Promise<{ id: number }> }) {
+export async function generateMetadata(props: {
+  params: Promise<{ id: number }>;
+}) {
   const params = await props.params;
   const cookieStore = await cookies();
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const supabase = createClient(cookieStore);
 
   try {
     const { data: studio } = await getStudioById(supabase, params.id);
 
     return {
-      title: studio?.name ?? studio?.original_name,
       description: `Information about ${studio?.name ?? studio?.original_name} from Kanojo.`,
+      title: studio?.name ?? studio?.original_name,
     };
   } catch {
     return {
-      title: 'Studio',
       description: 'Information about a studio from Kanojo.',
+      title: 'Studio',
     };
   }
 }
 
-export default async function StudioPage(
-  props: {
-    params: Promise<{ id: string }>;
-  }
-) {
+export default async function StudioPage(props: {
+  params: Promise<{ id: string }>;
+}) {
   const params = await props.params;
   const queryClient = new QueryClient();
   const cookieStore = await cookies();

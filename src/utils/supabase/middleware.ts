@@ -1,5 +1,5 @@
 import { createServerClient } from '@supabase/ssr';
-import { NextResponse, type NextRequest } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 
 export const updateSession = async (request: NextRequest) => {
   // This `try/catch` block is only here for the interactive tutorial.
@@ -21,14 +21,12 @@ export const updateSession = async (request: NextRequest) => {
             return request.cookies.getAll();
           },
           setAll(cookiesToSet) {
-            cookiesToSet.forEach(({ name, value, options }) => {
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-argument -- Following the Supabase example
+            cookiesToSet.forEach(({ name, options, value }) => {
               request.cookies.set({
                 name,
                 value,
                 ...options,
               });
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-argument -- Following the Supabase example
               response.cookies.set({
                 name,
                 value,

@@ -2,7 +2,7 @@ import { TypedSupabaseClient } from '@/utils/types';
 
 export function getLabelById(
   client: TypedSupabaseClient,
-  labelId: string | number,
+  labelId: number | string,
 ) {
   return client
     .from('labels')
@@ -31,7 +31,7 @@ export function getLabelById(
 
 export function getLabelMoviesCount(
   client: TypedSupabaseClient,
-  labelId: string | number,
+  labelId: number | string,
 ) {
   return client
     .from('movies')

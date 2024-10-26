@@ -1,19 +1,10 @@
 import { z } from 'zod';
 
 export const movieEditFormSchema = z.object({
-  original_name: z.string({
-    message: 'Original title is required.',
-  }),
-  name: z.string().optional(),
-  release_date: z.string().optional(),
-  length: z.number().optional(),
+  barcode: z.string().optional(),
   dvd_id: z.string({
     message: 'DVD ID is required.',
   }),
-  label_id: z.coerce.number().optional(),
-  series_id: z.coerce.number().optional(),
-  studio_id: z.coerce.number().optional(),
-  barcode: z.string().optional(),
   format: z
     .union([
       z.literal('Unknown'),
@@ -27,6 +18,15 @@ export const movieEditFormSchema = z.object({
       z.literal('Video CD'),
     ])
     .optional(),
+  label_id: z.coerce.number().optional(),
+  length: z.number().optional(),
+  name: z.string().optional(),
+  original_name: z.string({
+    message: 'Original title is required.',
+  }),
+  release_date: z.string().optional(),
+  series_id: z.coerce.number().optional(),
+  studio_id: z.coerce.number().optional(),
 });
 
 export type MovieEditFormSchema = z.infer<typeof movieEditFormSchema>;

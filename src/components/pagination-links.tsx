@@ -1,4 +1,5 @@
 import { usePathname, useSearchParams } from 'next/navigation';
+
 import {
   Pagination,
   PaginationContent,
@@ -33,8 +34,8 @@ export function PaginationLinks({
         {page > 1 ? (
           <PaginationItem>
             <PaginationPrevious
-              href={getPaginationPageLink(page - 1)}
               aria-disabled={page <= 1}
+              href={getPaginationPageLink(page - 1)}
             />
           </PaginationItem>
         ) : null}
@@ -44,8 +45,8 @@ export function PaginationLinks({
             (i) => (
               <PaginationItem key={i}>
                 <PaginationLink
-                  href={getPaginationPageLink(i)}
                   aria-current={i === page}
+                  href={getPaginationPageLink(i)}
                   isActive={i === page}
                 >
                   {i}
@@ -58,8 +59,8 @@ export function PaginationLinks({
           <>
             <PaginationItem>
               <PaginationLink
-                href={getPaginationPageLink(page)}
                 aria-current={true}
+                href={getPaginationPageLink(page)}
                 isActive={true}
               >
                 {page}
@@ -67,8 +68,8 @@ export function PaginationLinks({
             </PaginationItem>
             <PaginationItem>
               <PaginationLink
-                href={getPaginationPageLink(page + 1)}
                 aria-current={false}
+                href={getPaginationPageLink(page + 1)}
                 isActive={false}
               >
                 {page + 1}
@@ -85,16 +86,16 @@ export function PaginationLinks({
           <>
             <PaginationItem>
               <PaginationLink
-                href={getPaginationPageLink(page - 1)}
                 aria-current={false}
+                href={getPaginationPageLink(page - 1)}
               >
                 {page - 1}
               </PaginationLink>
             </PaginationItem>
             <PaginationItem>
               <PaginationLink
-                href={getPaginationPageLink(page)}
                 aria-current={true}
+                href={getPaginationPageLink(page)}
                 isActive={true}
               >
                 {page}
@@ -102,8 +103,8 @@ export function PaginationLinks({
             </PaginationItem>
             <PaginationItem>
               <PaginationLink
-                href={getPaginationPageLink(page + 1)}
                 aria-current={false}
+                href={getPaginationPageLink(page + 1)}
               >
                 {page + 1}
               </PaginationLink>
@@ -123,8 +124,8 @@ export function PaginationLinks({
           ).map((i) => (
             <PaginationItem key={i}>
               <PaginationLink
-                href={getPaginationPageLink(i)}
                 aria-current={i === page}
+                href={getPaginationPageLink(i)}
                 isActive={i === page}
               >
                 {i}
@@ -135,8 +136,8 @@ export function PaginationLinks({
         {page < pageCount ? (
           <PaginationItem>
             <PaginationNext
-              href={getPaginationPageLink(page + 1)}
               aria-disabled={page >= pageCount}
+              href={getPaginationPageLink(page + 1)}
             />
           </PaginationItem>
         ) : null}

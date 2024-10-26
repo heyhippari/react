@@ -2,12 +2,13 @@ import { getMovieById } from '@/queries/get-movie-by-id';
 import createClient from '@/utils/supabase/server';
 import { prefetchQuery } from '@supabase-cache-helpers/postgrest-react-query';
 import {
+  dehydrate,
   HydrationBoundary,
   QueryClient,
-  dehydrate,
 } from '@tanstack/react-query';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+
 import Movie from './movie';
 
 export default async function MoviePage({

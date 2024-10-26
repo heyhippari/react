@@ -7,12 +7,16 @@ import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
+/**
+ * Update a person in the database.
+ * @param personId - The ID of the person to update.
+ * @param formData - Form data containing the updated person information.
+ */
 export async function updatePersonAction(
   personId: number,
   formData: PersonEditFormSchema,
 ) {
   const cookieStore = await cookies();
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const supabase = createClient(cookieStore);
 
   if (!personId) {
@@ -51,9 +55,12 @@ export async function updatePersonAction(
   redirect(`/person/${personId}`);
 }
 
+/**
+ * Delete a person from the database.
+ * @param id - The ID of the person to delete.
+ */
 export async function deletePersonAction(id: number | undefined) {
   const cookieStore = await cookies();
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const supabase = createClient(cookieStore);
 
   if (!id) {

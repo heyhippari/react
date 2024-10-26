@@ -1,6 +1,7 @@
 'use client';
 
 import { switchLocaleAction } from '@/app/actions/locale';
+
 import { Button } from './ui/button';
 import {
   DropdownMenu,

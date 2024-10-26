@@ -1,18 +1,9 @@
 'use client';
 
-import { addMovieRoleAction, deleteMovieRoleAction } from '@/app/actions/movie';
+import { addMovieRoleAction } from '@/app/actions/movie';
+import DeleteRoleButton from '@/components/button-delete-role';
 import { AutoComplete } from '@/components/ui/autocomplete';
 import { Button } from '@/components/ui/button';
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
 import {
   Form,
   FormControl,
@@ -37,14 +28,17 @@ import { useQuery } from '@supabase-cache-helpers/postgrest-react-query';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import IconTrash from '~icons/mdi/trash-can-outline.jsx';
-
+/**
+ * Form to edit the cast of a movie.
+ * @param props - The component props.
+ * @param props.id - The movie id.
+ * @returns The rendered component.
+ */
 export default function MovieCast({ id }: Readonly<{ id: string }>) {
   const supabase = useSupabaseBrowser();
   const { data: movie } = useQuery(getMovieById(supabase, id));
 
   const [personSearchValue, setPersonSearchValue] = useState('');
-  const [isLoading, setLoading] = useState(false);
 
   const { data: persons, isLoading: isPersonLoading } = useQuery(
     searchPersonByName(supabase, personSearchValue),
@@ -58,21 +52,18 @@ export default function MovieCast({ id }: Readonly<{ id: string }>) {
 
   const onSubmit: SubmitHandler<MovieRoleAddFormSchema> = async (data) => {
     if (movie?.id) {
-      await addMovieRoleAction(movie.id, data);
-    }
-  };
+      const person = persons?.find((person) => person.id === data.person_id);
 
-  const onDeleteSubmit = async (role_id: number) => {
-    if (movie?.id) {
-      try {
-        setLoading(true);
-
-        await deleteMovieRoleAction(movie.id, role_id);
-
-        setLoading(false);
-      } catch {
-        setLoading(false);
+      if (person) {
+        // We have the person, so we can add the role to the movie eagerly for a better UX.
+        movie.roles.push({
+          age: null,
+          id: Infinity, // We use Infinity to indicate that this is a temporary role.
+          person,
+        });
       }
+
+      await addMovieRoleAction(movie.id, data);
     }
   };
 
@@ -92,34 +83,7 @@ export default function MovieCast({ id }: Readonly<{ id: string }>) {
                 {role?.person?.name ?? role?.person?.original_name}
               </TableCell>
               <TableCell className="space-x-2">
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <Button variant="outline" size="icon">
-                      <IconTrash />
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent>
-                    <DialogHeader>
-                      <DialogTitle>Delete role</DialogTitle>
-                      <DialogDescription>
-                        Are you sure you want to delete this role?
-                      </DialogDescription>
-                    </DialogHeader>
-                    <DialogFooter>
-                      <DialogClose asChild>
-                        <Button variant="outline">Cancel</Button>
-                      </DialogClose>
-                      <Button
-                        variant="default"
-                        className="bg-red-500"
-                        onClick={() => onDeleteSubmit(role.id)}
-                        disabled={isLoading}
-                      >
-                        Delete
-                      </Button>
-                    </DialogFooter>
-                  </DialogContent>
-                </Dialog>
+                <DeleteRoleButton movie_id={id} role={role} />
               </TableCell>
             </TableRow>
           ))}
@@ -127,8 +91,10 @@ export default function MovieCast({ id }: Readonly<{ id: string }>) {
       </Table>
       <Form {...form}>
         <form
-          onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-row items-end justify-start space-x-4"
+          onSubmit={(e) => {
+            void form.handleSubmit(onSubmit)(e);
+          }}
         >
           <FormField
             control={form.control}
@@ -138,23 +104,23 @@ export default function MovieCast({ id }: Readonly<{ id: string }>) {
                 <FormLabel>Add a model</FormLabel>
                 <FormControl>
                   <AutoComplete
-                    selectedValue={field.value?.toString() ?? ''}
-                    onSelectedValueChange={(value) =>
-                      form.setValue('person_id', parseInt(value, 10))
+                    emptyMessage="No persons found."
+                    isLoading={isPersonLoading}
+                    items={
+                      persons?.map((person) => ({
+                        label: person.name ?? person.original_name,
+                        value: person.id.toString(),
+                      })) ?? []
                     }
-                    searchValue={personSearchValue}
                     onSearchValueChange={(value) => {
                       setPersonSearchValue(value);
                     }}
-                    items={
-                      persons?.map((person) => ({
-                        value: person.id.toString(),
-                        label: person.name ?? person.original_name,
-                      })) ?? []
+                    onSelectedValueChange={(value) =>
+                      form.setValue('person_id', parseInt(value, 10))
                     }
-                    isLoading={isPersonLoading}
-                    emptyMessage="No persons found."
                     placeholder="Search for a person..."
+                    searchValue={personSearchValue}
+                    selectedValue={field.value?.toString() ?? ''}
                   />
                 </FormControl>
                 <FormMessage />
@@ -162,7 +128,7 @@ export default function MovieCast({ id }: Readonly<{ id: string }>) {
             )}
           />
 
-          <Button type="submit" disabled={form.formState.isSubmitting}>
+          <Button loading={form.formState.isSubmitting} type="submit">
             Add
           </Button>
         </form>

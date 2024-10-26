@@ -58,15 +58,15 @@ export default function Studio({ id }: Readonly<{ id: string }>) {
         <div className="flex flex-row gap-2">
           <h2 className="text-lg font-semibold">Movies</h2>
           <Badge
-            variant="default"
             className="bg-pink-500 hover:bg-pink-400 dark:bg-pink-400 dark:hover:bg-pink-500"
+            variant="default"
           >
             {moviesCount}
           </Badge>
         </div>
         <div className="grid grid-cols-3 gap-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
           {studio?.movies.map((movie, index) => (
-            <ItenCard key={index} item={movie} />
+            <ItenCard item={movie} key={index} />
           ))}
         </div>
       </div>

@@ -39,8 +39,8 @@ export default function Person({ id }: Readonly<{ id: string }>) {
   return (
     <>
       <ItemNavbar item={person} />
-      <div className="container flex flex-grow flex-col gap-2 px-4 lg:flex-row">
-        <div className="flex-grow bg-pink-100 p-4 dark:bg-pink-950">
+      <div className="container flex grow flex-col gap-2 px-4 lg:flex-row">
+        <div className="grow bg-pink-100 p-4 dark:bg-pink-950">
           <div className="container flex flex-col gap-6 px-4">
             <ItemPoster item={person} />
             <div className="flex w-full flex-col justify-start gap-4 align-top">
@@ -56,8 +56,8 @@ export default function Person({ id }: Readonly<{ id: string }>) {
               </div>
               <div className="flex flex-row">
                 <Badge
-                  variant="default"
                   className="bg-pink-500 hover:bg-pink-400 dark:bg-pink-400 dark:hover:bg-pink-500"
+                  variant="default"
                 >
                   {person?.birth_date
                     ? DateTime.fromISO(person?.birth_date).toLocaleString(
@@ -88,15 +88,15 @@ export default function Person({ id }: Readonly<{ id: string }>) {
           <div className="flex flex-row gap-2">
             <h2 className="text-lg font-semibold">Movies</h2>
             <Badge
-              variant="default"
               className="bg-pink-500 hover:bg-pink-400 dark:bg-pink-400 dark:hover:bg-pink-500"
+              variant="default"
             >
               {roleCount}
             </Badge>
           </div>
           <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {person?.roles.map((role) => (
-              <ItemCard key={role.id} item={role?.movies} />
+              <ItemCard item={role?.movies} key={role.id} />
             ))}
           </div>
         </div>

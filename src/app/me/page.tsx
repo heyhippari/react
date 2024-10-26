@@ -2,7 +2,11 @@ import createClient from '@/utils/supabase/server';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-export default async function PrivatePage() {
+/**
+ * Personal profile page.
+ * @returns The profile page of the current user.
+ */
+export default async function Me() {
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
 

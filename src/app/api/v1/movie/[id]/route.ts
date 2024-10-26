@@ -3,6 +3,13 @@ import { getApiMovieObject, omitNulls } from '@/utils/api';
 import createClient from '@/utils/supabase/server';
 import { cookies } from 'next/headers';
 
+/**
+ * Get a movie by its ID.
+ * @param _ - Unused.
+ * @param props - The request properties.
+ * @param props.params - The URL parameters containing the movie ID.
+ * @returns The movie object.
+ */
 export async function GET(_: Request, props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
   const { id } = params;
@@ -13,7 +20,6 @@ export async function GET(_: Request, props: { params: Promise<{ id: string }> }
   }
 
   const cookieStore = await cookies();
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const supabase = createClient(cookieStore);
 
   const { data, error } = await getMovieById(supabase, Number(id));

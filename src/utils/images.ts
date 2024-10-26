@@ -1,6 +1,6 @@
 import { MovieWithImages, PersonWithImage } from '@/queries/types';
 
-export function getFrontCover(movie: MovieWithImages): string | null {
+export function getFrontCover(movie: MovieWithImages): null | string {
   if (!movie?.front_cover_url) {
     return null;
   }
@@ -8,7 +8,7 @@ export function getFrontCover(movie: MovieWithImages): string | null {
   return movie.front_cover_url;
 }
 
-export function getFullCover(movie: MovieWithImages): string | null {
+export function getFullCover(movie: MovieWithImages): null | string {
   if (!movie?.full_cover_url) {
     return null;
   }
@@ -16,7 +16,7 @@ export function getFullCover(movie: MovieWithImages): string | null {
   return movie.full_cover_url;
 }
 
-export function getProfile(person: PersonWithImage): string | null {
+export function getProfile(person: PersonWithImage): null | string {
   if (!person?.profile_url) {
     return null;
   }
@@ -27,7 +27,7 @@ export function getProfile(person: PersonWithImage): string | null {
 export function getFrontCoverUrl(
   movie: MovieWithImages,
   variant = 'public',
-): string | null {
+): null | string {
   const uuid = getFrontCover(movie);
 
   return uuid
@@ -38,7 +38,7 @@ export function getFrontCoverUrl(
 export function getFullCoverUrl(
   movie: MovieWithImages,
   variant = 'public',
-): string | null {
+): null | string {
   const uuid = getFullCover(movie);
 
   return uuid
@@ -49,7 +49,7 @@ export function getFullCoverUrl(
 export function getProfileUrl(
   person: PersonWithImage,
   variant = 'public',
-): string | null {
+): null | string {
   const uuid = getProfile(person);
 
   return uuid

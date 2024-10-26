@@ -1,5 +1,6 @@
 'use client';
 import { useRouter } from 'next/navigation';
+
 import { Input } from './ui/input';
 
 export function SearchInput() {
@@ -19,9 +20,9 @@ export function SearchInput() {
   return (
     <form onSubmit={handleSearch}>
       <Input
+        className="border-pink-400 bg-pink-100 shadow-none dark:border-pink-900 dark:bg-pink-700"
         name="q"
         placeholder="Search an ID... (ABC-123)"
-        className="border-pink-400 bg-pink-100 shadow-none dark:border-pink-900 dark:bg-pink-700"
       />
     </form>
   );

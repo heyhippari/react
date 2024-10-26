@@ -1,3 +1,5 @@
+import type { Database } from '@/utils/database.types';
+
 import {
   Item,
   Label,
@@ -7,7 +9,6 @@ import {
   Series,
   Studio,
 } from '@/queries/types';
-import type { Database } from '@/utils/database.types';
 import { SupabaseClient } from '@supabase/supabase-js';
 
 export type TypedSupabaseClient = SupabaseClient<Database>;
@@ -80,7 +81,7 @@ export function isMediaFormat(format: unknown): format is MediaFormat {
  * @param differenciator The differenciator to use for the URL.
  * @returns The URL for the item.
  **/
-export function getUrlForItem(item: Item, path = '/', differenciator?: 'series' | 'label' | 'studio'): string {
+export function getUrlForItem(item: Item, path = '/', differenciator?: 'label' | 'series' | 'studio'): string {
   if (!item) {
     return '/';
   }

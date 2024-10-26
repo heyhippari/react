@@ -5,12 +5,13 @@ import {
 import createClient from '@/utils/supabase/server';
 import { prefetchQuery } from '@supabase-cache-helpers/postgrest-react-query';
 import {
+  dehydrate,
   HydrationBoundary,
   QueryClient,
-  dehydrate,
 } from '@tanstack/react-query';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+
 import Series from './series';
 
 export async function generateMetadata({
@@ -20,20 +21,19 @@ export async function generateMetadata({
 }) {
   const { id } = await params;
   const cookieStore = await cookies();
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const supabase = createClient(cookieStore);
 
   try {
     const { data: series } = await getSeriesById(supabase, id);
 
     return {
-      title: series?.name ?? series?.original_name,
       description: `Information about ${series?.name ?? series?.original_name} from Kanojo.`,
+      title: series?.name ?? series?.original_name,
     };
   } catch {
     return {
-      title: 'Series',
       description: 'Information about a series from Kanojo.',
+      title: 'Series',
     };
   }
 }

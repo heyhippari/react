@@ -10,7 +10,6 @@ import { cn } from '@/utils/ui';
 import Image from 'next/image';
 import { useMemo, useState } from 'react';
 import Lightbox from 'yet-another-react-lightbox';
-
 import 'yet-another-react-lightbox/styles.css';
 
 export default function ItemPoster({
@@ -49,18 +48,18 @@ export default function ItemPoster({
       >
         {item && image ? (
           <Image
-            className="aspect-[2/3] object-cover"
-            src={image}
             alt={item?.name ?? item?.original_name}
+            className="aspect-[2/3] object-cover"
+            height={375}
+            onClick={() => (fullImage && !small ? setOpen(true) : null)}
+            priority
+            sizes="(max-width: 1024px) 150w, 250w"
+            src={image}
             unoptimized
             width={250}
-            height={375}
-            sizes="(max-width: 1024px) 150w, 250w"
-            priority
-            onClick={() => (fullImage && !small ? setOpen(true) : null)}
           />
         ) : (
-          <div className="flex h-full w-full items-center justify-center">
+          <div className="flex size-full items-center justify-center">
             <p
               className={cn(
                 'select-none text-center font-black text-pink-300 dark:text-pink-800',
@@ -75,18 +74,18 @@ export default function ItemPoster({
 
       {fullImage && !small ? (
         <Lightbox
-          open={open}
+          carousel={{ finite: true }}
           close={() => setOpen(false)}
+          open={open}
+          render={{
+            buttonNext: () => null,
+            buttonPrev: () => null,
+          }}
           slides={[
             {
               src: fullImage,
             },
           ]}
-          carousel={{ finite: true }}
-          render={{
-            buttonPrev: () => null,
-            buttonNext: () => null,
-          }}
         />
       ) : null}
     </>

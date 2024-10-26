@@ -12,30 +12,30 @@ import {
   PopoverContent,
 } from '@/components/ui/popover';
 import { cn } from '@/utils/ui';
+import MdiCheck from '~icons/mdi/check.svg';
 import { Command as CommandPrimitive } from 'cmdk';
 import { useMemo, useState } from 'react';
-import MdiCheck from '~icons/mdi/check.svg';
 
 interface Props<T extends string> {
-  selectedValue: T;
-  onSelectedValueChange: (value: T) => void;
-  searchValue: string;
-  onSearchValueChange: (value: string) => void;
-  items: { value: T; label: string }[];
-  isLoading?: boolean;
   emptyMessage?: string;
+  isLoading?: boolean;
+  items: { label: string; value: T }[];
+  onSearchValueChange: (value: string) => void;
+  onSelectedValueChange: (value: T) => void;
   placeholder?: string;
+  searchValue: string;
+  selectedValue: T;
 }
 
 export function AutoComplete<T extends string>({
-  selectedValue,
-  onSelectedValueChange,
-  searchValue,
-  onSearchValueChange,
-  items,
-  isLoading,
   emptyMessage = 'No items.',
+  isLoading,
+  items,
+  onSearchValueChange,
+  onSelectedValueChange,
   placeholder = 'Search...',
+  searchValue,
+  selectedValue,
 }: Readonly<Props<T>>) {
   const [open, setOpen] = useState(false);
 
@@ -77,17 +77,17 @@ export function AutoComplete<T extends string>({
 
   return (
     <div className="flex items-center">
-      <Popover open={open} onOpenChange={setOpen}>
+      <Popover onOpenChange={setOpen} open={open}>
         <Command shouldFilter={false}>
           <PopoverAnchor asChild>
             <CommandPrimitive.Input
               asChild
-              value={searchValue}
-              onValueChange={onSearchValueChange}
+              onBlur={onInputBlur}
+              onFocus={() => setOpen(true)}
               onKeyDown={(e) => setOpen(e.key !== 'Escape')}
               onMouseDown={() => setOpen((open) => !!searchValue || !open)}
-              onFocus={() => setOpen(true)}
-              onBlur={onInputBlur}
+              onValueChange={onSearchValueChange}
+              value={searchValue}
             >
               <Input placeholder={placeholder} />
             </CommandPrimitive.Input>
@@ -95,7 +95,7 @@ export function AutoComplete<T extends string>({
           {!open && <CommandList aria-hidden="true" className="hidden" />}
           <PopoverContent
             asChild
-            onOpenAutoFocus={(e) => e.preventDefault()}
+            className="z-50 w-[--radix-popover-trigger-width] p-0"
             onInteractOutside={(e) => {
               if (
                 e.target instanceof Element &&
@@ -104,7 +104,7 @@ export function AutoComplete<T extends string>({
                 e.preventDefault();
               }
             }}
-            className="z-50 w-[--radix-popover-trigger-width] p-0"
+            onOpenAutoFocus={(e) => e.preventDefault()}
           >
             <CommandList>
               {items.length > 0 && !isLoading ? (
@@ -112,9 +112,9 @@ export function AutoComplete<T extends string>({
                   {items.map((option) => (
                     <CommandItem
                       key={option.value}
-                      value={option.value}
                       onMouseDown={(e) => e.preventDefault()}
                       onSelect={onSelectItem}
+                      value={option.value}
                     >
                       <MdiCheck
                         className={cn(

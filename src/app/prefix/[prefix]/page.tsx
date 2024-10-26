@@ -2,11 +2,12 @@ import { getMoviesByPrefix } from '@/queries/get-movies-by-prefix';
 import createClient from '@/utils/supabase/server';
 import { prefetchQuery } from '@supabase-cache-helpers/postgrest-react-query';
 import {
+  dehydrate,
   HydrationBoundary,
   QueryClient,
-  dehydrate,
 } from '@tanstack/react-query';
 import { cookies } from 'next/headers';
+
 import Prefix from './prefix';
 
 export default async function PrefixPage(

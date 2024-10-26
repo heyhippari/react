@@ -3,6 +3,7 @@ import { getProfileById } from '@/queries/get-profile-by-id';
 import { UserProfile } from '@/queries/types';
 import createClient from '@/utils/supabase/server';
 import { cookies } from 'next/headers';
+
 import UserMenu from './user-menu';
 
 export default async function UserMenuServer() {
@@ -13,7 +14,7 @@ export default async function UserMenuServer() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  let profile: UserProfile | null = null;
+  let profile: null | UserProfile = null;
   if (user) {
     const { data } = await getProfileById(supabase, user?.id || '');
 

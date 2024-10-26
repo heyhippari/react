@@ -59,15 +59,15 @@ export default function Movie({ id }: Readonly<{ id: string }>) {
             </div>
             <div className="flex flex-row items-start justify-start gap-4">
               <Badge
-                variant="default"
                 className="bg-pink-500 hover:bg-pink-400 dark:bg-pink-400 dark:hover:bg-pink-500"
+                variant="default"
               >
                 {movie?.dvd_id}
               </Badge>
 
               <Badge
-                variant="default"
                 className="bg-pink-500 hover:bg-pink-400 dark:bg-pink-400 dark:hover:bg-pink-500"
+                variant="default"
               >
                 {movie?.release_date &&
                 movie.release_date.includes('0001') === false ? (
@@ -84,8 +84,8 @@ export default function Movie({ id }: Readonly<{ id: string }>) {
                 )}
               </Badge>
               <Badge
-                variant="default"
                 className="bg-pink-500 hover:bg-pink-400 dark:bg-pink-400 dark:hover:bg-pink-500"
+                variant="default"
               >
                 {movie?.length ? (
                   <>{movie?.length} minutes</>
@@ -191,7 +191,7 @@ export default function Movie({ id }: Readonly<{ id: string }>) {
       <div className="container flex flex-col gap-4 p-4">
         <Tabs defaultValue="cast">
           <TabsList className="mb-2 p-0">
-            <TabsTrigger value="cast" asChild>
+            <TabsTrigger asChild value="cast">
               <Button>
                 <h2 className="text-lg font-semibold">Cast</h2>
               </Button>

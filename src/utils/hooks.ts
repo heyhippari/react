@@ -2,27 +2,28 @@ import { jwtDecode, type JwtPayload } from 'jwt-decode';
 import { useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import resolveConfig from 'tailwindcss/resolveConfig';
+
 import tailwindConfig from '../../tailwind.config';
 import useSupabaseBrowser from './supabase/client';
 
-type AuthJwtPayload = JwtPayload & { user_role: string };
+type AuthJwtPayload = { user_role: string } & JwtPayload;
 
 export function useWindowSize() {
   // Initialize state with undefined width/height so server and client renders match
   // Learn more here: https://joshwcomeau.com/react/the-perils-of-rehydration/
   const [windowSize, setWindowSize] = useState<{
-    width: number | undefined;
     height: number | undefined;
+    width: number | undefined;
   }>({
-    width: undefined,
     height: undefined,
+    width: undefined,
   });
 
   function handleResize() {
     // Set window width/height to state
     setWindowSize({
-      width: window.innerWidth,
       height: window.innerHeight,
+      width: window.innerWidth,
     });
   }
 
@@ -54,7 +55,7 @@ export function useBreakpoint<K extends BreakpointKey>(breakpoint: K) {
 }
 
 export function useUserRole() {
-  const [userRole, setUserRole] = useState<string | null>(null);
+  const [userRole, setUserRole] = useState<null | string>(null);
   const supabase = useSupabaseBrowser();
 
   useEffect(() => {

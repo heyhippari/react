@@ -9,6 +9,12 @@ import { useQuery } from '@supabase-cache-helpers/postgrest-react-query';
 import { redirect } from 'next/navigation';
 import { useEffect } from 'react';
 
+/**
+ * Label page
+ * @param props - The component props
+ * @param props.id - The label ID
+ * @returns The label page
+ */
 export default function Label({ id }: Readonly<{ id: string }>) {
   const supabase = useSupabaseBrowser();
 
@@ -59,7 +65,7 @@ export default function Label({ id }: Readonly<{ id: string }>) {
         </div>
         <div className="grid grid-cols-3 gap-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
           {label?.movies.map((movie, index) => (
-            <ItemCard key={index} item={movie} />
+            <ItemCard item={movie} key={index} />
           ))}
         </div>
       </div>

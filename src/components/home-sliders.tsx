@@ -6,6 +6,7 @@ import {
 } from '@/queries/homepage';
 import createClient from '@/utils/supabase/server';
 import { cookies } from 'next/headers';
+
 import MovieSlider from './movie-slider';
 
 export default async function HomeSliders() {

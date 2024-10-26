@@ -1,9 +1,8 @@
+import HomeSliders from '@/components/home-sliders';
 import HomeStats from '@/components/home-stats';
 import { getCurrentCounts } from '@/queries/homepage';
 import createClient from '@/utils/supabase/server';
 import { cookies } from 'next/headers';
-
-import HomeSliders from '@/components/home-sliders';
 
 export default async function Home() {
   const cookieStore = await cookies();

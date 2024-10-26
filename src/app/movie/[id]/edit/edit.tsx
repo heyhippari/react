@@ -1,6 +1,4 @@
 'use client';
-import { useQuery } from '@supabase-cache-helpers/postgrest-react-query';
-
 import { updateMovieAction } from '@/app/actions/movie';
 import { AutoComplete } from '@/components/ui/autocomplete';
 import { Button } from '@/components/ui/button';
@@ -32,6 +30,7 @@ import {
   movieEditFormSchema,
 } from '@/utils/validation/movie-update';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useQuery } from '@supabase-cache-helpers/postgrest-react-query';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
@@ -59,21 +58,20 @@ export default function MovieEdit({ id }: Readonly<{ id: string }>) {
     searchSeriesByName(supabase, seriesSearchValue),
   );
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks -- Only for error handling
   const form = useForm<MovieEditFormSchema>({
-    resolver: zodResolver(movieEditFormSchema),
     defaultValues: {
-      original_name: movie?.original_name ?? undefined,
-      name: movie?.name ?? undefined,
-      release_date: movie?.release_date?.split('T')[0] ?? undefined,
-      length: movie?.length ?? 0,
+      barcode: (movie?.barcode as string) ?? undefined,
       dvd_id: movie?.dvd_id ?? undefined,
+      format: movie?.format ?? 'Unknown',
       label_id: movie?.label_id ?? undefined,
+      length: movie?.length ?? 0,
+      name: movie?.name ?? undefined,
+      original_name: movie?.original_name ?? undefined,
+      release_date: movie?.release_date?.split('T')[0] ?? undefined,
       series_id: movie?.series_id ?? undefined,
       studio_id: movie?.studio_id ?? undefined,
-      barcode: (movie?.barcode as string) ?? undefined,
-      format: movie?.format ?? 'Unknown',
     },
+    resolver: zodResolver(movieEditFormSchema),
   });
 
   const onSubmit: SubmitHandler<MovieEditFormSchema> = async (data) => {
@@ -84,7 +82,7 @@ export default function MovieEdit({ id }: Readonly<{ id: string }>) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+      <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
           name="original_name"
@@ -119,7 +117,7 @@ export default function MovieEdit({ id }: Readonly<{ id: string }>) {
               <FormItem>
                 <FormLabel>DVD ID</FormLabel>
                 <FormControl>
-                  <Input placeholder="DVD ID" disabled readOnly {...field} />
+                  <Input disabled placeholder="DVD ID" readOnly {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -133,23 +131,23 @@ export default function MovieEdit({ id }: Readonly<{ id: string }>) {
                 <FormLabel>Studio</FormLabel>
                 <FormControl>
                   <AutoComplete
-                    selectedValue={field.value?.toString() ?? ''}
-                    onSelectedValueChange={(value) =>
-                      form.setValue('studio_id', parseInt(value, 10))
+                    emptyMessage="No studios found."
+                    isLoading={isStudioLoading}
+                    items={
+                      studios?.map((studio) => ({
+                        label: studio.name ?? studio.original_name,
+                        value: studio.id.toString(),
+                      })) ?? []
                     }
-                    searchValue={studioSearchValue}
                     onSearchValueChange={(value) => {
                       setStudioSearchValue(value);
                     }}
-                    items={
-                      studios?.map((studio) => ({
-                        value: studio.id.toString(),
-                        label: studio.name ?? studio.original_name,
-                      })) ?? []
+                    onSelectedValueChange={(value) =>
+                      form.setValue('studio_id', parseInt(value, 10))
                     }
-                    isLoading={isStudioLoading}
-                    emptyMessage="No studios found."
                     placeholder="Search for a studio..."
+                    searchValue={studioSearchValue}
+                    selectedValue={field.value?.toString() ?? ''}
                   />
                 </FormControl>
                 <FormMessage />
@@ -166,23 +164,23 @@ export default function MovieEdit({ id }: Readonly<{ id: string }>) {
                 <FormLabel>Label</FormLabel>
                 <FormControl>
                   <AutoComplete
-                    selectedValue={field.value?.toString() ?? ''}
-                    onSelectedValueChange={(value) =>
-                      form.setValue('label_id', parseInt(value, 10))
+                    emptyMessage="No labels found."
+                    isLoading={isLabelLoading}
+                    items={
+                      labels?.map((label) => ({
+                        label: label.name ?? label.original_name,
+                        value: label.id.toString(),
+                      })) ?? []
                     }
-                    searchValue={labelSearchValue}
                     onSearchValueChange={(value) => {
                       setLabelSearchValue(value);
                     }}
-                    items={
-                      labels?.map((label) => ({
-                        value: label.id.toString(),
-                        label: label.name ?? label.original_name,
-                      })) ?? []
+                    onSelectedValueChange={(value) =>
+                      form.setValue('label_id', parseInt(value, 10))
                     }
-                    isLoading={isLabelLoading}
-                    emptyMessage="No labels found."
                     placeholder="Search for a label..."
+                    searchValue={labelSearchValue}
+                    selectedValue={field.value?.toString() ?? ''}
                   />
                 </FormControl>
                 <FormMessage />
@@ -197,21 +195,21 @@ export default function MovieEdit({ id }: Readonly<{ id: string }>) {
                 <FormLabel>Series</FormLabel>
                 <FormControl>
                   <AutoComplete
-                    selectedValue={field.value?.toString() ?? ''}
+                    emptyMessage="No series found."
+                    isLoading={isSeriesLoading}
+                    items={
+                      series?.map((series) => ({
+                        label: series.name ?? series.original_name,
+                        value: series.id.toString(),
+                      })) ?? []
+                    }
+                    onSearchValueChange={(value) => setSeriesSearchValue(value)}
                     onSelectedValueChange={(value) =>
                       form.setValue('series_id', parseInt(value, 10))
                     }
-                    searchValue={seriesSearchValue}
-                    onSearchValueChange={(value) => setSeriesSearchValue(value)}
-                    items={
-                      series?.map((series) => ({
-                        value: series.id.toString(),
-                        label: series.name ?? series.original_name,
-                      })) ?? []
-                    }
-                    isLoading={isSeriesLoading}
-                    emptyMessage="No series found."
                     placeholder="Search for a series..."
+                    searchValue={seriesSearchValue}
+                    selectedValue={field.value?.toString() ?? ''}
                   />
                 </FormControl>
                 <FormMessage />
@@ -241,11 +239,11 @@ export default function MovieEdit({ id }: Readonly<{ id: string }>) {
                 <FormLabel>Runtime</FormLabel>
                 <FormControl>
                   <Input
-                    type="number"
-                    value={field.value}
                     onChange={(e) =>
                       form.setValue('length', e.target.valueAsNumber)
                     }
+                    type="number"
+                    value={field.value}
                   />
                 </FormControl>
                 <FormMessage />
@@ -275,8 +273,8 @@ export default function MovieEdit({ id }: Readonly<{ id: string }>) {
                 <FormLabel>Format</FormLabel>
                 <FormControl>
                   <Select
-                    onValueChange={field.onChange}
                     defaultValue={field.value}
+                    onValueChange={field.onChange}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Select a format" />
@@ -299,7 +297,7 @@ export default function MovieEdit({ id }: Readonly<{ id: string }>) {
             )}
           />
         </div>
-        <Button type="submit" disabled={form.formState.isSubmitting}>
+        <Button loading={form.formState.isSubmitting} type="submit">
           Submit
         </Button>
       </form>

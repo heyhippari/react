@@ -4,6 +4,7 @@ import { getUrlForItem, isMovie, isPerson } from '@/utils/types';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
+
 import { Badge } from './ui/badge';
 
 export default function ItemCard({
@@ -27,34 +28,34 @@ export default function ItemCard({
         <div className="relative aspect-[2/3] w-full overflow-hidden rounded-lg bg-pink-200 shadow-md dark:bg-pink-900">
           {item && image ? (
             <Image
-              className={`object-cover shadow-md transition-opacity ${imageIsLoaded ? 'opacity-100' : 'opacity-0'}`}
-              src={image}
               alt={item?.name ?? item?.original_name}
-              placeholder="empty"
+              className={`object-cover shadow-md transition-opacity ${imageIsLoaded ? 'opacity-100' : 'opacity-0'}`}
               fill
-              unoptimized
-              sizes="200px"
               onLoad={(event) => {
                 if (event.currentTarget.src.includes('data:image/gif;base64'))
                   return;
 
                 setImageIsLoaded(true);
               }}
+              placeholder="empty"
+              sizes="200px"
+              src={image}
+              unoptimized
             />
           ) : (
-            <div className="flex h-full w-full items-center justify-center p-2 text-center">
+            <div className="flex size-full items-center justify-center p-2 text-center">
               <p className="select-none text-xl font-black text-pink-300 dark:text-pink-800 md:text-3xl">
                 No Image
               </p>
             </div>
           )}
           {isMovie(item) ? (
-            <div className="absolute left-0 top-0 flex h-full w-full flex-col justify-between">
+            <div className="absolute left-0 top-0 flex size-full flex-col justify-between">
               <div />
               <div className="p-2">
                 <Badge
-                  variant="default"
                   className="bg-pink-600 hover:bg-pink-500 dark:bg-pink-400 dark:hover:bg-pink-500"
+                  variant="default"
                 >
                   {item?.dvd_id}
                 </Badge>

@@ -2,12 +2,12 @@ export default function HomeStats({
   counts,
 }: Readonly<{
   counts: {
-    movie_count: number | null;
-    person_count: number | null;
-    studio_count: number | null;
-    series_count: number | null;
-    label_count: number | null;
-    tag_count: number | null;
+    label_count: null | number;
+    movie_count: null | number;
+    person_count: null | number;
+    series_count: null | number;
+    studio_count: null | number;
+    tag_count: null | number;
   } | null;
 }>) {
   return (

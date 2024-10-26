@@ -1,4 +1,5 @@
 import Link from 'next/link';
+
 import { SearchInput } from './search-input';
 import UserMenuServer from './user-menu-server';
 

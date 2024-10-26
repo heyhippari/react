@@ -1,9 +1,15 @@
 'use server';
 
-import { cookies, type UnsafeUnwrappedCookies } from 'next/headers';
+import { cookies } from 'next/headers';
 
-export function switchLocaleAction(locale: string) {
-  (cookies() as unknown as UnsafeUnwrappedCookies).set('locale', locale);
+/**
+ * Switches the current locale.
+ * @param locale The locale to switch to.
+ */
+export async function switchLocaleAction(locale: string) {
+  const requestCookies = await cookies();
+
+  requestCookies.set('locale', locale);
 
   return;
 }

@@ -5,6 +5,7 @@ import { getUrlForItem } from '@/utils/types';
 import { cn } from '@/utils/ui';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+
 import { buttonVariants } from './ui/button';
 
 export default function SidebarMovieEdit({
@@ -15,7 +16,6 @@ export default function SidebarMovieEdit({
   return (
     <>
       <Link
-        href={getUrlForItem(movie, '/edit')}
         className={cn(
           buttonVariants({ variant: 'ghost' }),
           'justify-start',
@@ -23,11 +23,11 @@ export default function SidebarMovieEdit({
             ? 'bg-pink-200 text-pink-900 dark:bg-pink-700 dark:text-pink-300'
             : null,
         )}
+        href={getUrlForItem(movie, '/edit')}
       >
         Primary Facts
       </Link>
       <Link
-        href={getUrlForItem(movie, '/edit/cast')}
         className={cn(
           buttonVariants({ variant: 'ghost' }),
           'justify-start',
@@ -35,6 +35,7 @@ export default function SidebarMovieEdit({
             ? 'bg-pink-200 text-pink-900 dark:bg-pink-700 dark:text-pink-300'
             : null,
         )}
+        href={getUrlForItem(movie, '/edit/cast')}
       >
         Cast
       </Link>

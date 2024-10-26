@@ -1,20 +1,15 @@
 import type { NextConfig } from 'next';
+
 import { withSentryConfig } from '@sentry/nextjs';
 import Icons from 'unplugin-icons/webpack';
 
 const nextConfig: NextConfig = {
   compress: true,
-  reactStrictMode: true,
   images: {
     loader: 'custom',
     loaderFile: './src/utils/image-loader.ts',
   },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  experimental: {
-    // swcPlugins: [['@lingui/swc-plugin', {}]],
-  },
+  reactStrictMode: true,
   webpack: (config) => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     config.plugins.push(
@@ -35,17 +30,26 @@ withSentryConfig(nextConfig, {
   // For all available options, see:
   // https://github.com/getsentry/sentry-webpack-plugin#options
 
-  org: 'kanojo',
-  project: 'frontend',
+  // Enables automatic instrumentation of Vercel Cron Monitors. (Does not yet work with App Router route handlers.)
+  // See the following for more information:
+  // https://docs.sentry.io/product/crons/
+  // https://vercel.com/docs/cron-jobs
+  automaticVercelMonitors: true,
+  // Automatically tree-shake Sentry logger statements to reduce bundle size
+  disableLogger: true,
 
-  // Only print logs for uploading source maps in CI
-  silent: !process.env.CI,
+  // Hides source maps from generated client bundles
+  hideSourceMaps: true,
 
   // For all available options, see:
   // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
 
-  // Upload a larger set of source maps for prettier stack traces (increases build time)
-  widenClientFileUpload: true,
+  org: 'kanojo',
+
+  project: 'frontend',
+
+  // Only print logs for uploading source maps in CI
+  silent: !process.env.CI,
 
   // Route browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers.
   // This can increase your server load as well as your hosting bill.
@@ -53,15 +57,6 @@ withSentryConfig(nextConfig, {
   // side errors will fail.
   tunnelRoute: '/monitoring',
 
-  // Hides source maps from generated client bundles
-  hideSourceMaps: true,
-
-  // Automatically tree-shake Sentry logger statements to reduce bundle size
-  disableLogger: true,
-
-  // Enables automatic instrumentation of Vercel Cron Monitors. (Does not yet work with App Router route handlers.)
-  // See the following for more information:
-  // https://docs.sentry.io/product/crons/
-  // https://vercel.com/docs/cron-jobs
-  automaticVercelMonitors: true,
+  // Upload a larger set of source maps for prettier stack traces (increases build time)
+  widenClientFileUpload: true,
 });

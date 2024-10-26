@@ -2,7 +2,7 @@ import { TypedSupabaseClient } from '@/utils/types';
 
 export function getPersonById(
   client: TypedSupabaseClient,
-  personId: string | number,
+  personId: number | string,
 ) {
   return client
     .from('persons')
@@ -43,9 +43,9 @@ export function getPersonById(
     )
     .eq('id', personId)
     .order('movies(release_date)', {
+      ascending: false,
       nullsFirst: false,
       referencedTable: 'roles',
-      ascending: false,
     })
     .throwOnError()
     .single();
@@ -53,7 +53,7 @@ export function getPersonById(
 
 export function getPersonRolesCount(
   client: TypedSupabaseClient,
-  personId: string | number,
+  personId: number | string,
 ) {
   return client
     .from('roles')

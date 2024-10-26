@@ -1,6 +1,8 @@
 'use client';
-import { loginAction } from '@/app/actions/auth';
 import type { Provider } from '@supabase/supabase-js';
+
+import { loginAction } from '@/app/actions/auth';
+
 import { Button } from './ui/button';
 
 export default function LoginButton(props: {
@@ -9,9 +11,9 @@ export default function LoginButton(props: {
 }) {
   return (
     <form action={loginAction}>
-      <input type="hidden" name="provider" value={props.provider} />
-      <input type="hidden" name="next" value={props.nextUrl} />
-      <Button variant="default" type="submit">
+      <input name="provider" type="hidden" value={props.provider} />
+      <input name="next" type="hidden" value={props.nextUrl} />
+      <Button type="submit" variant="default">
         Login with {props.provider}
       </Button>
     </form>

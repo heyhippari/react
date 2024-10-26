@@ -5,9 +5,9 @@ const normalizeSrc = (src: string) => {
 };
 
 export default function cloudflareLoader({
+  quality,
   src,
   width,
-  quality,
 }: ImageLoaderProps) {
   const params = [`width=${width}`];
   if (quality) {

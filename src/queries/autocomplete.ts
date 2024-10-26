@@ -1,4 +1,4 @@
-import { TypedSupabaseClient } from '@/utils/types';
+import { TypedSupabaseClient } from "@/utils/types";
 
 /**
  * Search for studios by name or original name.
@@ -18,8 +18,8 @@ export function searchStudioByName(
   searchValue: string,
 ) {
   return client
-    .from('studios')
-    .select('id, name, original_name')
+    .from("studios")
+    .select("id, name, original_name")
     .or(`name.ilike.%${searchValue}%,original_name.ilike.%${searchValue}%`)
     .limit(15)
     .throwOnError();
@@ -43,8 +43,8 @@ export function searchLabelByName(
   searchValue: string,
 ) {
   return client
-    .from('labels')
-    .select('id, name, original_name')
+    .from("labels")
+    .select("id, name, original_name")
     .or(`name.ilike.%${searchValue}%,original_name.ilike.%${searchValue}%`)
     .limit(15)
     .throwOnError();
@@ -68,8 +68,8 @@ export function searchSeriesByName(
   searchValue: string,
 ) {
   return client
-    .from('series')
-    .select('id, name, original_name')
+    .from("series")
+    .select("id, name, original_name")
     .or(`name.ilike.%${searchValue}%,original_name.ilike.%${searchValue}%`)
     .limit(15)
     .throwOnError();
@@ -78,7 +78,7 @@ export function searchSeriesByName(
 /**
  * Search for persons by name or original name.
  * Limits the results to 15.
- * 
+ *
  * @param client - The Supabase client.
  * @param searchValue - The search value.
  * @returns The persons that match the search value.
@@ -88,10 +88,10 @@ export function searchPersonByName(
   searchValue: string,
 ) {
   return client
-    .from('persons')
-    .select('id, name, original_name')
+    .from("persons")
+    .select("id, name, original_name, birth_date, profile_url")
     .or(`name.ilike.%${searchValue}%,original_name.ilike.%${searchValue}%`)
     .limit(15)
-    .order('popularity', { ascending: false })
+    .order("popularity", { ascending: false })
     .throwOnError();
 }

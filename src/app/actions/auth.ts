@@ -5,6 +5,9 @@ import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
+/**
+ * Logs out the current user.
+ */
 export async function logoutAction() {
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
@@ -15,6 +18,10 @@ export async function logoutAction() {
   redirect('/');
 }
 
+/**
+ * Logs in the user using the specified provider.
+ * @param formData The form data containing the provider.
+ */
 export async function loginAction(formData: FormData) {
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
@@ -31,10 +38,10 @@ export async function loginAction(formData: FormData) {
   }
 
   const { data, error } = await supabase.auth.signInWithOAuth({
-    provider: provider,
     options: {
       redirectTo: `${defaultUrl}/auth/callback`,
     },
+    provider: provider,
   });
 
   if (error) {

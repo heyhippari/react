@@ -3,11 +3,18 @@
 import { Button } from '@/components/ui/button';
 import { useEffect } from 'react';
 
+/**
+ * Error component.
+ * @param error The error that caused the error page to be rendered.
+ * @param error.error The error that caused the error page to be rendered.
+ * @param error.reset The function to call to attempt to recover from the error.
+ * @returns The error page component.
+ */
 export default function Error({
   error,
   reset,
 }: {
-  error: Error & { digest?: string };
+  error: { digest?: string } & Error;
   reset: () => void;
 }) {
   useEffect(() => {

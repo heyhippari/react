@@ -2,7 +2,7 @@ import { TypedSupabaseClient } from '@/utils/types';
 
 export function getMovieById(
   client: TypedSupabaseClient,
-  movieId: string | number,
+  movieId: number | string,
 ) {
   return client
     .from('movies')

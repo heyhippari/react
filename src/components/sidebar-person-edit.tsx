@@ -4,6 +4,7 @@ import { PersonWithAll } from '@/queries/types';
 import { cn } from '@/utils/ui';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+
 import { buttonVariants } from './ui/button';
 
 export default function SidebarPersonEdit({
@@ -14,7 +15,6 @@ export default function SidebarPersonEdit({
   return (
     <>
       <Link
-        href={`/movie/${person?.id}/edit`}
         className={cn(
           buttonVariants({ variant: 'ghost' }),
           'justify-start',
@@ -22,6 +22,7 @@ export default function SidebarPersonEdit({
             ? 'bg-pink-200 text-pink-900 dark:bg-pink-700 dark:text-pink-300'
             : null,
         )}
+        href={`/movie/${person?.id}/edit`}
       >
         Primary Facts
       </Link>

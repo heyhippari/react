@@ -59,9 +59,9 @@ export default function MovieIndex({ page }: { page: number }) {
   const supabase = useSupabaseBrowser();
   const { data: movies } = useQuery(
     getPaginatedMovies(supabase, page, 25, {
-      search: searchParams.get('q') ?? undefined,
       orderBy: searchParams.get('order') ?? undefined,
       orderDirection: searchParams.get('asc') === 'true' ? 'asc' : 'desc',
+      search: searchParams.get('q') ?? undefined,
     }),
   );
   const { count: moviesCount } = useQuery(
@@ -72,20 +72,19 @@ export default function MovieIndex({ page }: { page: number }) {
 
   return (
     <TwoColumnLayout
-      sidebarTitle="Search"
       sidebarContent={
         <>
           <form className="flex flex-col gap-4" onSubmit={handleSearch}>
             <Input
+              defaultValue={searchParams.get('q') ?? ''}
               name="q"
               placeholder="Search"
-              defaultValue={searchParams.get('q') ?? ''}
             />
             <div className="flex flex-col gap-2">
               <Label htmlFor="order">Order by</Label>
               <Select
-                name="order"
                 defaultValue={searchParams.get('order') ?? 'create_time'}
+                name="order"
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Order by" />
@@ -100,8 +99,8 @@ export default function MovieIndex({ page }: { page: number }) {
             <div className="flex flex-col gap-2">
               <Label htmlFor="asc">Direction</Label>
               <Select
-                name="asc"
                 defaultValue={searchParams.get('asc') ?? 'false'}
+                name="asc"
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Ascending" />
@@ -116,13 +115,14 @@ export default function MovieIndex({ page }: { page: number }) {
           </form>
         </>
       }
+      sidebarTitle="Search"
     >
       {(moviesCount ?? 0 > 0) ? (
         <>
           <PaginationLinks page={page} pageCount={pageCount} />
           <div className="grid grid-cols-3 gap-4 md:grid-cols-4 lg:grid-cols-5">
             {movies?.map((movie, index) => (
-              <ItemCard key={index} item={movie} />
+              <ItemCard item={movie} key={index} />
             ))}
           </div>
           <PaginationLinks page={page} pageCount={pageCount} />

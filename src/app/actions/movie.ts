@@ -7,14 +7,21 @@ import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-export async function deleteMovieRoleAction(movieId: number, role_id: number) {
+/**
+ * Delete a role from a movie.
+ * @param previousState - Unused.
+ * @param formData - Form data containing the movie ID and role ID.
+ */
+export async function deleteMovieRoleAction(previousState: null | void, formData: FormData) {
   const cookieStore = await cookies();
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const supabase = createClient(cookieStore);
 
-  if (!movieId) {
+  if (!formData.get('movie_id')) {
     throw new Error('No movie ID provided');
   }
+
+  const movie_id = Number(formData.get('movie_id'));
+  const role_id = Number(formData.get('role_id'));
 
   const {
     data: { user },
@@ -24,14 +31,11 @@ export async function deleteMovieRoleAction(movieId: number, role_id: number) {
     throw new Error('User not authenticated');
   }
 
-  const { data: movie, error } = await getMovieById(supabase, movieId);
+  const { data: movie, error } = await getMovieById(supabase, movie_id);
 
   if (error || !movie) {
     throw new Error('Error fetching movie');
   }
-
-  console.log('movie_id', movieId);
-  console.log('role_id', role_id);
 
   const { error: deleteError } = await supabase
     .from('roles')
@@ -44,17 +48,21 @@ export async function deleteMovieRoleAction(movieId: number, role_id: number) {
   }
 
   // Revalidate the movie page in case the roles were updated
-  revalidatePath(`/movie/${movieId}`, 'page');
-  revalidatePath(`/movie/${movieId}/edit/cast`, 'page');
-  redirect(`/movie/${movieId}/edit/cast`);
+  revalidatePath(`/movie/${movie_id}`, 'page');
+  revalidatePath(`/movie/${movie_id}/edit/cast`, 'page');
+  redirect(`/movie/${movie_id}/edit/cast`);
 }
 
+/**
+ * Add a role to a movie.
+ * @param movieId - The ID of the movie to add the role to.
+ * @param formData - Form data containing the person ID.
+ */
 export async function addMovieRoleAction(
   movieId: number,
   formData: MovieRoleAddFormSchema,
 ) {
   const cookieStore = await cookies();
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const supabase = createClient(cookieStore);
 
   if (!movieId) {
@@ -93,12 +101,16 @@ export async function addMovieRoleAction(
   redirect(`/movie/${movieId}/edit/cast`);
 }
 
+/**
+ * Update a movie in the database.
+ * @param movieId - The ID of the movie to update.
+ * @param formData - Form data containing the movie details.
+ */
 export async function updateMovieAction(
   movieId: number,
   formData: MovieEditFormSchema,
 ) {
   const cookieStore = await cookies();
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const supabase = createClient(cookieStore);
 
   if (!movieId) {
@@ -137,9 +149,12 @@ export async function updateMovieAction(
   redirect(`/movie/${movieId}`);
 }
 
+/**
+ * Delete a movie from the database.
+ * @param id - The ID of the movie to delete.
+ */
 export async function deleteMovieAction(id: number | undefined) {
   const cookieStore = await cookies();
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const supabase = createClient(cookieStore);
 
   if (!id) {

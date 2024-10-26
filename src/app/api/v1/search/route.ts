@@ -6,9 +6,14 @@ import { cookies } from 'next/headers';
 
 type MovieSearchResult = Pick<
   Tables<'movies'>,
-  'id' | 'name' | 'original_name' | 'dvd_id' | 'release_date'
+  'dvd_id' | 'id' | 'name' | 'original_name' | 'release_date'
 >;
 
+/**
+ * Search for a movie by its DVD ID. Expects a query parameter "q" with the DVD ID.
+ * @param request - The request object.
+ * @returns The movie search results.
+ */
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
 
@@ -18,7 +23,6 @@ export async function GET(request: Request) {
   }
 
   const cookieStore = await cookies();
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const supabase = createClient(cookieStore);
 
   const { data, error } = await searchMovieByDvdId(supabase, query);
@@ -30,11 +34,11 @@ export async function GET(request: Request) {
   return new Response(
     JSON.stringify(
       data.map((movie: MovieSearchResult) => ({
+        dvd_id: movie.dvd_id,
         id: movie.id,
-        title: movie.name,
         original_title: movie.original_name,
         release_date: movie.release_date,
-        dvd_id: movie.dvd_id,
+        title: movie.name,
       })),
       omitNulls,
     ),

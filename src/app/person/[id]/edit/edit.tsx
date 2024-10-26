@@ -1,6 +1,4 @@
 'use client';
-import { useQuery } from '@supabase-cache-helpers/postgrest-react-query';
-
 import { updatePersonAction } from '@/app/actions/person';
 import { Button } from '@/components/ui/button';
 import {
@@ -19,24 +17,24 @@ import {
   personEditFormSchema,
 } from '@/utils/validation/person-update';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useQuery } from '@supabase-cache-helpers/postgrest-react-query';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 export default function Person({ id }: Readonly<{ id: string }>) {
   const supabase = useSupabaseBrowser();
   const { data: person } = useQuery(getPersonById(supabase, id));
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks -- Only for error handling
   const form = useForm<PersonEditFormSchema>({
-    resolver: zodResolver(personEditFormSchema),
     defaultValues: {
-      original_name: person?.original_name ?? undefined,
-      name: person?.name ?? undefined,
       birth_date: person?.birth_date ?? undefined,
-      height: person?.height ?? undefined,
       bust_size: person?.bust_size ?? undefined,
-      waist_size: person?.waist_size ?? undefined,
+      height: person?.height ?? undefined,
       hips_size: person?.hips_size ?? undefined,
+      name: person?.name ?? undefined,
+      original_name: person?.original_name ?? undefined,
+      waist_size: person?.waist_size ?? undefined,
     },
+    resolver: zodResolver(personEditFormSchema),
   });
 
   const onSubmit: SubmitHandler<PersonEditFormSchema> = async (data) => {
@@ -47,7 +45,7 @@ export default function Person({ id }: Readonly<{ id: string }>) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+      <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
           name="original_name"
@@ -96,11 +94,11 @@ export default function Person({ id }: Readonly<{ id: string }>) {
                 <FormLabel>Height</FormLabel>
                 <FormControl>
                   <Input
-                    type="number"
-                    value={field.value}
                     onChange={(event) =>
                       form.setValue('height', event.currentTarget.valueAsNumber)
                     }
+                    type="number"
+                    value={field.value}
                   />
                 </FormControl>
                 <FormMessage />
@@ -117,14 +115,14 @@ export default function Person({ id }: Readonly<{ id: string }>) {
                 <FormLabel>Bust Size</FormLabel>
                 <FormControl>
                   <Input
-                    type="number"
-                    value={field.value}
                     onChange={(event) =>
                       form.setValue(
                         'bust_size',
                         event.currentTarget.valueAsNumber,
                       )
                     }
+                    type="number"
+                    value={field.value}
                   />
                 </FormControl>
                 <FormMessage />
@@ -139,14 +137,14 @@ export default function Person({ id }: Readonly<{ id: string }>) {
                 <FormLabel>Waist Size</FormLabel>
                 <FormControl>
                   <Input
-                    type="number"
-                    value={field.value}
                     onChange={(event) =>
                       form.setValue(
                         'waist_size',
                         event.currentTarget.valueAsNumber,
                       )
                     }
+                    type="number"
+                    value={field.value}
                   />
                 </FormControl>
                 <FormMessage />
@@ -163,14 +161,14 @@ export default function Person({ id }: Readonly<{ id: string }>) {
                 <FormLabel>Hips Size</FormLabel>
                 <FormControl>
                   <Input
-                    type="number"
-                    value={field.value}
                     onChange={(event) =>
                       form.setValue(
                         'hips_size',
                         event.currentTarget.valueAsNumber,
                       )
                     }
+                    type="number"
+                    value={field.value}
                   />
                 </FormControl>
                 <FormMessage />
@@ -178,7 +176,7 @@ export default function Person({ id }: Readonly<{ id: string }>) {
             )}
           />
         </div>
-        <Button type="submit" disabled={form.formState.isSubmitting}>
+        <Button loading={form.formState.isSubmitting} type="submit">
           Submit
         </Button>
       </form>

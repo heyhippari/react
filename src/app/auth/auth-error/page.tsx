@@ -1,3 +1,7 @@
+/**
+ * Auth Error Page
+ * @returns JSX.Element
+ */
 export default function AuthError() {
   return (
     <div className="container mx-auto flex h-screen flex-wrap items-center justify-center">

@@ -5,12 +5,17 @@ import { sha256 } from '@/utils/hash';
 import createClient from '@/utils/supabase/server';
 import { cookies, headers } from 'next/headers';
 
+/**
+ * Register a view for an item.
+ * @param itemId - The ID of the item to register a view for.
+ * @param itemType - The type of item to register a view for.
+ * @returns True if the view was registered successfully.
+ */
 export async function registerViewAction(
   itemId: number | string,
-  itemType: 'movie' | 'person' | 'series' | 'studio' | 'label',
+  itemType: 'label' | 'movie' | 'person' | 'series' | 'studio',
 ) {
   const cookieStore = await cookies();
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const supabase = createClient(cookieStore);
 
   // If this is a development environment, we don't want to register views
@@ -23,7 +28,7 @@ export async function registerViewAction(
     throw new Error('No item ID provided');
   }
 
-  if (!['movie', 'person', 'series', 'studio', 'label'].includes(itemType)) {
+  if (!['label', 'movie', 'person', 'series', 'studio'].includes(itemType)) {
     throw new Error('Invalid item type');
   }
 

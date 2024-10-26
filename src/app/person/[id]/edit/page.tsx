@@ -2,12 +2,13 @@ import { getPersonById } from '@/queries/get-person-by-id';
 import createClient from '@/utils/supabase/server';
 import { prefetchQuery } from '@supabase-cache-helpers/postgrest-react-query';
 import {
+  dehydrate,
   HydrationBoundary,
   QueryClient,
-  dehydrate,
 } from '@tanstack/react-query';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+
 import PersonEdit from './edit';
 
 export default async function PersonEditPage({

@@ -1,5 +1,9 @@
 import LoginButton from '@/components/login-button';
 
+/**
+ * The login page
+ * @returns The login page
+ */
 export default function Login() {
   return (
     <div className="container mx-auto flex flex-wrap items-center justify-center">
