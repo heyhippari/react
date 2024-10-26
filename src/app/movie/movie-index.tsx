@@ -1,6 +1,6 @@
 'use client';
 
-import ItemCard from '@/components/item-card';
+import CardGrid from '@/components/card-grid';
 import { PaginationLinks } from '@/components/pagination-links';
 import { TwoColumnLayout } from '@/components/two-column-layout';
 import { Button } from '@/components/ui/button';
@@ -130,11 +130,7 @@ export default function MovieIndex({ page }: { page: number }) {
       {(moviesCount ?? 0 > 0) ? (
         <>
           <PaginationLinks page={page} pageCount={pageCount} />
-          <div className="grid grid-cols-3 gap-4 md:grid-cols-4 lg:grid-cols-5">
-            {movies?.map((movie, index) => (
-              <ItemCard item={movie} key={index} />
-            ))}
-          </div>
+          <CardGrid items={movies} />
           <PaginationLinks page={page} pageCount={pageCount} />
         </>
       ) : (
