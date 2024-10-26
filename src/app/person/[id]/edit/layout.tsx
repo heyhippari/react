@@ -6,6 +6,13 @@ import { getPersonById } from '@/queries/get-person-by-id';
 import createClient from '@/utils/supabase/server';
 import { cookies } from 'next/headers';
 
+/**
+ * The layout for the person edit page.
+ * @param props The props for the person edit page.
+ * @param props.children The children of the person edit page.
+ * @param props.params The URL parameters, containing the person ID.
+ * @returns The person edit page layout.
+ */
 export default async function Layout({
   children,
   params,

@@ -1,5 +1,4 @@
 'use client';
-import { deleteMovieRoleAction } from '@/app/actions/movie';
 import {
   Dialog,
   DialogClose,
@@ -10,46 +9,47 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { RoleWithPerson } from '@/queries/types';
-import IconTrash from '~icons/mdi/trash-can-outline.jsx';
+import { Item } from '@/queries/types';
 import { useActionState, useState } from 'react';
 
-import { Button } from './ui/button';
+import { Button, buttonVariants } from './ui/button';
 
 /**
- * Button to delete a role.
+ * Button to delete a movie.
  * @param props - The component props.
- * @param props.movie_id - The ID of the movie.
- * @param props.role - The role to delete.
+ * @param props.action - The action to perform when the movie is deleted.
+ * @param props.item - The item to delete.
  * @returns The rendered component.
  */
-export default function ButtonDeleteRole({
-  movie_id,
-  role,
-}: Readonly<{ movie_id: string; role: RoleWithPerson }>) {
+export default function ButtonDeleteItem({
+  action,
+  item,
+}: Readonly<{
+  action: (
+    state: null | void,
+    payload: FormData,
+  ) => null | Promise<null | void> | void;
+  item: Item;
+}>) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const [, deleteAction, isDeletePending] = useActionState(
-    deleteMovieRoleAction,
-    null,
-  );
+  const [, deleteAction, isDeletePending] = useActionState(action, null);
 
   return (
     <Dialog onOpenChange={setIsOpen} open={isOpen}>
       <DialogTrigger asChild>
-        <Button size="icon" variant="outline">
-          <IconTrash />
-        </Button>
+        <button
+          className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-start')} w-full text-red-500`}
+        >
+          Delete
+        </button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>
-            Delete {role?.person?.name ?? role?.person?.original_name}'s role?
-          </DialogTitle>
+          <DialogTitle>Delete {item?.name ?? item?.original_name}?</DialogTitle>
           <DialogDescription>
-            You won't be able to recover this role after deletion. The actor and
-            their performance details will be removed from the movie's cast
-            list.
+            This item will be permanently removed from the database. This action
+            cannot be undone.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
@@ -57,8 +57,7 @@ export default function ButtonDeleteRole({
             <Button variant="outline">Cancel</Button>
           </DialogClose>
           <form action={deleteAction}>
-            <input name="movie_id" type="hidden" value={movie_id} />
-            <input name="role_id" type="hidden" value={role?.id} />
+            <input name="movie_id" type="hidden" value={item?.id} />
             <Button
               className="bg-red-500"
               loading={isDeletePending}

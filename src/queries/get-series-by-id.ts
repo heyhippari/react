@@ -1,11 +1,17 @@
-import { TypedSupabaseClient } from '@/utils/types';
+import { TypedSupabaseClient } from "@/utils/types";
 
+/**
+ * Get a series by its ID
+ * @param client Supabase client
+ * @param seriesId Series ID
+ * @returns Series data
+ */
 export function getSeriesById(
   client: TypedSupabaseClient,
   seriesId: number | string,
 ) {
   return client
-    .from('series')
+    .from("series")
     .select(
       `
         id,
@@ -21,22 +27,28 @@ export function getSeriesById(
         )
       `,
     )
-    .eq('id', seriesId)
-    .order('release_date', {
+    .eq("id", seriesId)
+    .order("release_date", {
       ascending: false,
-      foreignTable: 'movies',
+      foreignTable: "movies",
     })
     .throwOnError()
     .single();
 }
 
+/**
+ * Get the number of movies in a series
+ * @param client Supabase client
+ * @param seriesId Series ID
+ * @returns Number of movies
+ */
 export function getSeriesMoviesCount(
   client: TypedSupabaseClient,
   seriesId: number | string,
 ) {
   return client
-    .from('movies')
-    .select('id', { count: 'exact', head: true })
-    .eq('series_id', seriesId)
+    .from("movies")
+    .select("id", { count: "exact", head: true })
+    .eq("series_id", seriesId)
     .throwOnError();
 }

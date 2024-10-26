@@ -6,6 +6,10 @@ import { cookies } from 'next/headers';
 
 import UserMenu from './user-menu';
 
+/**
+ * User menu server component.
+ * @returns User menu server component.
+ */
 export default async function UserMenuServer() {
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);

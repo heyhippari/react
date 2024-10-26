@@ -1,7 +1,7 @@
 'use client';
 
 import { addMovieRoleAction } from '@/app/actions/movie';
-import DeleteRoleButton from '@/components/button-delete-role';
+import ButtonDeleteRole from '@/components/button-delete-role';
 import { AutoComplete } from '@/components/ui/autocomplete';
 import { Button } from '@/components/ui/button';
 import {
@@ -83,7 +83,7 @@ export default function MovieCast({ id }: Readonly<{ id: string }>) {
                 {role?.person?.name ?? role?.person?.original_name}
               </TableCell>
               <TableCell className="space-x-2">
-                <DeleteRoleButton movie_id={id} role={role} />
+                <ButtonDeleteRole movie_id={id} role={role} />
               </TableCell>
             </TableRow>
           ))}
@@ -92,9 +92,7 @@ export default function MovieCast({ id }: Readonly<{ id: string }>) {
       <Form {...form}>
         <form
           className="flex flex-row items-end justify-start space-x-4"
-          onSubmit={(e) => {
-            void form.handleSubmit(onSubmit)(e);
-          }}
+          onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}
         >
           <FormField
             control={form.control}

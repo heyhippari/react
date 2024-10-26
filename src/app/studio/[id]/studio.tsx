@@ -12,6 +12,12 @@ import { useQuery } from '@supabase-cache-helpers/postgrest-react-query';
 import { redirect } from 'next/navigation';
 import { useEffect } from 'react';
 
+/**
+ * The studio page component.
+ * @param props The props for the studio page.
+ * @param props.id The id of the studio to display.
+ * @returns The studio page component.
+ */
 export default function Studio({ id }: Readonly<{ id: string }>) {
   const supabase = useSupabaseBrowser();
   const { data: studio } = useQuery(getStudioById(supabase, id));

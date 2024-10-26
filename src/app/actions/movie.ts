@@ -1,55 +1,61 @@
-'use server';
-import { getMovieById } from '@/queries/get-movie-by-id';
-import { cloudflare } from '@/utils/cloudflare';
-import createClient from '@/utils/supabase/server';
-import { MovieEditFormSchema, MovieRoleAddFormSchema } from '@/utils/validation/movie-update';
-import { revalidatePath } from 'next/cache';
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
+"use server";
+import { getMovieById } from "@/queries/get-movie-by-id";
+import { cloudflare } from "@/utils/cloudflare";
+import createClient from "@/utils/supabase/server";
+import {
+  MovieEditFormSchema,
+  MovieRoleAddFormSchema,
+} from "@/utils/validation/movie-update";
+import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 /**
  * Delete a role from a movie.
  * @param previousState - Unused.
  * @param formData - Form data containing the movie ID and role ID.
  */
-export async function deleteMovieRoleAction(previousState: null | void, formData: FormData) {
+export async function deleteMovieRoleAction(
+  previousState: null | void,
+  formData: FormData,
+) {
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
 
-  if (!formData.get('movie_id')) {
-    throw new Error('No movie ID provided');
+  if (!formData.get("movie_id")) {
+    throw new Error("No movie ID provided");
   }
 
-  const movie_id = Number(formData.get('movie_id'));
-  const role_id = Number(formData.get('role_id'));
+  const movie_id = Number(formData.get("movie_id"));
+  const role_id = Number(formData.get("role_id"));
 
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
   if (!user) {
-    throw new Error('User not authenticated');
+    throw new Error("User not authenticated");
   }
 
   const { data: movie, error } = await getMovieById(supabase, movie_id);
 
   if (error || !movie) {
-    throw new Error('Error fetching movie');
+    throw new Error("Error fetching movie");
   }
 
   const { error: deleteError } = await supabase
-    .from('roles')
+    .from("roles")
     .delete()
-    .eq('id', role_id);
+    .eq("id", role_id);
 
   if (deleteError) {
     console.error(deleteError);
-    throw new Error('Error deleting role');
+    throw new Error("Error deleting role");
   }
 
   // Revalidate the movie page in case the roles were updated
-  revalidatePath(`/movie/${movie_id}`, 'page');
-  revalidatePath(`/movie/${movie_id}/edit/cast`, 'page');
+  revalidatePath(`/movie/${movie_id}`, "page");
+  revalidatePath(`/movie/${movie_id}/edit/cast`, "page");
   redirect(`/movie/${movie_id}/edit/cast`);
 }
 
@@ -66,7 +72,7 @@ export async function addMovieRoleAction(
   const supabase = createClient(cookieStore);
 
   if (!movieId) {
-    throw new Error('No movie ID provided');
+    throw new Error("No movie ID provided");
   }
 
   const {
@@ -74,17 +80,17 @@ export async function addMovieRoleAction(
   } = await supabase.auth.getUser();
 
   if (!user) {
-    throw new Error('User not authenticated');
+    throw new Error("User not authenticated");
   }
 
   const { data: movie, error } = await getMovieById(supabase, movieId);
 
   if (error || !movie) {
-    throw new Error('Error fetching movie');
+    throw new Error("Error fetching movie");
   }
 
   const { error: insertError } = await supabase
-    .from('roles')
+    .from("roles")
     .insert({
       movie_id: movieId,
       person_id: formData.person_id,
@@ -92,12 +98,12 @@ export async function addMovieRoleAction(
 
   if (insertError) {
     console.error(insertError);
-    throw new Error('Error adding role');
+    throw new Error("Error adding role");
   }
 
   // Revalidate the movie page in case the roles were updated
-  revalidatePath(`/movie/${movieId}`, 'page');
-  revalidatePath(`/movie/${movieId}/edit/cast`, 'page');
+  revalidatePath(`/movie/${movieId}`, "page");
+  revalidatePath(`/movie/${movieId}/edit/cast`, "page");
   redirect(`/movie/${movieId}/edit/cast`);
 }
 
@@ -114,7 +120,7 @@ export async function updateMovieAction(
   const supabase = createClient(cookieStore);
 
   if (!movieId) {
-    throw new Error('No movie ID provided');
+    throw new Error("No movie ID provided");
   }
 
   const {
@@ -122,43 +128,49 @@ export async function updateMovieAction(
   } = await supabase.auth.getUser();
 
   if (!user) {
-    throw new Error('User not authenticated');
+    throw new Error("User not authenticated");
   }
 
   const { data: movie, error } = await getMovieById(supabase, movieId);
 
   if (error || !movie) {
-    throw new Error('Error fetching movie');
+    throw new Error("Error fetching movie");
   }
 
   const { error: updateError } = await supabase
-    .from('movies')
+    .from("movies")
     .update({
       ...formData,
-      format: formData.format === 'Unknown' ? null : formData.format,
+      format: formData.format === "Unknown" ? null : formData.format,
     })
-    .eq('id', movieId);
+    .eq("id", movieId);
 
   if (updateError) {
     console.error(updateError);
-    throw new Error('Error updating movie');
+    throw new Error("Error updating movie");
   }
 
   // Revalidate the homepage in case the movie updated was on the homepage
-  revalidatePath('/', 'page');
+  revalidatePath("/", "page");
   redirect(`/movie/${movieId}`);
 }
 
 /**
  * Delete a movie from the database.
- * @param id - The ID of the movie to delete.
+ * @param previousState - Unused.
+ * @param formData - Form data containing the movie ID.
  */
-export async function deleteMovieAction(id: number | undefined) {
+export async function deleteMovieAction(
+  previousState: null | void,
+  formData: FormData,
+) {
+  const id = Number(formData.get("id"));
+
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
 
   if (!id) {
-    throw new Error('No movie ID provided');
+    throw new Error("No movie ID provided");
   }
 
   const {
@@ -166,13 +178,13 @@ export async function deleteMovieAction(id: number | undefined) {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    throw new Error('User not authenticated');
+    throw new Error("User not authenticated");
   }
 
   const { data: movie, error } = await getMovieById(supabase, id);
 
   if (error || !movie) {
-    throw new Error('Error fetching movie');
+    throw new Error("Error fetching movie");
   }
 
   try {
@@ -181,7 +193,7 @@ export async function deleteMovieAction(id: number | undefined) {
         if (image) {
           await cloudflare.images.v1
             .delete(image.uuid, {
-              account_id: process.env.CLOUDFLARE_ACCOUNT_ID ?? '',
+              account_id: process.env.CLOUDFLARE_ACCOUNT_ID ?? "",
             })
             .catch(() => {
               // Ignore errors deleting images
@@ -195,15 +207,15 @@ export async function deleteMovieAction(id: number | undefined) {
 
   // Delete the movie from the database
   const { error: deleteError } = await supabase
-    .from('movies')
+    .from("movies")
     .delete()
     .match({ id });
 
   if (deleteError) {
-    throw new Error('Error deleting movie');
+    throw new Error("Error deleting movie");
   }
 
   // Revalidate the homepage in case the movie deleted was on the homepage
-  revalidatePath('/', 'page');
-  redirect('/');
+  revalidatePath("/", "page");
+  redirect("/");
 }

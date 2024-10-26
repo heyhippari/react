@@ -1,64 +1,23 @@
-import { jwtDecode, type JwtPayload } from 'jwt-decode';
-import { useEffect, useState } from 'react';
-import { useMediaQuery } from 'react-responsive';
-import resolveConfig from 'tailwindcss/resolveConfig';
+import { jwtDecode, type JwtPayload } from "jwt-decode";
+import { useEffect, useState } from "react";
 
-import tailwindConfig from '../../tailwind.config';
-import useSupabaseBrowser from './supabase/client';
+import useSupabaseBrowser from "./supabase/client";
 
 type AuthJwtPayload = { user_role: string } & JwtPayload;
 
-export function useWindowSize() {
-  // Initialize state with undefined width/height so server and client renders match
-  // Learn more here: https://joshwcomeau.com/react/the-perils-of-rehydration/
-  const [windowSize, setWindowSize] = useState<{
-    height: number | undefined;
-    width: number | undefined;
-  }>({
-    height: undefined,
-    width: undefined,
-  });
-
-  function handleResize() {
-    // Set window width/height to state
-    setWindowSize({
-      height: window.innerHeight,
-      width: window.innerWidth,
-    });
-  }
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      window.addEventListener('resize', handleResize);
-
-      handleResize();
-
-      return () => window.removeEventListener('resize', handleResize);
-    }
-  }, []);
-  return windowSize;
-}
-
-const fullConfig = resolveConfig(tailwindConfig);
-
-export type BreakpointKey = keyof typeof fullConfig.theme.screens;
-
-export function useBreakpoint<K extends BreakpointKey>(breakpoint: K) {
-  const bool = useMediaQuery({
-    query: `(min-width: ${fullConfig.theme.screens[breakpoint]})`,
-  });
-  const capitalizedKey = breakpoint[0].toUpperCase() + breakpoint.substring(1);
-  type Key = `is${Capitalize<K>}`;
-  return {
-    [`is${capitalizedKey}`]: bool,
-  } as Record<Key, boolean>;
-}
-
+/**
+ * Fetches the user role from the JWT token stored in the session.
+ * @returns The user role or null if the user is not authenticated.
+ */
 export function useUserRole() {
   const [userRole, setUserRole] = useState<null | string>(null);
   const supabase = useSupabaseBrowser();
 
   useEffect(() => {
+    /**
+     * Fetches the user role from the JWT token stored in the session.
+     * @returns The user role or null if the user is not authenticated.
+     */
     async function fetchUserRole() {
       const {
         data: { session },

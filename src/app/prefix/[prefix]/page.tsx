@@ -10,11 +10,15 @@ import { cookies } from 'next/headers';
 
 import Prefix from './prefix';
 
-export default async function PrefixPage(
-  props: {
-    params: Promise<{ prefix: string }>;
-  }
-) {
+/**
+ * Server-side code for the prefix page.
+ * @param props The props for the prefix page.
+ * @param props.params The URL parameters, containing the prefix.
+ * @returns The prefix page.
+ */
+export default async function PrefixPage(props: {
+  params: Promise<{ prefix: string }>;
+}) {
   const params = await props.params;
   const queryClient = new QueryClient();
   const cookieStore = await cookies();

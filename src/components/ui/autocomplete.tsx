@@ -27,6 +27,19 @@ interface Props<T extends string> {
   selectedValue: T;
 }
 
+/**
+ * A searchable dropdown list with autocomplete functionality.
+ * @param props The component props.
+ * @param props.emptyMessage The message to display when there are no items.
+ * @param props.isLoading Whether the items are loading.
+ * @param props.items The items to display.
+ * @param props.onSearchValueChange The callback to call when the search value changes.
+ * @param props.onSelectedValueChange The callback to call when the selected value changes.
+ * @param props.placeholder The input placeholder.
+ * @param props.searchValue The search value.
+ * @param props.selectedValue The selected value.
+ * @returns The component.
+ */
 export function AutoComplete<T extends string>({
   emptyMessage = 'No items.',
   isLoading,

@@ -12,6 +12,12 @@ import { useQuery } from '@supabase-cache-helpers/postgrest-react-query';
 import { redirect } from 'next/navigation';
 import { useEffect } from 'react';
 
+/**
+ * Series information page.
+ * @param props The props for the series page.
+ * @param props.id The ID of the series.
+ * @returns The series page.
+ */
 export default function Series({ id }: Readonly<{ id: string }>) {
   const supabase = useSupabaseBrowser();
   const { data: series } = useQuery(getSeriesById(supabase, id));

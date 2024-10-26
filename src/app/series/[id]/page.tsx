@@ -14,6 +14,12 @@ import { redirect } from 'next/navigation';
 
 import Series from './series';
 
+/**
+ * Metadata generation for the series page.
+ * @param params The URL parameters, containing the series ID.
+ * @param params.params The URL parameters, containing the series ID.
+ * @returns The metadata for the series page.
+ */
 export async function generateMetadata({
   params,
 }: {
@@ -38,6 +44,12 @@ export async function generateMetadata({
   }
 }
 
+/**
+ * Server-side code for the series page.
+ * @param props The props for the series page.
+ * @param props.params The URL parameters, containing the series ID.
+ * @returns The series page.
+ */
 export default async function SeriesPage({
   params,
 }: {

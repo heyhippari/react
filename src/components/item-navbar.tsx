@@ -7,12 +7,19 @@ import { getUrlForItem, isMovie, isPerson } from '@/utils/types';
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 
+import ButtonDeleteItem from './button-delete-item';
 import { Badge } from './ui/badge';
 import { Button, buttonVariants } from './ui/button';
 import { DropdownMenuSeparator } from './ui/dropdown-menu';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from './ui/hover-card';
 import { useToast } from './ui/use-toast';
 
+/**
+ * A navigation bar for an item, containing links to various item-related pages and actions.
+ * @param props - The component props.
+ * @param props.item - The item to display the navigation bar for.
+ * @returns The rendered component.
+ */
 export default function ItemNavbar({ item }: Readonly<{ item: Item }>) {
   const [supportsShareAPI, setSupportsShareAPI] = useState(
     navigator?.share !== undefined,
@@ -111,7 +118,7 @@ export default function ItemNavbar({ item }: Readonly<{ item: Item }>) {
   };
 
   return (
-    <nav className="start-0 top-0 z-20 w-full border-b bg-pink-300 p-2 dark:border-pink-700 dark:bg-pink-700">
+    <nav className="start-0 top-0 z-10 w-full border-b bg-pink-300 p-2 dark:border-pink-700 dark:bg-pink-700">
       <div className="container mx-auto flex items-center gap-2 overflow-x-scroll px-4 md:justify-center md:overflow-auto">
         <HoverCard closeDelay={0} openDelay={0}>
           <HoverCardTrigger>
@@ -180,7 +187,7 @@ export default function ItemNavbar({ item }: Readonly<{ item: Item }>) {
           </HoverCardContent>
         </HoverCard>
 
-        <Button onClick={handleShare} variant={'ghost'}>
+        <Button onClick={() => void handleShare()} variant={'ghost'}>
           Share
         </Button>
 
@@ -192,21 +199,7 @@ export default function ItemNavbar({ item }: Readonly<{ item: Item }>) {
               </Button>
             </HoverCardTrigger>
             <HoverCardContent align="center" className="w-44 p-2">
-              <button
-                className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-start')} w-full text-red-500`}
-                onClick={async () => {
-                  try {
-                    await deleteMovieAction(item?.id);
-                  } catch (error) {
-                    toast({
-                      description: (error as Error).message,
-                      variant: 'destructive',
-                    });
-                  }
-                }}
-              >
-                Delete
-              </button>
+              <ButtonDeleteItem action={deleteMovieAction} item={item} />
             </HoverCardContent>
           </HoverCard>
         ) : null}

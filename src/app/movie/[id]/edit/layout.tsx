@@ -6,6 +6,13 @@ import { getMovieById } from '@/queries/get-movie-by-id';
 import createClient from '@/utils/supabase/server';
 import { cookies } from 'next/headers';
 
+/**
+ * Layout for the movie edit pages.
+ * @param props The component props.
+ * @param props.children The children components.
+ * @param props.params The URL parameters, containing the movie ID.
+ * @returns The movie edit layout.
+ */
 export default async function Layout({
   children,
   params,

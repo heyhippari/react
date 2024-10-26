@@ -10,19 +10,20 @@ import {
   NavigationMenuTrigger,
 } from './ui/navigation-menu';
 
+/**
+ * Main site menu navigation component.
+ * @returns Site menu component.
+ */
 export default function SiteMenu() {
   return (
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
           <NavigationMenuTrigger>Movies</NavigationMenuTrigger>
-          <NavigationMenuContent>
+          <NavigationMenuContent className="z-50">
             <ul>
               <li>
-                <Link href="/movies">All Movies</Link>
-              </li>
-              <li>
-                <Link href="/movies/popular">Popular Movies</Link>
+                <Link href="/movie">All Movies</Link>
               </li>
             </ul>
           </NavigationMenuContent>

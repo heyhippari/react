@@ -5,6 +5,12 @@ import { getMoviesByPrefix } from '@/queries/get-movies-by-prefix';
 import useSupabaseBrowser from '@/utils/supabase/client';
 import { useQuery } from '@supabase-cache-helpers/postgrest-react-query';
 
+/**
+ * The prefix page.
+ * @param props The props for the prefix page.
+ * @param props.prefix The prefix to display.
+ * @returns The prefix page.
+ */
 export default function Prefix({ prefix }: { prefix: string }) {
   const supabase = useSupabaseBrowser();
   const { data: movies } = useQuery(getMoviesByPrefix(supabase, prefix));

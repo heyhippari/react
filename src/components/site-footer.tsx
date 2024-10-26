@@ -4,6 +4,10 @@ import SIGithub from '~icons/simple-icons/github';
 import ThemeToggle from './theme-toggle';
 import { buttonVariants } from './ui/button';
 
+/**
+ * Site footer component.
+ * @returns The site footer component.
+ */
 export default function SiteFooter() {
   return (
     <footer className="w-full bg-pink-300 shadow dark:bg-pink-700">

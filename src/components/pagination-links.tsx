@@ -1,3 +1,4 @@
+'use client';
 import { usePathname, useSearchParams } from 'next/navigation';
 
 import {
@@ -10,6 +11,13 @@ import {
   PaginationPrevious,
 } from './ui/pagination';
 
+/**
+ * Component to render pagination links.
+ * @param props The props for the component.
+ * @param props.page The current page.
+ * @param props.pageCount The total number of pages.
+ * @returns The rendered component.
+ */
 export function PaginationLinks({
   page,
   pageCount,
@@ -20,6 +28,11 @@ export function PaginationLinks({
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
+  /**
+   * Get the link for a specific page.
+   * @param page The page number.
+   * @returns The link for the page.
+   */
   function getPaginationPageLink(page: number): string {
     const newSearchParams = new URLSearchParams(searchParams);
 

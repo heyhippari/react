@@ -1,3 +1,9 @@
+/**
+ * Block of statistics for the home page hero.
+ * @param props The props for the home stats component.
+ * @param props.counts The counts for the statistics.
+ * @returns The home stats component.
+ */
 export default function HomeStats({
   counts,
 }: Readonly<{

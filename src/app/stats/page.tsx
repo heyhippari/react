@@ -3,6 +3,10 @@ import { getRolesByAge } from '@/queries/stats';
 import createClient from '@/utils/supabase/server';
 import { cookies } from 'next/headers';
 
+/**
+ * Statistics page.
+ * @returns The page content.
+ */
 export default async function StatsPage() {
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);

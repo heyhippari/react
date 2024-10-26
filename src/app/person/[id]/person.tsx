@@ -12,6 +12,12 @@ import { DateTime } from 'luxon';
 import { redirect } from 'next/navigation';
 import { useEffect } from 'react';
 
+/**
+ * Person information page.
+ * @param props The props for the person page.
+ * @param props.id The ID of the person.
+ * @returns The person page.
+ */
 export default function Person({ id }: Readonly<{ id: string }>) {
   const supabase = useSupabaseBrowser();
   const { data: person } = useQuery(getPersonById(supabase, id));

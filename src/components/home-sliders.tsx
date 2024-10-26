@@ -7,8 +7,12 @@ import {
 import createClient from '@/utils/supabase/server';
 import { cookies } from 'next/headers';
 
-import MovieSlider from './movie-slider';
+import ItemSlider from './movie-slider';
 
+/**
+ * Sliders for the home page.
+ * @returns The home sliders component.
+ */
 export default async function HomeSliders() {
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
@@ -20,13 +24,13 @@ export default async function HomeSliders() {
   return (
     <>
       <h2 className="text-2xl font-semibold">Recently Released</h2>
-      <MovieSlider items={recentMovies ?? []} />
+      <ItemSlider items={recentMovies ?? []} />
       <h2 className="text-2xl font-semibold">Trending People</h2>
-      <MovieSlider items={popularPersons ?? []} />
+      <ItemSlider items={popularPersons ?? []} />
       <h2 className="text-2xl font-semibold">On This Day</h2>
-      <MovieSlider items={releasedOnThisDay ?? []} />
+      <ItemSlider items={releasedOnThisDay ?? []} />
       <h2 className="text-2xl font-semibold">Information Needed</h2>
-      <MovieSlider items={informationNeeded ?? []} />
+      <ItemSlider items={informationNeeded ?? []} />
     </>
   );
 }

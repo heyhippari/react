@@ -11,6 +11,12 @@ import { redirect } from 'next/navigation';
 
 import PersonEdit from './edit';
 
+/**
+ * Server-side code for the person edit page.
+ * @param props The props for the person edit page.
+ * @param props.params The URL parameters, containing the person ID.
+ * @returns The person edit page.
+ */
 export default async function PersonEditPage({
   params,
 }: Readonly<{

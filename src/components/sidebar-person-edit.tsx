@@ -7,6 +7,12 @@ import { usePathname } from 'next/navigation';
 
 import { buttonVariants } from './ui/button';
 
+/**
+ * Sidebar for editing a person.
+ * @param props The component props.
+ * @param props.person The person to edit.
+ * @returns The sidebar.
+ */
 export default function SidebarPersonEdit({
   person,
 }: Readonly<{ person: PersonWithAll }>) {

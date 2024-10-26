@@ -4,6 +4,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useMemo } from 'react';
 
+/**
+ * Card component to display a role with a person.
+ * @param props The props for the component.
+ * @param props.role The role with the person to display.
+ * @returns The rendered component.
+ */
 export default function RoleCard({ role }: Readonly<{ role: RoleWithPerson }>) {
   const profile = useMemo(() => getProfileUrl(role.person), [role.person]);
 

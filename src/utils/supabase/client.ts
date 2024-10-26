@@ -1,12 +1,16 @@
-import { createBrowserClient } from '@supabase/ssr';
-import { useMemo } from 'react';
+import { createBrowserClient } from "@supabase/ssr";
+import { useMemo } from "react";
 
-import { Database } from '../database.types';
-import { TypedSupabaseClient } from '../types';
+import { Database } from "../database.types";
+import { TypedSupabaseClient } from "../types";
 
 let client: TypedSupabaseClient | undefined;
 
-export function getSupabaseBrowserClient() {
+/**
+ * Creates a Supabase client for browser-side use.
+ * @returns The Supabase client.
+ */
+export function createClient() {
   if (client) {
     return client;
   }
@@ -19,8 +23,12 @@ export function getSupabaseBrowserClient() {
   return client;
 }
 
+/**
+ * Hook to use a Supabase client in the browser.
+ * @returns The Supabase client.
+ */
 function useSupabaseBrowser() {
-  return useMemo(getSupabaseBrowserClient, []);
+  return useMemo(createClient, []);
 }
 
 export default useSupabaseBrowser;

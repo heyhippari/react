@@ -1,11 +1,17 @@
-import { TypedSupabaseClient } from '@/utils/types';
+import { TypedSupabaseClient } from "@/utils/types";
 
+/**
+ * Get a person by its ID
+ * @param client Supabase client
+ * @param personId Person ID
+ * @returns Person
+ */
 export function getPersonById(
   client: TypedSupabaseClient,
   personId: number | string,
 ) {
   return client
-    .from('persons')
+    .from("persons")
     .select(
       `
         id,
@@ -41,23 +47,29 @@ export function getPersonById(
         )
       `,
     )
-    .eq('id', personId)
-    .order('movies(release_date)', {
+    .eq("id", personId)
+    .order("movies(release_date)", {
       ascending: false,
       nullsFirst: false,
-      referencedTable: 'roles',
+      referencedTable: "roles",
     })
     .throwOnError()
     .single();
 }
 
+/**
+ * Get the count of roles for a person
+ * @param client Supabase client
+ * @param personId Person ID
+ * @returns Count of roles
+ */
 export function getPersonRolesCount(
   client: TypedSupabaseClient,
   personId: number | string,
 ) {
   return client
-    .from('roles')
-    .select('id', { count: 'exact', head: true })
-    .eq('person_id', personId)
+    .from("roles")
+    .select("id", { count: "exact", head: true })
+    .eq("person_id", personId)
     .throwOnError();
 }

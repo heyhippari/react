@@ -8,6 +8,12 @@ import { usePathname } from 'next/navigation';
 
 import { buttonVariants } from './ui/button';
 
+/**
+ * Sidebar for editing a movie.
+ * @param props The component props.
+ * @param props.movie The movie to edit.
+ * @returns The rendered component.
+ */
 export default function SidebarMovieEdit({
   movie,
 }: Readonly<{ movie: MovieWithAll }>) {

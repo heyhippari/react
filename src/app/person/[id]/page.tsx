@@ -11,6 +11,12 @@ import { redirect } from 'next/navigation';
 
 import Person from './person';
 
+/**
+ * Server-side code for the person page.
+ * @param props The props for the person page.
+ * @param props.params The URL parameters, containing the person ID.
+ * @returns The person page.
+ */
 export async function generateMetadata(props: {
   params: Promise<{ id: string }>;
 }) {
@@ -33,6 +39,12 @@ export async function generateMetadata(props: {
   }
 }
 
+/**
+ * Server-side code for the person page.
+ * @param props The props for the person page.
+ * @param props.params The URL parameters, containing the person ID.
+ * @returns The person page.
+ */
 export default async function PersonPage(props: {
   params: Promise<{ id: string }>;
 }) {

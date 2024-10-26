@@ -1,6 +1,6 @@
-import { Item } from '@/queries/types';
+import { Item } from "@/queries/types";
 
-import { isMovie } from './types';
+import { isMovie } from "./types";
 
 /**
  * Get the title for link sharing based on the item
@@ -15,6 +15,11 @@ export function getShareTitle(item: Item) {
   }
 }
 
+/**
+ * Get the text for link sharing based on the item
+ * @param item The item to get the text for
+ * @returns The text for sharing
+ */
 export function getShareText(item: Item) {
   if (isMovie(item)) {
     return `Find out more about ${item?.dvd_id} on Kanojo`;

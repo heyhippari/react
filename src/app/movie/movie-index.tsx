@@ -21,10 +21,20 @@ import useSupabaseBrowser from '@/utils/supabase/client';
 import { useQuery } from '@supabase-cache-helpers/postgrest-react-query';
 import { useRouter, useSearchParams } from 'next/navigation';
 
+/**
+ * The movie index page.
+ * @param props The props for the movie index page.
+ * @param props.page The page number to display.
+ * @returns The movie index page.
+ */
 export default function MovieIndex({ page }: { page: number }) {
   const searchParams = useSearchParams();
   const router = useRouter();
 
+  /**
+   * Handle the search form submission.
+   * @param event The form submission event.
+   */
   function handleSearch(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 

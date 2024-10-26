@@ -1,11 +1,17 @@
-import { TypedSupabaseClient } from '@/utils/types';
+import { TypedSupabaseClient } from "@/utils/types";
 
+/**
+ * Get a label by its ID
+ * @param client Supabase client
+ * @param labelId Label ID
+ * @returns Label data
+ */
 export function getLabelById(
   client: TypedSupabaseClient,
   labelId: number | string,
 ) {
   return client
-    .from('labels')
+    .from("labels")
     .select(
       `
         id,
@@ -20,22 +26,28 @@ export function getLabelById(
         )
       `,
     )
-    .eq('id', labelId)
-    .order('release_date', {
+    .eq("id", labelId)
+    .order("release_date", {
       ascending: false,
-      foreignTable: 'movies',
+      foreignTable: "movies",
     })
     .throwOnError()
     .single();
 }
 
+/**
+ * Get the number of movies in a label
+ * @param client Supabase client
+ * @param labelId Label ID
+ * @returns Number of movies in the label
+ */
 export function getLabelMoviesCount(
   client: TypedSupabaseClient,
   labelId: number | string,
 ) {
   return client
-    .from('movies')
-    .select('id', { count: 'exact', head: true })
-    .eq('label_id', labelId)
+    .from("movies")
+    .select("id", { count: "exact", head: true })
+    .eq("label_id", labelId)
     .throwOnError();
 }

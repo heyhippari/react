@@ -15,6 +15,12 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { useEffect } from 'react';
 
+/**
+ * The movie information page.
+ * @param props The props for the movie page.
+ * @param props.id The ID of the movie.
+ * @returns The movie page.
+ */
 export default function Movie({ id }: Readonly<{ id: string }>) {
   const supabase = useSupabaseBrowser();
   const { data: movie, error } = useQuery(getMovieById(supabase, id));

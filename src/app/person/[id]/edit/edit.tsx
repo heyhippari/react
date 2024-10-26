@@ -20,6 +20,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useQuery } from '@supabase-cache-helpers/postgrest-react-query';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
+/**
+ * Form to edit a person's primary facts.
+ * @param props - The component props.
+ * @param props.id - The person's ID.
+ * @returns The rendered component.
+ */
 export default function Person({ id }: Readonly<{ id: string }>) {
   const supabase = useSupabaseBrowser();
   const { data: person } = useQuery(getPersonById(supabase, id));
@@ -45,7 +51,10 @@ export default function Person({ id }: Readonly<{ id: string }>) {
 
   return (
     <Form {...form}>
-      <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
+      <form
+        className="space-y-4"
+        onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}
+      >
         <FormField
           control={form.control}
           name="original_name"

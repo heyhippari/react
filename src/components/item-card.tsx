@@ -7,6 +7,12 @@ import { useMemo, useState } from 'react';
 
 import { Badge } from './ui/badge';
 
+/**
+ * Card that displays an item with an image and some information depending on the type of item.
+ * @param props The props for the item card.
+ * @param props.item The item to display.
+ * @returns The item card component.
+ */
 export default function ItemCard({
   item,
 }: Readonly<{ item: MovieWithImages | PersonWithImage }>) {

@@ -1,7 +1,7 @@
-import { getMovieById } from '@/queries/get-movie-by-id';
-import { getApiMovieObject, omitNulls } from '@/utils/api';
-import createClient from '@/utils/supabase/server';
-import { cookies } from 'next/headers';
+import { getMovieById } from "@/queries/get-movie-by-id";
+import { getApiMovieObject, omitNulls } from "@/utils/api";
+import createClient from "@/utils/supabase/server";
+import { cookies } from "next/headers";
 
 /**
  * Get a movie by its ID.
@@ -10,7 +10,10 @@ import { cookies } from 'next/headers';
  * @param props.params - The URL parameters containing the movie ID.
  * @returns The movie object.
  */
-export async function GET(_: Request, props: { params: Promise<{ id: string }> }) {
+export async function GET(
+  _: Request,
+  props: { params: Promise<{ id: string }> },
+) {
   const params = await props.params;
   const { id } = params;
 
@@ -34,7 +37,7 @@ export async function GET(_: Request, props: { params: Promise<{ id: string }> }
 
   return new Response(JSON.stringify(getApiMovieObject(data), omitNulls), {
     headers: {
-      'content-type': 'application/json',
+      "content-type": "application/json",
     },
   });
 }

@@ -11,6 +11,10 @@ import IconWeatherSunny from '~icons/mdi/weather-sunny.jsx';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 
+/**
+ * Theme toggle button.
+ * @returns The theme toggle button.
+ */
 export default function ThemeToggle() {
   const [mounted, setMounted] = useState(false);
   const { setTheme } = useTheme();

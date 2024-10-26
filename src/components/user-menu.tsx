@@ -13,6 +13,12 @@ import { UserProfile } from '@/queries/types';
 import { useUserRole } from '@/utils/hooks';
 import { DropdownMenuLabel } from '@radix-ui/react-dropdown-menu';
 
+/**
+ * User menu component.
+ * @param props - Component props.
+ * @param props.profile - User profile.
+ * @returns User menu component.
+ */
 export default function UserMenu({ profile }: { profile: UserProfile }) {
   const userRole = useUserRole();
 

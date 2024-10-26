@@ -1,11 +1,17 @@
-import { TypedSupabaseClient } from '@/utils/types';
+import { TypedSupabaseClient } from "@/utils/types";
 
+/**
+ * Get a studio by its ID
+ * @param client Supabase client
+ * @param studioId Studio ID
+ * @returns Studio data
+ */
 export function getStudioById(
   client: TypedSupabaseClient,
   studioId: number | string,
 ) {
   return client
-    .from('studios')
+    .from("studios")
     .select(
       `
         id,
@@ -21,22 +27,28 @@ export function getStudioById(
         )
       `,
     )
-    .eq('id', studioId)
-    .order('release_date', {
+    .eq("id", studioId)
+    .order("release_date", {
       ascending: false,
-      foreignTable: 'movies',
+      foreignTable: "movies",
     })
     .throwOnError()
     .single();
 }
 
+/**
+ * Get the number of movies a studio has
+ * @param client Supabase client
+ * @param studioId Studio ID
+ * @returns Number of movies
+ */
 export function getStudioMoviesCount(
   client: TypedSupabaseClient,
   studioId: number | string,
 ) {
   return client
-    .from('movies')
-    .select('id', { count: 'exact', head: true })
-    .eq('studio_id', studioId)
+    .from("movies")
+    .select("id", { count: "exact", head: true })
+    .eq("studio_id", studioId)
     .throwOnError();
 }

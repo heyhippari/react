@@ -1,3 +1,4 @@
+// TODO(hippari): Add a loading indicator when changing pages to prevent the cards changing in place.
 import {
   getMoviePageCount,
   getPaginatedMovies,
@@ -13,11 +14,15 @@ import { cookies } from 'next/headers';
 
 import MovieIndex from './movie-index';
 
-export default async function MoviePage(
-  props: {
-    searchParams?: Promise<Record<string, string | undefined>>;
-  }
-) {
+/**
+ * Server-side code for the movie page.
+ * @param props The props for the movie page.
+ * @param props.searchParams The search parameters for the movie page, to handle pagination and search.
+ * @returns The movie page.
+ */
+export default async function MoviePage(props: {
+  searchParams?: Promise<Record<string, string | undefined>>;
+}) {
   const searchParams = await props.searchParams;
   const queryClient = new QueryClient();
   const cookieStore = await cookies();

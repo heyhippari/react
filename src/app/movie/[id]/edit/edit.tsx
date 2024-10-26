@@ -34,6 +34,12 @@ import { useQuery } from '@supabase-cache-helpers/postgrest-react-query';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
+/**
+ * Form to edit the primary facts of a movie.
+ * @param props - The component props.
+ * @param props.id - The movie id.
+ * @returns The rendered component.
+ */
 export default function MovieEdit({ id }: Readonly<{ id: string }>) {
   const supabase = useSupabaseBrowser();
   const { data: movie } = useQuery(getMovieById(supabase, id));
@@ -82,7 +88,10 @@ export default function MovieEdit({ id }: Readonly<{ id: string }>) {
 
   return (
     <Form {...form}>
-      <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
+      <form
+        className="space-y-4"
+        onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}
+      >
         <FormField
           control={form.control}
           name="original_name"

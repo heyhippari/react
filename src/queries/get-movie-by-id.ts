@@ -1,11 +1,17 @@
-import { TypedSupabaseClient } from '@/utils/types';
+import { TypedSupabaseClient } from "@/utils/types";
 
+/**
+ * Get a movie by its ID.
+ * @param client The Supabase client.
+ * @param movieId The movie ID.
+ * @returns The movie.
+ */
 export function getMovieById(
   client: TypedSupabaseClient,
   movieId: number | string,
 ) {
   return client
-    .from('movies')
+    .from("movies")
     .select(
       `
         id,
@@ -56,6 +62,6 @@ export function getMovieById(
         )
       `,
     )
-    .eq('id', movieId)
+    .eq("id", movieId)
     .single();
 }

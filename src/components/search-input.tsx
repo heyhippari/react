@@ -3,9 +3,17 @@ import { useRouter } from 'next/navigation';
 
 import { Input } from './ui/input';
 
+/**
+ * Search input for searching for a movie by ID.
+ * @returns The rendered component.
+ */
 export function SearchInput() {
   const router = useRouter();
 
+  /**
+   * Handle the search form submission.
+   * @param event The form submission event.
+   */
   function handleSearch(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 

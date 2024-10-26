@@ -1,12 +1,17 @@
 import Link from 'next/link';
 
 import { SearchInput } from './search-input';
+import SiteMenu from './site-menu';
 import UserMenuServer from './user-menu-server';
 
+/**
+ * Site header component.
+ * @returns The rendered component.
+ */
 export default function SiteHeader() {
   return (
     <nav className="start-0 top-0 z-20 w-full border-b border-pink-300 bg-pink-200 p-4 dark:border-pink-800 dark:bg-pink-900">
-      <div className="container mx-auto flex flex-col flex-wrap items-center justify-between gap-4 px-4 md:flex-row md:items-start">
+      <div className="container mx-auto flex flex-col flex-wrap items-center justify-between gap-6 px-4 md:flex-row md:items-start">
         <Link
           className="flex items-center space-x-3 rtl:space-x-reverse"
           href="/"
@@ -15,6 +20,9 @@ export default function SiteHeader() {
             Kanojo
           </span>
         </Link>
+        <div className="hidden grow flex-row items-center gap-2 space-x-3 pt-1 md:order-1 md:flex md:space-x-0 rtl:space-x-reverse">
+          <SiteMenu />
+        </div>
         <div className="flex items-center gap-2 space-x-3 md:order-2 md:space-x-0 rtl:space-x-reverse">
           <SearchInput />
           <UserMenuServer />

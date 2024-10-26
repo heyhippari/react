@@ -11,6 +11,12 @@ import { redirect } from 'next/navigation';
 
 import Movie from './movie';
 
+/**
+ * Server-side code for the movie edit page.
+ * @param props The props for the movie edit page.
+ * @param props.params The URL parameters, containing the movie ID.
+ * @returns The movie edit page.
+ */
 export default async function MoviePage({
   params,
 }: Readonly<{

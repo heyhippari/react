@@ -14,6 +14,12 @@ import { redirect } from 'next/navigation';
 
 import Studio from './studio';
 
+/**
+ * Generate metadata for the studio page.
+ * @param props - The props for the studio page.
+ * @param props.params - The URL parameters for the studio page.
+ * @returns The metadata for the studio page.
+ */
 export async function generateMetadata(props: {
   params: Promise<{ id: number }>;
 }) {
@@ -36,6 +42,12 @@ export async function generateMetadata(props: {
   }
 }
 
+/**
+ * Server-side component for the studio page.
+ * @param props - The props for the studio page.
+ * @param props.params - The URL parameters for the studio page, containing the studio ID.
+ * @returns The studio page.
+ */
 export default async function StudioPage(props: {
   params: Promise<{ id: string }>;
 }) {

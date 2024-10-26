@@ -1,8 +1,14 @@
-import { TypedSupabaseClient } from '@/utils/types';
+import { TypedSupabaseClient } from "@/utils/types";
 
+/**
+ * Search a movie by its DVD ID.
+ * @param client - Supabase client
+ * @param dvdId - DVD ID of the movie
+ * @returns Movie details
+ */
 export function searchMovieByDvdId(client: TypedSupabaseClient, dvdId: string) {
   return client
-    .from('movies')
+    .from("movies")
     .select(
       `
         id,
@@ -12,6 +18,6 @@ export function searchMovieByDvdId(client: TypedSupabaseClient, dvdId: string) {
         dvd_id
       `,
     )
-    .ilike('dvd_id', `%${dvdId}%`)
+    .ilike("dvd_id", `%${dvdId}%`)
     .throwOnError();
 }

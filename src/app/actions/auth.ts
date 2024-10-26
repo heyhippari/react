@@ -1,9 +1,9 @@
-'use server';
-import createClient from '@/utils/supabase/server';
-import { Provider } from '@supabase/supabase-js';
-import { revalidatePath } from 'next/cache';
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
+"use server";
+import createClient from "@/utils/supabase/server";
+import { Provider } from "@supabase/supabase-js";
+import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 /**
  * Logs out the current user.
@@ -14,27 +14,31 @@ export async function logoutAction() {
 
   await supabase.auth.signOut();
 
-  revalidatePath('/', 'layout');
-  redirect('/');
+  revalidatePath("/", "layout");
+  redirect("/");
 }
 
 /**
  * Logs in the user using the specified provider.
+ * @param currentState The current state of the form.
  * @param formData The form data containing the provider.
  */
-export async function loginAction(formData: FormData) {
+export async function loginAction(
+  currentState: null | void,
+  formData: FormData,
+) {
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
 
   const defaultUrl = process.env.VERCEL_URL
     ? `https://kanojodb.com`
-    : 'http://localhost:3000';
+    : "http://localhost:3000";
 
-  const provider = formData.get('provider') as Provider;
+  const provider = formData.get("provider") as Provider;
 
   // For safety, we only allow supported providers.
-  if (!['discord'].includes(provider)) {
-    redirect('/error');
+  if (!["discord"].includes(provider)) {
+    redirect("/error");
   }
 
   const { data, error } = await supabase.auth.signInWithOAuth({
@@ -45,12 +49,12 @@ export async function loginAction(formData: FormData) {
   });
 
   if (error) {
-    redirect('/error');
+    redirect("/error");
   }
 
-  revalidatePath('/', 'layout');
+  revalidatePath("/", "layout");
   if (data.url) {
-    revalidatePath(data.url, 'layout');
+    revalidatePath(data.url, "layout");
     redirect(data.url);
   }
 }

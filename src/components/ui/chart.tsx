@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types -- Seems like there's an issue with forwardRef */
 'use client';
 
 import { cn } from '@/utils/ui';
@@ -24,6 +23,10 @@ interface ChartContextProps {
 
 const ChartContext = React.createContext<ChartContextProps | null>(null);
 
+/**
+ * Hook to access the chart context.
+ * @returns The chart context.
+ */
 function useChart() {
   const context = React.useContext(ChartContext);
 
@@ -107,13 +110,13 @@ const ChartTooltip = RechartsPrimitive.Tooltip;
 const ChartTooltipContent = React.forwardRef<
   HTMLDivElement,
   {
-      hideIndicator?: boolean;
-      hideLabel?: boolean;
-      indicator?: 'dashed' | 'dot' | 'line';
-      labelKey?: string;
-      nameKey?: string;
-    } &
-    React.ComponentProps<'div'> & React.ComponentProps<typeof RechartsPrimitive.Tooltip>
+    hideIndicator?: boolean;
+    hideLabel?: boolean;
+    indicator?: 'dashed' | 'dot' | 'line';
+    labelKey?: string;
+    nameKey?: string;
+  } & React.ComponentProps<'div'> &
+    React.ComponentProps<typeof RechartsPrimitive.Tooltip>
 >(
   (
     {
@@ -266,10 +269,10 @@ const ChartLegend = RechartsPrimitive.Legend;
 const ChartLegendContent = React.forwardRef<
   HTMLDivElement,
   {
-      hideIcon?: boolean;
-      nameKey?: string;
-    } &
-    Pick<RechartsPrimitive.LegendProps, 'payload' | 'verticalAlign'> & React.ComponentProps<'div'>
+    hideIcon?: boolean;
+    nameKey?: string;
+  } & Pick<RechartsPrimitive.LegendProps, 'payload' | 'verticalAlign'> &
+    React.ComponentProps<'div'>
 >(
   (
     { className, hideIcon = false, nameKey, payload, verticalAlign = 'bottom' },
@@ -323,7 +326,13 @@ const ChartLegendContent = React.forwardRef<
 );
 ChartLegendContent.displayName = 'ChartLegend';
 
-// Helper to extract item config from a payload.
+/**
+ * Helper to extract item config from a payload.
+ * @param config The chart config.
+ * @param payload The payload.
+ * @param key The key to extract.
+ * @returns The item config.
+ */
 function getPayloadConfigFromPayload(
   config: ChartConfig,
   payload: unknown,

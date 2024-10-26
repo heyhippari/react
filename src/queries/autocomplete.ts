@@ -3,7 +3,6 @@ import { TypedSupabaseClient } from "@/utils/types";
 /**
  * Search for studios by name or original name.
  * Limits the results to 15.
- *
  * @param client - The Supabase client.
  * @param searchValue - The search value.
  * @returns The studios that match the search value.
@@ -28,7 +27,6 @@ export function searchStudioByName(
 /**
  * Search for labels by name or original name.
  * Limits the results to 15.
- *
  * @param client - The Supabase client.
  * @param searchValue - The search value.
  * @returns The labels that match the search value.
@@ -53,7 +51,6 @@ export function searchLabelByName(
 /**
  * Search for series by name or original name.
  * Limits the results to 15.
- *
  * @param client - The Supabase client.
  * @param searchValue - The search value.
  * @returns The series that match the search value.
@@ -78,7 +75,6 @@ export function searchSeriesByName(
 /**
  * Search for persons by name or original name.
  * Limits the results to 15.
- *
  * @param client - The Supabase client.
  * @param searchValue - The search value.
  * @returns The persons that match the search value.

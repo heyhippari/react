@@ -11,7 +11,13 @@ import 'swiper/css/mousewheel';
 import 'swiper/css/scrollbar';
 import 'swiper/css/virtual';
 
-export default function MovieSlider({
+/**
+ * Slider for items.
+ * @param props The props.
+ * @param props.items The items.
+ * @returns The component.
+ */
+export default function ItemSlider({
   items,
 }: Readonly<{ items: ItemWithImages[] }>) {
   return (

@@ -4,6 +4,10 @@ import { getCurrentCounts } from '@/queries/homepage';
 import createClient from '@/utils/supabase/server';
 import { cookies } from 'next/headers';
 
+/**
+ * The home page.
+ * @returns The home page.
+ */
 export default async function Home() {
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);

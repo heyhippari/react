@@ -5,6 +5,12 @@ import Link from 'next/link';
 
 import ItemPoster from './item-poster';
 
+/**
+ * A header for an item, containing the item's name and a link to the main page.
+ * @param props - The component props.
+ * @param props.item - The item to display the header for.
+ * @returns The rendered component.
+ */
 export default function ItemHeader({
   item,
 }: Readonly<{ item: MovieWithImages | PersonWithImage }>) {

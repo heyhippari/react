@@ -1,8 +1,14 @@
-import { TypedSupabaseClient } from '@/utils/types';
+import { TypedSupabaseClient } from "@/utils/types";
 
+/**
+ * Get a list of movies for a given DVD ID prefix.
+ * @param client The Supabase client.
+ * @param prefix The DVD ID prefix.
+ * @returns The list of movies.
+ */
 export function getMoviesByPrefix(client: TypedSupabaseClient, prefix: string) {
   return client
-    .from('movies')
+    .from("movies")
     .select(
       `
       id,
@@ -12,7 +18,7 @@ export function getMoviesByPrefix(client: TypedSupabaseClient, prefix: string) {
       front_cover_url
       `,
     )
-    .ilike('dvd_id', `${prefix}-%`)
-    .order('dvd_id', { ascending: false })
+    .ilike("dvd_id", `${prefix}-%`)
+    .order("dvd_id", { ascending: false })
     .throwOnError();
 }

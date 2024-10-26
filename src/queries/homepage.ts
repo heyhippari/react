@@ -1,9 +1,15 @@
-import { MovieWithImages, PersonWithImage } from '@/queries/types';
-import { TypedSupabaseClient } from '@/utils/types';
+import { MovieWithImages, PersonWithImage } from "@/queries/types";
+import { TypedSupabaseClient } from "@/utils/types";
 
-export function getMostRecentMovies(client: TypedSupabaseClient) {
+/**
+ * Get the most recently released movies
+ * @param client The Supabase client
+ * @param limit The number of movies to return, defaults to 25
+ * @returns The most recently released movies
+ */
+export function getMostRecentMovies(client: TypedSupabaseClient, limit = 25) {
   return client
-    .from('movies_recently_released')
+    .from("movies_recently_released")
     .select(
       `
       id,
@@ -13,14 +19,20 @@ export function getMostRecentMovies(client: TypedSupabaseClient) {
       front_cover_url
     `,
     )
-    .limit(25)
+    .limit(limit)
     .returns<MovieWithImages[]>()
     .throwOnError();
 }
 
-export function getMostPopularPersons(client: TypedSupabaseClient) {
+/**
+ * Get the most popular persons
+ * @param client The Supabase client
+ * @param limit The number of persons to return, defaults to 25
+ * @returns The most popular persons
+ */
+export function getMostPopularPersons(client: TypedSupabaseClient, limit = 25) {
   return client
-    .from('most_popular_persons')
+    .from("most_popular_persons")
     .select(
       `
       id,
@@ -29,14 +41,20 @@ export function getMostPopularPersons(client: TypedSupabaseClient) {
       profile_url
     `,
     )
-    .limit(25)
+    .limit(limit)
     .returns<PersonWithImage[]>()
     .throwOnError();
 }
 
-export function getReleasedOnThisDay(client: TypedSupabaseClient) {
+/**
+ * Get the movies that were released on this day in the past
+ * @param client The Supabase client
+ * @param limit The number of movies to return, defaults to 25
+ * @returns The movies that were released on this day in the past
+ */
+export function getReleasedOnThisDay(client: TypedSupabaseClient, limit = 25) {
   return client
-    .from('movies_released_today')
+    .from("movies_released_today")
     .select(
       `
       id,
@@ -46,14 +64,20 @@ export function getReleasedOnThisDay(client: TypedSupabaseClient) {
       front_cover_url
     `,
     )
-    .limit(25)
+    .limit(limit)
     .returns<MovieWithImages[]>()
     .throwOnError();
 }
 
-export function getInformationNeeded(client: TypedSupabaseClient) {
+/**
+ * Get the movies that are missing information
+ * @param client The Supabase client
+ * @param limit The number of movies to return, defaults to 25
+ * @returns The movies that are missing information
+ */
+export function getInformationNeeded(client: TypedSupabaseClient, limit = 25) {
   return client
-    .from('movies_missing_info')
+    .from("movies_missing_info")
     .select(
       `
       id,
@@ -64,11 +88,16 @@ export function getInformationNeeded(client: TypedSupabaseClient) {
       front_cover_url
     `,
     )
-    .limit(25)
+    .limit(limit)
     .returns<MovieWithImages[]>()
     .throwOnError();
 }
 
+/**
+ * Get the current counts for the homepage
+ * @param client The Supabase client
+ * @returns The current counts for the homepage
+ */
 export function getCurrentCounts(client: TypedSupabaseClient) {
-  return client.from('current_counts').select('*').single().throwOnError();
+  return client.from("current_counts").select("*").single().throwOnError();
 }
