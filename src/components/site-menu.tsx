@@ -1,7 +1,9 @@
 'use client';
 
+import { cn } from '@/utils/ui';
 import Link from 'next/link';
 
+import { buttonVariants } from './ui/button';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -21,11 +23,17 @@ export default function SiteMenu() {
         <NavigationMenuItem>
           <NavigationMenuTrigger>Movies</NavigationMenuTrigger>
           <NavigationMenuContent className="z-50">
-            <ul>
-              <li>
-                <Link href="/movie">All Movies</Link>
-              </li>
-            </ul>
+            <div className="flex w-48 flex-col gap-2 p-2">
+              <Link
+                className={cn(
+                  buttonVariants({ variant: 'ghost' }),
+                  'justify-start',
+                )}
+                href="/movie"
+              >
+                All Movies
+              </Link>
+            </div>
           </NavigationMenuContent>
         </NavigationMenuItem>
       </NavigationMenuList>
