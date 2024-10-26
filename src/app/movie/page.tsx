@@ -34,7 +34,11 @@ export default async function MoviePage(props: {
 
   await prefetchQuery(
     queryClient,
-    getPaginatedMovies(supabase, currentPage, 25, { search: searchQuery }),
+    getPaginatedMovies(supabase, currentPage, 25, {
+      orderBy: searchParams?.order,
+      orderDirection: searchParams?.asc === 'true' ? 'asc' : 'desc',
+      search: searchParams?.q,
+    }),
   );
   await prefetchQuery(
     queryClient,
