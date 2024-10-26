@@ -1,3 +1,4 @@
+import MovieCast from '@/app/movie/[id]/edit/cast/cast';
 import { getMovieById } from '@/queries/get-movie-by-id';
 import createClient from '@/utils/supabase/server';
 import { prefetchQuery } from '@supabase-cache-helpers/postgrest-react-query';
@@ -8,8 +9,6 @@ import {
 } from '@tanstack/react-query';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-
-import MovieCast from './cast';
 
 /**
  * Server-side rendered page to edit the cast of a movie.

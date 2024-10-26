@@ -1,3 +1,4 @@
+import Series from '@/app/series/[id]/series';
 import {
   getSeriesById,
   getSeriesMoviesCount,
@@ -11,8 +12,6 @@ import {
 } from '@tanstack/react-query';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-
-import Series from './series';
 
 /**
  * Metadata generation for the series page.

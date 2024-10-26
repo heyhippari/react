@@ -1,11 +1,10 @@
 'use client';
 
+import { buttonVariants } from '@/components/ui/button';
 import { PersonWithAll } from '@/queries/types';
 import { cn } from '@/utils/ui';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-
-import { buttonVariants } from './ui/button';
 
 /**
  * Sidebar for editing a person.

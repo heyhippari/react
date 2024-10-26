@@ -1,10 +1,8 @@
 'use client';
+import ItemCard from '@/components/item-card';
 import { ItemWithImages } from '@/queries/types';
 import { FreeMode, Mousewheel, Scrollbar, Virtual } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-
-import ItemCard from './item-card';
-
 import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/mousewheel';

@@ -1,5 +1,6 @@
 'use client';
 import { deleteMovieRoleAction } from '@/app/actions/movie';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogClose,
@@ -13,8 +14,6 @@ import {
 import { RoleWithPerson } from '@/queries/types';
 import IconTrash from '~icons/mdi/trash-can-outline.jsx';
 import { useActionState, useState } from 'react';
-
-import { Button } from './ui/button';
 
 /**
  * Button to delete a role.

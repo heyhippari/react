@@ -1,16 +1,15 @@
 'use client';
 
-import { cn } from '@/utils/ui';
-import Link from 'next/link';
-
-import { buttonVariants } from './ui/button';
+import { buttonVariants } from '@/components/ui/button';
 import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuList,
   NavigationMenuTrigger,
-} from './ui/navigation-menu';
+} from '@/components/ui/navigation-menu';
+import { cn } from '@/utils/ui';
+import Link from 'next/link';
 
 /**
  * Main site menu navigation component.

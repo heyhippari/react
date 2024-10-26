@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 /**
  * A layout with two columns, the first column is a sidebar and the second column is the main content.

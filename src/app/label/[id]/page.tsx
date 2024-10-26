@@ -1,3 +1,4 @@
+import Label from '@/app/label/[id]/label';
 import { getLabelById, getLabelMoviesCount } from '@/queries/get-label-by-id';
 import createClient from '@/utils/supabase/server';
 import { prefetchQuery } from '@supabase-cache-helpers/postgrest-react-query';
@@ -8,8 +9,6 @@ import {
 } from '@tanstack/react-query';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-
-import Label from './label';
 
 /**
  * Generate the metadata for the label page

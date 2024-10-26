@@ -1,3 +1,4 @@
+import Person from '@/app/person/[id]/person';
 import { getPersonById, getPersonRolesCount } from '@/queries/get-person-by-id';
 import createClient from '@/utils/supabase/server';
 import { prefetchQuery } from '@supabase-cache-helpers/postgrest-react-query';
@@ -8,8 +9,6 @@ import {
 } from '@tanstack/react-query';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-
-import Person from './person';
 
 /**
  * Server-side code for the person page.

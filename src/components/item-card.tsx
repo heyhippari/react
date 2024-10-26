@@ -1,11 +1,10 @@
+import { Badge } from '@/components/ui/badge';
 import { MovieWithImages, PersonWithImage } from '@/queries/types';
 import { getFrontCoverUrl, getProfileUrl } from '@/utils/images';
 import { getUrlForItem, isMovie, isPerson } from '@/utils/types';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
-
-import { Badge } from './ui/badge';
 
 /**
  * Card that displays an item with an image and some information depending on the type of item.

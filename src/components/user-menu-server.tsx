@@ -1,10 +1,9 @@
 import LoginButton from '@/components/login-button';
+import UserMenu from '@/components/user-menu';
 import { getProfileById } from '@/queries/get-profile-by-id';
 import { UserProfile } from '@/queries/types';
 import createClient from '@/utils/supabase/server';
 import { cookies } from 'next/headers';
-
-import UserMenu from './user-menu';
 
 /**
  * User menu server component.

@@ -1,6 +1,5 @@
+import ItemCard from '@/components/item-card';
 import { MovieWithImages, PersonWithImage } from '@/queries/types';
-
-import ItemCard from './item-card';
 
 /**
  * A grid of cards that display items.

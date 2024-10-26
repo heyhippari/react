@@ -1,3 +1,4 @@
+import Prefix from '@/app/prefix/[prefix]/prefix';
 import { getMoviesByPrefix } from '@/queries/get-movies-by-prefix';
 import createClient from '@/utils/supabase/server';
 import { prefetchQuery } from '@supabase-cache-helpers/postgrest-react-query';
@@ -7,8 +8,6 @@ import {
   QueryClient,
 } from '@tanstack/react-query';
 import { cookies } from 'next/headers';
-
-import Prefix from './prefix';
 
 /**
  * Server-side code for the prefix page.

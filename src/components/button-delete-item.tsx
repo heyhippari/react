@@ -1,4 +1,5 @@
 'use client';
+import { Button, buttonVariants } from '@/components/ui/button';
 import {
   Dialog,
   DialogClose,
@@ -11,8 +12,6 @@ import {
 } from '@/components/ui/dialog';
 import { Item } from '@/queries/types';
 import { useActionState, useState } from 'react';
-
-import { Button, buttonVariants } from './ui/button';
 
 /**
  * Button to delete a movie.

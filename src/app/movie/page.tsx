@@ -1,3 +1,4 @@
+import MovieIndex from '@/app/movie/movie-index';
 // TODO(hippari): Add a loading indicator when changing pages to prevent the cards changing in place.
 import {
   getMoviePageCount,
@@ -11,8 +12,6 @@ import {
   QueryClient,
 } from '@tanstack/react-query';
 import { cookies } from 'next/headers';
-
-import MovieIndex from './movie-index';
 
 /**
  * Server-side code for the movie page.

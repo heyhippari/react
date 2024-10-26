@@ -1,3 +1,4 @@
+import ItemSlider from '@/components/movie-slider';
 import {
   getInformationNeeded,
   getMostPopularPersons,
@@ -6,8 +7,6 @@ import {
 } from '@/queries/homepage';
 import createClient from '@/utils/supabase/server';
 import { cookies } from 'next/headers';
-
-import ItemSlider from './movie-slider';
 
 /**
  * Sliders for the home page.

@@ -1,8 +1,7 @@
+import { SearchInput } from '@/components/search-input';
+import SiteMenu from '@/components/site-menu';
+import UserMenuServer from '@/components/user-menu-server';
 import Link from 'next/link';
-
-import { SearchInput } from './search-input';
-import SiteMenu from './site-menu';
-import UserMenuServer from './user-menu-server';
 
 /**
  * Site header component.

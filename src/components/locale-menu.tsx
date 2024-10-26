@@ -1,13 +1,12 @@
 'use client';
 
 import { switchLocaleAction } from '@/app/actions/locale';
-
-import { Button } from './ui/button';
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from './ui/dropdown-menu';
+} from '@/components/ui/dropdown-menu';
 import {
   Select,
   SelectContent,
@@ -15,7 +14,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from './ui/select';
+} from '@/components/ui/select';
 
 /**
  * Dropdown menu to select the locale.

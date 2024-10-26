@@ -1,3 +1,4 @@
+import Studio from '@/app/studio/[id]/studio';
 import {
   getStudioById,
   getStudioMoviesCount,
@@ -11,8 +12,6 @@ import {
 } from '@tanstack/react-query';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-
-import Studio from './studio';
 
 /**
  * Generate metadata for the studio page.

@@ -1,9 +1,8 @@
+import ItemPoster from '@/components/item-poster';
 import { MovieWithImages, PersonWithImage } from '@/queries/types';
 import { getUrlForItem } from '@/utils/types';
 import MdiArrowLeft from '~icons/mdi/arrow-left.jsx';
 import Link from 'next/link';
-
-import ItemPoster from './item-poster';
 
 /**
  * A header for an item, containing the item's name and a link to the main page.

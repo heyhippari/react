@@ -1,6 +1,4 @@
 'use client';
-import { usePathname, useSearchParams } from 'next/navigation';
-
 import {
   Pagination,
   PaginationContent,
@@ -9,7 +7,8 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from './ui/pagination';
+} from '@/components/ui/pagination';
+import { usePathname, useSearchParams } from 'next/navigation';
 
 /**
  * Component to render pagination links.

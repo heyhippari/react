@@ -9,7 +9,7 @@ import { ThemeProvider } from 'next-themes';
 import resolveConfig from 'tailwindcss/resolveConfig';
 
 import tailwindConfig from '../../tailwind.config';
-import './globals.css';
+import '@/app/globals.css';
 
 const fullConfig = resolveConfig(tailwindConfig);
 

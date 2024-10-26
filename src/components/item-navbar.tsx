@@ -1,18 +1,21 @@
 'use client';
 import { deleteMovieAction } from '@/app/actions/movie';
+import ButtonDeleteItem from '@/components/button-delete-item';
+import { Badge } from '@/components/ui/badge';
+import { Button, buttonVariants } from '@/components/ui/button';
+import { DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from '@/components/ui/hover-card';
+import { useToast } from '@/components/ui/use-toast';
 import { Item } from '@/queries/types';
 import { useUserRole } from '@/utils/hooks';
 import { getShareTitle } from '@/utils/share';
 import { getUrlForItem, isMovie, isPerson } from '@/utils/types';
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
-
-import ButtonDeleteItem from './button-delete-item';
-import { Badge } from './ui/badge';
-import { Button, buttonVariants } from './ui/button';
-import { DropdownMenuSeparator } from './ui/dropdown-menu';
-import { HoverCard, HoverCardContent, HoverCardTrigger } from './ui/hover-card';
-import { useToast } from './ui/use-toast';
 
 /**
  * A navigation bar for an item, containing links to various item-related pages and actions.

@@ -2,9 +2,8 @@
 import type { Provider } from '@supabase/supabase-js';
 
 import { loginAction } from '@/app/actions/auth';
+import { Button } from '@/components/ui/button';
 import { useActionState } from 'react';
-
-import { Button } from './ui/button';
 
 /**
  * A button that logs in the user using the specified provider.

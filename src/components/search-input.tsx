@@ -1,7 +1,6 @@
 'use client';
+import { Input } from '@/components/ui/input';
 import { useRouter } from 'next/navigation';
-
-import { Input } from './ui/input';
 
 /**
  * Search input for searching for a movie by ID.
