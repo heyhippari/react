@@ -1,81 +1,781 @@
 export type Json =
-  | { [key: string]: Json | undefined }
-  | boolean
-  | Json[]
-  | null
-  | number
   | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: Json | undefined }
+  | Json[]
 
-export interface Database {
+export type Database = {
   public: {
-    CompositeTypes: {
-      [_ in never]: never
+    Tables: {
+      categories: {
+        Row: {
+          create_time: string
+          id: number
+          name: string
+          parent_id: number | null
+          update_time: string
+        }
+        Insert: {
+          create_time: string
+          id?: number
+          name: string
+          parent_id?: number | null
+          update_time: string
+        }
+        Update: {
+          create_time?: string
+          id?: number
+          name?: string
+          parent_id?: number | null
+          update_time?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "categories_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      images: {
+        Row: {
+          created_at: string
+          id: number
+          type: Database["public"]["Enums"]["image_type"]
+          uuid: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          type: Database["public"]["Enums"]["image_type"]
+          uuid: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          type?: Database["public"]["Enums"]["image_type"]
+          uuid?: string
+        }
+        Relationships: []
+      }
+      jobs: {
+        Row: {
+          id: number
+          movie_id: number
+          person_id: number
+          type: string | null
+        }
+        Insert: {
+          id?: number
+          movie_id: number
+          person_id: number
+          type?: string | null
+        }
+        Update: {
+          id?: number
+          movie_id?: number
+          person_id?: number
+          type?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "jobs_movies_movie"
+            columns: ["movie_id"]
+            isOneToOne: false
+            referencedRelation: "movies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "jobs_movies_movie"
+            columns: ["movie_id"]
+            isOneToOne: false
+            referencedRelation: "movies_missing_info"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "jobs_movies_movie"
+            columns: ["movie_id"]
+            isOneToOne: false
+            referencedRelation: "movies_recently_released"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "jobs_movies_movie"
+            columns: ["movie_id"]
+            isOneToOne: false
+            referencedRelation: "movies_released_today"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "jobs_persons_person"
+            columns: ["person_id"]
+            isOneToOne: false
+            referencedRelation: "most_popular_persons"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "jobs_persons_person"
+            columns: ["person_id"]
+            isOneToOne: false
+            referencedRelation: "persons"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      labels: {
+        Row: {
+          create_time: string
+          id: number
+          name: string | null
+          original_name: string
+          update_time: string
+        }
+        Insert: {
+          create_time?: string
+          id?: number
+          name?: string | null
+          original_name: string
+          update_time?: string
+        }
+        Update: {
+          create_time?: string
+          id?: number
+          name?: string | null
+          original_name?: string
+          update_time?: string
+        }
+        Relationships: []
+      }
+      movie_images: {
+        Row: {
+          id: number
+          image_id: number
+          movie_id: number
+          sequence: number | null
+        }
+        Insert: {
+          id?: number
+          image_id: number
+          movie_id: number
+          sequence?: number | null
+        }
+        Update: {
+          id?: number
+          image_id?: number
+          movie_id?: number
+          sequence?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "movie_images_image_id_fkey"
+            columns: ["image_id"]
+            isOneToOne: false
+            referencedRelation: "images"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "movie_images_movie_id_fkey"
+            columns: ["movie_id"]
+            isOneToOne: false
+            referencedRelation: "movies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "movie_images_movie_id_fkey"
+            columns: ["movie_id"]
+            isOneToOne: false
+            referencedRelation: "movies_missing_info"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "movie_images_movie_id_fkey"
+            columns: ["movie_id"]
+            isOneToOne: false
+            referencedRelation: "movies_recently_released"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "movie_images_movie_id_fkey"
+            columns: ["movie_id"]
+            isOneToOne: false
+            referencedRelation: "movies_released_today"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      movies: {
+        Row: {
+          barcode: unknown | null
+          create_time: string
+          dvd_id: string | null
+          format: Database["public"]["Enums"]["media_format"] | null
+          front_cover_url: string | null
+          full_cover_url: string | null
+          has_nudity: boolean
+          id: number
+          label_id: number | null
+          length: number | null
+          name: string | null
+          original_name: string
+          popularity: number | null
+          release_date: string | null
+          series_id: number | null
+          studio_id: number | null
+          update_time: string
+        }
+        Insert: {
+          barcode?: unknown | null
+          create_time?: string
+          dvd_id?: string | null
+          format?: Database["public"]["Enums"]["media_format"] | null
+          front_cover_url?: string | null
+          full_cover_url?: string | null
+          has_nudity?: boolean
+          id?: number
+          label_id?: number | null
+          length?: number | null
+          name?: string | null
+          original_name: string
+          popularity?: number | null
+          release_date?: string | null
+          series_id?: number | null
+          studio_id?: number | null
+          update_time?: string
+        }
+        Update: {
+          barcode?: unknown | null
+          create_time?: string
+          dvd_id?: string | null
+          format?: Database["public"]["Enums"]["media_format"] | null
+          front_cover_url?: string | null
+          full_cover_url?: string | null
+          has_nudity?: boolean
+          id?: number
+          label_id?: number | null
+          length?: number | null
+          name?: string | null
+          original_name?: string
+          popularity?: number | null
+          release_date?: string | null
+          series_id?: number | null
+          studio_id?: number | null
+          update_time?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "movies_labels_movies"
+            columns: ["label_id"]
+            isOneToOne: false
+            referencedRelation: "labels"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "movies_series_movies"
+            columns: ["series_id"]
+            isOneToOne: false
+            referencedRelation: "series"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "movies_studios_movies"
+            columns: ["studio_id"]
+            isOneToOne: false
+            referencedRelation: "studios"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      person_images: {
+        Row: {
+          id: number
+          image_id: number
+          person_id: number
+        }
+        Insert: {
+          id?: number
+          image_id: number
+          person_id: number
+        }
+        Update: {
+          id?: number
+          image_id?: number
+          person_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "person_images_image_id_fkey"
+            columns: ["image_id"]
+            isOneToOne: false
+            referencedRelation: "images"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "person_images_person_id_fkey"
+            columns: ["person_id"]
+            isOneToOne: false
+            referencedRelation: "most_popular_persons"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "person_images_person_id_fkey"
+            columns: ["person_id"]
+            isOneToOne: false
+            referencedRelation: "persons"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      persons: {
+        Row: {
+          birth_date: string | null
+          bust_size: number | null
+          create_time: string
+          cup_size: Database["public"]["Enums"]["bra_size"] | null
+          height: number | null
+          hips_size: number | null
+          id: number
+          name: string | null
+          original_name: string
+          popularity: number | null
+          profile_url: string | null
+          update_time: string
+          waist_size: number | null
+          persons_movies_count: number | null
+        }
+        Insert: {
+          birth_date?: string | null
+          bust_size?: number | null
+          create_time?: string
+          cup_size?: Database["public"]["Enums"]["bra_size"] | null
+          height?: number | null
+          hips_size?: number | null
+          id?: number
+          name?: string | null
+          original_name: string
+          popularity?: number | null
+          profile_url?: string | null
+          update_time?: string
+          waist_size?: number | null
+        }
+        Update: {
+          birth_date?: string | null
+          bust_size?: number | null
+          create_time?: string
+          cup_size?: Database["public"]["Enums"]["bra_size"] | null
+          height?: number | null
+          hips_size?: number | null
+          id?: number
+          name?: string | null
+          original_name?: string
+          popularity?: number | null
+          profile_url?: string | null
+          update_time?: string
+          waist_size?: number | null
+        }
+        Relationships: []
+      }
+      persons_aliases: {
+        Row: {
+          id: number
+          name: string | null
+          original_name: string | null
+          person_id: number
+        }
+        Insert: {
+          id?: number
+          name?: string | null
+          original_name?: string | null
+          person_id: number
+        }
+        Update: {
+          id?: number
+          name?: string | null
+          original_name?: string | null
+          person_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "persons_aliases_person_id_fkey"
+            columns: ["person_id"]
+            isOneToOne: false
+            referencedRelation: "most_popular_persons"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "persons_aliases_person_id_fkey"
+            columns: ["person_id"]
+            isOneToOne: false
+            referencedRelation: "persons"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          create_time: string
+          email: string | null
+          id: string
+          username: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          create_time?: string
+          email?: string | null
+          id: string
+          username?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          create_time?: string
+          email?: string | null
+          id?: string
+          username?: string | null
+        }
+        Relationships: []
+      }
+      role_permissions: {
+        Row: {
+          id: number
+          permission: Database["public"]["Enums"]["app_permission"]
+          role: Database["public"]["Enums"]["app_role"]
+        }
+        Insert: {
+          id?: number
+          permission: Database["public"]["Enums"]["app_permission"]
+          role: Database["public"]["Enums"]["app_role"]
+        }
+        Update: {
+          id?: number
+          permission?: Database["public"]["Enums"]["app_permission"]
+          role?: Database["public"]["Enums"]["app_role"]
+        }
+        Relationships: []
+      }
+      roles: {
+        Row: {
+          age: number | null
+          id: number
+          movie_id: number
+          person_id: number
+        }
+        Insert: {
+          age?: number | null
+          id?: number
+          movie_id: number
+          person_id: number
+        }
+        Update: {
+          age?: number | null
+          id?: number
+          movie_id?: number
+          person_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "roles_movies_movie"
+            columns: ["movie_id"]
+            isOneToOne: false
+            referencedRelation: "movies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "roles_movies_movie"
+            columns: ["movie_id"]
+            isOneToOne: false
+            referencedRelation: "movies_missing_info"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "roles_movies_movie"
+            columns: ["movie_id"]
+            isOneToOne: false
+            referencedRelation: "movies_recently_released"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "roles_movies_movie"
+            columns: ["movie_id"]
+            isOneToOne: false
+            referencedRelation: "movies_released_today"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "roles_persons_person"
+            columns: ["person_id"]
+            isOneToOne: false
+            referencedRelation: "most_popular_persons"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "roles_persons_person"
+            columns: ["person_id"]
+            isOneToOne: false
+            referencedRelation: "persons"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      series: {
+        Row: {
+          create_time: string
+          id: number
+          name: string | null
+          original_name: string
+          update_time: string
+          series_movies_count: number | null
+        }
+        Insert: {
+          create_time?: string
+          id?: number
+          name?: string | null
+          original_name: string
+          update_time?: string
+        }
+        Update: {
+          create_time?: string
+          id?: number
+          name?: string | null
+          original_name?: string
+          update_time?: string
+        }
+        Relationships: []
+      }
+      studios: {
+        Row: {
+          create_time: string
+          fts_doc: unknown | null
+          homepage: string | null
+          id: number
+          name: string | null
+          original_name: string
+          update_time: string
+          studio_movies_count: number | null
+        }
+        Insert: {
+          create_time?: string
+          fts_doc?: unknown | null
+          homepage?: string | null
+          id?: number
+          name?: string | null
+          original_name: string
+          update_time?: string
+        }
+        Update: {
+          create_time?: string
+          fts_doc?: unknown | null
+          homepage?: string | null
+          id?: number
+          name?: string | null
+          original_name?: string
+          update_time?: string
+        }
+        Relationships: []
+      }
+      tags: {
+        Row: {
+          category_id: number
+          movie_id: number
+        }
+        Insert: {
+          category_id: number
+          movie_id: number
+        }
+        Update: {
+          category_id?: number
+          movie_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "category_movies_category_id"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "category_movies_movie_id"
+            columns: ["movie_id"]
+            isOneToOne: false
+            referencedRelation: "movies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "category_movies_movie_id"
+            columns: ["movie_id"]
+            isOneToOne: false
+            referencedRelation: "movies_missing_info"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "category_movies_movie_id"
+            columns: ["movie_id"]
+            isOneToOne: false
+            referencedRelation: "movies_recently_released"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "category_movies_movie_id"
+            columns: ["movie_id"]
+            isOneToOne: false
+            referencedRelation: "movies_released_today"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          id: number
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: number
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: number
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_roles_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      views: {
+        Row: {
+          client_hash: string | null
+          date: string
+          id: number
+          item_id: number | null
+          item_type: string | null
+        }
+        Insert: {
+          client_hash?: string | null
+          date?: string
+          id?: number
+          item_id?: number | null
+          item_type?: string | null
+        }
+        Update: {
+          client_hash?: string | null
+          date?: string
+          id?: number
+          item_id?: number | null
+          item_type?: string | null
+        }
+        Relationships: []
+      }
     }
-    Enums: {
-      app_permission:
-        | "category.create"
-        | "category.delete"
-        | "category.update"
-        | "image.create"
-        | "image.delete"
-        | "image.update"
-        | "job.create"
-        | "job.delete"
-        | "job.update"
-        | "label.create"
-        | "label.delete"
-        | "label.update"
-        | "movie.create"
-        | "movie.delete"
-        | "movie.update"
-        | "person.create"
-        | "person.delete"
-        | "person.update"
-        | "role.create"
-        | "role.delete"
-        | "role.update"
-        | "series.create"
-        | "series.delete"
-        | "series.update"
-        | "studio.create"
-        | "studio.delete"
-        | "studio.update"
-        | "tag.create"
-        | "tag.delete"
-        | "tag.update"
-      app_role: "admin" | "banned" | "moderator" | "user"
-      bra_size:
-        | "A"
-        | "AA"
-        | "B"
-        | "C"
-        | "D"
-        | "E"
-        | "F"
-        | "G"
-        | "H"
-        | "I"
-        | "J"
-        | "K"
-        | "L"
-        | "M"
-      image_type:
-        | "art"
-        | "disc"
-        | "front_cover"
-        | "full_cover"
-        | "logo"
-        | "profile"
-        | "screenshot"
-      media_format:
-        | "Blu-ray"
-        | "Blu-ray 4K"
-        | "Digital"
-        | "DVD"
-        | "LaserDisc"
-        | "UMD Video"
-        | "VHS"
-        | "Video CD"
+    Views: {
+      current_counts: {
+        Row: {
+          label_count: number | null
+          movie_count: number | null
+          person_count: number | null
+          series_count: number | null
+          studio_count: number | null
+          tag_count: number | null
+        }
+        Relationships: []
+      }
+      most_popular_persons: {
+        Row: {
+          id: number | null
+          name: string | null
+          original_name: string | null
+          popularity: number | null
+          profile_url: string | null
+        }
+        Relationships: []
+      }
+      movies_missing_info: {
+        Row: {
+          dvd_id: string | null
+          front_cover_url: string | null
+          id: number | null
+          name: string | null
+          original_name: string | null
+          release_date: string | null
+        }
+        Relationships: []
+      }
+      movies_recently_released: {
+        Row: {
+          dvd_id: string | null
+          front_cover_url: string | null
+          id: number | null
+          name: string | null
+          original_name: string | null
+        }
+        Relationships: []
+      }
+      movies_released_today: {
+        Row: {
+          create_time: string | null
+          dvd_id: string | null
+          front_cover_url: string | null
+          id: number | null
+          label_id: number | null
+          length: number | null
+          name: string | null
+          original_name: string | null
+          release_date: string | null
+          series_id: number | null
+          studio_id: number | null
+          update_time: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "movies_labels_movies"
+            columns: ["label_id"]
+            isOneToOne: false
+            referencedRelation: "labels"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "movies_series_movies"
+            columns: ["series_id"]
+            isOneToOne: false
+            referencedRelation: "series"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "movies_studios_movies"
+            columns: ["studio_id"]
+            isOneToOne: false
+            referencedRelation: "studios"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      persons_ordered_by_roles: {
+        Row: {
+          birth_date: string | null
+          name: string | null
+          original_name: string | null
+          role_count: number | null
+        }
+        Relationships: []
+      }
+      roles_by_age: {
+        Row: {
+          age: number | null
+          count: number | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       authorize: {
@@ -103,9 +803,24 @@ export interface Database {
             }
             Returns: unknown
           }
-         
-         
-         
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: unknown
+          }
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: unknown
+          }
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: unknown
+          }
       hashean13: {
         Args: {
           "": unknown
@@ -161,13 +876,48 @@ export interface Database {
             }
             Returns: boolean
           }
-         
-         
-         
-         
-         
-         
-         
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: boolean
+          }
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: boolean
+          }
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: boolean
+          }
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: boolean
+          }
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: boolean
+          }
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: boolean
+          }
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: boolean
+          }
       isbn: {
         Args: {
           "": unknown
@@ -223,18 +973,33 @@ export interface Database {
             }
             Returns: unknown
           }
-         
-         
-         
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: unknown
+          }
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: unknown
+          }
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: unknown
+          }
       isn_weak:
+        | {
+            Args: Record<PropertyKey, never>
+            Returns: boolean
+          }
         | {
             Args: {
               "": boolean
             }
-            Returns: boolean
-          }
-        | {
-            Args: Record<PropertyKey, never>
             Returns: boolean
           }
       issn: {
@@ -268,13 +1033,48 @@ export interface Database {
             }
             Returns: unknown
           }
-         
-         
-         
-         
-         
-         
-         
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: unknown
+          }
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: unknown
+          }
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: unknown
+          }
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: unknown
+          }
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: unknown
+          }
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: unknown
+          }
+        | {
+            Args: {
+              "": unknown
+            }
+            Returns: unknown
+          }
       persons_movies_count: {
         Args: {
           "": unknown
@@ -305,779 +1105,91 @@ export interface Database {
         }
         Returns: unknown
       }
+      update_movie_popularity:
+        | {
+            Args: Record<PropertyKey, never>
+            Returns: undefined
+          }
+        | {
+            Args: {
+              limit_val: number
+              offset_val: number
+            }
+            Returns: undefined
+          }
       update_person_popularity: {
         Args: Record<PropertyKey, never>
         Returns: undefined
       }
     }
-    Tables: {
-      categories: {
-        Insert: {
-          create_time: string
-          id?: number
-          name: string
-          parent_id?: null | number
-          update_time: string
-        }
-        Relationships: [
-          {
-            columns: ["parent_id"]
-            foreignKeyName: "categories_parent_id_fkey"
-            isOneToOne: false
-            referencedColumns: ["id"]
-            referencedRelation: "categories"
-          },
-        ]
-        Row: {
-          create_time: string
-          id: number
-          name: string
-          parent_id: null | number
-          update_time: string
-        }
-        Update: {
-          create_time?: string
-          id?: number
-          name?: string
-          parent_id?: null | number
-          update_time?: string
-        }
-      }
-      images: {
-        Insert: {
-          created_at?: string
-          id?: number
-          type: Database["public"]["Enums"]["image_type"]
-          uuid: string
-        }
-        Relationships: []
-        Row: {
-          created_at: string
-          id: number
-          type: Database["public"]["Enums"]["image_type"]
-          uuid: string
-        }
-        Update: {
-          created_at?: string
-          id?: number
-          type?: Database["public"]["Enums"]["image_type"]
-          uuid?: string
-        }
-      }
-      jobs: {
-        Insert: {
-          id?: number
-          movie_id: number
-          person_id: number
-          type?: null | string
-        }
-        Relationships: [
-          {
-            columns: ["movie_id"]
-            foreignKeyName: "jobs_movies_movie"
-            isOneToOne: false
-            referencedColumns: ["id"]
-            referencedRelation: "movies"
-          },
-          {
-            columns: ["movie_id"]
-            foreignKeyName: "jobs_movies_movie"
-            isOneToOne: false
-            referencedColumns: ["id"]
-            referencedRelation: "movies_missing_info"
-          },
-          {
-            columns: ["movie_id"]
-            foreignKeyName: "jobs_movies_movie"
-            isOneToOne: false
-            referencedColumns: ["id"]
-            referencedRelation: "movies_recently_released"
-          },
-          {
-            columns: ["movie_id"]
-            foreignKeyName: "jobs_movies_movie"
-            isOneToOne: false
-            referencedColumns: ["id"]
-            referencedRelation: "movies_released_today"
-          },
-          {
-            columns: ["person_id"]
-            foreignKeyName: "jobs_persons_person"
-            isOneToOne: false
-            referencedColumns: ["id"]
-            referencedRelation: "most_popular_persons"
-          },
-          {
-            columns: ["person_id"]
-            foreignKeyName: "jobs_persons_person"
-            isOneToOne: false
-            referencedColumns: ["id"]
-            referencedRelation: "persons"
-          },
-        ]
-        Row: {
-          id: number
-          movie_id: number
-          person_id: number
-          type: null | string
-        }
-        Update: {
-          id?: number
-          movie_id?: number
-          person_id?: number
-          type?: null | string
-        }
-      }
-      labels: {
-        Insert: {
-          create_time?: string
-          id?: number
-          name?: null | string
-          original_name: string
-          update_time?: string
-        }
-        Relationships: []
-        Row: {
-          create_time: string
-          id: number
-          name: null | string
-          original_name: string
-          update_time: string
-        }
-        Update: {
-          create_time?: string
-          id?: number
-          name?: null | string
-          original_name?: string
-          update_time?: string
-        }
-      }
-      movie_images: {
-        Insert: {
-          id?: number
-          image_id: number
-          movie_id: number
-          sequence?: null | number
-        }
-        Relationships: [
-          {
-            columns: ["image_id"]
-            foreignKeyName: "movie_images_image_id_fkey"
-            isOneToOne: false
-            referencedColumns: ["id"]
-            referencedRelation: "images"
-          },
-          {
-            columns: ["movie_id"]
-            foreignKeyName: "movie_images_movie_id_fkey"
-            isOneToOne: false
-            referencedColumns: ["id"]
-            referencedRelation: "movies"
-          },
-          {
-            columns: ["movie_id"]
-            foreignKeyName: "movie_images_movie_id_fkey"
-            isOneToOne: false
-            referencedColumns: ["id"]
-            referencedRelation: "movies_missing_info"
-          },
-          {
-            columns: ["movie_id"]
-            foreignKeyName: "movie_images_movie_id_fkey"
-            isOneToOne: false
-            referencedColumns: ["id"]
-            referencedRelation: "movies_recently_released"
-          },
-          {
-            columns: ["movie_id"]
-            foreignKeyName: "movie_images_movie_id_fkey"
-            isOneToOne: false
-            referencedColumns: ["id"]
-            referencedRelation: "movies_released_today"
-          },
-        ]
-        Row: {
-          id: number
-          image_id: number
-          movie_id: number
-          sequence: null | number
-        }
-        Update: {
-          id?: number
-          image_id?: number
-          movie_id?: number
-          sequence?: null | number
-        }
-      }
-      movies: {
-        Insert: {
-          barcode?: null | unknown
-          create_time?: string
-          dvd_id?: null | string
-          format?: Database["public"]["Enums"]["media_format"] | null
-          front_cover_url?: null | string
-          full_cover_url?: null | string
-          has_nudity?: boolean
-          id?: number
-          label_id?: null | number
-          length?: null | number
-          name?: null | string
-          original_name: string
-          popularity?: null | number
-          release_date?: null | string
-          series_id?: null | number
-          studio_id?: null | number
-          update_time?: string
-        }
-        Relationships: [
-          {
-            columns: ["label_id"]
-            foreignKeyName: "movies_labels_movies"
-            isOneToOne: false
-            referencedColumns: ["id"]
-            referencedRelation: "labels"
-          },
-          {
-            columns: ["series_id"]
-            foreignKeyName: "movies_series_movies"
-            isOneToOne: false
-            referencedColumns: ["id"]
-            referencedRelation: "series"
-          },
-          {
-            columns: ["studio_id"]
-            foreignKeyName: "movies_studios_movies"
-            isOneToOne: false
-            referencedColumns: ["id"]
-            referencedRelation: "studios"
-          },
-        ]
-        Row: {
-          barcode: null | unknown
-          create_time: string
-          dvd_id: null | string
-          format: Database["public"]["Enums"]["media_format"] | null
-          front_cover_url: null | string
-          full_cover_url: null | string
-          has_nudity: boolean
-          id: number
-          label_id: null | number
-          length: null | number
-          name: null | string
-          original_name: string
-          popularity: null | number
-          release_date: null | string
-          series_id: null | number
-          studio_id: null | number
-          update_time: string
-        }
-        Update: {
-          barcode?: null | unknown
-          create_time?: string
-          dvd_id?: null | string
-          format?: Database["public"]["Enums"]["media_format"] | null
-          front_cover_url?: null | string
-          full_cover_url?: null | string
-          has_nudity?: boolean
-          id?: number
-          label_id?: null | number
-          length?: null | number
-          name?: null | string
-          original_name?: string
-          popularity?: null | number
-          release_date?: null | string
-          series_id?: null | number
-          studio_id?: null | number
-          update_time?: string
-        }
-      }
-      person_images: {
-        Insert: {
-          id?: number
-          image_id: number
-          person_id: number
-        }
-        Relationships: [
-          {
-            columns: ["image_id"]
-            foreignKeyName: "person_images_image_id_fkey"
-            isOneToOne: false
-            referencedColumns: ["id"]
-            referencedRelation: "images"
-          },
-          {
-            columns: ["person_id"]
-            foreignKeyName: "person_images_person_id_fkey"
-            isOneToOne: false
-            referencedColumns: ["id"]
-            referencedRelation: "most_popular_persons"
-          },
-          {
-            columns: ["person_id"]
-            foreignKeyName: "person_images_person_id_fkey"
-            isOneToOne: false
-            referencedColumns: ["id"]
-            referencedRelation: "persons"
-          },
-        ]
-        Row: {
-          id: number
-          image_id: number
-          person_id: number
-        }
-        Update: {
-          id?: number
-          image_id?: number
-          person_id?: number
-        }
-      }
-      persons: {
-        Insert: {
-          birth_date?: null | string
-          bust_size?: null | number
-          create_time?: string
-          cup_size?: Database["public"]["Enums"]["bra_size"] | null
-          height?: null | number
-          hips_size?: null | number
-          id?: number
-          name?: null | string
-          original_name: string
-          popularity?: null | number
-          profile_url?: null | string
-          update_time?: string
-          waist_size?: null | number
-        }
-        Relationships: []
-        Row: {
-          birth_date: null | string
-          bust_size: null | number
-          create_time: string
-          cup_size: Database["public"]["Enums"]["bra_size"] | null
-          height: null | number
-          hips_size: null | number
-          id: number
-          name: null | string
-          original_name: string
-          persons_movies_count: null | number
-          popularity: null | number
-          profile_url: null | string
-          update_time: string
-          waist_size: null | number
-        }
-        Update: {
-          birth_date?: null | string
-          bust_size?: null | number
-          create_time?: string
-          cup_size?: Database["public"]["Enums"]["bra_size"] | null
-          height?: null | number
-          hips_size?: null | number
-          id?: number
-          name?: null | string
-          original_name?: string
-          popularity?: null | number
-          profile_url?: null | string
-          update_time?: string
-          waist_size?: null | number
-        }
-      }
-      persons_aliases: {
-        Insert: {
-          id?: number
-          name?: null | string
-          original_name?: null | string
-          person_id: number
-        }
-        Relationships: [
-          {
-            columns: ["person_id"]
-            foreignKeyName: "persons_aliases_person_id_fkey"
-            isOneToOne: false
-            referencedColumns: ["id"]
-            referencedRelation: "most_popular_persons"
-          },
-          {
-            columns: ["person_id"]
-            foreignKeyName: "persons_aliases_person_id_fkey"
-            isOneToOne: false
-            referencedColumns: ["id"]
-            referencedRelation: "persons"
-          },
-        ]
-        Row: {
-          id: number
-          name: null | string
-          original_name: null | string
-          person_id: number
-        }
-        Update: {
-          id?: number
-          name?: null | string
-          original_name?: null | string
-          person_id?: number
-        }
-      }
-      profiles: {
-        Insert: {
-          avatar_url?: null | string
-          create_time?: string
-          email?: null | string
-          id: string
-          username?: null | string
-        }
-        Relationships: []
-        Row: {
-          avatar_url: null | string
-          create_time: string
-          email: null | string
-          id: string
-          username: null | string
-        }
-        Update: {
-          avatar_url?: null | string
-          create_time?: string
-          email?: null | string
-          id?: string
-          username?: null | string
-        }
-      }
-      role_permissions: {
-        Insert: {
-          id?: number
-          permission: Database["public"]["Enums"]["app_permission"]
-          role: Database["public"]["Enums"]["app_role"]
-        }
-        Relationships: []
-        Row: {
-          id: number
-          permission: Database["public"]["Enums"]["app_permission"]
-          role: Database["public"]["Enums"]["app_role"]
-        }
-        Update: {
-          id?: number
-          permission?: Database["public"]["Enums"]["app_permission"]
-          role?: Database["public"]["Enums"]["app_role"]
-        }
-      }
-      roles: {
-        Insert: {
-          age?: null | number
-          id?: number
-          movie_id: number
-          person_id: number
-        }
-        Relationships: [
-          {
-            columns: ["movie_id"]
-            foreignKeyName: "roles_movies_movie"
-            isOneToOne: false
-            referencedColumns: ["id"]
-            referencedRelation: "movies"
-          },
-          {
-            columns: ["movie_id"]
-            foreignKeyName: "roles_movies_movie"
-            isOneToOne: false
-            referencedColumns: ["id"]
-            referencedRelation: "movies_missing_info"
-          },
-          {
-            columns: ["movie_id"]
-            foreignKeyName: "roles_movies_movie"
-            isOneToOne: false
-            referencedColumns: ["id"]
-            referencedRelation: "movies_recently_released"
-          },
-          {
-            columns: ["movie_id"]
-            foreignKeyName: "roles_movies_movie"
-            isOneToOne: false
-            referencedColumns: ["id"]
-            referencedRelation: "movies_released_today"
-          },
-          {
-            columns: ["person_id"]
-            foreignKeyName: "roles_persons_person"
-            isOneToOne: false
-            referencedColumns: ["id"]
-            referencedRelation: "most_popular_persons"
-          },
-          {
-            columns: ["person_id"]
-            foreignKeyName: "roles_persons_person"
-            isOneToOne: false
-            referencedColumns: ["id"]
-            referencedRelation: "persons"
-          },
-        ]
-        Row: {
-          age: null | number
-          id: number
-          movie_id: number
-          person_id: number
-        }
-        Update: {
-          age?: null | number
-          id?: number
-          movie_id?: number
-          person_id?: number
-        }
-      }
-      series: {
-        Insert: {
-          create_time?: string
-          id?: number
-          name?: null | string
-          original_name: string
-          update_time?: string
-        }
-        Relationships: []
-        Row: {
-          create_time: string
-          id: number
-          name: null | string
-          original_name: string
-          series_movies_count: null | number
-          update_time: string
-        }
-        Update: {
-          create_time?: string
-          id?: number
-          name?: null | string
-          original_name?: string
-          update_time?: string
-        }
-      }
-      studios: {
-        Insert: {
-          create_time?: string
-          fts_doc?: null | unknown
-          homepage?: null | string
-          id?: number
-          name?: null | string
-          original_name: string
-          update_time?: string
-        }
-        Relationships: []
-        Row: {
-          create_time: string
-          fts_doc: null | unknown
-          homepage: null | string
-          id: number
-          name: null | string
-          original_name: string
-          studio_movies_count: null | number
-          update_time: string
-        }
-        Update: {
-          create_time?: string
-          fts_doc?: null | unknown
-          homepage?: null | string
-          id?: number
-          name?: null | string
-          original_name?: string
-          update_time?: string
-        }
-      }
-      tags: {
-        Insert: {
-          category_id: number
-          movie_id: number
-        }
-        Relationships: [
-          {
-            columns: ["category_id"]
-            foreignKeyName: "category_movies_category_id"
-            isOneToOne: false
-            referencedColumns: ["id"]
-            referencedRelation: "categories"
-          },
-          {
-            columns: ["movie_id"]
-            foreignKeyName: "category_movies_movie_id"
-            isOneToOne: false
-            referencedColumns: ["id"]
-            referencedRelation: "movies"
-          },
-          {
-            columns: ["movie_id"]
-            foreignKeyName: "category_movies_movie_id"
-            isOneToOne: false
-            referencedColumns: ["id"]
-            referencedRelation: "movies_missing_info"
-          },
-          {
-            columns: ["movie_id"]
-            foreignKeyName: "category_movies_movie_id"
-            isOneToOne: false
-            referencedColumns: ["id"]
-            referencedRelation: "movies_recently_released"
-          },
-          {
-            columns: ["movie_id"]
-            foreignKeyName: "category_movies_movie_id"
-            isOneToOne: false
-            referencedColumns: ["id"]
-            referencedRelation: "movies_released_today"
-          },
-        ]
-        Row: {
-          category_id: number
-          movie_id: number
-        }
-        Update: {
-          category_id?: number
-          movie_id?: number
-        }
-      }
-      user_roles: {
-        Insert: {
-          id?: number
-          role: Database["public"]["Enums"]["app_role"]
-          user_id: string
-        }
-        Relationships: [
-          {
-            columns: ["user_id"]
-            foreignKeyName: "user_roles_user_id_fkey"
-            isOneToOne: false
-            referencedColumns: ["id"]
-            referencedRelation: "profiles"
-          },
-        ]
-        Row: {
-          id: number
-          role: Database["public"]["Enums"]["app_role"]
-          user_id: string
-        }
-        Update: {
-          id?: number
-          role?: Database["public"]["Enums"]["app_role"]
-          user_id?: string
-        }
-      }
-      views: {
-        Insert: {
-          client_hash?: null | string
-          date?: string
-          id?: number
-          item_id?: null | number
-          item_type?: null | string
-        }
-        Relationships: []
-        Row: {
-          client_hash: null | string
-          date: string
-          id: number
-          item_id: null | number
-          item_type: null | string
-        }
-        Update: {
-          client_hash?: null | string
-          date?: string
-          id?: number
-          item_id?: null | number
-          item_type?: null | string
-        }
-      }
+    Enums: {
+      app_permission:
+        | "movie.delete"
+        | "movie.update"
+        | "movie.create"
+        | "person.delete"
+        | "person.update"
+        | "person.create"
+        | "series.delete"
+        | "series.update"
+        | "series.create"
+        | "studio.delete"
+        | "studio.update"
+        | "studio.create"
+        | "category.delete"
+        | "category.update"
+        | "category.create"
+        | "label.delete"
+        | "label.update"
+        | "label.create"
+        | "image.delete"
+        | "image.update"
+        | "image.create"
+        | "job.delete"
+        | "job.update"
+        | "job.create"
+        | "role.delete"
+        | "role.update"
+        | "role.create"
+        | "tag.delete"
+        | "tag.update"
+        | "tag.create"
+      app_role: "admin" | "moderator" | "user" | "banned"
+      bra_size:
+        | "AA"
+        | "A"
+        | "B"
+        | "C"
+        | "D"
+        | "E"
+        | "F"
+        | "G"
+        | "H"
+        | "I"
+        | "J"
+        | "K"
+        | "L"
+        | "M"
+      image_type:
+        | "front_cover"
+        | "full_cover"
+        | "art"
+        | "disc"
+        | "profile"
+        | "logo"
+        | "screenshot"
+      media_format:
+        | "DVD"
+        | "Blu-ray"
+        | "Blu-ray 4K"
+        | "Digital"
+        | "VHS"
+        | "LaserDisc"
+        | "UMD Video"
+        | "Video CD"
     }
-    Views: {
-      current_counts: {
-        Relationships: []
-        Row: {
-          label_count: null | number
-          movie_count: null | number
-          person_count: null | number
-          series_count: null | number
-          studio_count: null | number
-          tag_count: null | number
-        }
-      }
-      most_popular_persons: {
-        Relationships: []
-        Row: {
-          id: null | number
-          name: null | string
-          original_name: null | string
-          popularity: null | number
-          profile_url: null | string
-        }
-      }
-      movies_missing_info: {
-        Relationships: []
-        Row: {
-          dvd_id: null | string
-          front_cover_url: null | string
-          id: null | number
-          name: null | string
-          original_name: null | string
-          release_date: null | string
-        }
-      }
-      movies_recently_released: {
-        Relationships: []
-        Row: {
-          dvd_id: null | string
-          front_cover_url: null | string
-          id: null | number
-          name: null | string
-          original_name: null | string
-        }
-      }
-      movies_released_today: {
-        Relationships: [
-          {
-            columns: ["label_id"]
-            foreignKeyName: "movies_labels_movies"
-            isOneToOne: false
-            referencedColumns: ["id"]
-            referencedRelation: "labels"
-          },
-          {
-            columns: ["series_id"]
-            foreignKeyName: "movies_series_movies"
-            isOneToOne: false
-            referencedColumns: ["id"]
-            referencedRelation: "series"
-          },
-          {
-            columns: ["studio_id"]
-            foreignKeyName: "movies_studios_movies"
-            isOneToOne: false
-            referencedColumns: ["id"]
-            referencedRelation: "studios"
-          },
-        ]
-        Row: {
-          create_time: null | string
-          dvd_id: null | string
-          front_cover_url: null | string
-          id: null | number
-          label_id: null | number
-          length: null | number
-          name: null | string
-          original_name: null | string
-          release_date: null | string
-          series_id: null | number
-          studio_id: null | number
-          update_time: null | string
-        }
-      }
-      persons_ordered_by_roles: {
-        Relationships: []
-        Row: {
-          birth_date: null | string
-          name: null | string
-          original_name: null | string
-          role_count: null | number
-        }
-      }
-      roles_by_age: {
-        Relationships: []
-        Row: {
-          age: null | number
-          count: null | number
-        }
-      }
+    CompositeTypes: {
+      [_ in never]: never
     }
   }
 }
@@ -1086,8 +1198,8 @@ type PublicSchema = Database[Extract<keyof Database, "public">]
 
 export type Tables<
   PublicTableNameOrOptions extends
-    | { schema: keyof Database }
-    | keyof (PublicSchema["Tables"] & PublicSchema["Views"]),
+    | keyof (PublicSchema["Tables"] & PublicSchema["Views"])
+    | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
     ? keyof (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
         Database[PublicTableNameOrOptions["schema"]]["Views"])
@@ -1111,8 +1223,8 @@ export type Tables<
 
 export type TablesInsert<
   PublicTableNameOrOptions extends
-    | { schema: keyof Database }
-    | keyof PublicSchema["Tables"],
+    | keyof PublicSchema["Tables"]
+    | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
     ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
     : never = never,
@@ -1132,8 +1244,8 @@ export type TablesInsert<
 
 export type TablesUpdate<
   PublicTableNameOrOptions extends
-    | { schema: keyof Database }
-    | keyof PublicSchema["Tables"],
+    | keyof PublicSchema["Tables"]
+    | { schema: keyof Database },
   TableName extends PublicTableNameOrOptions extends { schema: keyof Database }
     ? keyof Database[PublicTableNameOrOptions["schema"]]["Tables"]
     : never = never,
@@ -1153,8 +1265,8 @@ export type TablesUpdate<
 
 export type Enums<
   PublicEnumNameOrOptions extends
-    | { schema: keyof Database }
-    | keyof PublicSchema["Enums"],
+    | keyof PublicSchema["Enums"]
+    | { schema: keyof Database },
   EnumName extends PublicEnumNameOrOptions extends { schema: keyof Database }
     ? keyof Database[PublicEnumNameOrOptions["schema"]]["Enums"]
     : never = never,
@@ -1166,8 +1278,8 @@ export type Enums<
 
 export type CompositeTypes<
   PublicCompositeTypeNameOrOptions extends
-    | { schema: keyof Database }
-    | keyof PublicSchema["CompositeTypes"],
+    | keyof PublicSchema["CompositeTypes"]
+    | { schema: keyof Database },
   CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
     schema: keyof Database
   }
