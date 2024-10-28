@@ -4,7 +4,6 @@ import {
   MovieEditFormSchema,
   MovieRoleAddFormSchema,
 } from "@/core/utils/validation/movie-update";
-import { cloudflareService } from "@/services/cloudflare.service";
 import { movieService } from "@/services/movie.service";
 import { userService } from "@/services/user.service";
 import { revalidatePath } from "next/cache";
@@ -131,24 +130,6 @@ export async function deleteMovieAction(
 
   if (!isLoggedIn) {
     throw new Error("User not authenticated");
-  }
-
-  const movie = await movieService.getMovie(id);
-  if (!movie) {
-    throw new Error("Movie not found");
-  }
-
-  // TODO: Move this to a service for Cloudflare.
-  try {
-    await Promise.all(
-      movie.movie_images?.map(async ({ image }) => {
-        if (image) {
-          await cloudflareService.deleteImage(image.uuid!);
-        }
-      }) ?? [],
-    );
-  } catch {
-    // Ignore errors deleting images
   }
 
   // Delete the movie from the database

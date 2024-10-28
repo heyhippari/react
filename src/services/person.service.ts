@@ -10,8 +10,28 @@ import {
   updatePerson,
 } from "@/infrastructure/database/repositories/person.repository";
 
+import { cloudflareService } from "./cloudflare.service";
+
 export const personService = {
   async deletePerson(person_id: number) {
+    const person = await this.getPerson(person_id);
+
+    if (!person) {
+      throw new Error("Person not found");
+    }
+
+    try {
+      await Promise.all(
+        person.person_images?.map(async ({ image }) => {
+          if (image) {
+            await cloudflareService.deleteImage(image.uuid!);
+          }
+        }) ?? [],
+      );
+    } catch {
+      throw new Error("Error deleting images");
+    }
+
     await deletePerson(person_id);
   },
   async getPerson(person_id: number) {

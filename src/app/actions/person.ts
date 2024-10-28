@@ -3,7 +3,6 @@ import {
   fromPersonEditForm,
   PersonEditFormSchema,
 } from "@/core/utils/validation/person-update";
-import { cloudflareService } from "@/services/cloudflare.service";
 import { personService } from "@/services/person.service";
 import { userService } from "@/services/user.service";
 import { revalidatePath } from "next/cache";
@@ -62,25 +61,6 @@ export async function deletePersonAction(
     throw new Error("User not authenticated");
   }
 
-  const person = await personService.getPerson(id);
-
-  if (!person) {
-    throw new Error("Person not found");
-  }
-
-  try {
-    await Promise.all(
-      person.person_images?.map(async ({ image }) => {
-        if (image) {
-          await cloudflareService.deleteImage(image.uuid!);
-        }
-      }) ?? [],
-    );
-  } catch {
-    // Ignore errors deleting images
-  }
-
-  // Delete the movie from the database
   await personService.deletePerson(id);
 
   // Revalidate the homepage in case the movie deleted was on the homepage

@@ -14,11 +14,31 @@ import {
   updateMovie,
 } from "@/infrastructure/database/repositories/movie.repository";
 
+import { cloudflareService } from "./cloudflare.service";
+
 export const movieService = {
   async addMovieRole(movie_id: number, role_id: number) {
     await addMovieRole(movie_id, role_id);
   },
   async deleteMovie(movie_id: number) {
+    const movie = await this.getMovie(movie_id);
+
+    if (!movie) {
+      throw new Error("Movie not found");
+    }
+
+    try {
+      await Promise.all(
+        movie.movie_images?.map(async ({ image }) => {
+          if (image) {
+            await cloudflareService.deleteImage(image.uuid!);
+          }
+        }) ?? [],
+      );
+    } catch {
+      throw new Error("Error deleting images");
+    }
+
     await deleteMovie(movie_id);
   },
   async deleteMovieRole(movie_id: number, role_id: number) {
