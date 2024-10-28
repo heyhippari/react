@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "eslint": "eslint",
+    "test": "vitest",
     "eslint:fix": "eslint --fix",
     "i18n:extract": "lingui extract",
     "i18n:compile": "lingui compile --typescript"
@@ -74,12 +74,16 @@
     "@next/eslint-plugin-next": "^15.0.1",
     "@svgr/core": "^8.1.0",
     "@svgr/plugin-jsx": "^8.1.0",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/react": "^16.0.1",
     "@types/cookie": "^0.6.0",
     "@types/luxon": "^3.4.2",
     "@types/node": "^22",
     "@types/react": "npm:types-react@19.0.0-rc.1",
     "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
     "@types/react-virtualized": "^9.21.30",
+    "@vitejs/plugin-react": "^4.3.3",
+    "@vitest/eslint-plugin": "^1.1.7",
     "autoprefixer": "^10.4.20",
     "eslint": "^9.13.0",
     "eslint-config-next": "15.0.1",
@@ -94,6 +98,7 @@
     "eslint-plugin-tailwindcss": "^3.17.5",
     "eslint-plugin-unicorn": "^56.0.0",
     "globals": "^15.11.0",
+    "jsdom": "^25.0.1",
     "postcss": "^8.4.47",
     "prettier": "^3.3.3",
     "prettier-plugin-organize-imports": "^4.1.0",
@@ -102,7 +107,8 @@
     "tailwindcss-logical": "^3.0.1",
     "typescript": "^5",
     "typescript-eslint": "^8.12.0",
-    "unplugin-icons": "^0.19.3"
+    "unplugin-icons": "^0.19.3",
+    "vitest": "^2.1.4"
   },
   "overrides": {
     "react": "19.0.0-rc-65a56d0e-20241020",

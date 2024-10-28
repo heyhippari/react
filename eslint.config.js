@@ -15,8 +15,8 @@ import globals from 'globals';
 import tseslint from 'typescript-eslint';
 import perfectionist from 'eslint-plugin-perfectionist';
 import jsdoc from 'eslint-plugin-jsdoc';
-import reactRefresh from 'eslint-plugin-react-refresh';
 import eslintPluginUnicorn from 'eslint-plugin-unicorn';
+import vitest from '@vitest/eslint-plugin';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -73,6 +73,9 @@ export default tseslint.config(
       sourceType: 'module',
     },
     settings: {
+      vitest: {
+        typecheck: true,
+      },
       react: {
         version: 'detect',
       },
@@ -131,5 +134,15 @@ export default tseslint.config(
   {
     files: ['**/components/ui/*.tsx'],
     rules: {},
+  },
+  {
+    // Rules for test files.
+    files: ['**/*.spec.{js,ts}'],
+    plugins: {
+      vitest,
+    },
+    rules: {
+      ...vitest.configs.recommended.rules,
+    },
   },
 );

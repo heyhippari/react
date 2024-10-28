@@ -6,32 +6,32 @@
 import { z } from "zod";
 
 export const baseSeriesModelSchema = z.object({
-  id: z.number().nullable().optional(),
+  id: z.number().optional(),
   name: z.string().nullable().optional(),
-  original_name: z.string().nullable().optional(),
+  original_name: z.string(),
 });
 
 export type BaseSeriesModel = z.infer<typeof baseSeriesModelSchema>;
 
 export const baseLabelModelSchema = z.object({
-  id: z.number().nullable().optional(),
+  id: z.number().optional(),
   name: z.string().nullable().optional(),
-  original_name: z.string().nullable().optional(),
+  original_name: z.string(),
 });
 
 export type BaseLabelModel = z.infer<typeof baseLabelModelSchema>;
 
 export const baseStudioModelSchema = z.object({
-  id: z.number().nullable().optional(),
+  id: z.number().optional(),
   name: z.string().nullable().optional(),
-  original_name: z.string().nullable().optional(),
+  original_name: z.string(),
 });
 
 export type BaseStudioModel = z.infer<typeof baseStudioModelSchema>;
 
 export const baseMovieModelSchema = z.object({
   barcode: z.string().nullable().optional(),
-  dvd_id: z.string().nullable().optional(),
+  dvd_id: z.string(),
   format: z.enum([
     "DVD",
     "Blu-ray",
