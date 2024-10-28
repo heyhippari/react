@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 import { withSentryConfig } from "@sentry/nextjs";
 import Icons from "unplugin-icons/webpack";
 
-const nextConfig: NextConfig = {
+export default withSentryConfig<NextConfig>({
   compress: true,
   images: {
     loader: "custom",
@@ -22,11 +22,7 @@ const nextConfig: NextConfig = {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return -- There seems to be a bug in the types
     return config;
   },
-};
-
-export default nextConfig;
-
-withSentryConfig(nextConfig, {
+}, {
   // For all available options, see:
   // https://github.com/getsentry/sentry-webpack-plugin#options
 
