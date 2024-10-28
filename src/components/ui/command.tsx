@@ -2,7 +2,7 @@
 
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { cn } from '@/core/utils/ui';
-import { type Dialogproperties } from '@radix-ui/react-dialog';
+import { type DialogProps } from '@radix-ui/react-dialog';
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
 import { Command as CommandPrimitive } from 'cmdk';
 import * as React from 'react';
@@ -22,7 +22,7 @@ const Command = React.forwardRef<
 ));
 Command.displayName = CommandPrimitive.displayName;
 
-type CommandDialogProperties = Dialogproperties;
+type CommandDialogProperties = DialogProps;
 
 const CommandDialog = ({
   children,
