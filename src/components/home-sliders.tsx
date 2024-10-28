@@ -1,24 +1,15 @@
 import ItemSlider from '@/components/movie-slider';
-import {
-  getInformationNeeded,
-  getMostPopularPersons,
-  getMostRecentMovies,
-  getReleasedOnThisDay,
-} from '@/queries/homepage';
-import createClient from '@/utils/supabase/server';
-import { cookies } from 'next/headers';
+import { viewsService } from '@/services/views.service';
 
 /**
- * Sliders for the home page.
+ * Slider sections used in the home page.
  * @returns The home sliders component.
  */
 export default async function HomeSliders() {
-  const cookieStore = await cookies();
-  const supabase = createClient(cookieStore);
-  const { data: recentMovies } = await getMostRecentMovies(supabase);
-  const { data: informationNeeded } = await getInformationNeeded(supabase);
-  const { data: releasedOnThisDay } = await getReleasedOnThisDay(supabase);
-  const { data: popularPersons } = await getMostPopularPersons(supabase);
+  const recentMovies = await viewsService.getMostRecentMovies();
+  const popularPersons = await viewsService.getMostPopularPersons();
+  const informationNeeded = await viewsService.getInformationNeeded();
+  const releasedOnThisDay = await viewsService.getReleasedOnThisDay();
 
   return (
     <>

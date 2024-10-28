@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/utils/ui';
+import { cn } from '@/core/utils/ui';
 import * as React from 'react';
 import * as RechartsPrimitive from 'recharts';
 
@@ -17,11 +17,11 @@ export type ChartConfig = {
   );
 };
 
-interface ChartContextProps {
+interface ChartContextProperties {
   config: ChartConfig;
 }
 
-const ChartContext = React.createContext<ChartContextProps | null>(null);
+const ChartContext = React.createContext<ChartContextProperties | null>(null);
 
 /**
  * Hook to access the chart context.
@@ -46,9 +46,9 @@ const ChartContainer = React.forwardRef<
     config: ChartConfig;
     id?: string;
   } & React.ComponentProps<'div'>
->(({ children, className, config, id, ...props }, ref) => {
+>(({ children, className, config, id, ...properties }, reference) => {
   const uniqueId = React.useId();
-  const chartId = `chart-${id ?? uniqueId.replace(/:/g, '')}`;
+  const chartId = `chart-${id ?? uniqueId.replaceAll(':', '')}`;
 
   return (
     <ChartContext.Provider value={{ config }}>
@@ -58,8 +58,8 @@ const ChartContainer = React.forwardRef<
           className,
         )}
         data-chart={chartId}
-        ref={ref}
-        {...props}
+        ref={reference}
+        {...properties}
       >
         <ChartStyle config={config} id={chartId} />
         <RechartsPrimitive.ResponsiveContainer>
@@ -73,11 +73,10 @@ ChartContainer.displayName = 'Chart';
 
 const ChartStyle = ({ config, id }: { config: ChartConfig; id: string }) => {
   const colorConfig = Object.entries(config).filter(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    ([_, config]) => config.theme ?? config.color,
+    ([, config]) => config.theme ?? config.color,
   );
 
-  if (!colorConfig.length) {
+  if (colorConfig.length === 0) {
     return null;
   }
 
@@ -134,7 +133,7 @@ const ChartTooltipContent = React.forwardRef<
       nameKey,
       payload,
     },
-    ref,
+    reference,
   ) => {
     const { config } = useChart();
 
@@ -186,15 +185,15 @@ const ChartTooltipContent = React.forwardRef<
           'grid min-w-[8rem] items-start gap-1.5 rounded-lg border border-stone-200 border-stone-200/50 bg-white px-2.5 py-1.5 text-xs shadow-xl dark:border-stone-800 dark:border-stone-800/50 dark:bg-stone-950',
           className,
         )}
-        ref={ref}
+        ref={reference}
       >
-        {!nestLabel ? tooltipLabel : null}
+        {nestLabel ? null : tooltipLabel}
         <div className="grid gap-1.5">
           {payload.map((item, index) => {
             const key = `${nameKey ?? item.name ?? item.dataKey ?? 'value'}`;
             const itemConfig = getPayloadConfigFromPayload(config, item, key);
             const indicatorColor =
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access -- Payload is not typed.
               color ?? (item.payload.fill as string) ?? item.color;
 
             return (
@@ -206,7 +205,7 @@ const ChartTooltipContent = React.forwardRef<
                 key={item.dataKey}
               >
                 {formatter && item?.value !== undefined && item.name ? (
-                  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+                  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument -- Payload is not typed.
                   formatter(item.value, item.name, item, index, item.payload)
                 ) : (
                   <>
@@ -276,7 +275,7 @@ const ChartLegendContent = React.forwardRef<
 >(
   (
     { className, hideIcon = false, nameKey, payload, verticalAlign = 'bottom' },
-    ref,
+    reference,
   ) => {
     const { config } = useChart();
 
@@ -291,10 +290,10 @@ const ChartLegendContent = React.forwardRef<
           verticalAlign === 'top' ? 'pb-3' : 'pt-3',
           className,
         )}
-        ref={ref}
+        ref={reference}
       >
         {payload.map((item) => {
-          // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+          // eslint-disable-next-line @typescript-eslint/restrict-template-expressions -- DataKey is not typed.
           const key = `${nameKey ?? item.dataKey ?? 'value'}`;
           const itemConfig = getPayloadConfigFromPayload(config, item, key);
 
@@ -303,7 +302,7 @@ const ChartLegendContent = React.forwardRef<
               className={cn(
                 'flex items-center gap-1.5 [&>svg]:h-3 [&>svg]:w-3 [&>svg]:text-stone-500 dark:[&>svg]:text-stone-400',
               )}
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- Value is not typed.
               key={item.value}
             >
               {itemConfig?.icon && !hideIcon ? (
@@ -329,7 +328,7 @@ ChartLegendContent.displayName = 'ChartLegend';
 /**
  * Helper to extract item config from a payload.
  * @param config The chart config.
- * @param payload The payload.
+ * @param payload The payload to extract from.
  * @param key The key to extract.
  * @returns The item config.
  */
@@ -339,7 +338,7 @@ function getPayloadConfigFromPayload(
   key: string,
 ) {
   if (typeof payload !== 'object' || payload === null) {
-    return undefined;
+    return;
   }
 
   const payloadPayload =

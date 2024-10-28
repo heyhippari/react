@@ -1,4 +1,4 @@
-import { cn } from '@/utils/ui';
+import { cn } from '@/core/utils/ui';
 import { cva, type VariantProps } from 'class-variance-authority';
 import * as React from 'react';
 
@@ -22,20 +22,23 @@ const badgeVariants = cva(
   },
 );
 
-export interface BadgeProps
+export interface BadgeProperties
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof badgeVariants> {}
 
 /**
- * Badge component
- * @param props - Props of the badge
- * @param props.className - Class name of the badge
- * @param props.variant - Variant of the badge
- * @returns React component
+ * Badge component.
+ * @param properties - The properties for the badge component.
+ * @param properties.className - The class name for the badge.
+ * @param properties.variant - The variant for the badge.
+ * @returns React component.
  */
-function Badge({ className, variant, ...props }: BadgeProps) {
+function Badge({ className, variant, ...properties }: BadgeProperties) {
   return (
-    <div className={cn(badgeVariants({ variant }), className)} {...props} />
+    <div
+      className={cn(badgeVariants({ variant }), className)}
+      {...properties}
+    />
   );
 }
 

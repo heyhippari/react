@@ -16,15 +16,15 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
+const handleLocaleChange = (value: string) => {
+  void switchLocaleAction(value);
+};
+
 /**
  * Dropdown menu to select the locale.
  * @returns The rendered component.
  */
 export default function LocaleMenu() {
-  const handleLocaleChange = (value: string) => {
-    void switchLocaleAction(value);
-  };
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>

@@ -12,9 +12,9 @@ import { usePathname, useSearchParams } from 'next/navigation';
 
 /**
  * Component to render pagination links.
- * @param props The props for the component.
- * @param props.page The current page.
- * @param props.pageCount The total number of pages.
+ * @param properties The properties for the component.
+ * @param properties.page The current page.
+ * @param properties.pageCount The total number of pages.
  * @returns The rendered component.
  */
 export function PaginationLinks({
@@ -25,7 +25,7 @@ export function PaginationLinks({
   pageCount: number;
 }) {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
+  const searchParameters = useSearchParams();
 
   /**
    * Get the link for a specific page.
@@ -33,11 +33,11 @@ export function PaginationLinks({
    * @returns The link for the page.
    */
   function getPaginationPageLink(page: number): string {
-    const newSearchParams = new URLSearchParams(searchParams);
+    const newSearchParameters = new URLSearchParams(searchParameters);
 
-    newSearchParams.set('page', page.toString());
+    newSearchParameters.set('page', page.toString());
 
-    return `${pathname}?${newSearchParams.toString()}`;
+    return `${pathname}?${newSearchParameters.toString()}`;
   }
 
   return (
@@ -53,19 +53,20 @@ export function PaginationLinks({
         ) : null}
         {
           /* Always show at most the first 3 pages */
-          Array.from({ length: Math.min(pageCount, 3) }, (_, i) => i + 1).map(
-            (i) => (
-              <PaginationItem key={i}>
-                <PaginationLink
-                  aria-current={i === page}
-                  href={getPaginationPageLink(i)}
-                  isActive={i === page}
-                >
-                  {i}
-                </PaginationLink>
-              </PaginationItem>
-            ),
-          )
+          Array.from(
+            { length: Math.min(pageCount, 3) },
+            (_, index) => index + 1,
+          ).map((index) => (
+            <PaginationItem key={index}>
+              <PaginationLink
+                aria-current={index === page}
+                href={getPaginationPageLink(index)}
+                isActive={index === page}
+              >
+                {index}
+              </PaginationLink>
+            </PaginationItem>
+          ))
         }
         {pageCount > 6 && page > 3 && page < 5 ? (
           <>
@@ -132,15 +133,15 @@ export function PaginationLinks({
           /* Always show at most the last 3 pages */
           Array.from(
             { length: Math.min(pageCount, 3) },
-            (_, i) => pageCount + i,
-          ).map((i) => (
-            <PaginationItem key={i}>
+            (_, index) => pageCount + index,
+          ).map((index) => (
+            <PaginationItem key={index}>
               <PaginationLink
-                aria-current={i === page}
-                href={getPaginationPageLink(i)}
-                isActive={i === page}
+                aria-current={index === page}
+                href={getPaginationPageLink(index)}
+                isActive={index === page}
               >
-                {i}
+                {index}
               </PaginationLink>
             </PaginationItem>
           ))

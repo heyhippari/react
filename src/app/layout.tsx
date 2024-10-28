@@ -19,8 +19,8 @@ const NotoSansJP = Noto_Sans_JP({
 });
 
 /**
- * Generate the viewport meta tags for the site
- * @returns The viewport meta tags
+ * Generate the viewport meta tags for the site.
+ * @returns The viewport meta tags.
  */
 export function generateViewport(): Viewport {
   return {
@@ -40,10 +40,10 @@ export const metadata: Metadata = {
 };
 
 /**
- * The root layout for the site
- * @param props - The component props
- * @param props.children - The children to render
- * @returns The root layout
+ * The root layout for the site.
+ * @param properties - The properties passed to the layout.
+ * @param properties.children - The children to render in the layout.
+ * @returns The rendered root layout.
  */
 export default function RootLayout({
   children,

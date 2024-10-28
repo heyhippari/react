@@ -1,52 +1,62 @@
-import MovieIndex from '@/app/movie/movie-index';
-// TODO(hippari): Add a loading indicator when changing pages to prevent the cards changing in place.
-import {
-  getMoviePageCount,
-  getPaginatedMovies,
-} from '@/queries/get-movies-paginated';
-import createClient from '@/utils/supabase/server';
-import { prefetchQuery } from '@supabase-cache-helpers/postgrest-react-query';
-import {
-  dehydrate,
-  HydrationBoundary,
-  QueryClient,
-} from '@tanstack/react-query';
-import { cookies } from 'next/headers';
+import CardGrid from '@/components/card-grid';
+import { PaginationLinks } from '@/components/pagination-links';
+import SidebarMovieSearch from '@/components/sidebar-movie-search';
+import { TwoColumnLayout } from '@/components/two-column-layout';
+import { movieService } from '@/services/movie.service';
 
 /**
  * Server-side code for the movie page.
- * @param props The props for the movie page.
- * @param props.searchParams The search parameters for the movie page, to handle pagination and search.
- * @returns The movie page.
+ * @param properties The properties for the movie page.
+ * @param properties.searchParams The search parameters for the movie page, to handle pagination and search.
+ * @returns The rendered movie page.
  */
-export default async function MoviePage(props: {
-  searchParams?: Promise<Record<string, string | undefined>>;
+export default async function MoviePage({
+  searchParams,
+}: {
+  searchParams?: Promise<{
+    direction?: 'asc' | 'desc';
+    order?: string;
+    page?: string;
+    q?: string;
+  }>;
 }) {
-  const searchParams = await props.searchParams;
-  const queryClient = new QueryClient();
-  const cookieStore = await cookies();
-  const supabase = createClient(cookieStore);
+  const {
+    direction = 'desc',
+    order = 'create_time',
+    page = '1',
+    q,
+  } = (await searchParams) ?? {};
 
-  // Parse the page into a number, defaulting to 1
-  const currentPage = searchParams?.page ? parseInt(searchParams.page, 10) : 1;
-  const searchQuery = searchParams?.q;
-
-  await prefetchQuery(
-    queryClient,
-    getPaginatedMovies(supabase, currentPage, 25, {
-      orderBy: searchParams?.order,
-      orderDirection: searchParams?.asc === 'true' ? 'asc' : 'desc',
-      search: searchParams?.q,
-    }),
+  const movies = await movieService.getPaginatedMovies(
+    Number.parseInt(page, 10),
+    25,
+    {
+      orderBy: order,
+      orderDirection: direction,
+      search: q,
+    },
   );
-  await prefetchQuery(
-    queryClient,
-    getMoviePageCount(supabase, { search: searchQuery }),
-  );
+  const pageCount = await movieService.getMoviePageCount(q, 25);
 
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <MovieIndex page={currentPage} />
-    </HydrationBoundary>
+    <TwoColumnLayout
+      sidebarContent={
+        <SidebarMovieSearch direction={direction} order={order} q={q} />
+      }
+      sidebarTitle="Search"
+    >
+      {(pageCount ?? 0 > 0) ? (
+        <>
+          <PaginationLinks page={Number(page)} pageCount={pageCount} />
+          <CardGrid items={movies} />
+          <PaginationLinks page={Number(page)} pageCount={pageCount} />
+        </>
+      ) : (
+        <>
+          <h1 className="text-2xl font-semibold">No movies found</h1>
+          <p>Try changing your search query or adjusting the filters.</p>
+        </>
+      )}
+    </TwoColumnLayout>
   );
 }

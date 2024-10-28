@@ -9,17 +9,17 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { UserProfile } from '@/queries/types';
-import { useUserRole } from '@/utils/hooks';
+import { useUserRole } from '@/core/utils/hooks';
+import { UserDto } from '@/data/user.dto';
 import { DropdownMenuLabel } from '@radix-ui/react-dropdown-menu';
 
 /**
- * User menu component.
- * @param props - Component props.
- * @param props.profile - User profile.
- * @returns User menu component.
+ * A menu that displays the user's profile picture and username, as well as various links to relevant actions.
+ * @param propeties - The properties of the component.
+ * @param propeties.profile - The profile of the current user.
+ * @returns The rendered component.
  */
-export default function UserMenu({ profile }: { profile: UserProfile }) {
+export default function UserMenu({ profile }: { profile: UserDto }) {
   const userRole = useUserRole();
 
   return (

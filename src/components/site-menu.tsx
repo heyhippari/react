@@ -8,7 +8,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from '@/components/ui/navigation-menu';
-import { cn } from '@/utils/ui';
+import { cn } from '@/core/utils/ui';
 import Link from 'next/link';
 
 /**
@@ -20,13 +20,15 @@ export default function SiteMenu() {
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuTrigger>Movies</NavigationMenuTrigger>
+          <NavigationMenuTrigger className="text-lg">
+            Movies
+          </NavigationMenuTrigger>
           <NavigationMenuContent className="z-50">
             <div className="flex w-48 flex-col gap-2 p-2">
               <Link
                 className={cn(
                   buttonVariants({ variant: 'ghost' }),
-                  'justify-start',
+                  'justify-start bg-transparent',
                 )}
                 href="/movie"
               >

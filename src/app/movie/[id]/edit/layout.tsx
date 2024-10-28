@@ -2,15 +2,13 @@ import ItemHeader from '@/components/item-header';
 import ItemNavbar from '@/components/item-navbar';
 import SidebarMovieEdit from '@/components/sidebar-movie-edit';
 import { TwoColumnLayout } from '@/components/two-column-layout';
-import { getMovieById } from '@/queries/get-movie-by-id';
-import createClient from '@/utils/supabase/server';
-import { cookies } from 'next/headers';
+import { movieService } from '@/services/movie.service';
 
 /**
  * Layout for the movie edit pages.
- * @param props The component props.
- * @param props.children The children components.
- * @param props.params The URL parameters, containing the movie ID.
+ * @param properties The component properties.
+ * @param properties.children The children components.
+ * @param properties.params The URL parameters, containing the movie ID.
  * @returns The movie edit layout.
  */
 export default async function Layout({
@@ -19,10 +17,7 @@ export default async function Layout({
 }: Readonly<{ children: React.ReactNode; params: Promise<{ id: string }> }>) {
   const { id } = await params;
 
-  const cookieStore = await cookies();
-  const supabase = createClient(cookieStore);
-
-  const { data: movie } = await getMovieById(supabase, id);
+  const movie = await movieService.getMovie(Number(id));
 
   return (
     <>

@@ -1,5 +1,4 @@
 'use client';
-import { deleteMovieAction } from '@/app/actions/movie';
 import ButtonDeleteItem from '@/components/button-delete-item';
 import { Badge } from '@/components/ui/badge';
 import { Button, buttonVariants } from '@/components/ui/button';
@@ -10,20 +9,20 @@ import {
   HoverCardTrigger,
 } from '@/components/ui/hover-card';
 import { useToast } from '@/components/ui/use-toast';
-import { Item } from '@/queries/types';
-import { useUserRole } from '@/utils/hooks';
-import { getShareTitle } from '@/utils/share';
-import { getUrlForItem, isMovie, isPerson } from '@/utils/types';
+import { getUrlForItem, isMovie, isPerson } from '@/core/types';
+import { useUserRole } from '@/core/utils/hooks';
+import { getShareTitle } from '@/core/utils/share';
+import { MovieDto } from '@/data/movie.dto';
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 
 /**
  * A navigation bar for an item, containing links to various item-related pages and actions.
- * @param props - The component props.
- * @param props.item - The item to display the navigation bar for.
+ * @param properties - The component properties.
+ * @param properties.item - The item to display the navigation bar for.
  * @returns The rendered component.
  */
-export default function ItemNavbar({ item }: Readonly<{ item: Item }>) {
+export default function ItemNavbar({ item }: Readonly<{ item: MovieDto }>) {
   const [supportsShareAPI, setSupportsShareAPI] = useState(
     navigator?.share !== undefined,
   );
@@ -31,33 +30,26 @@ export default function ItemNavbar({ item }: Readonly<{ item: Item }>) {
   const userRole = useUserRole();
 
   const frontCoverCount = useMemo(() => {
-    if (isMovie(item)) {
-      return item?.movie_images.filter(
-        (image) => image.image?.type === 'front_cover',
-      ).length;
-    } else {
-      return 0;
-    }
+    return isMovie(item)
+      ? item?.movie_images?.filter(
+          (image) => image.image?.type === 'front_cover',
+        ).length
+      : 0;
   }, [item]);
 
   const fullCoverCount = useMemo(() => {
-    if (isMovie(item)) {
-      return item?.movie_images.filter(
-        (image) => image.image?.type === 'full_cover',
-      ).length;
-    } else {
-      return 0;
-    }
+    return isMovie(item)
+      ? item?.movie_images?.filter(
+          (image) => image.image?.type === 'full_cover',
+        ).length
+      : 0;
   }, [item]);
 
   const profileCount = useMemo(() => {
-    if (isPerson(item)) {
-      return item?.person_images.filter(
-        (image) => image.image?.type === 'profile',
-      ).length;
-    } else {
-      return 0;
-    }
+    return isPerson(item)
+      ? item?.person_images?.filter((image) => image.image?.type === 'profile')
+          .length
+      : 0;
   }, [item]);
 
   const imageLinks = useMemo(() => {
@@ -102,7 +94,7 @@ export default function ItemNavbar({ item }: Readonly<{ item: Item }>) {
         await navigator.share({
           text: getShareTitle(item),
           title: getShareTitle(item),
-          url: window.location.href,
+          url: globalThis.location.href,
         });
       } catch {
         toast({
@@ -202,7 +194,7 @@ export default function ItemNavbar({ item }: Readonly<{ item: Item }>) {
               </Button>
             </HoverCardTrigger>
             <HoverCardContent align="center" className="w-44 p-2">
-              <ButtonDeleteItem action={deleteMovieAction} item={item} />
+              <ButtonDeleteItem item={item} />
             </HoverCardContent>
           </HoverCard>
         ) : null}

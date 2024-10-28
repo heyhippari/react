@@ -1,35 +1,25 @@
-import Label from '@/app/label/[id]/label';
-import { getLabelById, getLabelMoviesCount } from '@/queries/get-label-by-id';
-import createClient from '@/utils/supabase/server';
-import { prefetchQuery } from '@supabase-cache-helpers/postgrest-react-query';
-import {
-  dehydrate,
-  HydrationBoundary,
-  QueryClient,
-} from '@tanstack/react-query';
-import { cookies } from 'next/headers';
+import ItemCard from '@/components/item-card';
+import { Badge } from '@/components/ui/badge';
+import { labelService } from '@/services/label.service';
 import { redirect } from 'next/navigation';
 
 /**
- * Generate the metadata for the label page
- * @param props - The component props
- * @param props.params - The label ID
- * @returns The metadata
+ * Generate the metadata for the label page.
+ * @param properties - The properties of the page.
+ * @param properties.params - The ID of the label to generate metadata for.
+ * @returns The metadata for the label page.
  */
-export async function generateMetadata(props: {
+export async function generateMetadata(properties: {
   params: Promise<{ id: number }>;
 }) {
-  const { id } = await props.params;
-
-  const cookieStore = await cookies();
-  const supabase = createClient(cookieStore);
+  const { id } = await properties.params;
 
   try {
-    const { data: label } = await getLabelById(supabase, id);
+    const label = await labelService.getLabel(id);
 
     return {
-      description: `Information about ${label?.name ?? label?.original_name} from Kanojo.`,
-      title: label?.name ?? label?.original_name,
+      description: `Information about ${label?.display_name} from Kanojo.`,
+      title: label?.display_name,
     };
   } catch {
     return {
@@ -40,30 +30,53 @@ export async function generateMetadata(props: {
 }
 
 /**
- * Server-side label page
- * @param props - The component props
- * @param props.params - The URL parameters
- * @returns The label page
+ * The label page component.
+ * @param properties - The properties of the page component.
+ * @param properties.params - The URL parameter for the label ID.
+ * @returns The rendered label page.
  */
-export default async function LabelPage(props: {
+export default async function LabelPage(properties: {
   params: Promise<{ id: string }>;
 }) {
-  const params = await props.params;
-  const queryClient = new QueryClient();
-  const cookieStore = await cookies();
-  const supabase = createClient(cookieStore);
+  const { id } = await properties.params;
 
   // If the id contains anything other than numbers, redirect to 404
-  if (!/^\d+$/.test(params.id)) {
+  if (!/^\d+$/.test(id)) {
     return redirect('/404');
   }
 
-  await prefetchQuery(queryClient, getLabelById(supabase, params.id));
-  await prefetchQuery(queryClient, getLabelMoviesCount(supabase, params.id));
+  const label = await labelService.getLabel(Number(id));
+  const moviesCount = await labelService.getLabelMoviesCount(Number(id));
 
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <Label id={params.id} />
-    </HydrationBoundary>
+    <>
+      <div className="w-full bg-pink-100 p-4 dark:bg-pink-800">
+        <div className="container flex flex-col gap-6 px-4 md:flex-row">
+          <div className="flex w-full flex-col justify-start gap-2 align-top">
+            <div className="flex flex-col gap-0">
+              <h1 className="line-clamp-2 w-fit text-ellipsis bg-gradient-to-r from-pink-600 to-rose-400 bg-clip-text text-4xl font-bold leading-tight text-transparent dark:from-pink-400 dark:to-rose-400">
+                {label?.display_name}
+              </h1>
+              {label?.alternative_name ? (
+                <p className="line-clamp-2 text-ellipsis text-lg font-semibold">
+                  {label?.alternative_name}
+                </p>
+              ) : null}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="container flex flex-col gap-4 p-4">
+        <div className="flex flex-row gap-2">
+          <h2 className="text-lg font-semibold">Movies</h2>
+          <Badge variant="default">{moviesCount}</Badge>
+        </div>
+        <div className="grid grid-cols-3 gap-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+          {label?.movies?.map((movie) => (
+            <ItemCard item={movie} key={movie?.id} />
+          ))}
+        </div>
+      </div>
+    </>
   );
 }

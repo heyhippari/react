@@ -1,5 +1,4 @@
-import createClient from '@/utils/supabase/server';
-import { cookies } from 'next/headers';
+import { userService } from '@/services/user.service';
 import { redirect } from 'next/navigation';
 
 /**
@@ -7,13 +6,10 @@ import { redirect } from 'next/navigation';
  * @returns The profile page of the current user.
  */
 export default async function Me() {
-  const cookieStore = await cookies();
-  const supabase = createClient(cookieStore);
-
-  const { data, error } = await supabase.auth.getUser();
-  if (error || !data?.user) {
+  const user = await userService.getCurrentUser();
+  if (!user) {
     redirect('/login');
   }
 
-  return <p>{JSON.stringify(data.user)}</p>;
+  return <p>{JSON.stringify(user)}</p>;
 }

@@ -11,12 +11,12 @@ import {
   PopoverAnchor,
   PopoverContent,
 } from '@/components/ui/popover';
-import { cn } from '@/utils/ui';
+import { cn } from '@/core/utils/ui';
 import MdiCheck from '~icons/mdi/check.svg';
 import { Command as CommandPrimitive } from 'cmdk';
 import { useMemo, useState } from 'react';
 
-interface Props<T extends string> {
+interface Properties<T extends string> {
   emptyMessage?: string;
   isLoading?: boolean;
   items: { label: string; value: T }[];
@@ -29,15 +29,15 @@ interface Props<T extends string> {
 
 /**
  * A searchable dropdown list with autocomplete functionality.
- * @param props The component props.
- * @param props.emptyMessage The message to display when there are no items.
- * @param props.isLoading Whether the items are loading.
- * @param props.items The items to display.
- * @param props.onSearchValueChange The callback to call when the search value changes.
- * @param props.onSelectedValueChange The callback to call when the selected value changes.
- * @param props.placeholder The input placeholder.
- * @param props.searchValue The search value.
- * @param props.selectedValue The selected value.
+ * @param properties The component properties.
+ * @param properties.emptyMessage The message to display when there are no items.
+ * @param properties.isLoading Whether the items are loading.
+ * @param properties.items The items to display.
+ * @param properties.onSearchValueChange The callback to call when the search value changes.
+ * @param properties.onSelectedValueChange The callback to call when the selected value changes.
+ * @param properties.placeholder The input placeholder.
+ * @param properties.searchValue The value to search for.
+ * @param properties.selectedValue The value that is selected.
  * @returns The component.
  */
 export function AutoComplete<T extends string>({
@@ -49,18 +49,11 @@ export function AutoComplete<T extends string>({
   placeholder = 'Search...',
   searchValue,
   selectedValue,
-}: Readonly<Props<T>>) {
+}: Readonly<Properties<T>>) {
   const [open, setOpen] = useState(false);
 
   const labels = useMemo(
-    () =>
-      items.reduce(
-        (acc, item) => {
-          acc[item.value] = item.label;
-          return acc;
-        },
-        {} as Record<string, string>,
-      ),
+    () => Object.fromEntries(items.map((item) => [item.value, item.label])),
     [items],
   );
 
@@ -69,9 +62,9 @@ export function AutoComplete<T extends string>({
     onSearchValueChange('');
   };
 
-  const onInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+  const onInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     if (
-      !e.relatedTarget?.hasAttribute('cmdk-list') &&
+      !event.relatedTarget?.hasAttribute('cmdk-list') &&
       labels[selectedValue] !== searchValue
     ) {
       reset();
@@ -97,7 +90,7 @@ export function AutoComplete<T extends string>({
               asChild
               onBlur={onInputBlur}
               onFocus={() => setOpen(true)}
-              onKeyDown={(e) => setOpen(e.key !== 'Escape')}
+              onKeyDown={(event) => setOpen(event.key !== 'Escape')}
               onMouseDown={() => setOpen((open) => !!searchValue || !open)}
               onValueChange={onSearchValueChange}
               value={searchValue}
@@ -109,15 +102,15 @@ export function AutoComplete<T extends string>({
           <PopoverContent
             asChild
             className="z-50 w-[--radix-popover-trigger-width] p-0"
-            onInteractOutside={(e) => {
+            onInteractOutside={(event) => {
               if (
-                e.target instanceof Element &&
-                e.target.hasAttribute('cmdk-input')
+                event.target instanceof Element &&
+                event.target.hasAttribute('cmdk-input')
               ) {
-                e.preventDefault();
+                event.preventDefault();
               }
             }}
-            onOpenAutoFocus={(e) => e.preventDefault()}
+            onOpenAutoFocus={(event) => event.preventDefault()}
           >
             <CommandList>
               {items.length > 0 && !isLoading ? (
@@ -125,7 +118,7 @@ export function AutoComplete<T extends string>({
                   {items.map((option) => (
                     <CommandItem
                       key={option.value}
-                      onMouseDown={(e) => e.preventDefault()}
+                      onMouseDown={(event) => event.preventDefault()}
                       onSelect={onSelectItem}
                       value={option.value}
                     >
@@ -142,9 +135,9 @@ export function AutoComplete<T extends string>({
                   ))}
                 </CommandGroup>
               ) : null}
-              {!isLoading ? (
+              {isLoading ? null : (
                 <CommandEmpty>{emptyMessage ?? 'No items.'}</CommandEmpty>
-              ) : null}
+              )}
             </CommandList>
           </PopoverContent>
         </Command>

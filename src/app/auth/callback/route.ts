@@ -1,6 +1,5 @@
-import createClient from '@/utils/supabase/server';
-import { cookies } from 'next/headers';
-import { NextResponse } from 'next/server';
+import { userService } from "@/services/user.service";
+import { NextResponse } from "next/server";
 
 /**
  * Handle the OAuth callback from Supabase.
@@ -9,21 +8,15 @@ import { NextResponse } from 'next/server';
  */
 export async function GET(request: Request) {
   const { origin, searchParams } = new URL(request.url);
-  const code = searchParams.get('code');
-  const next = searchParams.get('next') ?? '/';
-
-  const cookieStore = await cookies();
-  const supabase = createClient(cookieStore);
+  const code = searchParams.get("code");
+  const next = searchParams.get("next") ?? "/";
 
   if (code) {
-    const { error } = await supabase.auth.exchangeCodeForSession(code);
-
-    // Redirect to the URL specified in the `next` query parameter if successful
-    if (!error) {
+    try {
+      await userService.exchangeCodeForSession(code);
       return NextResponse.redirect(`${origin}${next}`);
+    } catch {
+      return NextResponse.redirect(`${origin}/auth/auth-error`);
     }
   }
-
-  // If there was an error, redirect to the auth error page
-  return NextResponse.redirect(`${origin}/auth/auth-error`);
 }

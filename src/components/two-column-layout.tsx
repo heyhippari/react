@@ -2,11 +2,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 /**
  * A layout with two columns, the first column is a sidebar and the second column is the main content.
- * @param props The props of the component.
- * @param props.children The main content.
- * @param props.sidebarContent The content of the sidebar.
- * @param props.sidebarTitle The title of the sidebar.
- * @returns The two column layout.
+ * @param properties The properties of the component.
+ * @param properties.children The main content.
+ * @param properties.sidebarContent The content to display in the sidebar.
+ * @param properties.sidebarTitle The title to display at the top of the sidebar.
+ * @returns The rendered component.
  */
 export function TwoColumnLayout({
   children,

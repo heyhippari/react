@@ -1,21 +1,21 @@
 'use client';
 
 import { buttonVariants } from '@/components/ui/button';
-import { MovieWithAll } from '@/queries/types';
-import { getUrlForItem } from '@/utils/types';
-import { cn } from '@/utils/ui';
+import { getUrlForItem } from '@/core/types';
+import { cn } from '@/core/utils/ui';
+import { MovieDto } from '@/data/movie.dto';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 /**
  * Sidebar for editing a movie.
- * @param props The component props.
- * @param props.movie The movie to edit.
+ * @param properties The component properties.
+ * @param properties.movie The movie to edit.
  * @returns The rendered component.
  */
 export default function SidebarMovieEdit({
   movie,
-}: Readonly<{ movie: MovieWithAll }>) {
+}: Readonly<{ movie: MovieDto }>) {
   const pathname = usePathname();
 
   return (

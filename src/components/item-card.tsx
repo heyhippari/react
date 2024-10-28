@@ -1,25 +1,25 @@
+'use client';
 import { Badge } from '@/components/ui/badge';
-import { MovieWithImages, PersonWithImage } from '@/queries/types';
-import { getFrontCoverUrl, getProfileUrl } from '@/utils/images';
-import { getUrlForItem, isMovie, isPerson } from '@/utils/types';
+import { getUrlForItem, isMovie, isPerson } from '@/core/types';
+import { BaseMovieDto, BasePersonDto } from '@/data/base.dto';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 
 /**
  * Card that displays an item with an image and some information depending on the type of item.
- * @param props The props for the item card.
- * @param props.item The item to display.
+ * @param properties The properties for the item card.
+ * @param properties.item The item to display.
  * @returns The item card component.
  */
 export default function ItemCard({
   item,
-}: Readonly<{ item: MovieWithImages | PersonWithImage }>) {
+}: Readonly<{ item: BaseMovieDto | BasePersonDto }>) {
   const image = useMemo(() => {
     if (isMovie(item)) {
-      return getFrontCoverUrl(item, 'card');
+      return item?.front_cover_url?.card;
     } else if (isPerson(item)) {
-      return getProfileUrl(item, 'card');
+      return item?.profile_url?.card;
     }
 
     return null;
@@ -33,7 +33,7 @@ export default function ItemCard({
         <div className="relative aspect-[2/3] w-full overflow-hidden rounded-lg bg-pink-200 shadow-md dark:bg-pink-900">
           {item && image ? (
             <Image
-              alt={item?.name ?? item?.original_name}
+              alt={item?.display_name}
               className={`object-cover shadow-md transition-opacity ${imageIsLoaded ? 'opacity-100' : 'opacity-0'}`}
               fill
               onLoad={(event) => {
@@ -70,13 +70,11 @@ export default function ItemCard({
         </div>
         <div className="mb-2 flex flex-col">
           <h3 className="text-md line-clamp-1 font-semibold dark:text-pink-50">
-            {item?.name ?? item?.original_name}
+            {item?.display_name}
           </h3>
-          {item?.name ? (
-            <p className="line-clamp-1 text-xs font-medium opacity-75 dark:text-pink-50">
-              {item?.original_name}
-            </p>
-          ) : null}
+          <p className="line-clamp-1 text-xs font-medium opacity-75 dark:text-pink-50">
+            {item?.alternative_name}
+          </p>
         </div>
       </div>
     </Link>

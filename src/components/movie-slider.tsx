@@ -1,6 +1,7 @@
 'use client';
 import ItemCard from '@/components/item-card';
-import { ItemWithImages } from '@/queries/types';
+import { MovieDto } from '@/data/movie.dto';
+import { PersonDto } from '@/data/person.dto';
 import { FreeMode, Mousewheel, Scrollbar, Virtual } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -10,14 +11,14 @@ import 'swiper/css/scrollbar';
 import 'swiper/css/virtual';
 
 /**
- * Slider for items.
- * @param props The props.
- * @param props.items The items.
- * @returns The component.
+ * A slider for movie or person items.
+ * @param properties The properties of the component.
+ * @param properties.items The items to display in the slider.
+ * @returns The rendered component.
  */
 export default function ItemSlider({
   items,
-}: Readonly<{ items: ItemWithImages[] }>) {
+}: Readonly<{ items: (MovieDto | PersonDto)[] }>) {
   return (
     <div className="relative">
       <Swiper

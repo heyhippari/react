@@ -1,4 +1,6 @@
 'use client';
+import { deleteMovieAction } from '@/app/actions/movie';
+import { deletePersonAction } from '@/app/actions/person';
 import { Button, buttonVariants } from '@/components/ui/button';
 import {
   Dialog,
@@ -10,28 +12,25 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { Item } from '@/queries/types';
+import { isMovie } from '@/core/types';
+import { MovieDto } from '@/data/movie.dto';
+import { PersonDto } from '@/data/person.dto';
 import { useActionState, useState } from 'react';
 
 /**
  * Button to delete a movie.
- * @param props - The component props.
- * @param props.action - The action to perform when the movie is deleted.
- * @param props.item - The item to delete.
+ * @param properties - The component properties.
+ * @param properties.item - The item to delete.
  * @returns The rendered component.
  */
 export default function ButtonDeleteItem({
-  action,
   item,
 }: Readonly<{
-  action: (
-    state: null | void,
-    payload: FormData,
-  ) => null | Promise<null | void> | void;
-  item: Item;
+  item: MovieDto | PersonDto;
 }>) {
   const [isOpen, setIsOpen] = useState(false);
 
+  const action = isMovie(item) ? deleteMovieAction : deletePersonAction;
   const [, deleteAction, isDeletePending] = useActionState(action, null);
 
   return (
@@ -45,7 +44,7 @@ export default function ButtonDeleteItem({
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Delete {item?.name ?? item?.original_name}?</DialogTitle>
+          <DialogTitle>Delete {item?.display_name}?</DialogTitle>
           <DialogDescription>
             This item will be permanently removed from the database. This action
             cannot be undone.
@@ -56,7 +55,7 @@ export default function ButtonDeleteItem({
             <Button variant="outline">Cancel</Button>
           </DialogClose>
           <form action={deleteAction}>
-            <input name="movie_id" type="hidden" value={item?.id} />
+            <input name="item_id" type="hidden" value={item?.id} />
             <Button
               className="bg-red-500"
               loading={isDeletePending}

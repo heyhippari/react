@@ -1,19 +1,17 @@
-import Movie from '@/app/movie/[id]/movie';
-import { getMovieById } from '@/queries/get-movie-by-id';
-import createClient from '@/utils/supabase/server';
-import { prefetchQuery } from '@supabase-cache-helpers/postgrest-react-query';
-import {
-  dehydrate,
-  HydrationBoundary,
-  QueryClient,
-} from '@tanstack/react-query';
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
+import ItemNavbar from '@/components/item-navbar';
+import ItemPoster from '@/components/item-poster';
+import RoleCard from '@/components/role-card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { movieService } from '@/services/movie.service';
+import { DateTime } from 'luxon';
+import Link from 'next/link';
 
 /**
  * Server-side code for the movie edit page.
- * @param props The props for the movie edit page.
- * @param props.params The URL parameters, containing the movie ID.
+ * @param properties The properties for the movie edit page.
+ * @param properties.params The URL parameters, containing the movie ID.
  * @returns The movie edit page.
  */
 export default async function MoviePage({
@@ -23,20 +21,203 @@ export default async function MoviePage({
 }>) {
   const { id } = await params;
 
-  const queryClient = new QueryClient();
-  const cookieStore = await cookies();
-  const supabase = createClient(cookieStore);
+  const movie = await movieService.getMovie(Number(id));
 
-  // If the id contains anything other than numbers, redirect to 404
-  if (!/^\d+$/.test(id)) {
-    return redirect('/404');
-  }
+  // On initial load, register the visit
+  // TODO: Move this to a client-side effect
+  /*useEffect(() => {
+    const registerView = async () => {
+      if (movie) {
+        try {
+          await registerViewAction(movie.id, 'movie');
+        } catch {
+          // Just ignore the error, we don't want to block the page load
+        }
+      }
+    };
 
-  await prefetchQuery(queryClient, getMovieById(supabase, id));
+    void registerView();
+  }, [movie]);*/
 
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <Movie id={id} />
-    </HydrationBoundary>
+    <>
+      <ItemNavbar item={movie} />
+      <div className="w-full bg-pink-100 p-4 dark:bg-pink-800">
+        <div className="container flex flex-col gap-6 px-4 md:flex-row">
+          <div className="flex flex-col gap-4">
+            <ItemPoster item={movie} />
+          </div>
+          <div className="flex w-full flex-col justify-start gap-2 align-top">
+            <div className="flex flex-col gap-0">
+              <h1 className="line-clamp-2 w-fit text-ellipsis bg-gradient-to-r from-pink-600 to-rose-400 bg-clip-text text-4xl font-bold leading-tight text-transparent dark:from-pink-400 dark:to-rose-400">
+                {movie?.display_name}
+              </h1>
+              {movie?.alternative_name ? (
+                <p className="line-clamp-2 text-ellipsis text-lg font-semibold">
+                  {movie?.alternative_name}
+                </p>
+              ) : null}
+            </div>
+            <div className="flex flex-row items-start justify-start gap-4">
+              <Badge
+                className="bg-pink-500 hover:bg-pink-400 dark:bg-pink-400 dark:hover:bg-pink-500"
+                variant="default"
+              >
+                {movie?.dvd_id}
+              </Badge>
+
+              <Badge
+                className="bg-pink-500 hover:bg-pink-400 dark:bg-pink-400 dark:hover:bg-pink-500"
+                variant="default"
+              >
+                {movie?.release_date ? (
+                  <>
+                    {DateTime.fromISO(movie?.release_date).toLocaleString(
+                      DateTime.DATE_FULL,
+                      {
+                        locale: 'en-US',
+                      },
+                    )}
+                  </>
+                ) : (
+                  <>Unknown Release Date</>
+                )}
+              </Badge>
+              <Badge
+                className="bg-pink-500 hover:bg-pink-400 dark:bg-pink-400 dark:hover:bg-pink-500"
+                variant="default"
+              >
+                {movie?.length ? (
+                  <>{movie?.length} minutes</>
+                ) : (
+                  <>Unknown Duration</>
+                )}
+              </Badge>
+            </div>
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+              {movie?.series?.id ? (
+                <div className="flex flex-col">
+                  <p className="text-lg font-semibold leading-loose text-pink-600 dark:text-pink-400">
+                    Series
+                  </p>
+                  <Link
+                    className="text-pink-500 hover:text-pink-400 hover:underline dark:text-pink-300 dark:hover:text-pink-400"
+                    href={`/series/${movie?.series?.id}`}
+                  >
+                    {movie?.series?.display_name ??
+                      movie?.series?.alternative_name}
+                  </Link>
+                </div>
+              ) : null}
+              {movie?.studio?.id ? (
+                <div className="flex flex-col">
+                  <p className="text-lg font-semibold leading-loose text-pink-600 dark:text-pink-400">
+                    Studio
+                  </p>
+                  <Link
+                    className="text-pink-500 hover:text-pink-400 hover:underline dark:text-pink-300 dark:hover:text-pink-400"
+                    href={`/studio/${movie?.studio.id}`}
+                  >
+                    {movie?.studio.display_name ??
+                      movie?.studio.alternative_name}
+                  </Link>
+                </div>
+              ) : null}
+              {movie?.label?.id ? (
+                <div className="flex flex-col">
+                  <p className="text-lg font-semibold leading-loose text-pink-600 dark:text-pink-400">
+                    Label
+                  </p>
+                  <Link
+                    className="text-pink-500 hover:text-pink-400 hover:underline dark:text-pink-300 dark:hover:text-pink-400"
+                    href={`/label/${movie?.label.id}`}
+                  >
+                    {movie?.label.display_name ?? movie?.label.alternative_name}
+                  </Link>
+                </div>
+              ) : null}
+            </div>
+            {/*
+            <div className="flex w-full flex-col gap-2">
+              <p className="text-lg font-semibold leading-loose text-white">
+                Tags
+              </p>
+              <div className="flex flex-row items-center gap-6">
+                <p className="w-24 pb-1 text-sm font-semibold text-pink-400">
+                  Appearance
+                </p>
+                <div className="flex flex-grow flex-row flex-wrap gap-2">
+                  <Badge>Brown Hair</Badge>
+                  <Badge>Medium Breasts</Badge>
+                  <Badge>Westerner</Badge>
+                </div>
+              </div>
+              <div className="flex flex-row items-center gap-6">
+                <p className="w-24 pb-1 text-sm font-semibold text-pink-400">
+                  Attire
+                </p>
+                <div className="flex flex-grow flex-row flex-wrap gap-2">
+                  <Badge>Bikini</Badge>
+                  <Badge>Kneesocks</Badge>
+                </div>
+              </div>
+              <div className="flex flex-row items-center gap-6">
+                <p className="w-24 pb-1 text-sm font-semibold text-pink-400">
+                  Objects
+                </p>
+                <div className="flex flex-grow flex-row flex-wrap gap-2">
+                  <Badge>Exercise Ball</Badge>
+                </div>
+              </div>
+              <div className="flex flex-row items-center gap-6">
+                <p className="w-24 pb-1 text-sm font-semibold text-pink-400">
+                  Places
+                </p>
+                <div className="flex flex-grow flex-row flex-wrap gap-2">
+                  <Badge>Bedroom</Badge>
+                </div>
+              </div>
+              <div className="flex flex-row items-center gap-6">
+                <p className="w-24 pb-1 text-sm font-semibold text-pink-400">
+                  Actions
+                </p>
+                <div className="flex flex-grow flex-row flex-wrap gap-2">
+                  <Badge>Showering</Badge>
+                </div>
+              </div>
+            </div>
+            */}
+          </div>
+        </div>
+      </div>
+      <div className="container flex flex-col gap-4 p-4">
+        <Tabs defaultValue="cast">
+          <TabsList className="mb-2 p-0">
+            <TabsTrigger asChild value="cast">
+              <Button>
+                <h2 className="text-lg font-semibold">Cast</h2>
+              </Button>
+            </TabsTrigger>
+            {/*
+              <TabsTrigger value="crew" asChild>
+              <Button variant="ghost">
+                <h2 className="text-lg font-semibold text-white">Crew</h2>
+              </Button>
+            </TabsTrigger>
+            */}
+          </TabsList>
+          <TabsContent value="cast">
+            <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {movie?.roles?.map((role) => (
+                <RoleCard key={role.id} role={role} />
+              ))}
+            </div>
+          </TabsContent>
+          {/*
+          <TabsContent value="crew">Lorem ipsum</TabsContent>
+          */}
+        </Tabs>
+      </div>
+    </>
   );
 }

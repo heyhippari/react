@@ -1,23 +1,15 @@
 import HomeSliders from '@/components/home-sliders';
 import HomeStats from '@/components/home-stats';
-import { getCurrentCounts } from '@/queries/homepage';
-import createClient from '@/utils/supabase/server';
-import { cookies } from 'next/headers';
 
 /**
  * The home page.
  * @returns The home page.
  */
-export default async function Home() {
-  const cookieStore = await cookies();
-  const supabase = createClient(cookieStore);
-
-  const { data: currentCounts } = await getCurrentCounts(supabase);
-
+export default function Home() {
   return (
     <>
       <div className="flex h-fit w-full flex-col items-center justify-center bg-pink-100 py-4 dark:bg-pink-800 md:h-80 md:py-0 lg:h-72">
-        <HomeStats counts={currentCounts} />
+        <HomeStats />
       </div>
       <div className="container flex flex-col gap-4 p-4">
         <HomeSliders />

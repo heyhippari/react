@@ -1,24 +1,26 @@
-import { RoleWithPerson } from '@/queries/types';
-import { getProfileUrl } from '@/utils/images';
+import { RoleDto } from '@/data/role.dto';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useMemo } from 'react';
 
 /**
  * Card component to display a role with a person.
- * @param props The props for the component.
- * @param props.role The role with the person to display.
+ * @param properties The properties for the component.
+ * @param properties.role The role with the person to display.
  * @returns The rendered component.
  */
-export default function RoleCard({ role }: Readonly<{ role: RoleWithPerson }>) {
-  const profile = useMemo(() => getProfileUrl(role.person), [role.person]);
+export default function RoleCard({ role }: Readonly<{ role: RoleDto }>) {
+  const profile = useMemo(
+    () => (role.person ? role?.person?.profile_url?.role : null),
+    [role.person],
+  );
 
   return (
     <Link href={`/person/${role.person?.id}`}>
       <div className="flex h-24 flex-row items-center gap-4 rounded-lg bg-pink-100 px-4 py-2 text-pink-700 dark:bg-pink-800 dark:text-pink-300">
         {role.person && profile ? (
           <Image
-            alt={role.person?.name ?? role.person?.original_name}
+            alt={role.person.display_name}
             className="rounded-full object-cover"
             height={64}
             placeholder="empty"
@@ -29,7 +31,7 @@ export default function RoleCard({ role }: Readonly<{ role: RoleWithPerson }>) {
         ) : (
           <div className="relative inline-flex size-16 items-center justify-center overflow-hidden rounded-full bg-pink-200 text-pink-400 dark:bg-pink-300 dark:text-pink-500">
             <span className="text-4xl font-medium">
-              {role.person?.name?.[0] ?? role.person?.original_name?.[0]}
+              {role.person?.display_name?.[0]}
             </span>
           </div>
         )}
@@ -37,10 +39,10 @@ export default function RoleCard({ role }: Readonly<{ role: RoleWithPerson }>) {
         <div className="flex flex-col gap-2">
           <div className="flex flex-col gap-0">
             <h2 className="text-lg font-extrabold text-pink-800 dark:text-pink-200">
-              {role.person?.name ?? role.person?.original_name}
+              {role.person?.display_name}
             </h2>
-            {role.person?.name ? (
-              <p className="text-sm">{role.person.original_name}</p>
+            {role.person?.alternative_name ? (
+              <p className="text-sm">{role.person.alternative_name}</p>
             ) : null}
           </div>
           <p className="text-sm">

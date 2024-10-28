@@ -17,8 +17,8 @@ const chartConfig = {
 
 /**
  * Chart that displays the roles by age.
- * @param props The props for the chart roles by age.
- * @param props.data The data for the chart.
+ * @param properties The properties for the chart roles by age.
+ * @param properties.data The data for the chart.
  * @returns The chart roles by age component.
  */
 export default function ChartRolesByAge({

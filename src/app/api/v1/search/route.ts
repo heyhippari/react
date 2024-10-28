@@ -1,12 +1,43 @@
-import { searchMovieByDvdId } from '@/queries/search-movie-by-dvd-id';
-import { omitNulls } from '@/utils/api';
-import { Tables } from '@/utils/database.types';
-import createClient from '@/utils/supabase/server';
-import { cookies } from 'next/headers';
+import { omitNulls } from "@/core/utils/api";
+import { MovieDto } from "@/data/movie.dto";
+import { movieService } from "@/services/movie.service";
+import { z } from "zod";
 
-type MovieSearchResult = Pick<
-  Tables<'movies'>,
-  'dvd_id' | 'id' | 'name' | 'original_name' | 'release_date'
+export const movieSearchResultResponseSchema = z.object({
+  dvd_id: z.string(),
+  id: z.number(),
+  original_title: z.string(),
+  release_date: z.string().nullable().optional(),
+  title: z.string().nullable().optional(),
+});
+
+export type MovieSearchResultResponse = z.infer<
+  typeof movieSearchResultResponseSchema
+>;
+
+/**
+ * Convert a movie DTO to a movie search result response object.
+ * @param movie An instance of the movie DTO.
+ * @returns The movie search result response object.
+ */
+function toMovieSearchResultResponse(
+  movie: MovieDto,
+): MovieSearchResultResponse {
+  return {
+    dvd_id: movie.dvd_id!,
+    id: movie.id!,
+    original_title: movie.alternative_name ?? movie.display_name,
+    release_date: movie.release_date!,
+    title: movie?.alternative_name ? movie?.display_name : undefined,
+  };
+}
+
+export const movieSearchResultArrayResponseSchema = z.array(
+  movieSearchResultResponseSchema,
+);
+
+export type MovieSearchResultArrayResponse = z.infer<
+  typeof movieSearchResultArrayResponseSchema
 >;
 
 /**
@@ -17,34 +48,23 @@ type MovieSearchResult = Pick<
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
 
-  const query = searchParams.get('q');
+  const query = searchParams.get("q");
   if (!query) {
-    return new Response('Missing search query', { status: 400 });
+    return new Response("Missing search query", { status: 400 });
   }
 
-  const cookieStore = await cookies();
-  const supabase = createClient(cookieStore);
-
-  const { data, error } = await searchMovieByDvdId(supabase, query);
-
-  if (error) {
-    return new Response(error.message, { status: 500 });
-  }
+  const movies = await movieService.searchMovieByDvdId(query);
 
   return new Response(
     JSON.stringify(
-      data.map((movie: MovieSearchResult) => ({
-        dvd_id: movie.dvd_id,
-        id: movie.id,
-        original_title: movie.original_name,
-        release_date: movie.release_date,
-        title: movie.name,
-      })),
+      movieSearchResultArrayResponseSchema.parse(
+        movies?.map((movie) => toMovieSearchResultResponse(movie)) ?? [],
+      ),
       omitNulls,
     ),
     {
       headers: {
-        'content-type': 'application/json',
+        "content-type": "application/json",
       },
     },
   );

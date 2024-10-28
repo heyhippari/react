@@ -1,6 +1,6 @@
 import ThemeToggle from '@/components/theme-toggle';
 import { buttonVariants } from '@/components/ui/button';
-import { cn } from '@/utils/ui';
+import { cn } from '@/core/utils/ui';
 import SIGithub from '~icons/simple-icons/github';
 
 /**

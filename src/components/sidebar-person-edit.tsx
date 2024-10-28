@@ -1,20 +1,21 @@
 'use client';
 
 import { buttonVariants } from '@/components/ui/button';
-import { PersonWithAll } from '@/queries/types';
-import { cn } from '@/utils/ui';
+import { getUrlForItem } from '@/core/types';
+import { cn } from '@/core/utils/ui';
+import { PersonDto } from '@/data/person.dto';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 /**
  * Sidebar for editing a person.
- * @param props The component props.
- * @param props.person The person to edit.
- * @returns The sidebar.
+ * @param properties The properties for the sidebar.
+ * @param properties.person The DTO of the person to edit.
+ * @returns The rendered component.
  */
 export default function SidebarPersonEdit({
   person,
-}: Readonly<{ person: PersonWithAll }>) {
+}: Readonly<{ person: PersonDto }>) {
   const pathname = usePathname();
 
   return (
@@ -27,7 +28,7 @@ export default function SidebarPersonEdit({
             ? 'bg-pink-200 text-pink-900 dark:bg-pink-700 dark:text-pink-300'
             : null,
         )}
-        href={`/movie/${person?.id}/edit`}
+        href={getUrlForItem(person, '/edit')}
       >
         Primary Facts
       </Link>

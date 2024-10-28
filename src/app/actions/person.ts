@@ -1,117 +1,89 @@
-'use server';
-import { getPersonById } from '@/queries/get-person-by-id';
-import { cloudflare } from '@/utils/cloudflare';
-import createClient from '@/utils/supabase/server';
-import { PersonEditFormSchema } from '@/utils/validation/person-update';
-import { revalidatePath } from 'next/cache';
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
+"use server";
+import {
+  fromPersonEditForm,
+  PersonEditFormSchema,
+} from "@/core/utils/validation/person-update";
+import { cloudflareService } from "@/services/cloudflare.service";
+import { personService } from "@/services/person.service";
+import { userService } from "@/services/user.service";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 /**
  * Update a person in the database.
- * @param personId - The ID of the person to update.
  * @param formData - Form data containing the updated person information.
  */
 export async function updatePersonAction(
-  personId: number,
   formData: PersonEditFormSchema,
 ) {
-  const cookieStore = await cookies();
-  const supabase = createClient(cookieStore);
-
-  if (!personId) {
-    throw new Error('No person ID provided');
+  if (!formData.id) {
+    throw new Error("No person ID provided");
   }
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const isLoggedIn = await userService.refreshUser();
 
-  if (!user) {
-    throw new Error('User not authenticated');
+  if (!isLoggedIn) {
+    throw new Error("User not authenticated");
   }
 
-  const { data: person, error } = await getPersonById(supabase, personId);
+  const person = await personService.getPerson(formData.id);
 
-  if (error || !person) {
-    throw new Error('Error fetching person', { cause: error });
+  if (!person) {
+    throw new Error("Person not found");
   }
 
-  const { error: updateError } = await supabase
-    .from('persons')
-    .update({
-      ...formData,
-    })
-    .eq('id', personId);
-
-  if (updateError) {
-    throw new Error('Error updating movie', {
-      cause: updateError,
-    });
-  }
+  await personService.updatePerson(
+    fromPersonEditForm(formData),
+  );
 
   // Revalidate the homepage in case the movie updated was on the homepage
-  revalidatePath('/', 'page');
-  redirect(`/person/${personId}`);
+  revalidatePath("/", "page");
+  redirect(`/person/${person.id}`);
 }
 
 /**
  * Delete a person from the database.
- * @param id - The ID of the person to delete.
+ * @param previousState - Unused.
+ * @param formData - Form data containing the person ID.
  */
-export async function deletePersonAction(id: number | undefined) {
-  const cookieStore = await cookies();
-  const supabase = createClient(cookieStore);
+export async function deletePersonAction(
+  previousState: null | void,
+  formData: FormData,
+) {
+  const id = Number(formData.get("item_id"));
 
   if (!id) {
-    throw new Error('No person ID provided');
+    throw new Error("No person ID provided");
   }
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const isLoggedIn = await userService.refreshUser();
 
-  if (!user) {
-    throw new Error('User not authenticated');
+  if (!isLoggedIn) {
+    throw new Error("User not authenticated");
   }
 
-  const { data: person, error } = await getPersonById(supabase, id);
+  const person = await personService.getPerson(id);
 
-  if (error || !person) {
-    throw new Error('Error fetching person', { cause: error });
+  if (!person) {
+    throw new Error("Person not found");
   }
 
   try {
     await Promise.all(
-      person.person_images.map(async ({ image }) => {
+      person.person_images?.map(async ({ image }) => {
         if (image) {
-          await cloudflare.images.v1
-            .delete(image.uuid, {
-              account_id: process.env.CLOUDFLARE_ACCOUNT_ID ?? '',
-            })
-            .catch(() => {
-              // Ignore errors deleting images
-            });
+          await cloudflareService.deleteImage(image.uuid!);
         }
-      }),
+      }) ?? [],
     );
   } catch {
     // Ignore errors deleting images
   }
 
   // Delete the movie from the database
-  const { error: deleteError } = await supabase
-    .from('persons')
-    .delete()
-    .match({ id });
-
-  if (deleteError) {
-    throw new Error('Error deleting person', {
-      cause: deleteError,
-    });
-  }
+  await personService.deletePerson(id);
 
   // Revalidate the homepage in case the movie deleted was on the homepage
-  revalidatePath('/', 'page');
-  redirect('/');
+  revalidatePath("/", "page");
+  redirect("/");
 }

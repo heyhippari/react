@@ -1,18 +1,14 @@
 "use server";
-import createClient from "@/utils/supabase/server";
+import { userService } from "@/services/user.service";
 import { Provider } from "@supabase/supabase-js";
 import { revalidatePath } from "next/cache";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 /**
  * Logs out the current user.
  */
 export async function logoutAction() {
-  const cookieStore = await cookies();
-  const supabase = createClient(cookieStore);
-
-  await supabase.auth.signOut();
+  await userService.logout();
 
   revalidatePath("/", "layout");
   redirect("/");
@@ -27,34 +23,24 @@ export async function loginAction(
   currentState: null | void,
   formData: FormData,
 ) {
-  const cookieStore = await cookies();
-  const supabase = createClient(cookieStore);
-
-  const defaultUrl = process.env.VERCEL_URL
-    ? `https://kanojodb.com`
-    : "http://localhost:3000";
-
   const provider = formData.get("provider") as Provider;
 
   // For safety, we only allow supported providers.
   if (!["discord"].includes(provider)) {
+    console.error(`Unsupported provider: ${provider}`);
     redirect("/error");
   }
 
-  const { data, error } = await supabase.auth.signInWithOAuth({
-    options: {
-      redirectTo: `${defaultUrl}/auth/callback`,
-    },
-    provider: provider,
-  });
+  try {
+    const data = await userService.loginWithProvider(provider);
 
-  if (error) {
+    revalidatePath("/", "layout");
+    if (data.url) {
+      revalidatePath(data.url, "layout");
+      redirect(data.url);
+    }
+  } catch (error) {
+    console.error(error);
     redirect("/error");
-  }
-
-  revalidatePath("/", "layout");
-  if (data.url) {
-    revalidatePath(data.url, "layout");
-    redirect(data.url);
   }
 }

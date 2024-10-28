@@ -1,25 +1,25 @@
-import type { NextConfig } from 'next';
+import type { NextConfig } from "next";
 
-import { withSentryConfig } from '@sentry/nextjs';
-import Icons from 'unplugin-icons/webpack';
+import { withSentryConfig } from "@sentry/nextjs";
+import Icons from "unplugin-icons/webpack";
 
 const nextConfig: NextConfig = {
   compress: true,
   images: {
-    loader: 'custom',
-    loaderFile: './src/utils/image-loader.ts',
+    loader: "custom",
+    loaderFile: "./src/core/utils/image-loader.ts",
   },
   reactStrictMode: true,
   webpack: (config) => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access -- There seems to be a bug in the types
     config.plugins.push(
       Icons({
-        compiler: 'jsx',
-        jsx: 'react',
+        compiler: "jsx",
+        jsx: "react",
       }),
     );
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return -- There seems to be a bug in the types
     return config;
   },
 };
@@ -44,9 +44,9 @@ withSentryConfig(nextConfig, {
   // For all available options, see:
   // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
 
-  org: 'kanojo',
+  org: "kanojo",
 
-  project: 'frontend',
+  project: "frontend",
 
   // Only print logs for uploading source maps in CI
   silent: !process.env.CI,
@@ -55,7 +55,7 @@ withSentryConfig(nextConfig, {
   // This can increase your server load as well as your hosting bill.
   // Note: Check that the configured route will not match with your Next.js middleware, otherwise reporting of client-
   // side errors will fail.
-  tunnelRoute: '/monitoring',
+  tunnelRoute: "/monitoring",
 
   // Upload a larger set of source maps for prettier stack traces (increases build time)
   widenClientFileUpload: true,

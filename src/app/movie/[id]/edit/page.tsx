@@ -1,20 +1,13 @@
-import MovieEdit from '@/app/movie/[id]/edit/edit';
-import { getMovieById } from '@/queries/get-movie-by-id';
-import createClient from '@/utils/supabase/server';
-import { prefetchQuery } from '@supabase-cache-helpers/postgrest-react-query';
-import {
-  dehydrate,
-  HydrationBoundary,
-  QueryClient,
-} from '@tanstack/react-query';
-import { cookies } from 'next/headers';
+import { FormMovieEdit } from '@/components/form-movie-edit';
+import { movieService } from '@/services/movie.service';
+import { userService } from '@/services/user.service';
 import { redirect } from 'next/navigation';
 
 /**
  * Server-side code for the movie edit page.
- * @param props The props for the movie edit page.
- * @param props.params The URL parameters, containing the movie ID.
- * @returns The movie edit page.
+ * @param properties The properties for the movie edit page.
+ * @param properties.params The URL parameters, containing the movie ID.
+ * @returns The rendered component.
  */
 export default async function MovieEditPage({
   params,
@@ -23,13 +16,9 @@ export default async function MovieEditPage({
 }>) {
   const { id } = await params;
 
-  const queryClient = new QueryClient();
-  const cookieStore = await cookies();
-  const supabase = createClient(cookieStore);
-
   // If we are not logged in, redirect to login
-  const { data, error } = await supabase.auth.getUser();
-  if (error || !data?.user) {
+  const isLoggedIn = await userService.refreshUser();
+  if (!isLoggedIn) {
     redirect('/login');
   }
 
@@ -38,11 +27,7 @@ export default async function MovieEditPage({
     return redirect('/404');
   }
 
-  await prefetchQuery(queryClient, getMovieById(supabase, id));
+  const movie = await movieService.getMovie(Number(id));
 
-  return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <MovieEdit id={id} />
-    </HydrationBoundary>
-  );
+  return <FormMovieEdit movie={movie} />;
 }

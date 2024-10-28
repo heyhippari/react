@@ -1,34 +1,28 @@
-import Person from '@/app/person/[id]/person';
-import { getPersonById, getPersonRolesCount } from '@/queries/get-person-by-id';
-import createClient from '@/utils/supabase/server';
-import { prefetchQuery } from '@supabase-cache-helpers/postgrest-react-query';
-import {
-  dehydrate,
-  HydrationBoundary,
-  QueryClient,
-} from '@tanstack/react-query';
-import { cookies } from 'next/headers';
+import ItemCard from '@/components/item-card';
+import ItemNavbar from '@/components/item-navbar';
+import ItemPoster from '@/components/item-poster';
+import { Badge } from '@/components/ui/badge';
+import { personService } from '@/services/person.service';
+import { DateTime } from 'luxon';
 import { redirect } from 'next/navigation';
 
 /**
  * Server-side code for the person page.
- * @param props The props for the person page.
- * @param props.params The URL parameters, containing the person ID.
+ * @param properties The properties for the person page.
+ * @param properties.params The URL parameters, containing the person ID.
  * @returns The person page.
  */
-export async function generateMetadata(props: {
+export async function generateMetadata(properties: {
   params: Promise<{ id: string }>;
 }) {
-  const { id } = await props.params;
-  const cookieStore = await cookies();
-  const supabase = createClient(cookieStore);
+  const { id } = await properties.params;
 
   try {
-    const { data: person } = await getPersonById(supabase, id);
+    const person = await personService.getPerson(Number(id));
 
     return {
-      description: `Information about ${person?.name ?? person?.original_name} from Kanojo.`,
-      title: person?.name ?? person?.original_name,
+      description: `Information about ${person.display_name} from Kanojo.`,
+      title: person.display_name,
     };
   } catch {
     return {
@@ -40,29 +34,103 @@ export async function generateMetadata(props: {
 
 /**
  * Server-side code for the person page.
- * @param props The props for the person page.
- * @param props.params The URL parameters, containing the person ID.
- * @returns The person page.
+ * @param properties The properties for the person page.
+ * @param properties.params The URL parameters, containing the person ID.
+ * @returns The rendered person page.
  */
-export default async function PersonPage(props: {
+export default async function PersonPage({
+  params,
+}: {
   params: Promise<{ id: string }>;
 }) {
-  const { id } = await props.params;
-  const queryClient = new QueryClient();
-  const cookieStore = await cookies();
-  const supabase = createClient(cookieStore);
+  const { id } = await params;
+  const person = await personService.getPerson(Number(id));
+  const movie_count = await personService.getPersonMoviesCount(Number(id));
 
-  // If the id contains anything other than numbers, redirect to 404
-  if (!/^\d+$/.test(id)) {
+  // On initial load, register the visit
+  /*useEffect(() => {
+    const registerView = async () => {
+      if (person) {
+        try {
+          await registerViewAction(person.id, 'person');
+        } catch {
+          // Just ignore the error, we don't want to block the page load
+        }
+      }
+    };
+
+    void registerView();
+  }, [person]);*/
+
+  if (!person) {
     return redirect('/404');
   }
 
-  await prefetchQuery(queryClient, getPersonById(supabase, id));
-  await prefetchQuery(queryClient, getPersonRolesCount(supabase, id));
-
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <Person id={id} />
-    </HydrationBoundary>
+    <>
+      <ItemNavbar item={person} />
+      <div className="container flex grow flex-col gap-2 px-4 lg:flex-row">
+        <div className="grow bg-pink-100 p-4 dark:bg-pink-950">
+          <div className="container flex flex-col gap-6 px-4">
+            <ItemPoster item={person} />
+            <div className="flex w-full flex-col justify-start gap-4 align-top">
+              <div className="flex flex-col gap-0">
+                <h1 className="line-clamp-2 w-fit text-ellipsis bg-gradient-to-r from-pink-600 to-rose-400 bg-clip-text text-4xl font-bold leading-tight text-transparent dark:from-pink-400 dark:to-rose-400">
+                  {person?.display_name}
+                </h1>
+                {person?.alternative_name ? (
+                  <p className="line-clamp-2 text-ellipsis text-lg font-semibold">
+                    {person?.alternative_name}
+                  </p>
+                ) : null}
+              </div>
+              <div className="flex flex-row">
+                <Badge
+                  className="bg-pink-500 hover:bg-pink-400 dark:bg-pink-400 dark:hover:bg-pink-500"
+                  variant="default"
+                >
+                  {person?.birth_date
+                    ? DateTime.fromISO(person.birth_date).toLocaleString(
+                        DateTime.DATE_FULL,
+                        {
+                          locale: 'en-US',
+                        },
+                      )
+                    : null}
+                </Badge>
+              </div>
+              {/*{person?.aliases.length > 0 ? (
+                <div className="flex flex-col gap-2">
+                  <h2 className="text-lg font-semibold">Aliases</h2>
+                  {person?.aliases.map((alias) => (
+                    <p key={alias.original_name}>
+                      {alias.name
+                        ? `${alias.name} (${alias.original_name})`
+                        : alias.original_name}
+                    </p>
+                  ))}
+                </div>
+              ) : null}*/}
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-col gap-4 p-4">
+          <div className="flex flex-row gap-2">
+            <h2 className="text-lg font-semibold">Movies</h2>
+            <Badge
+              className="bg-pink-500 hover:bg-pink-400 dark:bg-pink-400 dark:hover:bg-pink-500"
+              variant="default"
+            >
+              {movie_count}
+            </Badge>
+          </div>
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+            {person?.roles?.map((role) =>
+              role.movie ? <ItemCard item={role.movie} key={role.id} /> : null,
+            )}
+          </div>
+        </div>
+      </div>
+    </>
   );
 }

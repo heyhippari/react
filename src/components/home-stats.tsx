@@ -1,21 +1,12 @@
+import { viewsService } from '@/services/views.service';
+
 /**
  * Block of statistics for the home page hero.
- * @param props The props for the home stats component.
- * @param props.counts The counts for the statistics.
  * @returns The home stats component.
  */
-export default function HomeStats({
-  counts,
-}: Readonly<{
-  counts: {
-    label_count: null | number;
-    movie_count: null | number;
-    person_count: null | number;
-    series_count: null | number;
-    studio_count: null | number;
-    tag_count: null | number;
-  } | null;
-}>) {
+export default async function HomeStats() {
+  const counts = await viewsService.getCurrentCounts();
+
   return (
     <div className="container flex flex-row items-center justify-center gap-8 px-4 text-center">
       <div className="grid grid-cols-1 gap-8 overflow-hidden md:grid-cols-2 lg:grid-cols-3">

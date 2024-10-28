@@ -11,21 +11,22 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { RoleWithPerson } from '@/queries/types';
+import { MovieDto } from '@/data/movie.dto';
+import { RoleDto } from '@/data/role.dto';
 import IconTrash from '~icons/mdi/trash-can-outline.jsx';
 import { useActionState, useState } from 'react';
 
 /**
  * Button to delete a role.
- * @param props - The component props.
- * @param props.movie_id - The ID of the movie.
- * @param props.role - The role to delete.
+ * @param properties - The component properties.
+ * @param properties.movie - The movie to delete the role from.
+ * @param properties.role - The role to delete.
  * @returns The rendered component.
  */
 export default function ButtonDeleteRole({
-  movie_id,
+  movie,
   role,
-}: Readonly<{ movie_id: string; role: RoleWithPerson }>) {
+}: Readonly<{ movie: MovieDto; role: RoleDto }>) {
   const [isOpen, setIsOpen] = useState(false);
 
   const [, deleteAction, isDeletePending] = useActionState(
@@ -42,9 +43,7 @@ export default function ButtonDeleteRole({
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>
-            Delete {role?.person?.name ?? role?.person?.original_name}'s role?
-          </DialogTitle>
+          <DialogTitle>Delete {role?.person?.display_name}'s role?</DialogTitle>
           <DialogDescription>
             You won't be able to recover this role after deletion. The actor and
             their performance details will be removed from the movie's cast
@@ -56,8 +55,8 @@ export default function ButtonDeleteRole({
             <Button variant="outline">Cancel</Button>
           </DialogClose>
           <form action={deleteAction}>
-            <input name="movie_id" type="hidden" value={movie_id} />
-            <input name="role_id" type="hidden" value={role?.id} />
+            <input name="movie_id" type="hidden" value={movie.id} />
+            <input name="role_id" type="hidden" value={role?.id ?? undefined} />
             <Button
               className="bg-red-500"
               loading={isDeletePending}

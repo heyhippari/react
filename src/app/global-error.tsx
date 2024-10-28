@@ -5,10 +5,10 @@ import Error from 'next/error';
 import { useEffect } from 'react';
 
 /**
- * A component that is rendered when an unexpected error occurs.
- * @param error The error that occurred.
- * @param error.error The error that occurred.
- * @returns The component to render.dc
+ * A component rendered when an unexpected error occurs.
+ * @param properties The component properties.
+ * @param properties.error The error that occurred.
+ * @returns An error page.
  */
 export default function GlobalError({
   error,

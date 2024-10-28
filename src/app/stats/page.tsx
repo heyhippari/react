@@ -1,26 +1,17 @@
 import ChartRolesByAge from '@/components/chart-roles-by-age';
-import { getRolesByAge } from '@/queries/stats';
-import createClient from '@/utils/supabase/server';
-import { cookies } from 'next/headers';
+import { viewsService } from '@/services/views.service';
 
 /**
  * Statistics page.
  * @returns The page content.
  */
 export default async function StatsPage() {
-  const cookieStore = await cookies();
-  const supabase = createClient(cookieStore);
-
-  const { data: rolesByAge } = await getRolesByAge(supabase);
-
-  if (!rolesByAge) {
-    return null;
-  }
+  const rolesByAge = await viewsService.getRolesByAge();
 
   return (
     <div className="container flex flex-col gap-4 p-4">
       <h1>Stats</h1>
-      <ChartRolesByAge data={rolesByAge} />
+      {rolesByAge ? <ChartRolesByAge data={rolesByAge} /> : null}
     </div>
   );
 }

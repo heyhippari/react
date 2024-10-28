@@ -1,6 +1,6 @@
 /**
- * Auth Error Page
- * @returns JSX.Element
+ * Authentication error page component.
+ * @returns An authentication error page.
  */
 export default function AuthError() {
   return (

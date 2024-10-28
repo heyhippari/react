@@ -1,8 +1,8 @@
 import LoginButton from '@/components/login-button';
 
 /**
- * The login page
- * @returns The login page
+ * The login page component.
+ * @returns The rendered login page.
  */
 export default function Login() {
   return (

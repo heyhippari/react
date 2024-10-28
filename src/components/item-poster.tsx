@@ -1,12 +1,8 @@
 'use client';
-import { MovieWithImages, PersonWithImage } from '@/queries/types';
-import {
-  getFrontCoverUrl,
-  getFullCoverUrl,
-  getProfileUrl,
-} from '@/utils/images';
-import { isMovie, isPerson } from '@/utils/types';
-import { cn } from '@/utils/ui';
+import { isMovie, isPerson } from '@/core/types';
+import { cn } from '@/core/utils/ui';
+import { MovieDto } from '@/data/movie.dto';
+import { PersonDto } from '@/data/person.dto';
 import Image from 'next/image';
 import { useMemo, useState } from 'react';
 import { Lightbox } from 'yet-another-react-lightbox';
@@ -14,32 +10,32 @@ import 'yet-another-react-lightbox/styles.css';
 
 /**
  * Poster for a movie or person.
- * @param props - The component props.
- * @param props.item - The item to display the poster for, either a movie or a person.
- * @param props.small - Whether to display a small poster.
+ * @param properties - The component properties.
+ * @param properties.item - The item to display the poster for, either a movie or a person.
+ * @param properties.small - Whether to display a small poster.
  * @returns The rendered component.
  */
 export default function ItemPoster({
   item,
   small = false,
 }: Readonly<{
-  item: MovieWithImages | PersonWithImage;
+  item: MovieDto | PersonDto;
   small?: boolean;
 }>) {
   const [open, setOpen] = useState(false);
 
-  const image = useMemo(() => {
+  const thumbImageUrl = useMemo(() => {
     if (isMovie(item)) {
-      return getFrontCoverUrl(item, 'poster');
+      return item?.front_cover_url?.poster;
     } else if (isPerson(item)) {
-      return getProfileUrl(item, 'poster');
+      return item?.profile_url?.poster;
     }
 
     return null;
   }, [item]);
-  const fullImage = useMemo(() => {
+  const fullImageUrl = useMemo(() => {
     if (isMovie(item)) {
-      return getFullCoverUrl(item);
+      return item?.full_cover_url?.public;
     }
 
     return null;
@@ -53,15 +49,15 @@ export default function ItemPoster({
           small ? 'w-[50px]' : 'w-[150px] lg:w-[250px]',
         )}
       >
-        {item && image ? (
+        {item && thumbImageUrl ? (
           <Image
-            alt={item?.name ?? item?.original_name}
+            alt={item?.display_name}
             className="aspect-[2/3] object-cover"
             height={375}
-            onClick={() => (fullImage && !small ? setOpen(true) : null)}
+            onClick={() => (fullImageUrl && !small ? setOpen(true) : null)}
             priority
             sizes="(max-width: 1024px) 150w, 250w"
-            src={image}
+            src={thumbImageUrl}
             unoptimized
             width={250}
           />
@@ -79,7 +75,7 @@ export default function ItemPoster({
         )}
       </div>
 
-      {fullImage && !small ? (
+      {fullImageUrl && !small ? (
         <Lightbox
           carousel={{ finite: true }}
           close={() => setOpen(false)}
@@ -90,7 +86,7 @@ export default function ItemPoster({
           }}
           slides={[
             {
-              src: fullImage,
+              src: fullImageUrl,
             },
           ]}
         />

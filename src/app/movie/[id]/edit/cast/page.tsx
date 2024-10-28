@@ -1,19 +1,21 @@
-import MovieCast from '@/app/movie/[id]/edit/cast/cast';
-import { getMovieById } from '@/queries/get-movie-by-id';
-import createClient from '@/utils/supabase/server';
-import { prefetchQuery } from '@supabase-cache-helpers/postgrest-react-query';
+import ButtonDeleteRole from '@/components/button-delete-role';
+import { FormCastEdit } from '@/components/form-cast-edit';
 import {
-  dehydrate,
-  HydrationBoundary,
-  QueryClient,
-} from '@tanstack/react-query';
-import { cookies } from 'next/headers';
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { movieService } from '@/services/movie.service';
+import { userService } from '@/services/user.service';
 import { redirect } from 'next/navigation';
 
 /**
  * Server-side rendered page to edit the cast of a movie.
- * @param props - The component props.
- * @param props.params - The URL parameters.
+ * @param properties - The component properties.
+ * @param properties.params - The URL parameters.
  * @returns The rendered component.
  */
 export default async function MovieCastEditPage({
@@ -22,15 +24,11 @@ export default async function MovieCastEditPage({
   params: Promise<{ id: string }>;
 }>) {
   const { id } = await params;
-
-  const queryClient = new QueryClient();
-  const cookieStore = await cookies();
-  const supabase = createClient(cookieStore);
-
   // If we are not logged in, redirect to login
-  const { data, error } = await supabase.auth.getUser();
-  if (error || !data?.user) {
-    redirect('/login');
+  const isLoggedIn = await userService.refreshUser();
+
+  if (!isLoggedIn) {
+    return redirect('/login');
   }
 
   // If the id contains anything other than numbers, redirect to 404
@@ -38,11 +36,29 @@ export default async function MovieCastEditPage({
     return redirect('/404');
   }
 
-  await prefetchQuery(queryClient, getMovieById(supabase, id));
+  const movie = await movieService.getMovie(Number(id));
 
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <MovieCast id={id} />
-    </HydrationBoundary>
+    <div className="flex flex-col items-start justify-start space-y-2">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Model</TableHead>
+            <TableHead className="w-32">Actions</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {movie?.roles?.map((role) => (
+            <TableRow key={role?.id}>
+              <TableCell>{role?.person?.display_name}</TableCell>
+              <TableCell className="space-x-2">
+                <ButtonDeleteRole movie={movie} role={role} />
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+      <FormCastEdit movie={movie} />
+    </div>
   );
 }
