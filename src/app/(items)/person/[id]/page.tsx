@@ -1,8 +1,8 @@
 import CardGrid from '@/components/card-grid';
-import ItemCard from '@/components/item-card';
 import ItemNavbar from '@/components/item-navbar';
 import ItemPoster from '@/components/item-poster';
 import { Badge } from '@/components/ui/badge';
+import { VisitTracker } from '@/components/visit-tracker';
 import { personService } from '@/services/person.service';
 import { DateTime } from 'luxon';
 import { redirect } from 'next/navigation';
@@ -69,6 +69,7 @@ export default async function PersonPage({
 
   return (
     <>
+      <VisitTracker differenciator="person" item={person} />
       <ItemNavbar item={person} />
       <div className="container flex grow flex-col gap-2 px-0 lg:flex-row">
         <div className="grow bg-pink-100 p-4 dark:bg-pink-950">

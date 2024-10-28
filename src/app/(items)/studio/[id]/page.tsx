@@ -1,6 +1,6 @@
 import CardGrid from '@/components/card-grid';
-import ItenCard from '@/components/item-card';
 import { Badge } from '@/components/ui/badge';
+import { VisitTracker } from '@/components/visit-tracker';
 import { studioService } from '@/services/studio.service';
 import { redirect } from 'next/navigation';
 
@@ -55,6 +55,7 @@ export default async function StudioPage({
 
   return (
     <>
+      <VisitTracker differenciator="studio" item={studio} />
       <div className="w-full bg-pink-100 p-4 dark:bg-pink-800">
         <div className="container flex flex-col gap-6 px-4 md:flex-row">
           <div className="flex w-full flex-col justify-start gap-2 align-top">

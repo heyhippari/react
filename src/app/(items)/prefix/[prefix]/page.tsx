@@ -1,5 +1,4 @@
 import CardGrid from '@/components/card-grid';
-import ItemCard from '@/components/item-card';
 import { movieService } from '@/services/movie.service';
 
 /**

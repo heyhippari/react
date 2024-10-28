@@ -18,6 +18,8 @@ export async function registerViewAction(
   // If this is a development environment, we don't want to register views
   // since it will mess up production data.
   if (process.env.NODE_ENV === "development") {
+    console.log("Fake view registered for", itemType, itemId);
+
     return true;
   }
 

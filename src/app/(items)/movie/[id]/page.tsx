@@ -4,6 +4,7 @@ import RoleCard from '@/components/role-card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { VisitTracker } from '@/components/visit-tracker';
 import { movieService } from '@/services/movie.service';
 import { DateTime } from 'luxon';
 import Link from 'next/link';
@@ -23,24 +24,9 @@ export default async function MoviePage({
 
   const movie = await movieService.getMovie(Number(id));
 
-  // On initial load, register the visit
-  // TODO: Move this to a client-side effect
-  /*useEffect(() => {
-    const registerView = async () => {
-      if (movie) {
-        try {
-          await registerViewAction(movie.id, 'movie');
-        } catch {
-          // Just ignore the error, we don't want to block the page load
-        }
-      }
-    };
-
-    void registerView();
-  }, [movie]);*/
-
   return (
     <>
+      <VisitTracker differenciator="movie" item={movie} />
       <ItemNavbar item={movie} />
       <div className="w-full bg-pink-100 p-4 dark:bg-pink-800">
         <div className="container flex flex-col gap-6 px-4 md:flex-row">
