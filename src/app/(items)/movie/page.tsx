@@ -48,7 +48,7 @@ export default async function MoviePage({
       {(pageCount ?? 0 > 0) ? (
         <>
           <PaginationLinks page={Number(page)} pageCount={pageCount} />
-          <CardGrid items={movies} />
+          <CardGrid items={movies} sidebar />
           <PaginationLinks page={Number(page)} pageCount={pageCount} />
         </>
       ) : (

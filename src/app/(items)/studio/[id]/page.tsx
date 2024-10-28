@@ -1,3 +1,4 @@
+import CardGrid from '@/components/card-grid';
 import ItenCard from '@/components/item-card';
 import { Badge } from '@/components/ui/badge';
 import { studioService } from '@/services/studio.service';
@@ -80,11 +81,7 @@ export default async function StudioPage({
             {moviesCount}
           </Badge>
         </div>
-        <div className="grid grid-cols-3 gap-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-          {studio?.movies?.map((movie) => (
-            <ItenCard item={movie} key={movie.id} />
-          ))}
-        </div>
+        <CardGrid items={studio?.movies} />
       </div>
     </>
   );

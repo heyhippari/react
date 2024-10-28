@@ -1,3 +1,4 @@
+import CardGrid from '@/components/card-grid';
 import ItemCard from '@/components/item-card';
 import { Badge } from '@/components/ui/badge';
 import { labelService } from '@/services/label.service';
@@ -71,11 +72,7 @@ export default async function LabelPage(properties: {
           <h2 className="text-lg font-semibold">Movies</h2>
           <Badge variant="default">{moviesCount}</Badge>
         </div>
-        <div className="grid grid-cols-3 gap-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-          {label?.movies?.map((movie) => (
-            <ItemCard item={movie} key={movie?.id} />
-          ))}
-        </div>
+        <CardGrid items={label?.movies} />
       </div>
     </>
   );

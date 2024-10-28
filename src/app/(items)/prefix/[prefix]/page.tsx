@@ -1,3 +1,4 @@
+import CardGrid from '@/components/card-grid';
 import ItemCard from '@/components/item-card';
 import { movieService } from '@/services/movie.service';
 
@@ -31,9 +32,7 @@ export default async function PrefixPage(properties: {
         <div className="flex flex-row gap-2">
           <h2 className="text-lg font-semibold">Movies</h2>
         </div>
-        <div className="grid grid-cols-3 gap-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-          {movies?.map((movie) => <ItemCard item={movie} key={movie.id} />)}
-        </div>
+        <CardGrid items={movies} />
       </div>
     </>
   );

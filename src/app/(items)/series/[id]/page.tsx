@@ -1,3 +1,4 @@
+import CardGrid from '@/components/card-grid';
 import ItemCard from '@/components/item-card';
 import { Badge } from '@/components/ui/badge';
 import { seriesService } from '@/services/series.service';
@@ -80,11 +81,7 @@ export default async function SeriesPage({
             {moviesCount}
           </Badge>
         </div>
-        <div className="grid grid-cols-3 gap-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-          {series?.movies?.map((movie) => (
-            <ItemCard item={movie} key={movie.id} />
-          ))}
-        </div>
+        <CardGrid items={series?.movies} />
       </div>
     </>
   );

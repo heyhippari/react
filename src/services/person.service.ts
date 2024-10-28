@@ -14,7 +14,7 @@ export const personService = {
   async deletePerson(person_id: number) {
     await deletePerson(person_id);
   },
-  async getPerson(person_id: number): Promise<PersonDto> {
+  async getPerson(person_id: number) {
     const person = await getPersonById(person_id);
 
     return toPersonDto(person);

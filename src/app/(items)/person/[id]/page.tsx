@@ -1,3 +1,4 @@
+import CardGrid from '@/components/card-grid';
 import ItemCard from '@/components/item-card';
 import ItemNavbar from '@/components/item-navbar';
 import ItemPoster from '@/components/item-poster';
@@ -69,7 +70,7 @@ export default async function PersonPage({
   return (
     <>
       <ItemNavbar item={person} />
-      <div className="container flex grow flex-col gap-2 px-4 lg:flex-row">
+      <div className="container flex grow flex-col gap-2 px-0 lg:flex-row">
         <div className="grow bg-pink-100 p-4 dark:bg-pink-950">
           <div className="container flex flex-col gap-6 px-4">
             <ItemPoster item={person} />
@@ -124,11 +125,14 @@ export default async function PersonPage({
               {movie_count}
             </Badge>
           </div>
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-            {person?.roles?.map((role) =>
-              role.movie ? <ItemCard item={role.movie} key={role.id} /> : null,
-            )}
-          </div>
+          <CardGrid
+            items={
+              person?.roles
+                ?.map((role) => role.movie)
+                .filter((movie) => !!movie) ?? []
+            }
+            sidebar
+          />
         </div>
       </div>
     </>
