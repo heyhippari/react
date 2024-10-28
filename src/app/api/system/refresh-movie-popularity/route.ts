@@ -17,7 +17,7 @@ export const runtime = "edge";
 export async function GET() {
   console.log("Refreshing movie popularity");
 
-  const supabase = await createSupabaseClient();
+  const supabase = await createSupabaseClient(true);
 
   const { count, error } = await supabase.from("movies").select("id", {
     count: "exact",

@@ -1081,6 +1081,10 @@ export type Database = {
         }
         Returns: number
       }
+      refresh_materialized_views: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
       series_movies_count: {
         Args: {
           "": unknown
