@@ -116,7 +116,7 @@ export default function ItemNavbar({ item }: Readonly<{ item: MovieDto }>) {
     <nav className="start-0 top-0 z-10 w-full border-b bg-pink-300 p-2 dark:border-pink-700 dark:bg-pink-700">
       <div className="container mx-auto flex items-center gap-2 overflow-x-scroll px-4 md:justify-center md:overflow-auto">
         <HoverCard closeDelay={0} openDelay={0}>
-          <HoverCardTrigger>
+          <HoverCardTrigger asChild>
             <Button variant={'ghost'}>Overview</Button>
           </HoverCardTrigger>
           <HoverCardContent align="center" className="w-44 p-2">
@@ -150,7 +150,7 @@ export default function ItemNavbar({ item }: Readonly<{ item: MovieDto }>) {
 
         {imageLinks ? (
           <HoverCard closeDelay={0} openDelay={0}>
-            <HoverCardTrigger>
+            <HoverCardTrigger asChild>
               <Button variant={'ghost'}>Media</Button>
             </HoverCardTrigger>
             <HoverCardContent align="center" className="w-44 p-2">
@@ -160,7 +160,7 @@ export default function ItemNavbar({ item }: Readonly<{ item: MovieDto }>) {
         ) : null}
 
         <HoverCard closeDelay={0} openDelay={0}>
-          <HoverCardTrigger>
+          <HoverCardTrigger asChild>
             <Button variant={'ghost'}>Community</Button>
           </HoverCardTrigger>
           <HoverCardContent align="center" className="w-44 p-2">
@@ -188,7 +188,7 @@ export default function ItemNavbar({ item }: Readonly<{ item: MovieDto }>) {
 
         {['admin', 'moderator'].includes(userRole ?? '') ? (
           <HoverCard closeDelay={0} openDelay={0}>
-            <HoverCardTrigger>
+            <HoverCardTrigger asChild>
               <Button className="text-red-500" variant={'ghost'}>
                 Manage
               </Button>
