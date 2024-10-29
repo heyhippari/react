@@ -7,7 +7,6 @@ import {
   deleteImage,
   uploadImage,
 } from "@/infrastructure/services/cloudflare/repositories/image.repository";
-import "server-only";
 
 export const cloudflareService = {
   async deleteImage(imageId: string) {

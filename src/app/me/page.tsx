@@ -8,7 +8,7 @@ import { redirect } from 'next/navigation';
 export default async function Me() {
   const user = await userService.getCurrentUser();
   if (!user) {
-    redirect('/login');
+    return redirect('/login');
   }
 
   return <p>{JSON.stringify(user)}</p>;

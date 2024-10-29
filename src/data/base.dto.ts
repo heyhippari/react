@@ -84,7 +84,7 @@ export const baseMovieDtoSchema = z.object({
   alternative_name: z.string().nullable().optional(),
   barcode: z.string().nullable().optional(),
   display_name: z.string(),
-  dvd_id: z.string(),
+  dvd_id: z.string().optional(),
   format: z.enum([
     "DVD",
     "Blu-ray",

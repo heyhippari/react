@@ -74,7 +74,7 @@ export default async function LabelPage(properties: {
           <h2 className="text-lg font-semibold">Movies</h2>
           <Badge variant="default">{moviesCount}</Badge>
         </div>
-        <ItemGrid items={label?.movies}>
+        <ItemGrid items={label?.movies ?? []}>
           {(movie, index) => (
             <ItemCard item={movie} key={movie.id} priority={index < 10} />
           )}

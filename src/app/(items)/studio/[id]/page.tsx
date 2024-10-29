@@ -83,7 +83,7 @@ export default async function StudioPage({
             {moviesCount}
           </Badge>
         </div>
-        <ItemGrid items={studio?.movies}>
+        <ItemGrid items={studio?.movies ?? []}>
           {(movie, index) => (
             <ItemCard item={movie} key={movie.id} priority={index < 12} />
           )}

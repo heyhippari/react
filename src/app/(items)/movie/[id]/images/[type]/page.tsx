@@ -21,14 +21,10 @@ export default async function Image({
   const { id, type } = await params;
 
   if (!['backdrops', 'posters'].includes(type)) {
-    redirect(`/movie/${id}`);
+    return redirect(`/movie/${id}`);
   }
 
   const movie = await movieService.getMovie(Number(id));
-
-  if (!movie) {
-    redirect('/404');
-  }
 
   let imageType = 'front_cover';
 

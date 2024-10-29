@@ -36,7 +36,7 @@ export default function ItemSlider({
             key={item?.id}
             virtualIndex={index}
           >
-            <ItemCard item={item} />
+            <ItemCard item={item} priority={index < 8} />
           </SwiperSlide>
         ))}
       </Swiper>

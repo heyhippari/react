@@ -19,9 +19,11 @@ export const seriesService = {
 
     return count;
   },
-  async searchSeriesByName(name: string): Promise<SeriesDto[]> {
+  async searchSeriesByName(name: string) {
     const series = await searchSeriesByName(name);
 
-    return series?.map((series) => toSeriesDto(series)) ?? [];
+    return series?.map((series) => toSeriesDto(series)).filter(
+      (series) => series !== undefined,
+    ) ?? [];
   },
 };

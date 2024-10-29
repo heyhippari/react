@@ -34,14 +34,15 @@ export default withSentryConfig<NextConfig>({
   // https://docs.sentry.io/product/crons/
   // https://vercel.com/docs/cron-jobs
   automaticVercelMonitors: true,
+
   // Automatically tree-shake Sentry logger statements to reduce bundle size
   disableLogger: true,
 
-  // Hides source maps from generated client bundles
-  hideSourceMaps: true,
-
   // For all available options, see:
   // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
+
+  // Hides source maps from generated client bundles
+  hideSourceMaps: true,
 
   org: "kanojo",
 

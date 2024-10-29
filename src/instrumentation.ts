@@ -1,5 +1,12 @@
 /**
- * This file is used to register the Sentry SDK.
+ * Instrumentation for the application.
+ */
+import * as Sentry from "@sentry/nextjs";
+
+export const onRequestError = Sentry.captureRequestError;
+
+/**
+ * Register the Sentry SDK.
  */
 export async function register() {
   // If we are in development mode, don't send the error to Sentry.

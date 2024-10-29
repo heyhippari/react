@@ -31,7 +31,7 @@ export type BaseStudioModel = z.infer<typeof baseStudioModelSchema>;
 
 export const baseMovieModelSchema = z.object({
   barcode: z.string().nullable().optional(),
-  dvd_id: z.string(),
+  dvd_id: z.string().optional(),
   format: z.enum([
     "DVD",
     "Blu-ray",
