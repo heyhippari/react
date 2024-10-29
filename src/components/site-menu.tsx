@@ -2,13 +2,10 @@
 
 import { buttonVariants } from '@/components/ui/button';
 import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from '@/components/ui/navigation-menu';
-import { cn } from '@/core/utils/ui';
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from '@/components/ui/hover-card';
 import Link from 'next/link';
 
 /**
@@ -17,45 +14,41 @@ import Link from 'next/link';
  */
 export default function SiteMenu() {
   return (
-    <NavigationMenu>
-      <NavigationMenuList>
-        <NavigationMenuItem>
-          <NavigationMenuTrigger className="text-lg">
-            Movies
-          </NavigationMenuTrigger>
-          <NavigationMenuContent className="z-50">
-            <div className="flex w-48 flex-col gap-2 p-2">
-              <Link
-                className={cn(
-                  buttonVariants({ variant: 'ghost' }),
-                  'justify-start bg-transparent',
-                )}
-                href="/movie"
-              >
-                All Movies
-              </Link>
-            </div>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuTrigger className="text-lg">
-            Persons
-          </NavigationMenuTrigger>
-          <NavigationMenuContent className="z-50">
-            <div className="flex w-48 flex-col gap-2 p-2">
-              <Link
-                className={cn(
-                  buttonVariants({ variant: 'ghost' }),
-                  'justify-start bg-transparent',
-                )}
-                href="/person"
-              >
-                All Persons
-              </Link>
-            </div>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-      </NavigationMenuList>
-    </NavigationMenu>
+    <div className="ml-2 flex flex-row gap-6">
+      <HoverCard closeDelay={0} openDelay={0}>
+        <HoverCardTrigger className="text-lg">Movies</HoverCardTrigger>
+        <HoverCardContent align="center" className="z-50 w-44 p-2">
+          <Link
+            className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-start')} w-full`}
+            href="/movie"
+          >
+            All Movies
+          </Link>
+          <Link
+            className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-start')} w-full`}
+            href="/movie?order=popularity&direction=desc"
+          >
+            Popular Movies
+          </Link>
+        </HoverCardContent>
+      </HoverCard>
+      <HoverCard closeDelay={0} openDelay={0}>
+        <HoverCardTrigger className="text-lg">Persons</HoverCardTrigger>
+        <HoverCardContent align="center" className="z-50 w-44 p-2">
+          <Link
+            className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-start')} w-full`}
+            href="/person"
+          >
+            All Persons
+          </Link>
+          <Link
+            className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-start')} w-full`}
+            href="/person?order=popularity&direction=desc"
+          >
+            Popular Persons
+          </Link>
+        </HoverCardContent>
+      </HoverCard>
+    </div>
   );
 }

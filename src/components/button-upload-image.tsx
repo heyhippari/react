@@ -13,6 +13,7 @@ import { PersonDto } from '@/data/person.dto';
 import { personService } from '@/services/person.service';
 import { zodResolver } from '@hookform/resolvers/zod';
 import MdiPlus from '~icons/mdi/plus.svg';
+import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
@@ -31,7 +32,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from './ui/tooltip';
-import { useRouter } from 'next/navigation';
 
 type Item = MovieDto | PersonDto;
 
