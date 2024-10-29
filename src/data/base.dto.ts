@@ -84,7 +84,7 @@ export const baseMovieDtoSchema = z.object({
   alternative_name: z.string().nullable().optional(),
   barcode: z.string().nullable().optional(),
   display_name: z.string(),
-  dvd_id: z.string().nullable().optional(),
+  dvd_id: z.string(),
   format: z.enum([
     "DVD",
     "Blu-ray",
@@ -134,7 +134,7 @@ export function toBaseMovieDto(model: BaseMovieModel): BaseMovieDto {
 export function fromBaseMovieDto(dto: BaseMovieDto): BaseMovieModel {
   return {
     barcode: dto.barcode,
-    dvd_id: dto.dvd_id!,
+    dvd_id: dto.dvd_id,
     format: dto.format,
     front_cover_url: dto.front_cover_url?.uuid,
     full_cover_url: dto.full_cover_url?.uuid,
