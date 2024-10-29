@@ -1,4 +1,4 @@
-import { ButtonUploadImage } from '@/components/button-upload-image';
+import { ButtonUploadPersonImage } from '@/components/button-upload-person-image';
 import ImageCard from '@/components/image-card';
 import ItemGrid from '@/components/item-grid';
 import ItemHeader from '@/components/item-header';
@@ -42,7 +42,9 @@ export default async function Image({
       <TwoColumnLayout
         sidebarContent={<SidebarPersonImages person={person} />}
         sidebarTitle={type}
-        titleAction={<ButtonUploadImage imageType={imageType} item={person} />}
+        titleAction={
+          <ButtonUploadPersonImage imageType={imageType} item={person} />
+        }
       >
         {images.length === 0 ? (
           <p className="text-center text-lg text-pink-600 dark:text-pink-400">

@@ -7,8 +7,10 @@ import {
   FormItem,
   FormMessage,
 } from '@/components/ui/form';
-import { PersonAddImageFormSchema } from '@/core/utils/validation/person-add-image';
-import { MovieDto } from '@/data/movie.dto';
+import {
+  PersonAddImageForm,
+  personAddImageFormSchema,
+} from '@/core/utils/validation/person-add-image';
 import { PersonDto } from '@/data/person.dto';
 import { personService } from '@/services/person.service';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -33,39 +35,25 @@ import {
   TooltipTrigger,
 } from './ui/tooltip';
 
-type Item = MovieDto | PersonDto;
-
-type ValidImageType<T extends Item> = T['_type'] extends 'movie'
-  ? 'front_cover' | 'full_cover'
-  : T['_type'] extends 'person'
-    ? 'profile'
-    : never;
-
 /**
- * A button to upload an image for a movie or person.
+ * A button to upload an image for a person.
  * @param parameters The parameters of the component.
  * @param parameters.imageType The type of the image to upload.
  * @param parameters.item The item to upload the image for.
  * @returns The rendered component.
  */
-export function ButtonUploadImage<T extends Item>({
+export function ButtonUploadPersonImage({
   imageType,
   item,
 }: {
-  imageType: ValidImageType<T>;
-  item: T;
+  imageType: 'profile';
+  item: PersonDto;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
   const typeDisplayName = useMemo(() => {
     switch (imageType) {
-      case 'front_cover': {
-        return 'Upload a Poster';
-      }
-      case 'full_cover': {
-        return 'Upload a Backdrop';
-      }
       case 'profile': {
         return 'Upload Profile';
       }
@@ -89,17 +77,16 @@ export function ButtonUploadImage<T extends Item>({
     }
   }, [imageType]);
 
-  const form = useForm<PersonAddImageFormSchema>({
+  const form = useForm<PersonAddImageForm>({
     defaultValues: {
       image: undefined,
       person_id: item.id,
-      // @ts-expect-error -- The type of the item should be good.
       type: imageType,
     },
-    resolver: zodResolver(PersonAddImageFormSchema),
+    resolver: zodResolver(personAddImageFormSchema),
   });
 
-  const onSubmit: SubmitHandler<PersonAddImageFormSchema> = async (data) => {
+  const onSubmit: SubmitHandler<PersonAddImageForm> = async (data) => {
     await personService.addPersonImage(data.image, data.person_id, data.type);
 
     setIsOpen(false);
@@ -140,7 +127,7 @@ export function ButtonUploadImage<T extends Item>({
           >
             <p>Drag and drop an image or click to select a file.</p>
             <div className="flex flex-col gap-1">
-              <p>Profile images must meet the following criteria:</p>
+              <p>Images must meet the following criteria:</p>
               <ul className="list-inside list-disc">
                 {uploadRequirements.map((requirement, index) => (
                   <li key={index}>{requirement}</li>

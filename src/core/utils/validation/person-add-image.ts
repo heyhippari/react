@@ -28,7 +28,7 @@ export async function validateImageDimensionsForProfile(
   });
 }
 
-export const PersonAddImageFormSchema = z.object({
+export const personAddImageFormSchema = z.object({
   image: z.custom<File>()
     .refine(
       (file) => file instanceof File,
@@ -52,4 +52,4 @@ export const PersonAddImageFormSchema = z.object({
   ]),
 });
 
-export type PersonAddImageFormSchema = z.infer<typeof PersonAddImageFormSchema>;
+export type PersonAddImageForm = z.infer<typeof personAddImageFormSchema>;

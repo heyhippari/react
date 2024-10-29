@@ -1,3 +1,4 @@
+import { fromBaseMovieDto } from "@/data/base.dto";
 /**
  * Service to handle movie related operations.
  */
@@ -23,12 +24,8 @@ export const movieService = {
     image: File,
     movie_id: number,
     type:
-      | "art"
-      | "disc"
       | "front_cover"
-      | "full_cover"
-      | "logo"
-      | "screenshot",
+      | "full_cover",
   ) {
     const movie = await this.getMovie(movie_id);
 
@@ -52,6 +49,28 @@ export const movieService = {
     }
 
     await addMovieImage(movie.id, imageRecord.id);
+
+    const updatedMovie = fromBaseMovieDto(movie);
+
+    // If the movie does not have a default image, set it to the new image.
+    switch (type) {
+      case "front_cover": {
+        if (!updatedMovie.front_cover_url) {
+          updatedMovie.front_cover_url = imageRecord.uuid;
+
+          await updateMovie(updatedMovie);
+        }
+        break;
+      }
+      case "full_cover": {
+        if (!updatedMovie.full_cover_url) {
+          updatedMovie.full_cover_url = imageRecord.uuid;
+
+          await updateMovie(updatedMovie);
+        }
+        break;
+      }
+    }
   },
   async addMovieRole(movie_id: number, role_id: number) {
     await addMovieRole(movie_id, role_id);

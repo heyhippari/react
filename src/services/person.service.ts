@@ -44,15 +44,9 @@ export const personService = {
 
     const updatedPerson = fromBasePersonDto(person);
 
-    console.warn("updatedPerson", updatedPerson);
-
     // If the person does not have a profile_url, set it to the new image.
     if (!updatedPerson.profile_url) {
-      console.warn("Updating person profile URL");
-
       updatedPerson.profile_url = imageRecord.uuid;
-
-      console.warn("updatedPerson", updatedPerson);
 
       await updatePerson(updatedPerson);
     }

@@ -1,3 +1,4 @@
+import { ButtonUploadMovieImage } from '@/components/button-upload-movie-image';
 import ImageCard from '@/components/image-card';
 import ItemGrid from '@/components/item-grid';
 import ItemHeader from '@/components/item-header';
@@ -26,7 +27,7 @@ export default async function Image({
 
   const movie = await movieService.getMovie(Number(id));
 
-  let imageType = 'front_cover';
+  let imageType: 'front_cover' | 'full_cover' = 'front_cover';
 
   switch (type) {
     case 'backdrops': {
@@ -54,6 +55,9 @@ export default async function Image({
       <TwoColumnLayout
         sidebarContent={<SidebarMovieImages movie={movie} />}
         sidebarTitle={type}
+        titleAction={
+          <ButtonUploadMovieImage imageType={imageType} item={movie} />
+        }
       >
         <ItemGrid items={images} large sidebar wide={isWide}>
           {(image, index) => (
