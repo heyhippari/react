@@ -53,7 +53,7 @@ export async function getMostPopularPersons(limit = 25) {
   const client = await createSupabaseClient();
 
   const { data } = await client
-    .from("most_popular_persons")
+    .from("persons")
     .select(
       `
       id,
@@ -62,6 +62,7 @@ export async function getMostPopularPersons(limit = 25) {
       profile_url
     `,
     )
+    .order("popularity", { ascending: false })
     .limit(limit)
     .throwOnError();
 

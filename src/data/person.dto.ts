@@ -6,7 +6,7 @@ import {
   fromBasePersonDto,
   toBasePersonDto,
 } from "./base.dto";
-import { imageDtoSchema } from "./image.dto";
+import { fromImageDto, imageDtoSchema, toImageDto } from "./image.dto";
 import { fromRoleDto, roleDtoSchema, toRoleDto } from "./role.dto";
 
 export const personDtoSchema = basePersonDtoSchema.extend({
@@ -29,6 +29,12 @@ export type PersonDto = z.infer<typeof personDtoSchema>;
 export function toPersonDto(model: PersonModel): PersonDto {
   return {
     ...toBasePersonDto(model),
+    person_images: model.person_images?.map((image) => ({
+      id: image.id,
+      image: image.image ? toImageDto(image.image) : undefined,
+      image_id: image.image_id,
+      movie_id: image.movie_id,
+    })),
     roles: model.roles?.map(toRoleDto),
   };
 }
@@ -41,6 +47,12 @@ export function toPersonDto(model: PersonModel): PersonDto {
 export function fromPersonDto(dto: PersonDto): PersonModel {
   return {
     ...fromBasePersonDto(dto),
+    person_images: dto.person_images?.map((image) => ({
+      id: image.id,
+      image: image.image ? fromImageDto(image.image) : undefined,
+      image_id: image.image_id,
+      movie_id: image.movie_id,
+    })),
     roles: dto.roles?.map(fromRoleDto),
   };
 }

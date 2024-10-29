@@ -63,6 +63,7 @@ export function toMovieEditForm(dto: MovieDto): MovieEditFormSchema {
  */
 export function fromMovieEditForm(form: MovieEditFormSchema): MovieDto {
   return {
+    _type: "movie",
     alternative_name: form.name ? form.original_name : undefined,
     barcode: form.barcode,
     display_name: form.name ?? form.original_name ?? "",
@@ -70,14 +71,17 @@ export function fromMovieEditForm(form: MovieEditFormSchema): MovieDto {
     format: form.format === "Unknown" ? undefined : form.format,
     id: form.id,
     label: {
+      _type: "label",
       id: form.label_id,
     },
     length: form.length,
     release_date: form.release_date,
     series: {
+      _type: "series",
       id: form.series_id,
     },
     studio: {
+      _type: "studio",
       id: form.studio_id,
     },
   };

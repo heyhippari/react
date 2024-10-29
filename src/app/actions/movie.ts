@@ -33,7 +33,6 @@ export async function deleteMovieRoleAction(
 
   const movie = await movieService.getMovie(movie_id);
   if (!movie) {
-    console.log("Movie not found");
     throw new Error("Movie not found");
   }
 

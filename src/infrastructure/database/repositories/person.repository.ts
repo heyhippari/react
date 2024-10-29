@@ -46,8 +46,14 @@ export async function getPersonById(
         ),
         person_images (
           image: images (
+            created_at,
             uuid,
-            type
+            type,
+            uploader: profiles (
+              id,
+              username,
+              avatar_url
+            )
           )
         )
       `,
@@ -134,6 +140,8 @@ export async function updatePerson(person: PersonModel) {
 
   const client = await createSupabaseClient();
 
+  console.warn("Updating person", person);
+
   await client
     .from("persons")
     .update(person)
@@ -156,5 +164,6 @@ export async function addPersonImage(
   await client
     .from("person_images")
     .insert({ image_id, person_id })
-    .throwOnError();
+    .throwOnError()
+    .single();
 }

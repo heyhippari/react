@@ -26,7 +26,7 @@ export async function addImage(
   const { data } = await client
     .from("images")
     .insert([{ type, uuid }])
-    .select("id")
+    .select("id, uuid")
     .single();
 
   return data;

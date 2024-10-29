@@ -24,8 +24,6 @@ export default async function MoviePage({
 
   const movie = await movieService.getMovie(Number(id));
 
-  console.log(movie);
-
   return (
     <>
       <VisitTracker differenciator="movie" item={movie} />

@@ -1,3 +1,4 @@
+import { ButtonUploadImage } from '@/components/button-upload-image';
 import ImageCard from '@/components/image-card';
 import ItemGrid from '@/components/item-grid';
 import ItemHeader from '@/components/item-header';
@@ -31,7 +32,7 @@ export default async function Image({
   const images =
     person.person_images
       ?.filter((person_images) => person_images.image?.type === imageType)
-      .map((movie_image) => movie_image.image)
+      .map((person_images) => person_images.image)
       .filter((image) => image !== null && image !== undefined) ?? [];
 
   return (
@@ -41,6 +42,7 @@ export default async function Image({
       <TwoColumnLayout
         sidebarContent={<SidebarPersonImages person={person} />}
         sidebarTitle={type}
+        titleAction={<ButtonUploadImage imageType={imageType} item={person} />}
       >
         {images.length === 0 ? (
           <p className="text-center text-lg text-pink-600 dark:text-pink-400">

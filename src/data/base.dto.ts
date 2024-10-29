@@ -81,6 +81,7 @@ export function toImageVariants(uuid: string): ImageVariants {
 }
 
 export const baseMovieDtoSchema = z.object({
+  _type: z.literal("movie").default("movie"),
   alternative_name: z.string().nullable().optional(),
   barcode: z.string().nullable().optional(),
   display_name: z.string(),
@@ -112,6 +113,7 @@ export type BaseMovieDto = z.infer<typeof baseMovieDtoSchema>;
  */
 export function toBaseMovieDto(model: BaseMovieModel): BaseMovieDto {
   return {
+    _type: "movie",
     alternative_name: model.name ? model.original_name : undefined,
     barcode: model.barcode,
     display_name: model.name ?? model.original_name ?? "Unknown",
@@ -148,6 +150,7 @@ export function fromBaseMovieDto(dto: BaseMovieDto): BaseMovieModel {
 }
 
 export const baseLabelDtoSchema = z.object({
+  _type: z.literal("label").default("label"),
   alternative_name: z.string().nullable().optional(),
   display_name: z.string().nullable().optional(),
   id: z.number().nullable().optional(),
@@ -162,6 +165,7 @@ export type BaseLabelDto = z.infer<typeof baseLabelDtoSchema>;
  */
 export function toBaseLabelDto(model: BaseLabelModel): BaseLabelDto {
   return {
+    _type: "label",
     alternative_name: model.name ? model.original_name : undefined,
     display_name: model.name ?? model.original_name,
     id: model.id,
@@ -182,6 +186,7 @@ export function fromBaseLabelDto(dto: BaseLabelDto): BaseLabelModel {
 }
 
 export const baseSeriesDtoSchema = z.object({
+  _type: z.literal("series").default("series"),
   alternative_name: z.string().nullable().optional(),
   display_name: z.string().nullable().optional(),
   id: z.number().nullable().optional(),
@@ -196,6 +201,7 @@ export type BaseSeriesDto = z.infer<typeof baseSeriesDtoSchema>;
  */
 export function toBaseSeriesDto(model: BaseSeriesModel): BaseSeriesDto {
   return {
+    _type: "series",
     alternative_name: model.name ? model.original_name : undefined,
     display_name: model.name ?? model.original_name,
     id: model.id,
@@ -216,6 +222,7 @@ export function fromBaseSeriesDto(dto: BaseSeriesDto): BaseSeriesModel {
 }
 
 export const baseStudioDtoSchema = z.object({
+  _type: z.literal("studio").default("studio"),
   alternative_name: z.string().nullable().optional(),
   display_name: z.string().nullable().optional(),
   id: z.number().nullable().optional(),
@@ -230,6 +237,7 @@ export type BaseStudioDto = z.infer<typeof baseStudioDtoSchema>;
  */
 export function toBaseStudioDto(model: BaseStudioModel): BaseStudioDto {
   return {
+    _type: "studio",
     alternative_name: model.name ? model.original_name : undefined,
     display_name: model.name ?? model.original_name,
     id: model.id,
@@ -250,6 +258,7 @@ export function fromBaseStudioDto(dto: BaseStudioDto): BaseStudioModel {
 }
 
 export const basePersonDtoSchema = z.object({
+  _type: z.literal("person").default("person"),
   alternative_name: z.string().nullable(),
   birth_date: z.string().nullable().optional(),
   bust_size: z.number().nullable().optional(),
@@ -286,6 +295,7 @@ export type BasePersonDto = z.infer<typeof basePersonDtoSchema>;
  */
 export function toBasePersonDto(model: BasePersonModel): BasePersonDto {
   return {
+    _type: "person",
     alternative_name: model.name ? model.original_name ?? null : null,
     birth_date: model.birth_date,
     bust_size: model.bust_size,

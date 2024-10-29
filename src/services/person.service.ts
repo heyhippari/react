@@ -1,7 +1,8 @@
+import { fromBasePersonDto } from "@/data/base.dto";
 /**
  * Service to handle movie related operations.
  */
-import { fromPersonDto, PersonDto, toPersonDto } from "@/data/person.dto";
+import { PersonDto, toPersonDto } from "@/data/person.dto";
 import { addImage } from "@/infrastructure/database/repositories/image.repository";
 import {
   addPersonImage,
@@ -38,6 +39,21 @@ export const personService = {
     }
 
     await addPersonImage(person.id, imageRecord.id);
+
+    const updatedPerson = fromBasePersonDto(person);
+
+    console.warn("updatedPerson", updatedPerson);
+
+    // If the person does not have a profile_url, set it to the new image.
+    if (!updatedPerson.profile_url) {
+      console.warn("Updating person profile URL");
+
+      updatedPerson.profile_url = imageRecord.uuid;
+
+      console.warn("updatedPerson", updatedPerson);
+
+      await updatePerson(updatedPerson);
+    }
   },
   async deletePerson(person_id: number) {
     const person = await this.getPerson(person_id);
@@ -80,6 +96,6 @@ export const personService = {
       throw new Error("No person ID provided");
     }
 
-    await updatePerson(fromPersonDto(person));
+    await updatePerson(fromBasePersonDto(person));
   },
 };

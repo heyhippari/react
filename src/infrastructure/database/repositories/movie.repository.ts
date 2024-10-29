@@ -79,8 +79,6 @@ export async function getMovieById(
     .single()
     .throwOnError();
 
-  console.log(data?.movie_images);
-
   return movieModelSchema.parse(data);
 }
 

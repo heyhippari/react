@@ -57,6 +57,7 @@ export function toPersonEditForm(dto: PersonDto): PersonEditFormSchema {
  */
 export function fromPersonEditForm(form: PersonEditFormSchema): PersonDto {
   return {
+    _type: "person",
     alternative_name: form.name ? form.original_name : null,
     birth_date: form.birth_date,
     bust_size: form.bust_size,

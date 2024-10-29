@@ -7,6 +7,9 @@ export default withSentryConfig<NextConfig>({
   compress: true,
   experimental: {
     optimizeCss: true,
+    serverActions: {
+      bodySizeLimit: "10mb",
+    },
   },
   images: {
     loader: "custom",

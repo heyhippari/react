@@ -13,6 +13,7 @@ import { getUrlForItem, isMovie, isPerson } from '@/core/types';
 import { useUserRole } from '@/core/utils/hooks';
 import { getShareTitle } from '@/core/utils/share';
 import { MovieDto } from '@/data/movie.dto';
+import { PersonDto } from '@/data/person.dto';
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 
@@ -22,7 +23,9 @@ import { useMemo, useState } from 'react';
  * @param properties.item - The item to display the navigation bar for.
  * @returns The rendered component.
  */
-export default function ItemNavbar({ item }: Readonly<{ item: MovieDto }>) {
+export default function ItemNavbar({
+  item,
+}: Readonly<{ item: MovieDto | PersonDto }>) {
   const [supportsShareAPI, setSupportsShareAPI] = useState(
     navigator?.share !== undefined,
   );
