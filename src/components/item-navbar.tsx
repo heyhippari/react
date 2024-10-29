@@ -94,7 +94,7 @@ export default function ItemNavbar({
   const handleShare = async () => {
     if (supportsShareAPI) {
       try {
-        await navigator.share({
+        await navigator?.share({
           text: getShareTitle(item),
           title: getShareTitle(item),
           url: globalThis.location.href,

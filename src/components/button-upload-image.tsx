@@ -31,6 +31,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from './ui/tooltip';
+import { useRouter } from 'next/navigation';
 
 type Item = MovieDto | PersonDto;
 
@@ -55,6 +56,7 @@ export function ButtonUploadImage<T extends Item>({
   item: T;
 }) {
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
 
   const typeDisplayName = useMemo(() => {
     switch (imageType) {
@@ -103,7 +105,7 @@ export function ButtonUploadImage<T extends Item>({
     setIsOpen(false);
 
     // We need to refresh the page to show the new image.
-    location.reload();
+    router.refresh();
   };
 
   return (

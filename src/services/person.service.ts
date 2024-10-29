@@ -7,7 +7,9 @@ import { addImage } from "@/infrastructure/database/repositories/image.repositor
 import {
   addPersonImage,
   deletePerson,
+  getPaginatedPersons,
   getPersonById,
+  getPersonPageCount,
   getPersonRolesCount,
   searchPersonByName,
   updatePerson,
@@ -76,6 +78,15 @@ export const personService = {
 
     await deletePerson(person_id);
   },
+  async getPaginatedPersons(page = 1, perPage = 25, options?: {
+    orderBy?: string;
+    orderDirection?: "asc" | "desc";
+    search?: string;
+  }) {
+    const persons = await getPaginatedPersons(page, perPage, options);
+
+    return persons?.map((person) => toPersonDto(person)) ?? [];
+  },
   async getPerson(person_id: number) {
     const person = await getPersonById(person_id);
 
@@ -85,6 +96,11 @@ export const personService = {
     const count = await getPersonRolesCount(person_id);
 
     return count;
+  },
+  async getPersonPageCount(query?: string, limit = 25) {
+    const pageCount = await getPersonPageCount(query, limit);
+
+    return pageCount ? pageCount - 1 : 1;
   },
   async searchPersonByName(searchValue: string, limit?: number) {
     const persons = await searchPersonByName(searchValue, limit);

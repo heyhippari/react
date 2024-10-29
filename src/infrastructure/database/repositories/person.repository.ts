@@ -167,3 +167,77 @@ export async function addPersonImage(
     .throwOnError()
     .single();
 }
+
+/**
+ * Get a paginated list of persons.
+ * @param page The page number.
+ * @param perPage The number of persons per page.
+ * @param options Optional parameters.
+ * @param options.orderBy The column to order by.
+ * @param options.orderDirection The direction to order by.
+ * @param options.search The search query.
+ * @returns The paginated list of persons.
+ */
+export async function getPaginatedPersons(
+  page = 1,
+  perPage = 25,
+  options?: {
+    orderBy?: string;
+    orderDirection?: "asc" | "desc";
+    search?: string;
+  },
+) {
+  const client = await createSupabaseClient();
+
+  let query = client
+    .from("persons")
+    .select(
+      `
+      id,
+      name,
+      original_name,
+      birth_date,
+      profile_url
+    `,
+    )
+    .order(options?.orderBy ?? "create_time", {
+      ascending: options?.orderDirection === "asc",
+    })
+    .range((page - 1) * perPage, page * perPage - 1);
+
+  if (options?.search) {
+    // Should search by name or original name
+    query = query.or(
+      `name.ilike.%${options.search}%,original_name.ilike.%${options.search}%`,
+    );
+  }
+
+  const { data } = await query.throwOnError();
+
+  return data?.map((person) => personModelSchema.parse(person));
+}
+
+/**
+ * Get the total number of pages of persons based on the search query.
+ * @param search The query to search for.
+ * @param limit The number of persons per page.
+ * @returns The total number of persons.
+ */
+export async function getPersonPageCount(
+  search?: string,
+  limit = 25,
+) {
+  const client = await createSupabaseClient();
+
+  let query = client.from("persons").select("id", { count: "exact" });
+
+  if (search) {
+    query = query.or(
+      `name.ilike.%${search}%,original_name.ilike.%${search}%`,
+    );
+  }
+
+  const { count } = await query.throwOnError();
+
+  return Math.floor((count ?? 0) / limit);
+}

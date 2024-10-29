@@ -37,6 +37,24 @@ export default function SiteMenu() {
             </div>
           </NavigationMenuContent>
         </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuTrigger className="text-lg">
+            Persons
+          </NavigationMenuTrigger>
+          <NavigationMenuContent className="z-50">
+            <div className="flex w-48 flex-col gap-2 p-2">
+              <Link
+                className={cn(
+                  buttonVariants({ variant: 'ghost' }),
+                  'justify-start bg-transparent',
+                )}
+                href="/person"
+              >
+                All Persons
+              </Link>
+            </div>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
   );
