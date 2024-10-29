@@ -77,7 +77,7 @@ export default function ItemNavbar({ item }: Readonly<{ item: MovieDto }>) {
       return (
         <Link
           className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-between')} w-full`}
-          href={getUrlForItem(item)}
+          href={getUrlForItem(item, '/images/profiles')}
         >
           Profile
           <Badge variant="outline">{profileCount ?? 0}</Badge>
