@@ -70,7 +70,7 @@ export function ButtonUploadMovieImage({
           'No logo or watermark',
           'A maximum resolution of 2000x3000',
           'A minimum resolution of 300x450',
-          'Aspect ratio of 1:1.5 (2:3)',
+          'Aspect ratio is not forced, but should be portait',
         ];
       }
       case 'full_cover': {

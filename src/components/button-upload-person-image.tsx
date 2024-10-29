@@ -66,6 +66,7 @@ export function ButtonUploadPersonImage({
         return [
           'No logo or watermark',
           'Avoid nudity or explicit content if possible',
+          'Prefer a portrait (head and shoulders) if possible',
           'A maximum resolution of 2000x3000',
           'A minimum resolution of 300x450',
           'Aspect ratio of 1:1.5 (2:3)',
