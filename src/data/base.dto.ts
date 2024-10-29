@@ -134,7 +134,7 @@ export function toBaseMovieDto(model: BaseMovieModel): BaseMovieDto {
 export function fromBaseMovieDto(dto: BaseMovieDto): BaseMovieModel {
   return {
     barcode: dto.barcode,
-    dvd_id: dto.dvd_id,
+    dvd_id: dto.dvd_id!,
     format: dto.format,
     front_cover_url: dto.front_cover_url?.uuid,
     full_cover_url: dto.full_cover_url?.uuid,
@@ -175,9 +175,9 @@ export function toBaseLabelDto(model: BaseLabelModel): BaseLabelDto {
  */
 export function fromBaseLabelDto(dto: BaseLabelDto): BaseLabelModel {
   return {
-    id: dto.id,
+    id: dto.id!,
     name: dto.alternative_name ? dto.display_name : undefined,
-    original_name: dto.alternative_name ?? dto.display_name,
+    original_name: dto.alternative_name ?? dto.display_name!,
   };
 }
 
@@ -209,9 +209,9 @@ export function toBaseSeriesDto(model: BaseSeriesModel): BaseSeriesDto {
  */
 export function fromBaseSeriesDto(dto: BaseSeriesDto): BaseSeriesModel {
   return {
-    id: dto.id,
+    id: dto.id!,
     name: dto.display_name ?? dto.alternative_name,
-    original_name: dto.alternative_name ?? dto.display_name,
+    original_name: dto.alternative_name ?? dto.display_name!,
   };
 }
 
@@ -243,9 +243,9 @@ export function toBaseStudioDto(model: BaseStudioModel): BaseStudioDto {
  */
 export function fromBaseStudioDto(dto: BaseStudioDto): BaseStudioModel {
   return {
-    id: dto.id,
+    id: dto.id!,
     name: dto.display_name ?? dto.alternative_name,
-    original_name: dto.alternative_name ?? dto.display_name,
+    original_name: dto.alternative_name ?? dto.display_name!,
   };
 }
 

@@ -1,4 +1,5 @@
-import CardGrid from '@/components/card-grid';
+import ItemCard from '@/components/item-card';
+import ItemGrid from '@/components/item-grid';
 import { PaginationLinks } from '@/components/pagination-links';
 import SidebarMovieSearch from '@/components/sidebar-movie-search';
 import { TwoColumnLayout } from '@/components/two-column-layout';
@@ -48,7 +49,11 @@ export default async function MoviePage({
       {(pageCount ?? 0 > 0) ? (
         <>
           <PaginationLinks page={Number(page)} pageCount={pageCount} />
-          <CardGrid items={movies} sidebar />
+          <ItemGrid items={movies} sidebar>
+            {(movie, index) => (
+              <ItemCard item={movie} key={movie.id} priority={index < 10} />
+            )}
+          </ItemGrid>
           <PaginationLinks page={Number(page)} pageCount={pageCount} />
         </>
       ) : (

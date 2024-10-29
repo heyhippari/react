@@ -1,4 +1,5 @@
-import CardGrid from '@/components/card-grid';
+import ItemCard from '@/components/item-card';
+import ItemGrid from '@/components/item-grid';
 import ItemNavbar from '@/components/item-navbar';
 import ItemPoster from '@/components/item-poster';
 import { Badge } from '@/components/ui/badge';
@@ -126,14 +127,18 @@ export default async function PersonPage({
               {movie_count}
             </Badge>
           </div>
-          <CardGrid
+          <ItemGrid
             items={
               person?.roles
                 ?.map((role) => role.movie)
                 .filter((movie) => !!movie) ?? []
             }
             sidebar
-          />
+          >
+            {(movie, index) => (
+              <ItemCard item={movie} key={movie.id} priority={index < 10} />
+            )}
+          </ItemGrid>
         </div>
       </div>
     </>

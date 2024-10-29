@@ -140,3 +140,21 @@ export async function updatePerson(person: PersonModel) {
     .eq("id", person.id)
     .throwOnError();
 }
+
+/**
+ * Create a new image for a person.
+ * @param person_id The ID of the person to add the image to.
+ * @param image_id The ID of the image to add.
+ * @returns The created image.
+ */
+export async function addPersonImage(
+  person_id: number,
+  image_id: number,
+) {
+  const client = await createSupabaseClient();
+
+  await client
+    .from("person_images")
+    .insert({ image_id, person_id })
+    .throwOnError();
+}

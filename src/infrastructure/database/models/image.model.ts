@@ -4,7 +4,10 @@
 
 import { z } from "zod";
 
+import { userModelSchema } from "./user.model";
+
 export const imageModelSchema = z.object({
+  created_at: z.string().optional(),
   type: z.enum([
     "front_cover",
     "full_cover",
@@ -14,6 +17,7 @@ export const imageModelSchema = z.object({
     "logo",
     "screenshot",
   ]).nullable().optional(),
+  uploader: userModelSchema.nullable().optional(),
   uuid: z.string().nullable().optional(),
 });
 

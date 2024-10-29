@@ -1,4 +1,5 @@
-import CardGrid from '@/components/card-grid';
+import ItemCard from '@/components/item-card';
+import ItemGrid from '@/components/item-grid';
 import { Badge } from '@/components/ui/badge';
 import { VisitTracker } from '@/components/visit-tracker';
 import { studioService } from '@/services/studio.service';
@@ -82,7 +83,11 @@ export default async function StudioPage({
             {moviesCount}
           </Badge>
         </div>
-        <CardGrid items={studio?.movies} />
+        <ItemGrid items={studio?.movies}>
+          {(movie, index) => (
+            <ItemCard item={movie} key={movie.id} priority={index < 12} />
+          )}
+        </ItemGrid>
       </div>
     </>
   );

@@ -10,11 +10,13 @@ import { useMemo, useState } from 'react';
  * Card that displays an item with an image and some information depending on the type of item.
  * @param properties The properties for the item card.
  * @param properties.item The item to display.
+ * @param properties.priority Whether the item is a priority item and should be loaded first.
  * @returns The item card component.
  */
 export default function ItemCard({
   item,
-}: Readonly<{ item: BaseMovieDto | BasePersonDto }>) {
+  priority = false,
+}: Readonly<{ item: BaseMovieDto | BasePersonDto; priority: boolean }>) {
   const image = useMemo(() => {
     if (isMovie(item)) {
       return item?.front_cover_url?.card;
@@ -35,7 +37,7 @@ export default function ItemCard({
             <Image
               alt={item?.display_name}
               className={`object-cover shadow-md transition-opacity ${imageIsLoaded ? 'opacity-100' : 'opacity-0'}`}
-              fill
+              height={300}
               onLoad={(event) => {
                 if (event.currentTarget.src.includes('data:image/gif;base64'))
                   return;
@@ -43,9 +45,11 @@ export default function ItemCard({
                 setImageIsLoaded(true);
               }}
               placeholder="empty"
+              priority={priority}
               sizes="200px"
               src={image}
               unoptimized
+              width={200}
             />
           ) : (
             <div className="flex size-full items-center justify-center p-2 text-center">

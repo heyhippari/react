@@ -2,7 +2,9 @@
  * Service to handle movie related operations.
  */
 import { fromPersonDto, PersonDto, toPersonDto } from "@/data/person.dto";
+import { addImage } from "@/infrastructure/database/repositories/image.repository";
 import {
+  addPersonImage,
   deletePerson,
   getPersonById,
   getPersonRolesCount,
@@ -13,6 +15,30 @@ import {
 import { cloudflareService } from "./cloudflare.service";
 
 export const personService = {
+  async addPersonImage(image: File, person_id: number, type: "profile") {
+    const person = await this.getPerson(person_id);
+
+    if (!person?.id) {
+      throw new Error("Person not found");
+    }
+
+    const cloudflareImageUUID = await cloudflareService.uploadImage(image);
+
+    if (!cloudflareImageUUID) {
+      throw new Error("Error uploading image");
+    }
+
+    const imageRecord = await addImage(cloudflareImageUUID, type);
+
+    if (!imageRecord) {
+      // Delete the image from Cloudflare to avoid orphaned images.
+      await cloudflareService.deleteImage(cloudflareImageUUID);
+
+      throw new Error("Error adding image to database");
+    }
+
+    await addPersonImage(person.id, imageRecord.id);
+  },
   async deletePerson(person_id: number) {
     const person = await this.getPerson(person_id);
 

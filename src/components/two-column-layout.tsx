@@ -21,7 +21,7 @@ export function TwoColumnLayout({
     <div className="container flex flex-row gap-2 p-4">
       <Card className="hidden h-fit shrink-0 flex-col overflow-hidden bg-pink-50 dark:border-pink-900 dark:bg-pink-950 lg:flex lg:w-64">
         <CardHeader className="bg-pink-200 dark:bg-pink-700">
-          <CardTitle>{sidebarTitle}</CardTitle>
+          <CardTitle className="capitalize">{sidebarTitle}</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-2 p-2 pt-3">
           {sidebarContent}

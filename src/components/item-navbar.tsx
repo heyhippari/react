@@ -58,7 +58,7 @@ export default function ItemNavbar({ item }: Readonly<{ item: MovieDto }>) {
         <>
           <Link
             className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-between')} w-full`}
-            href={getUrlForItem(item)}
+            href={getUrlForItem(item, '/images/posters')}
           >
             Poster
             <Badge variant="outline">{frontCoverCount ?? 0}</Badge>
@@ -66,7 +66,7 @@ export default function ItemNavbar({ item }: Readonly<{ item: MovieDto }>) {
 
           <Link
             className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-between')} w-full`}
-            href={getUrlForItem(item)}
+            href={getUrlForItem(item, '/images/backdrops')}
           >
             Backdrop
             <Badge variant="outline">{fullCoverCount ?? 0}</Badge>

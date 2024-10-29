@@ -15,7 +15,7 @@ import {
   toBaseSeriesDto,
   toBaseStudioDto,
 } from "./base.dto";
-import { imageDtoSchema } from "./image.dto";
+import { fromImageDto, imageDtoSchema, toImageDto } from "./image.dto";
 import { fromRoleDto, roleDtoSchema, toRoleDto } from "./role.dto";
 
 export const movieDtoSchema = baseMovieDtoSchema.extend({
@@ -42,6 +42,12 @@ export function toMovieDto(model: MovieModel): MovieDto {
   return {
     ...toBaseMovieDto(model),
     label: model.label ? toBaseLabelDto(model.label) : undefined,
+    movie_images: model.movie_images?.map((image) => ({
+      id: image.id,
+      image: image.image ? toImageDto(image.image) : undefined,
+      image_id: image.image_id,
+      movie_id: image.movie_id,
+    })),
     roles: model.roles?.map(toRoleDto),
     series: model.series ? toBaseSeriesDto(model.series) : undefined,
     studio: model.studio ? toBaseStudioDto(model.studio) : undefined,
@@ -58,6 +64,12 @@ export function fromMovieDto(dto: MovieDto): MovieModel {
     ...fromBaseMovieDto(dto),
     label: dto.label ? fromBaseLabelDto(dto.label) : undefined,
     label_id: dto.label?.id,
+    movie_images: dto.movie_images?.map((image) => ({
+      id: image.id,
+      image: image.image ? fromImageDto(image.image) : undefined,
+      image_id: image.image_id,
+      movie_id: image.movie_id,
+    })),
     roles: dto.roles?.map(fromRoleDto),
     series: dto.series ? fromBaseSeriesDto(dto.series) : undefined,
     series_id: dto.series?.id,

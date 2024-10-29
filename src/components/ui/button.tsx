@@ -24,7 +24,7 @@ const buttonVariants = cva(
         destructive:
           'bg-red-500 text-pink-50 shadow-sm hover:bg-red-500/90 dark:bg-red-900 dark:text-pink-50 dark:hover:bg-red-900/90',
         ghost:
-          'text-pink-900 hover:bg-pink-100 hover:text-pink-900 dark:hover:bg-pink-800 dark:hover:text-pink-50',
+          'text-pink-900 hover:bg-pink-100 hover:text-pink-900 dark:text-pink-100 dark:hover:bg-pink-800 dark:hover:text-pink-50',
         link: 'text-pink-900 underline-offset-4 hover:underline dark:text-pink-50',
         outline:
           'border border-pink-200 bg-white shadow-sm hover:bg-pink-100 hover:text-pink-900 dark:border-pink-800 dark:bg-pink-950 dark:hover:bg-pink-800 dark:hover:text-pink-50',

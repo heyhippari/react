@@ -63,8 +63,14 @@ export async function getMovieById(
         ),
         movie_images (
           image: images (
+            created_at,
             uuid,
-            type
+            type,
+            uploader: profiles (
+              id,
+              username,
+              avatar_url
+            )
           )
         )
       `,
@@ -72,6 +78,8 @@ export async function getMovieById(
     .eq("id", movie_id)
     .single()
     .throwOnError();
+
+  console.log(data?.movie_images);
 
   return movieModelSchema.parse(data);
 }
@@ -297,5 +305,23 @@ export async function deleteMovieRole(
     .delete()
     .eq("movie_id", movie_id)
     .eq("id", role_id)
+    .throwOnError();
+}
+
+/**
+ * Create a new image for a movie.
+ * @param movie_id The ID of the movie to add the image to.
+ * @param image_id The ID of the image to add.
+ * @returns The created image.
+ */
+export async function addMovieImage(
+  movie_id: number,
+  image_id: number,
+) {
+  const client = await createSupabaseClient();
+
+  await client
+    .from("movie_images")
+    .insert({ image_id, movie_id })
     .throwOnError();
 }

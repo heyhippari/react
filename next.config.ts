@@ -5,6 +5,9 @@ import Icons from "unplugin-icons/webpack";
 
 export default withSentryConfig<NextConfig>({
   compress: true,
+  experimental: {
+    optimizeCss: true,
+  },
   images: {
     loader: "custom",
     loaderFile: "./src/core/utils/image-loader.ts",

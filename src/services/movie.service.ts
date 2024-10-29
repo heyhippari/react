@@ -2,7 +2,9 @@
  * Service to handle movie related operations.
  */
 import { fromMovieDto, MovieDto, toMovieDto } from "@/data/movie.dto";
+import { addImage } from "@/infrastructure/database/repositories/image.repository";
 import {
+  addMovieImage,
   addMovieRole,
   deleteMovie,
   deleteMovieRole,
@@ -17,6 +19,40 @@ import {
 import { cloudflareService } from "./cloudflare.service";
 
 export const movieService = {
+  async addMovieImage(
+    image: File,
+    movie_id: number,
+    type:
+      | "art"
+      | "disc"
+      | "front_cover"
+      | "full_cover"
+      | "logo"
+      | "screenshot",
+  ) {
+    const movie = await this.getMovie(movie_id);
+
+    if (!movie?.id) {
+      throw new Error("Movie not found");
+    }
+
+    const cloudflareImageUUID = await cloudflareService.uploadImage(image);
+
+    if (!cloudflareImageUUID) {
+      throw new Error("Error uploading image");
+    }
+
+    const imageRecord = await addImage(cloudflareImageUUID, type);
+
+    if (!imageRecord) {
+      // Delete the image from Cloudflare to avoid orphaned images.
+      await cloudflareService.deleteImage(cloudflareImageUUID);
+
+      throw new Error("Error adding image to database");
+    }
+
+    await addMovieImage(movie.id, imageRecord.id);
+  },
   async addMovieRole(movie_id: number, role_id: number) {
     await addMovieRole(movie_id, role_id);
   },
@@ -52,7 +88,7 @@ export const movieService = {
   async getMoviePageCount(query?: string, limit = 25) {
     const pageCount = await getMoviePageCount(query, limit);
 
-    return pageCount ? Math.floor(pageCount / 25) - 1 : 1;
+    return pageCount ? pageCount - 1 : 1;
   },
   async getMoviesByPrefix(prefix: string) {
     const movies = await getMoviesByPrefix(prefix);
