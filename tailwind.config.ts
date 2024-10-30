@@ -1,5 +1,7 @@
 import type { Config } from "tailwindcss";
 
+// @ts-expect-error - TailwindCSS Gradient Mask Image is not typed
+import tailwindGradientMaskImage from "tailwind-gradient-mask-image";
 import tailwindCssAnimate from "tailwindcss-animate";
 // @ts-expect-error - TailwindCSS Logical is not typed
 import tailwindLogical from "tailwindcss-logical";
@@ -12,7 +14,7 @@ const config = {
     "./src/**/*.{ts,tsx}",
   ],
   darkMode: "class",
-  plugins: [tailwindCssAnimate, tailwindLogical],
+  plugins: [tailwindCssAnimate, tailwindLogical, tailwindGradientMaskImage],
   prefix: "",
   theme: {
     container: {

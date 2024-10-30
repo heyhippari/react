@@ -3,13 +3,18 @@ import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/core/utils/ui';
 import SIGithub from '~icons/simple-icons/github';
 
+import HomeStats from './home-stats';
+
 /**
  * Site footer component.
  * @returns The site footer component.
  */
 export default function SiteFooter() {
   return (
-    <footer className="w-full bg-pink-300 shadow dark:bg-pink-700">
+    <footer className="flex w-full flex-col bg-pink-300 shadow dark:bg-pink-700">
+      <div className="container mx-auto flex w-full items-center justify-between p-4">
+        <HomeStats />
+      </div>
       <div className="container mx-auto w-full p-4 md:flex md:items-center md:justify-between">
         <span className="text-sm text-pink-800 dark:text-pink-200 sm:text-center">
           &copy; 2024 Kanojo. All rights reserved.

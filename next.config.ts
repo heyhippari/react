@@ -11,10 +11,6 @@ export default withSentryConfig<NextConfig>({
       bodySizeLimit: "10mb",
     },
   },
-  images: {
-    loader: "custom",
-    loaderFile: "./src/core/utils/image-loader.ts",
-  },
   reactStrictMode: true,
   webpack: (config) => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access -- There seems to be a bug in the types
