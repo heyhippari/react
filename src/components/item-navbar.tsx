@@ -192,9 +192,7 @@ export default function ItemNavbar({
         {['admin', 'moderator'].includes(userRole ?? '') ? (
           <HoverCard closeDelay={0} openDelay={0}>
             <HoverCardTrigger asChild>
-              <Button className="text-red-500" variant={'ghost'}>
-                Manage
-              </Button>
+              <Button variant={'ghost'}>Manage</Button>
             </HoverCardTrigger>
             <HoverCardContent align="center" className="w-44 p-2">
               <ButtonDeleteItem item={item} />

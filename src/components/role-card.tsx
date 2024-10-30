@@ -16,8 +16,8 @@ export default function RoleCard({ role }: Readonly<{ role: RoleDto }>) {
   );
 
   return (
-    <Link href={`/person/${role.person?.id}`}>
-      <div className="flex h-24 flex-row items-center gap-4 rounded-lg bg-pink-100 px-4 py-2 text-pink-700 dark:bg-pink-800 dark:text-pink-300">
+    <Link className="group" href={`/person/${role.person?.id}`}>
+      <div className="flex h-24 flex-row items-center gap-4 rounded-lg border-2 border-pink-200 bg-pink-100 px-4 py-2 text-pink-700 transition-colors duration-300 group-hover:bg-pink-200 dark:bg-pink-800 dark:text-pink-300 dark:group-hover:bg-pink-700">
         {role.person && profile ? (
           <Image
             alt={role.person.display_name}
@@ -29,7 +29,7 @@ export default function RoleCard({ role }: Readonly<{ role: RoleDto }>) {
             width={64}
           />
         ) : (
-          <div className="relative inline-flex size-16 items-center justify-center overflow-hidden rounded-full bg-pink-200 text-pink-400 dark:bg-pink-300 dark:text-pink-500">
+          <div className="relative inline-flex size-16 items-center justify-center overflow-hidden rounded-full bg-pink-300 text-pink-500 dark:bg-pink-300 dark:text-pink-500">
             <span className="text-4xl font-medium">
               {role.person?.display_name?.[0]}
             </span>

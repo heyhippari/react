@@ -39,7 +39,7 @@ export default function ButtonDeleteItem({
         <button
           className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-start')} w-full text-red-500`}
         >
-          Delete
+          Delete {item?._type}
         </button>
       </DialogTrigger>
       <DialogContent>

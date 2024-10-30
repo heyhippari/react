@@ -1,6 +1,7 @@
 'use client';
 import { Badge } from '@/components/ui/badge';
 import { getUrlForItem, isMovie, isPerson } from '@/core/types';
+import { cn } from '@/core/utils/ui';
 import { BaseMovieDto, BasePersonDto } from '@/data/base.dto';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -32,11 +33,14 @@ export default function ItemCard({
   return (
     <Link href={getUrlForItem(item)}>
       <div className="flex flex-col gap-2">
-        <div className="relative aspect-[2/3] w-full overflow-hidden rounded-lg bg-pink-200 shadow-md dark:bg-pink-900">
+        <div className="relative aspect-[2/3] w-full overflow-hidden rounded-lg border-2 border-pink-300 bg-pink-200 dark:border-pink-700 dark:bg-pink-900">
           {item && image ? (
             <Image
               alt={item?.display_name}
-              className={`object-cover shadow-md transition-opacity ${imageIsLoaded ? 'opacity-100' : 'opacity-0'}`}
+              className={cn(
+                'size-full rounded-lg object-cover transition-opacity',
+                imageIsLoaded ? 'opacity-100' : 'opacity-0',
+              )}
               height={300}
               onLoad={(event) => {
                 if (event.currentTarget.src.includes('data:image/gif;base64'))
@@ -52,8 +56,8 @@ export default function ItemCard({
               width={200}
             />
           ) : (
-            <div className="flex size-full items-center justify-center p-2 text-center">
-              <p className="select-none text-xl font-black text-pink-300 dark:text-pink-800 md:text-3xl">
+            <div className="flex size-full items-center justify-center rounded-lg p-2 text-center">
+              <p className="select-none text-xl font-black text-pink-300 dark:text-pink-700 md:text-3xl">
                 No Image
               </p>
             </div>

@@ -24,6 +24,7 @@ export default function ItemPoster({
   small?: boolean;
 }>) {
   const [open, setOpen] = useState(false);
+  const [imageIsLoaded, setImageIsLoaded] = useState(false);
 
   const thumbImageUrl = useMemo(() => {
     if (isMovie(item)) {
@@ -46,7 +47,7 @@ export default function ItemPoster({
     <>
       <div
         className={cn(
-          'relative aspect-[2/3] overflow-hidden rounded-lg bg-pink-200 shadow-md dark:bg-pink-900',
+          'relative aspect-[2/3] overflow-hidden rounded-lg border-2 border-pink-300 bg-pink-200 dark:border-pink-700 dark:bg-pink-900',
           small ? 'w-[50px]' : 'w-[150px] lg:w-[250px]',
           fullImageUrl && !small && 'group',
         )}
@@ -55,9 +56,18 @@ export default function ItemPoster({
           <>
             <Image
               alt={item?.display_name}
-              className="aspect-[2/3] object-cover"
+              className={cn(
+                'size-full rounded-lg object-cover transition-opacity',
+                imageIsLoaded ? 'opacity-100' : 'opacity-0',
+              )}
               height={375}
               onClick={() => (fullImageUrl && !small ? setOpen(true) : null)}
+              onLoad={(event) => {
+                if (event.currentTarget.src.includes('data:image/gif;base64'))
+                  return;
+
+                setImageIsLoaded(true);
+              }}
               priority
               sizes="(max-width: 1024px) 150w, 250w"
               src={thumbImageUrl}
@@ -72,10 +82,10 @@ export default function ItemPoster({
             </div>
           </>
         ) : (
-          <div className="flex size-full items-center justify-center">
+          <div className="flex size-full items-center justify-center rounded-lg">
             <p
               className={cn(
-                'select-none text-center font-black text-pink-300 dark:text-pink-800',
+                'select-none text-center font-black text-pink-300 dark:text-pink-700',
                 small ? 'text-xs' : 'text-3xl',
               )}
             >
