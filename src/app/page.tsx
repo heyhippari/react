@@ -14,11 +14,11 @@ export default function Home() {
       <div className="relative flex h-52 w-full flex-col items-center justify-center py-4 text-white sm:h-64 md:h-80 md:py-0 lg:h-96">
         <Image
           alt="Hero"
-          // eslint-disable-next-line tailwindcss/classnames-order -- ESLint gets tripped up by the gradient mask class names
           className="container z-0 object-cover p-0"
           fill
           src={`/hero/hero-${randomHero}-desktop.png`}
         />
+        <div className="container pointer-events-none absolute inset-0 bg-pink-200/60 p-0 bg-blend-overlay dark:bg-pink-900/70" />
         <h1 className="container z-10 text-center text-3xl font-black text-white md:text-5xl">
           Find your new favorite idol
         </h1>

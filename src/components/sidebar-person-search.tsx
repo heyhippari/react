@@ -2,7 +2,6 @@
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
@@ -10,7 +9,22 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import {
+  personSearchFormSchema,
+  PersonSearchFormSchema,
+} from '@/core/utils/validation/person-search';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
+import { SubmitHandler, useForm } from 'react-hook-form';
+
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from './ui/form';
 
 /**
  * Sidebar for searching a person.
@@ -26,80 +40,138 @@ export default function SidebarPersonSearch({
   q,
 }: Readonly<{
   direction?: 'asc' | 'desc';
-  order?: string;
+  order?:
+    | 'birth_date'
+    | 'create_time'
+    | 'name'
+    | 'original_name'
+    | 'popularity';
   q?: string;
 }>) {
   const router = useRouter();
 
-  /**
-   * Handle the search form submission.
-   * @param event The form submission event.
-   * // TODO: Refactor this to use the useForm hook.
-   */
-  function handleSearch(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  const form = useForm<PersonSearchFormSchema>({
+    defaultValues: {
+      direction,
+      order,
+      page: 1,
+      q,
+    },
+    resolver: zodResolver(personSearchFormSchema),
+  });
 
+  // eslint-disable-next-line @typescript-eslint/require-await -- We need to use async here.
+  const onSubmit: SubmitHandler<PersonSearchFormSchema> = async (data) => {
     const searchParameters = new URLSearchParams({
-      page: '1',
+      direction: data.direction,
+      order: data.order,
+      page: data.page.toString(),
+      q: data.q,
     });
-
-    if ((event.currentTarget.q as HTMLInputElement).value) {
-      searchParameters.set(
-        'q',
-        (event.currentTarget.q as HTMLInputElement).value,
-      );
-    }
-
-    if ((event.currentTarget.order as HTMLSelectElement).value) {
-      searchParameters.set(
-        'order',
-        (event.currentTarget.order as HTMLSelectElement).value,
-      );
-    }
-
-    if ((event.currentTarget.direction as HTMLSelectElement).value) {
-      searchParameters.set(
-        'direction',
-        (event.currentTarget.direction as HTMLSelectElement).value,
-      );
-    }
 
     router.push(`/person?${searchParameters.toString()}`, {
       scroll: false,
     });
-  }
+  };
 
   return (
-    <form className="flex flex-col gap-4" onSubmit={handleSearch}>
-      <Input defaultValue={q} name="q" placeholder="Search" />
-      <div className="flex flex-col gap-2">
-        <Label htmlFor="order">Order by</Label>
-        <Select defaultValue={order} name="order">
-          <SelectTrigger>
-            <SelectValue placeholder="Order by" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="name">Name</SelectItem>
-            <SelectItem value="original_name">Original Name</SelectItem>
-            <SelectItem value="popularity">Popularity</SelectItem>
-            <SelectItem value="birth_date">Birth Date</SelectItem>
-            <SelectItem value="create_time">Date Added</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-      <div className="flex flex-col gap-2">
-        <Label htmlFor="direction">Direction</Label>
-        <Select defaultValue={direction} name="direction">
-          <SelectTrigger>
-            <SelectValue placeholder="Ascending" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="asc">Ascending</SelectItem>
-            <SelectItem value="desc">Descending</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-      <Button type="submit">Search</Button>
-    </form>
+    <Form {...form}>
+      <form
+        className="flex flex-col gap-4"
+        onSubmit={(event) => void form.handleSubmit(onSubmit)(event)}
+      >
+        <FormField
+          control={form.control}
+          name="page"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <input type="hidden" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="q"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <Input placeholder="Search" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <div className="flex flex-col gap-2">
+          <FormField
+            control={form.control}
+            name="order"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Order by</FormLabel>
+                <FormControl>
+                  <Select
+                    onValueChange={(
+                      value:
+                        | 'birth_date'
+                        | 'create_time'
+                        | 'name'
+                        | 'original_name'
+                        | 'popularity',
+                    ) => form.setValue('order', value)}
+                    value={field.value}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Order by" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="name">Name</SelectItem>
+                      <SelectItem value="original_name">
+                        Original Name
+                      </SelectItem>
+                      <SelectItem value="popularity">Popularity</SelectItem>
+                      <SelectItem value="birth_date">Birth Date</SelectItem>
+                      <SelectItem value="create_time">Date Added</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <div className="flex flex-col gap-2">
+          <FormField
+            control={form.control}
+            name="direction"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Direction</FormLabel>
+                <FormControl>
+                  <Select
+                    onValueChange={(value: 'asc' | 'desc') =>
+                      form.setValue('direction', value)
+                    }
+                    value={field.value}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Ascending" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="asc">Ascending</SelectItem>
+                      <SelectItem value="desc">Descending</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <Button type="submit">Search</Button>
+      </form>
+    </Form>
   );
 }
