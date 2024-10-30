@@ -49,7 +49,7 @@ export default function ItemPoster({
         className={cn(
           'relative aspect-[2/3] overflow-hidden rounded-lg border-2 border-pink-300 bg-pink-200 dark:border-pink-700 dark:bg-pink-900',
           small ? 'w-[50px]' : 'w-[150px] lg:w-[250px]',
-          fullImageUrl && !small && 'group',
+          fullImageUrl && !small && 'group cursor-pointer',
         )}
       >
         {item && thumbImageUrl ? (

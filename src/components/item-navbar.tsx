@@ -3,11 +3,6 @@ import ButtonDeleteItem from '@/components/button-delete-item';
 import { Badge } from '@/components/ui/badge';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from '@/components/ui/hover-card';
 import { useToast } from '@/components/ui/use-toast';
 import { getUrlForItem, isMovie, isPerson } from '@/core/types';
 import { useUserRole } from '@/core/utils/hooks';
@@ -16,6 +11,13 @@ import { MovieDto } from '@/data/movie.dto';
 import { PersonDto } from '@/data/person.dto';
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
+
+import {
+  HoverMenu,
+  HoverMenuContent,
+  HoverMenuProvider,
+  HoverMenuTrigger,
+} from './ui/hover-menu';
 
 /**
  * A navigation bar for an item, containing links to various item-related pages and actions.
@@ -118,87 +120,89 @@ export default function ItemNavbar({
   return (
     <nav className="start-0 top-0 z-10 w-full border-b bg-pink-300 p-2 dark:border-pink-700 dark:bg-pink-700">
       <div className="container mx-auto flex items-center gap-2 overflow-x-scroll px-4 md:justify-center md:overflow-auto">
-        <HoverCard closeDelay={0} openDelay={0}>
-          <HoverCardTrigger asChild>
-            <Button variant={'ghost'}>Overview</Button>
-          </HoverCardTrigger>
-          <HoverCardContent align="center" className="w-44 p-2">
-            <Link
-              className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-start')} w-full`}
-              href={getUrlForItem(item)}
-            >
-              Main
-            </Link>
-            <DropdownMenuSeparator />
-            <Link
-              className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-start')} w-full`}
-              href={getUrlForItem(item)}
-            >
-              Changes
-            </Link>
-            <Link
-              className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-start')} w-full`}
-              href={getUrlForItem(item)}
-            >
-              Report
-            </Link>
-            <Link
-              className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-start')} w-full`}
-              href={`${getUrlForItem(item)}/edit`}
-            >
-              Edit
-            </Link>
-          </HoverCardContent>
-        </HoverCard>
+        <HoverMenuProvider>
+          <HoverMenu closeDelay={0} openDelay={0}>
+            <HoverMenuTrigger asChild>
+              <Button variant={'ghost'}>Overview</Button>
+            </HoverMenuTrigger>
+            <HoverMenuContent align="center" className="w-44 p-2">
+              <Link
+                className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-start')} w-full`}
+                href={getUrlForItem(item)}
+              >
+                Main
+              </Link>
+              <DropdownMenuSeparator />
+              <Link
+                className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-start')} w-full`}
+                href={getUrlForItem(item)}
+              >
+                Changes
+              </Link>
+              <Link
+                className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-start')} w-full`}
+                href={getUrlForItem(item)}
+              >
+                Report
+              </Link>
+              <Link
+                className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-start')} w-full`}
+                href={`${getUrlForItem(item)}/edit`}
+              >
+                Edit
+              </Link>
+            </HoverMenuContent>
+          </HoverMenu>
 
-        {imageLinks ? (
-          <HoverCard closeDelay={0} openDelay={0}>
-            <HoverCardTrigger asChild>
-              <Button variant={'ghost'}>Media</Button>
-            </HoverCardTrigger>
-            <HoverCardContent align="center" className="w-44 p-2">
-              {imageLinks}
-            </HoverCardContent>
-          </HoverCard>
-        ) : null}
+          {imageLinks ? (
+            <HoverMenu closeDelay={0} openDelay={0}>
+              <HoverMenuTrigger asChild>
+                <Button variant={'ghost'}>Media</Button>
+              </HoverMenuTrigger>
+              <HoverMenuContent align="center" className="w-44 p-2">
+                {imageLinks}
+              </HoverMenuContent>
+            </HoverMenu>
+          ) : null}
 
-        <HoverCard closeDelay={0} openDelay={0}>
-          <HoverCardTrigger asChild>
-            <Button variant={'ghost'}>Community</Button>
-          </HoverCardTrigger>
-          <HoverCardContent align="center" className="w-44 p-2">
-            <Link
-              className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-between')} w-full`}
-              href={getUrlForItem(item)}
-            >
-              Discussions
-              <Badge variant="outline">0</Badge>
-            </Link>
+          <HoverMenu closeDelay={0} openDelay={0}>
+            <HoverMenuTrigger asChild>
+              <Button variant={'ghost'}>Community</Button>
+            </HoverMenuTrigger>
+            <HoverMenuContent align="center" className="w-44 p-2">
+              <Link
+                className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-between')} w-full`}
+                href={getUrlForItem(item)}
+              >
+                Discussions
+                <Badge variant="outline">0</Badge>
+              </Link>
 
-            <Link
-              className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-between')} w-full`}
-              href={getUrlForItem(item)}
-            >
-              Reviews
-              <Badge variant="outline">0</Badge>
-            </Link>
-          </HoverCardContent>
-        </HoverCard>
+              <Link
+                className={`${buttonVariants({ variant: 'ghost' }).replace('justify-center', 'justify-between')} w-full`}
+                href={getUrlForItem(item)}
+              >
+                Reviews
+                <Badge variant="outline">0</Badge>
+              </Link>
+            </HoverMenuContent>
+          </HoverMenu>
 
-        <Button onClick={() => void handleShare()} variant={'ghost'}>
-          Share
-        </Button>
+          <Button onClick={() => void handleShare()} variant={'ghost'}>
+            Share
+          </Button>
 
-        {['admin', 'moderator'].includes(userRole ?? '') ? (
-          <HoverCard closeDelay={0} openDelay={0}>
-            <HoverCardTrigger asChild>
-              <Button variant={'ghost'}>Manage</Button>
-            </HoverCardTrigger>
-            <HoverCardContent align="center" className="w-44 p-2">
-              <ButtonDeleteItem item={item} />
-            </HoverCardContent>
-          </HoverCard>
-        ) : null}
+          {['admin', 'moderator'].includes(userRole ?? '') ? (
+            <HoverMenu closeDelay={0} openDelay={0}>
+              <HoverMenuTrigger asChild>
+                <Button variant={'ghost'}>Manage</Button>
+              </HoverMenuTrigger>
+              <HoverMenuContent align="center" className="w-44 p-2">
+                <ButtonDeleteItem item={item} />
+              </HoverMenuContent>
+            </HoverMenu>
+          ) : null}
+        </HoverMenuProvider>
       </div>
     </nav>
   );

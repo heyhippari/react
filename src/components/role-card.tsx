@@ -17,7 +17,7 @@ export default function RoleCard({ role }: Readonly<{ role: RoleDto }>) {
 
   return (
     <Link className="group" href={`/person/${role.person?.id}`}>
-      <div className="flex h-24 flex-row items-center gap-4 rounded-lg border-2 border-pink-200 bg-pink-100 px-4 py-2 text-pink-700 transition-colors duration-300 group-hover:bg-pink-200 dark:bg-pink-800 dark:text-pink-300 dark:group-hover:bg-pink-700">
+      <div className="flex h-24 flex-row items-center gap-4 rounded-lg border-2 border-pink-200 bg-pink-100 px-4 py-2 text-pink-700 transition-colors duration-300 group-hover:bg-pink-200 dark:border-pink-700 dark:bg-pink-800 dark:text-pink-300 dark:group-hover:bg-pink-700">
         {role.person && profile ? (
           <Image
             alt={role.person.display_name}
