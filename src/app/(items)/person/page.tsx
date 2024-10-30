@@ -16,7 +16,12 @@ export default async function PersonPage({
 }: {
   searchParams?: Promise<{
     direction?: 'asc' | 'desc';
-    order?: string;
+    order?:
+      | 'birth_date'
+      | 'create_time'
+      | 'name'
+      | 'original_name'
+      | 'popularity';
     page?: string;
     q?: string;
   }>;

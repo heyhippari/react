@@ -16,7 +16,7 @@ export default async function MoviePage({
 }: {
   searchParams?: Promise<{
     direction?: 'asc' | 'desc';
-    order?: string;
+    order?: 'create_time' | 'dvd_id' | 'popularity' | 'release_date';
     page?: string;
     q?: string;
   }>;
