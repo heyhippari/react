@@ -5,6 +5,7 @@ import { toUserDto, UserDto } from "@/data/user.dto";
 import {
   exchangeCodeForSession,
   getUserById,
+  getUserByUsername,
   loginWithProvider,
   logoutUser,
   refreshUser,
@@ -32,6 +33,11 @@ export const userService = {
     }
 
     const user = await getUserById(user_id);
+
+    return toUserDto(user);
+  },
+  async getUserByUsername(username: string): Promise<null | UserDto> {
+    const user = await getUserByUsername(username);
 
     return toUserDto(user);
   },

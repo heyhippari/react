@@ -32,6 +32,30 @@ export async function getUserById(userId: string) {
 }
 
 /**
+ * Get a profile by its username.
+ * @param username The username of the profile to get.
+ * @returns The profile with the specified username.
+ */
+export async function getUserByUsername(username: string) {
+  const client = await createSupabaseClient();
+
+  const { data } = await client.from("profiles").select(
+    `
+      id,
+      username,
+      avatar_url,
+      create_time,
+      roles: user_roles (
+        role
+      )
+    `,
+  ).eq("username", username)
+    .single().throwOnError();
+
+  return userModelSchema.parse(data);
+}
+
+/**
  * Refresh the current user session.
  * @returns The refreshed user.
  */
