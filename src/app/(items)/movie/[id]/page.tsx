@@ -28,7 +28,7 @@ export default async function MoviePage({
     <>
       <VisitTracker differenciator="movie" item={movie} />
       <ItemNavbar item={movie} />
-      <div className="w-full bg-pink-100 p-4 dark:bg-pink-800">
+      <div className="w-full border-b-2 border-pink-300 bg-pink-100 p-4 dark:border-pink-700 dark:bg-pink-800">
         <div className="container flex flex-col gap-6 px-4 md:flex-row">
           <div className="flex flex-col gap-4">
             <ItemPoster item={movie} />

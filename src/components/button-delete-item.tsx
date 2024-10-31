@@ -13,8 +13,11 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { isMovie } from '@/core/types';
+import { LabelDto } from '@/data/label.dto';
 import { MovieDto } from '@/data/movie.dto';
 import { PersonDto } from '@/data/person.dto';
+import { SeriesDto } from '@/data/series.dto';
+import { StudioDto } from '@/data/studio.dto';
 import { useActionState, useState } from 'react';
 
 /**
@@ -26,12 +29,16 @@ import { useActionState, useState } from 'react';
 export default function ButtonDeleteItem({
   item,
 }: Readonly<{
-  item: MovieDto | PersonDto;
+  item: LabelDto | MovieDto | PersonDto | SeriesDto | StudioDto;
 }>) {
   const [isOpen, setIsOpen] = useState(false);
 
   const action = isMovie(item) ? deleteMovieAction : deletePersonAction;
   const [, deleteAction, isDeletePending] = useActionState(action, null);
+
+  if (['label', 'series', 'studio'].includes(item?._type)) {
+    return null;
+  }
 
   return (
     <Dialog onOpenChange={setIsOpen} open={isOpen}>
@@ -55,7 +62,7 @@ export default function ButtonDeleteItem({
             <Button variant="outline">Cancel</Button>
           </DialogClose>
           <form action={deleteAction}>
-            <input name="item_id" type="hidden" value={item?.id} />
+            <input name="item_id" type="hidden" value={item?.id ?? Infinity} />
             <Button
               className="bg-red-500"
               loading={isDeletePending}

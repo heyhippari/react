@@ -11,7 +11,7 @@ import HomeStats from './home-stats';
  */
 export default function SiteFooter() {
   return (
-    <footer className="flex w-full flex-col bg-pink-300 shadow dark:bg-pink-700">
+    <footer className="flex w-full flex-col border-t-2 border-pink-300 bg-pink-200 shadow dark:border-pink-700 dark:bg-pink-800">
       <div className="container mx-auto flex w-full items-center justify-between p-4">
         <HomeStats />
       </div>

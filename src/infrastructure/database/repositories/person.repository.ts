@@ -41,6 +41,7 @@ export async function getPersonById(
             original_name,
             release_date,
             dvd_id,
+            format,
             front_cover_url
           )
         ),

@@ -1,5 +1,7 @@
 import ItemCard from '@/components/item-card';
 import ItemGrid from '@/components/item-grid';
+import ItemHeader from '@/components/item-header';
+import ItemNavbar from '@/components/item-navbar';
 import { Badge } from '@/components/ui/badge';
 import { VisitTracker } from '@/components/visit-tracker';
 import { labelService } from '@/services/label.service';
@@ -53,22 +55,8 @@ export default async function LabelPage(properties: {
   return (
     <>
       <VisitTracker differenciator="label" item={label} />
-      <div className="w-full bg-pink-100 p-4 dark:bg-pink-800">
-        <div className="container flex flex-col gap-6 px-4 md:flex-row">
-          <div className="flex w-full flex-col justify-start gap-2 align-top">
-            <div className="flex flex-col gap-0">
-              <h1 className="line-clamp-2 w-fit text-ellipsis bg-gradient-to-r from-pink-600 to-rose-400 bg-clip-text text-4xl font-bold leading-tight text-transparent dark:from-pink-400 dark:to-rose-400">
-                {label?.display_name}
-              </h1>
-              {label?.alternative_name ? (
-                <p className="line-clamp-2 text-ellipsis text-lg font-semibold">
-                  {label?.alternative_name}
-                </p>
-              ) : null}
-            </div>
-          </div>
-        </div>
-      </div>
+      <ItemNavbar item={label} />
+      <ItemHeader item={label} />
       <div className="container flex flex-col gap-4 p-4">
         <div className="flex flex-row gap-2">
           <h2 className="text-lg font-semibold">Movies</h2>

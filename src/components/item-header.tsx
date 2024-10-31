@@ -1,8 +1,12 @@
 import ItemPoster from '@/components/item-poster';
 import { getUrlForItem } from '@/core/types';
+import { LabelDto } from '@/data/label.dto';
 import { MovieDto } from '@/data/movie.dto';
 import { PersonDto } from '@/data/person.dto';
+import { SeriesDto } from '@/data/series.dto';
+import { StudioDto } from '@/data/studio.dto';
 import MdiArrowLeft from '~icons/mdi/arrow-left.jsx';
+import MdiLink from '~icons/mdi/link.jsx';
 import Link from 'next/link';
 
 /**
@@ -13,9 +17,11 @@ import Link from 'next/link';
  */
 export default function ItemHeader({
   item,
-}: Readonly<{ item: MovieDto | PersonDto }>) {
+}: Readonly<{
+  item: LabelDto | MovieDto | PersonDto | SeriesDto | StudioDto;
+}>) {
   return (
-    <div className="w-full bg-pink-100 p-4 dark:bg-pink-800">
+    <div className="flex w-full flex-col gap-4 border-b-2 border-pink-300 bg-pink-100 pt-4 dark:border-pink-700 dark:bg-pink-800">
       <div className="container flex flex-col gap-6 px-4 md:flex-row">
         <Link
           className="flex flex-col items-center gap-4 md:flex-row"
@@ -33,6 +39,19 @@ export default function ItemHeader({
           </div>
         </Link>
       </div>
+      {item._type === 'studio' && item?.homepage && (
+        <div className="border-t-2 border-pink-300 bg-pink-200 dark:border-pink-700 dark:bg-pink-900">
+          <div className="container flex flex-row items-center px-3 py-2">
+            <Link
+              className="flex flex-row items-center justify-center gap-2 hover:underline"
+              href={item.homepage}
+            >
+              <MdiLink className="mt-0.5 size-5" />
+              Visit homepage
+            </Link>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

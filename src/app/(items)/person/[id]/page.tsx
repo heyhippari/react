@@ -73,7 +73,7 @@ export default async function PersonPage({
       <VisitTracker differenciator="person" item={person} />
       <ItemNavbar item={person} />
       <div className="container flex grow flex-col gap-2 px-0 lg:flex-row">
-        <div className="grow bg-pink-100 p-4 dark:bg-pink-950">
+        <div className="grow border-x-2 border-pink-300 bg-pink-100 p-4 dark:border-pink-700 dark:bg-pink-800">
           <div className="container flex flex-col gap-6 px-4">
             <ItemPoster item={person} />
             <div className="flex w-full flex-col justify-start gap-4 align-top">

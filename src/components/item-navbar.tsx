@@ -7,8 +7,11 @@ import { useToast } from '@/components/ui/use-toast';
 import { getUrlForItem, isMovie, isPerson } from '@/core/types';
 import { useUserRole } from '@/core/utils/hooks';
 import { getShareTitle } from '@/core/utils/share';
+import { LabelDto } from '@/data/label.dto';
 import { MovieDto } from '@/data/movie.dto';
 import { PersonDto } from '@/data/person.dto';
+import { SeriesDto } from '@/data/series.dto';
+import { StudioDto } from '@/data/studio.dto';
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 
@@ -27,7 +30,9 @@ import {
  */
 export default function ItemNavbar({
   item,
-}: Readonly<{ item: MovieDto | PersonDto }>) {
+}: Readonly<{
+  item: LabelDto | MovieDto | PersonDto | SeriesDto | StudioDto;
+}>) {
   const [supportsShareAPI, setSupportsShareAPI] = useState(
     navigator?.share !== undefined,
   );
@@ -118,7 +123,7 @@ export default function ItemNavbar({
   };
 
   return (
-    <nav className="start-0 top-0 z-10 w-full border-b bg-pink-300 p-2 dark:border-pink-700 dark:bg-pink-700">
+    <nav className="start-0 top-0 z-10 w-full border-b-2 border-pink-300 bg-pink-200 p-2 dark:border-pink-700 dark:bg-pink-800">
       <div className="container mx-auto flex items-center gap-2 overflow-x-scroll px-4 md:justify-center md:overflow-auto">
         <HoverMenuProvider>
           <HoverMenu closeDelay={0} openDelay={0}>

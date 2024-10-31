@@ -29,6 +29,7 @@ export async function getSeriesById(
           original_name,
           release_date,
           dvd_id,
+          format,
           front_cover_url
         )
       `,

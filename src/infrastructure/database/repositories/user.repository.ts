@@ -15,7 +15,17 @@ import { userModelSchema } from "../models/user.model";
 export async function getUserById(userId: string) {
   const client = await createSupabaseClient();
 
-  const { data } = await client.from("profiles").select("*").eq("id", userId)
+  const { data } = await client.from("profiles").select(
+    `
+      id,
+      username,
+      avatar_url,
+      create_time,
+      roles: user_roles (
+        role
+      )
+    `,
+  ).eq("id", userId)
     .single().throwOnError();
 
   return userModelSchema.parse(data);

@@ -225,6 +225,7 @@ export const baseStudioDtoSchema = z.object({
   _type: z.literal("studio").default("studio"),
   alternative_name: z.string().nullable().optional(),
   display_name: z.string().nullable().optional(),
+  homepage: z.string().url().nullable().optional(),
   id: z.number().nullable().optional(),
 });
 
@@ -240,6 +241,7 @@ export function toBaseStudioDto(model: BaseStudioModel): BaseStudioDto {
     _type: "studio",
     alternative_name: model.name ? model.original_name : undefined,
     display_name: model.name ?? model.original_name,
+    homepage: model.homepage,
     id: model.id,
   };
 }
@@ -251,6 +253,7 @@ export function toBaseStudioDto(model: BaseStudioModel): BaseStudioDto {
  */
 export function fromBaseStudioDto(dto: BaseStudioDto): BaseStudioModel {
   return {
+    homepage: dto.homepage,
     id: dto.id!,
     name: dto.display_name ?? dto.alternative_name,
     original_name: dto.alternative_name ?? dto.display_name!,

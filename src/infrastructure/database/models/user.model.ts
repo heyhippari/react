@@ -9,6 +9,14 @@ export const userModelSchema = z.object({
   create_time: z.string().optional(),
   email: z.string().email().nullable().optional(),
   id: z.string().nullable().optional(),
+  roles: z.array(z.object({
+    role: z.enum([
+      "admin",
+      "moderator",
+      "user",
+      "banned",
+    ]),
+  })).nullable().optional(),
   username: z.string().nullable().optional(),
 });
 

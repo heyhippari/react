@@ -6,6 +6,14 @@ export const userDtoSchema = z.object({
   create_time: z.string().optional(),
   email: z.string().email().nullable().optional(),
   id: z.string().nullable().optional(),
+  roles: z.array(z.object({
+    role: z.enum([
+      "admin",
+      "moderator",
+      "user",
+      "banned",
+    ]),
+  })).nullable().optional(),
   username: z.string().nullable().optional(),
 });
 
@@ -22,6 +30,7 @@ export function toUserDto(model: UserModel): UserDto {
     create_time: model.create_time,
     email: model.email,
     id: model.id,
+    roles: model.roles,
     username: model.username,
   };
 }

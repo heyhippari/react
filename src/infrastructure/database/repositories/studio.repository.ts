@@ -23,12 +23,14 @@ export async function getStudioById(
         id,
         name,
         original_name,
+        homepage,
         movies (
           id,
           name,
           original_name,
           release_date,
           dvd_id,
+          format,
           front_cover_url
         )
       `,

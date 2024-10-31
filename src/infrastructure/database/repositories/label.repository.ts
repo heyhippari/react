@@ -27,6 +27,7 @@ export async function getLabelById(
           name,
           original_name,
           dvd_id,
+          format,
           front_cover_url
         )
       `,

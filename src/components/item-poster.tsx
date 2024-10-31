@@ -1,13 +1,16 @@
 'use client';
 import { isMovie, isPerson } from '@/core/types';
 import { cn } from '@/core/utils/ui';
+import { LabelDto } from '@/data/label.dto';
 import { MovieDto } from '@/data/movie.dto';
 import { PersonDto } from '@/data/person.dto';
+import { SeriesDto } from '@/data/series.dto';
+import { StudioDto } from '@/data/studio.dto';
 import MdiArrowExpandAll from '~icons/mdi/arrow-expand-all.jsx';
 import Image from 'next/image';
 import { useMemo, useState } from 'react';
-import 'yet-another-react-lightbox/styles.css';
 import { Lightbox } from 'yet-another-react-lightbox';
+import 'yet-another-react-lightbox/styles.css';
 
 /**
  * Poster for a movie or person.
@@ -20,7 +23,7 @@ export default function ItemPoster({
   item,
   small = false,
 }: Readonly<{
-  item: MovieDto | PersonDto;
+  item: LabelDto | MovieDto | PersonDto | SeriesDto | StudioDto;
   small?: boolean;
 }>) {
   const [open, setOpen] = useState(false);
@@ -43,6 +46,14 @@ export default function ItemPoster({
     return null;
   }, [item]);
 
+  const hasImage = useMemo(() => {
+    if (item._type === 'movie' || item._type === 'person') {
+      return true;
+    }
+
+    return false;
+  }, [item]);
+
   return (
     <>
       <div
@@ -52,10 +63,10 @@ export default function ItemPoster({
           fullImageUrl && !small && 'group cursor-pointer',
         )}
       >
-        {item && thumbImageUrl ? (
+        {item && thumbImageUrl && hasImage ? (
           <>
             <Image
-              alt={item?.display_name}
+              alt={item?.display_name ?? 'Poster'}
               className={cn(
                 'size-full rounded-lg object-cover transition-opacity',
                 imageIsLoaded ? 'opacity-100' : 'opacity-0',

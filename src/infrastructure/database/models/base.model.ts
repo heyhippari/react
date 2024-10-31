@@ -22,6 +22,7 @@ export const baseLabelModelSchema = z.object({
 export type BaseLabelModel = z.infer<typeof baseLabelModelSchema>;
 
 export const baseStudioModelSchema = z.object({
+  homepage: z.string().url().nullable().optional(),
   id: z.number().optional(),
   name: z.string().nullable().optional(),
   original_name: z.string(),

@@ -64,7 +64,18 @@ export default function ItemCard({
           )}
           {isMovie(item) ? (
             <div className="absolute left-0 top-0 flex size-full flex-col justify-between">
-              <div />
+              {item?.format ? (
+                <div className="self-end p-2">
+                  <Badge
+                    className="bg-pink-600 hover:bg-pink-500 dark:bg-pink-400 dark:hover:bg-pink-500"
+                    variant="default"
+                  >
+                    {item?.format}
+                  </Badge>
+                </div>
+              ) : (
+                <div />
+              )}
               <div className="p-2">
                 <Badge
                   className="bg-pink-600 hover:bg-pink-500 dark:bg-pink-400 dark:hover:bg-pink-500"
