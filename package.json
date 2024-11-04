@@ -16,7 +16,7 @@
     "i18n:compile": "lingui compile --typescript"
   },
   "dependencies": {
-    "@hookform/resolvers": "^3.9.0",
+    "@hookform/resolvers": "^3.9.1",
     "@lingui/macro": "^4.13.0",
     "@lingui/react": "^4.13.0",
     "@radix-ui/react-accordion": "^1.2.1",
