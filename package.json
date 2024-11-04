@@ -58,7 +58,7 @@
     "react-responsive": "^10.0.0",
     "react-use": "^17.5.1",
     "react-virtualized": "^9.22.5",
-    "recharts": "^2.13.0",
+    "recharts": "^2.13.3",
     "server-only": "^0.0.1",
     "styled-components": "^6.1.13",
     "swiper": "^11.1.14",
