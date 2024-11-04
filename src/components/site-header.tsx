@@ -2,6 +2,7 @@ import { SearchInput } from '@/components/search-input';
 import SiteMenu from '@/components/site-menu';
 import UserMenuServer from '@/components/user-menu-server';
 import Link from 'next/link';
+import { Search } from './search-instantsearch';
 
 /**
  * Site header component.
@@ -23,7 +24,7 @@ export default function SiteHeader() {
           <SiteMenu />
         </div>
         <div className="flex items-center gap-2 space-x-3 md:order-2 md:space-x-0 rtl:space-x-reverse">
-          <SearchInput />
+          <Search />
           <UserMenuServer />
         </div>
       </div>

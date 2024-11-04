@@ -34,7 +34,7 @@ export default function ItemNavbar({
   item: LabelDto | MovieDto | PersonDto | SeriesDto | StudioDto;
 }>) {
   const [supportsShareAPI, setSupportsShareAPI] = useState(
-    navigator?.share !== undefined,
+    globalThis?.navigator?.share !== undefined,
   );
   const { toast } = useToast();
   const userRole = useUserRole();
@@ -101,7 +101,7 @@ export default function ItemNavbar({
   const handleShare = async () => {
     if (supportsShareAPI) {
       try {
-        await navigator?.share({
+        await globalThis?.navigator?.share({
           text: getShareTitle(item),
           title: getShareTitle(item),
           url: globalThis.location.href,

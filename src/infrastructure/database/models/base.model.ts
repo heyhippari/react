@@ -51,6 +51,7 @@ export const baseMovieModelSchema = z.object({
   length: z.number().nullable().optional(),
   name: z.string().nullable().optional(),
   original_name: z.string(),
+  popularity: z.number().nullable().optional(),
   release_date: z.string().nullable().optional(),
   series_id: z.number().nullable().optional(),
   studio_id: z.number().nullable().optional(),

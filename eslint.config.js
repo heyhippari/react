@@ -17,6 +17,7 @@ import perfectionist from 'eslint-plugin-perfectionist';
 import jsdoc from 'eslint-plugin-jsdoc';
 import eslintPluginUnicorn from 'eslint-plugin-unicorn';
 import vitest from '@vitest/eslint-plugin';
+import pluginPromise from 'eslint-plugin-promise';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -46,6 +47,7 @@ export default tseslint.config(
   eslintPluginImportX.flatConfigs.typescript,
   ...tseslint.configs.recommendedTypeChecked,
   ...tseslint.configs.stylisticTypeChecked,
+  pluginPromise.configs['flat/recommended'],
   prettierConfig,
   ...tailwind.configs['flat/recommended'],
   {
@@ -129,6 +131,10 @@ export default tseslint.config(
         2,
         { checkArrowFunctions: false },
       ],
+      // Prefer using async/await over callbacks.
+      'promise/prefer-await-to-callbacks': 2,
+      // Prefer using async/await over then/catch.
+      'promise/prefer-await-to-then': 2,
     },
   },
   {

@@ -35,6 +35,7 @@ export async function getMovieById(
         has_nudity,
         front_cover_url,
         full_cover_url,
+        popularity,
         roles (
           id,
           age,
