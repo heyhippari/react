@@ -29,7 +29,7 @@ const buttonVariants = cva(
         outline:
           'border border-pink-200 bg-white shadow-sm hover:bg-pink-100 hover:text-pink-900 dark:border-pink-800 dark:bg-pink-950 dark:hover:bg-pink-800 dark:hover:text-pink-50',
         secondary:
-          'bg-pink-100 text-pink-900 shadow-sm hover:bg-pink-100/80 dark:bg-pink-800 dark:text-pink-50 dark:hover:bg-pink-800/80',
+          'border-2 border-pink-300 bg-pink-100 text-pink-900 shadow-sm hover:bg-pink-100/80 dark:border-pink-700 dark:bg-pink-800 dark:text-pink-50 dark:hover:bg-pink-800/80',
       },
     },
   },

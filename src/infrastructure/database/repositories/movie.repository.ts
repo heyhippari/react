@@ -94,6 +94,15 @@ export async function createMovie(movie: BaseMovieModel) {
   const { data } = await client
     .from("movies")
     .insert(movie)
+    .select(
+      `
+        id,
+        name,
+        original_name,
+        release_date,
+        dvd_id
+        `,
+    )
     .single()
     .throwOnError();
 

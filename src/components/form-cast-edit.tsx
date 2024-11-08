@@ -31,7 +31,8 @@ export function FormCastEdit({
   const [personSearchValue, setPersonSearchValue] = useState('');
 
   const { loading: isPersonLoading, value: persons } = useAsync(
-    async () => await personService.searchPersonByName(personSearchValue),
+    async () => await personService.searchPersonByName(personSearchValue ?? ''),
+    [personSearchValue],
   );
 
   const form = useForm<MovieRoleAddFormSchema>({
@@ -80,6 +81,7 @@ export function FormCastEdit({
                     })) ?? []
                   }
                   onSearchValueChange={(value) => {
+                    console.log(value);
                     setPersonSearchValue(value);
                   }}
                   onSelectedValueChange={(value) =>

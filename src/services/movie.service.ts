@@ -1,4 +1,4 @@
-import { fromBaseMovieDto } from "@/data/base.dto";
+import { fromBaseMovieDto, toBaseMovieDto } from "@/data/base.dto";
 /**
  * Service to handle movie related operations.
  */
@@ -7,6 +7,7 @@ import { addImage } from "@/infrastructure/database/repositories/image.repositor
 import {
   addMovieImage,
   addMovieRole,
+  createMovie,
   deleteMovie,
   deleteMovieRole,
   getMovieById,
@@ -74,6 +75,11 @@ export const movieService = {
   },
   async addMovieRole(movie_id: number, role_id: number) {
     await addMovieRole(movie_id, role_id);
+  },
+  async createMovie(movie: MovieDto) {
+    const createdMovie = await createMovie(fromBaseMovieDto(movie));
+
+    return toBaseMovieDto(createdMovie);
   },
   async deleteMovie(movie_id: number) {
     const movie = await this.getMovie(movie_id);

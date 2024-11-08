@@ -1,5 +1,5 @@
 'use client';
-import { updateMovieAction } from '@/app/actions/movie';
+import { createMovieAction } from '@/app/actions/movie';
 import { AutoComplete } from '@/components/ui/autocomplete';
 import { Button } from '@/components/ui/button';
 import {
@@ -19,39 +19,25 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import {
-  MovieEditFormSchema,
-  movieEditFormSchema,
-} from '@/core/utils/validation/movie-update';
-import { MovieDto } from '@/data/movie.dto';
+  MovieCreateFormSchema,
+  movieCreateFormSchema,
+} from '@/core/utils/validation/movie-create';
 import { labelService } from '@/services/label.service';
 import { seriesService } from '@/services/series.service';
 import { studioService } from '@/services/studio.service';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { DateTime } from 'luxon';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useAsync } from 'react-use';
 
 /**
- * Form to edit a movie.
- * @param properties - The properties to render the form.
- * @param properties.movie - The DTO of the movie to edit.
+ * Form to create a movie.
  * @returns The rendered component.
  */
-export function FormMovieEdit({
-  movie,
-}: Readonly<{
-  movie: MovieDto;
-}>) {
-  const [studioSearchValue, setStudioSearchValue] = useState(
-    movie?.studio?.display_name,
-  );
-  const [labelSearchValue, setLabelSearchValue] = useState(
-    movie?.label?.display_name,
-  );
-  const [seriesSearchValue, setSeriesSearchValue] = useState(
-    movie?.series?.display_name,
-  );
+export function FormMovieCreate() {
+  const [studioSearchValue, setStudioSearchValue] = useState('');
+  const [labelSearchValue, setLabelSearchValue] = useState('');
+  const [seriesSearchValue, setSeriesSearchValue] = useState('');
 
   const { loading: isStudioLoading, value: studios } = useAsync(
     async () => await studioService.searchStudioByName(studioSearchValue ?? ''),
@@ -66,27 +52,24 @@ export function FormMovieEdit({
     [seriesSearchValue],
   );
 
-  const form = useForm<MovieEditFormSchema>({
+  const form = useForm<MovieCreateFormSchema>({
     defaultValues: {
-      barcode: movie?.barcode ?? undefined,
-      dvd_id: movie?.dvd_id ?? undefined,
-      format: movie?.format ?? 'Unknown',
-      id: movie?.id ?? undefined,
-      label_id: movie?.label?.id ?? undefined,
-      length: movie?.length ?? 0,
-      name: movie?.alternative_name ? movie?.display_name : undefined,
-      original_name: movie?.alternative_name ?? movie?.display_name,
-      release_date: movie?.release_date
-        ? (DateTime.fromISO(movie?.release_date).toISODate() ?? undefined)
-        : undefined,
-      series_id: movie?.series?.id ?? undefined,
-      studio_id: movie?.studio?.id ?? undefined,
+      barcode: undefined,
+      dvd_id: undefined,
+      format: 'Unknown',
+      label_id: undefined,
+      length: 0,
+      name: undefined,
+      original_name: undefined,
+      release_date: undefined,
+      series_id: undefined,
+      studio_id: undefined,
     },
-    resolver: zodResolver(movieEditFormSchema),
+    resolver: zodResolver(movieCreateFormSchema),
   });
 
-  const onSubmit: SubmitHandler<MovieEditFormSchema> = async (data) => {
-    await updateMovieAction(data);
+  const onSubmit: SubmitHandler<MovieCreateFormSchema> = async (data) => {
+    await createMovieAction(data);
   };
 
   return (
@@ -95,18 +78,6 @@ export function FormMovieEdit({
         className="space-y-4"
         onSubmit={(event) => void form.handleSubmit(onSubmit)(event)}
       >
-        <FormField
-          control={form.control}
-          name="id"
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <input type="hidden" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
         <FormField
           control={form.control}
           name="original_name"
@@ -141,7 +112,7 @@ export function FormMovieEdit({
               <FormItem>
                 <FormLabel>DVD ID</FormLabel>
                 <FormControl>
-                  <Input disabled placeholder="DVD ID" readOnly {...field} />
+                  <Input autoComplete="off" placeholder="DVD ID" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -166,9 +137,13 @@ export function FormMovieEdit({
                     onSearchValueChange={(value) => {
                       setStudioSearchValue(value);
                     }}
-                    onSelectedValueChange={(value) =>
-                      form.setValue('studio_id', Number.parseInt(value, 10))
-                    }
+                    onSelectedValueChange={(value) => {
+                      if (Number.isNaN(Number.parseInt(value, 10))) {
+                        form.setValue('studio_id', null);
+                      } else {
+                        form.setValue('studio_id', Number.parseInt(value, 10));
+                      }
+                    }}
                     placeholder="Search for a studio..."
                     searchValue={studioSearchValue ?? ''}
                     selectedValue={field.value?.toString() ?? ''}
@@ -199,9 +174,13 @@ export function FormMovieEdit({
                     onSearchValueChange={(value) => {
                       setLabelSearchValue(value);
                     }}
-                    onSelectedValueChange={(value) =>
-                      form.setValue('label_id', Number.parseInt(value, 10))
-                    }
+                    onSelectedValueChange={(value) => {
+                      if (Number.isNaN(Number.parseInt(value, 10))) {
+                        form.setValue('label_id', null);
+                      } else {
+                        form.setValue('label_id', Number.parseInt(value, 10));
+                      }
+                    }}
                     placeholder="Search for a label..."
                     searchValue={labelSearchValue ?? ''}
                     selectedValue={field.value?.toString() ?? ''}
@@ -228,9 +207,13 @@ export function FormMovieEdit({
                       })) ?? []
                     }
                     onSearchValueChange={(value) => setSeriesSearchValue(value)}
-                    onSelectedValueChange={(value) =>
-                      form.setValue('series_id', Number.parseInt(value, 10))
-                    }
+                    onSelectedValueChange={(value) => {
+                      if (Number.isNaN(Number.parseInt(value, 10))) {
+                        form.setValue('series_id', null);
+                      } else {
+                        form.setValue('series_id', Number.parseInt(value, 10));
+                      }
+                    }}
                     placeholder="Search for a series..."
                     searchValue={seriesSearchValue ?? ''}
                     selectedValue={field.value?.toString() ?? ''}

@@ -1,7 +1,17 @@
 import { SearchInput } from '@/components/search-input';
 import SiteMenu from '@/components/site-menu';
 import UserMenuServer from '@/components/user-menu-server';
+import MdiPlus from '~icons/mdi/plus.jsx';
 import Link from 'next/link';
+
+import { Button, buttonVariants } from './ui/button';
+import {
+  HoverMenu,
+  HoverMenuContent,
+  HoverMenuProvider,
+  HoverMenuTrigger,
+} from './ui/hover-menu';
+import { cn } from '@/core/utils/ui';
 
 /**
  * Site header component.
@@ -24,6 +34,30 @@ export default function SiteHeader() {
         </div>
         <div className="flex items-center gap-2 space-x-3 md:order-2 md:space-x-0 rtl:space-x-reverse">
           <SearchInput />
+          <HoverMenuProvider>
+            <HoverMenu closeDelay={0} openDelay={0}>
+              <HoverMenuTrigger asChild>
+                <Button
+                  className="rounded-full text-pink-400"
+                  size={'icon'}
+                  variant={'secondary'}
+                >
+                  <MdiPlus className="size-5" />
+                </Button>
+              </HoverMenuTrigger>
+              <HoverMenuContent align="center" className="z-50 w-28 p-2">
+                <Link
+                  className={cn(
+                    buttonVariants({ variant: 'ghost' }),
+                    'w-full justify-start',
+                  )}
+                  href="/movie/create"
+                >
+                  Movie
+                </Link>
+              </HoverMenuContent>
+            </HoverMenu>
+          </HoverMenuProvider>
           <UserMenuServer />
         </div>
       </div>

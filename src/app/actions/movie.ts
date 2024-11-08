@@ -1,4 +1,9 @@
 "use server";
+import { getUrlForItem } from "@/core/types";
+import {
+  fromMovieCreateForm,
+  MovieCreateFormSchema,
+} from "@/core/utils/validation/movie-create";
 import {
   fromMovieEditForm,
   MovieEditFormSchema,
@@ -137,4 +142,28 @@ export async function deleteMovieAction(
   // Revalidate the homepage in case the movie deleted was on the homepage
   revalidatePath("/", "page");
   redirect("/");
+}
+
+/**
+ * Create a new movie in the database.
+ * @param formData - Form data containing the movie details.
+ */
+export async function createMovieAction(
+  formData: MovieCreateFormSchema,
+) {
+  const isLoggedIn = await userService.refreshUser();
+
+  if (!isLoggedIn) {
+    throw new Error("User not authenticated");
+  }
+
+  const movie = await movieService.createMovie(fromMovieCreateForm(formData));
+
+  // Revalidate the homepage in case the movie created was on the homepage
+  revalidatePath("/", "page");
+  // Revalidate the movie index page
+  revalidatePath("/movie", "page");
+  // Revalidate the movie page for the new movie
+  revalidatePath(getUrlForItem(movie), "page");
+  redirect(getUrlForItem(movie));
 }
