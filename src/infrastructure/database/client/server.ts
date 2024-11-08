@@ -34,6 +34,7 @@ export async function createClient(serviceKey = false) {
 
           try {
             for (const { name, options, value } of cookiesToSet) {
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-argument -- Types are vague on purpose
               cookieStore.set(name, value, options);
             }
           } catch {

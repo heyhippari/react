@@ -1,6 +1,7 @@
 import { SearchInput } from '@/components/search-input';
 import SiteMenu from '@/components/site-menu';
 import UserMenuServer from '@/components/user-menu-server';
+import { cn } from '@/core/utils/ui';
 import MdiPlus from '~icons/mdi/plus.jsx';
 import Link from 'next/link';
 
@@ -11,7 +12,6 @@ import {
   HoverMenuProvider,
   HoverMenuTrigger,
 } from './ui/hover-menu';
-import { cn } from '@/core/utils/ui';
 
 /**
  * Site header component.

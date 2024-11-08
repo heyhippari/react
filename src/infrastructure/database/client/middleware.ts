@@ -22,11 +22,13 @@ export const updateSession = async (request: NextRequest) => {
           },
           setAll(cookiesToSet) {
             for (const { name, options, value } of cookiesToSet) {
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-argument -- Types are vague on purpose
               request.cookies.set({
                 name,
                 value,
                 ...options,
               });
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-argument -- Types are vague on purpose
               response.cookies.set({
                 name,
                 value,
