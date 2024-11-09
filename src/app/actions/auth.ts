@@ -31,16 +31,26 @@ export async function loginAction(
     redirect("/error");
   }
 
+  let data: {
+    provider: Provider;
+    url: string;
+  } | null = null;
+
   try {
-    const data = await userService.loginWithProvider(provider);
+    data = await userService.loginWithProvider(provider);
 
     revalidatePath("/", "layout");
     if (data.url) {
       revalidatePath(data.url, "layout");
-      redirect(data.url);
     }
   } catch (error) {
-    console.error(error);
+    console.error(`loginWithProvider error`, error);
     redirect("/error");
+  } finally {
+    if (!data) {
+      redirect("/");
+    }
+
+    redirect(data.url);
   }
 }
