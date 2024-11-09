@@ -34,7 +34,7 @@ export default function ItemNavbar({
   item: LabelDto | MovieDto | PersonDto | SeriesDto | StudioDto;
 }>) {
   const [supportsShareAPI, setSupportsShareAPI] = useState(
-    navigator?.share !== undefined,
+    'navigator' in globalThis && globalThis.navigator.share !== undefined,
   );
   const { toast } = useToast();
   const userRole = useUserRole();
