@@ -19,6 +19,7 @@ import {
 } from "@/infrastructure/database/repositories/movie.repository";
 
 import { cloudflareService } from "./cloudflare.service";
+import { ServiceResponse } from "./types";
 
 export const movieService = {
   async addMovieImage(
@@ -74,18 +75,22 @@ export const movieService = {
     }
   },
   async addMovieRole(movie_id: number, role_id: number) {
-    await addMovieRole(movie_id, role_id);
+    try {
+      await addMovieRole(movie_id, role_id);
+    } catch (error) {
+      return { error, message: "Error adding role" };
+    }
   },
   async createMovie(movie: MovieDto) {
     const createdMovie = await createMovie(fromBaseMovieDto(movie));
 
     return toBaseMovieDto(createdMovie);
   },
-  async deleteMovie(movie_id: number) {
+  async deleteMovie(movie_id: number): Promise<ServiceResponse> {
     const movie = await this.getMovie(movie_id);
 
     if (!movie) {
-      throw new Error("Movie not found");
+      return { message: "Movie not found" };
     }
 
     try {
@@ -100,10 +105,23 @@ export const movieService = {
       throw new Error("Error deleting images");
     }
 
-    await deleteMovie(movie_id);
+    const { error } = await deleteMovie(movie_id);
+
+    if (error) {
+      return { error, message: "Error deleting movie" };
+    }
+
+    return { message: "Movie deleted" };
   },
-  async deleteMovieRole(movie_id: number, role_id: number) {
-    await deleteMovieRole(movie_id, role_id);
+  async deleteMovieRole(
+    movie_id: number,
+    role_id: number,
+  ): Promise<ServiceResponse> {
+    const { error } = await deleteMovieRole(movie_id, role_id);
+
+    return error
+      ? { error, message: "Error deleting role" }
+      : { message: "Role deleted" };
   },
   async getMovie(movie_id: number): Promise<MovieDto> {
     const movie = await getMovieById(movie_id);
@@ -134,11 +152,17 @@ export const movieService = {
 
     return movies?.map((movie) => toMovieDto(movie)) ?? [];
   },
-  async updateMovie(movie: MovieDto) {
+  async updateMovie(
+    movie: MovieDto,
+  ): Promise<{ movie?: MovieDto } & ServiceResponse> {
     if (!movie.id) {
       throw new Error("No movie ID provided");
     }
 
-    await updateMovie(fromMovieDto(movie));
+    const { data, error } = await updateMovie(fromMovieDto(movie));
+
+    return error
+      ? { error, message: "Error updating movie" }
+      : { message: "Movie updated", movie: toMovieDto(data) };
   },
 };

@@ -131,12 +131,11 @@ export async function updateMovie(
   delete movie.series;
   delete movie.studio;
 
-  await client
+  return await client
     .from("movies")
     .update(movie)
     .eq("id", movie.id)
-    .single()
-    .throwOnError();
+    .single();
 }
 
 /**
@@ -149,11 +148,10 @@ export async function updateMovie(
 export async function deleteMovie(movie_id: number) {
   const client = await createSupabaseClient();
 
-  await client
+  return await client
     .from("movies")
     .delete()
-    .eq("id", movie_id)
-    .throwOnError();
+    .eq("id", movie_id);
 }
 
 /**
@@ -300,6 +298,7 @@ export async function addMovieRole(
  * Delete a role from a movie for a person.
  * @param movie_id ID of the movie to delete the role from.
  * @param role_id ID of the person to delete the role for.
+ * @returns The deleted role.
  */
 export async function deleteMovieRole(
   movie_id: number,
@@ -307,12 +306,11 @@ export async function deleteMovieRole(
 ) {
   const client = await createSupabaseClient();
 
-  await client
+  return await client
     .from("roles")
     .delete()
     .eq("movie_id", movie_id)
-    .eq("id", role_id)
-    .throwOnError();
+    .eq("id", role_id);
 }
 
 /**

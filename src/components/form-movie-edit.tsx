@@ -28,9 +28,12 @@ import { seriesService } from '@/services/series.service';
 import { studioService } from '@/services/studio.service';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { DateTime } from 'luxon';
+import { redirect } from 'next/navigation';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useAsync } from 'react-use';
+
+import { useToast } from './ui/use-toast';
 
 /**
  * Form to edit a movie.
@@ -43,6 +46,8 @@ export function FormMovieEdit({
 }: Readonly<{
   movie: MovieDto;
 }>) {
+  const { toast } = useToast();
+
   const [studioSearchValue, setStudioSearchValue] = useState(
     movie?.studio?.display_name,
   );
@@ -86,7 +91,17 @@ export function FormMovieEdit({
   });
 
   const onSubmit: SubmitHandler<MovieEditFormSchema> = async (data) => {
-    await updateMovieAction(data);
+    const result = await updateMovieAction(data);
+
+    toast({
+      description: result.message,
+      title: result.success ? 'Success' : 'Error',
+      variant: result.success ? 'success' : 'destructive',
+    });
+
+    if (result.success) {
+      redirect(`/movie/${movie.id}`);
+    }
   };
 
   return (

@@ -14,7 +14,10 @@ import {
 import { MovieDto } from '@/data/movie.dto';
 import { RoleDto } from '@/data/role.dto';
 import IconTrash from '~icons/mdi/trash-can-outline.jsx';
-import { useActionState, useState } from 'react';
+import { redirect } from 'next/navigation';
+import { useActionState, useEffect, useState } from 'react';
+
+import { useToast } from './ui/use-toast';
 
 /**
  * Button to delete a role.
@@ -28,11 +31,26 @@ export default function ButtonDeleteRole({
   role,
 }: Readonly<{ movie: MovieDto; role: RoleDto }>) {
   const [isOpen, setIsOpen] = useState(false);
+  const { toast } = useToast();
 
-  const [, deleteAction, isDeletePending] = useActionState(
+  const [state, deleteAction, isDeletePending] = useActionState(
     deleteMovieRoleAction,
     null,
   );
+
+  useEffect(() => {
+    if (state?.success) {
+      redirect(`/movie/${movie.id}/edit/cast`);
+    }
+
+    if (state?.message) {
+      toast({
+        description: state.message,
+        title: state.success ? 'Success' : 'Error',
+        variant: state.success ? 'success' : 'destructive',
+      });
+    }
+  }, [state, movie, toast]);
 
   return (
     <Dialog onOpenChange={setIsOpen} open={isOpen}>

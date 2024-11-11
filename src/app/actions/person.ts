@@ -40,30 +40,37 @@ export async function updatePersonAction(
   redirect(`/person/${person.id}`);
 }
 
+export interface DeletePersonState {
+  message: string;
+  success?: boolean;
+}
+
 /**
  * Delete a person from the database.
  * @param previousState - Unused.
  * @param formData - Form data containing the person ID.
+ * @returns An object containing a message in case of an error.
  */
 export async function deletePersonAction(
-  previousState: null | void,
+  previousState: DeletePersonState | null,
   formData: FormData,
-) {
+): Promise<DeletePersonState> {
   const id = Number(formData.get("item_id"));
 
   if (!id) {
-    throw new Error("No person ID provided");
+    return { message: "No person ID provided" };
   }
 
   const isLoggedIn = await userService.refreshUser();
 
   if (!isLoggedIn) {
-    throw new Error("User not authenticated");
+    return { message: "User not authenticated" };
   }
 
   await personService.deletePerson(id);
 
   // Revalidate the homepage in case the movie deleted was on the homepage
   revalidatePath("/", "page");
-  redirect("/");
+
+  return { message: "Person deleted", success: true };
 }
