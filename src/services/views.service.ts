@@ -9,6 +9,7 @@ import {
   getInformationNeeded,
   getMostPopularPersons,
   getMostRecentMovies,
+  getMoviesPerYear,
   getReleasedOnThisDay,
   getRolesByAge,
 } from "@/infrastructure/database/repositories/view.repository";
@@ -28,6 +29,9 @@ export const viewsService = {
   async getMostRecentMovies(limit = 25): Promise<MovieDto[]> {
     const movies = await getMostRecentMovies(limit);
     return movies.map((movie) => toMovieDto(movie));
+  },
+  async getMoviesPerYear() {
+    return await getMoviesPerYear();
   },
   async getReleasedOnThisDay(limit = 25): Promise<MovieDto[]> {
     const movies = await getReleasedOnThisDay(limit);

@@ -139,3 +139,22 @@ export async function getRolesByAge() {
 
   return data;
 }
+
+/**
+ * Get the number of movies per year.
+ * @returns The number of movies per year.
+ */
+export async function getMoviesPerYear() {
+  const client = await createSupabaseClient();
+
+  const { data } = await client
+    .from("movies_per_year")
+    .select(
+      `
+      *
+    `,
+    )
+    .throwOnError();
+
+  return data;
+}

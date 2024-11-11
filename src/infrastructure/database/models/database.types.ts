@@ -46,21 +46,21 @@ export type Database = {
           created_at: string
           id: number
           type: Database["public"]["Enums"]["image_type"]
-          uploader: string | null
+          uploader: string
           uuid: string
         }
         Insert: {
           created_at?: string
           id?: number
           type: Database["public"]["Enums"]["image_type"]
-          uploader?: string | null
+          uploader?: string
           uuid: string
         }
         Update: {
           created_at?: string
           id?: number
           type?: Database["public"]["Enums"]["image_type"]
-          uploader?: string | null
+          uploader?: string
           uuid?: string
         }
         Relationships: [
@@ -104,6 +104,13 @@ export type Database = {
             foreignKeyName: "jobs_movies_movie"
             columns: ["movie_id"]
             isOneToOne: false
+            referencedRelation: "movies_fts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "jobs_movies_movie"
+            columns: ["movie_id"]
+            isOneToOne: false
             referencedRelation: "movies_missing_info"
             referencedColumns: ["id"]
           },
@@ -119,13 +126,6 @@ export type Database = {
             columns: ["movie_id"]
             isOneToOne: false
             referencedRelation: "movies_released_today"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "jobs_persons_person"
-            columns: ["person_id"]
-            isOneToOne: false
-            referencedRelation: "most_popular_persons"
             referencedColumns: ["id"]
           },
           {
@@ -193,6 +193,13 @@ export type Database = {
             columns: ["movie_id"]
             isOneToOne: false
             referencedRelation: "movies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "movie_images_movie_id_fkey"
+            columns: ["movie_id"]
+            isOneToOne: false
+            referencedRelation: "movies_fts"
             referencedColumns: ["id"]
           },
           {
@@ -328,13 +335,6 @@ export type Database = {
             foreignKeyName: "person_images_person_id_fkey"
             columns: ["person_id"]
             isOneToOne: false
-            referencedRelation: "most_popular_persons"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "person_images_person_id_fkey"
-            columns: ["person_id"]
-            isOneToOne: false
             referencedRelation: "persons"
             referencedColumns: ["id"]
           },
@@ -409,13 +409,6 @@ export type Database = {
           person_id?: number
         }
         Relationships: [
-          {
-            foreignKeyName: "persons_aliases_person_id_fkey"
-            columns: ["person_id"]
-            isOneToOne: false
-            referencedRelation: "most_popular_persons"
-            referencedColumns: ["id"]
-          },
           {
             foreignKeyName: "persons_aliases_person_id_fkey"
             columns: ["person_id"]
@@ -498,6 +491,13 @@ export type Database = {
             foreignKeyName: "roles_movies_movie"
             columns: ["movie_id"]
             isOneToOne: false
+            referencedRelation: "movies_fts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "roles_movies_movie"
+            columns: ["movie_id"]
+            isOneToOne: false
             referencedRelation: "movies_missing_info"
             referencedColumns: ["id"]
           },
@@ -513,13 +513,6 @@ export type Database = {
             columns: ["movie_id"]
             isOneToOne: false
             referencedRelation: "movies_released_today"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "roles_persons_person"
-            columns: ["person_id"]
-            isOneToOne: false
-            referencedRelation: "most_popular_persons"
             referencedColumns: ["id"]
           },
           {
@@ -619,6 +612,13 @@ export type Database = {
             foreignKeyName: "category_movies_movie_id"
             columns: ["movie_id"]
             isOneToOne: false
+            referencedRelation: "movies_fts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "category_movies_movie_id"
+            columns: ["movie_id"]
+            isOneToOne: false
             referencedRelation: "movies_missing_info"
             referencedColumns: ["id"]
           },
@@ -701,13 +701,24 @@ export type Database = {
         }
         Relationships: []
       }
-      most_popular_persons: {
+      movies_fts: {
         Row: {
+          create_time: string | null
+          dvd_id: string | null
+          fts_vector: unknown | null
           id: number | null
+          label_name: string | null
+          label_original_name: string | null
           name: string | null
           original_name: string | null
+          person_names: string | null
+          person_original_names: string | null
           popularity: number | null
-          profile_url: string | null
+          release_date: string | null
+          series_name: string | null
+          series_original_name: string | null
+          studio_name: string | null
+          studio_original_name: string | null
         }
         Relationships: []
       }
@@ -719,6 +730,13 @@ export type Database = {
           name: string | null
           original_name: string | null
           release_date: string | null
+        }
+        Relationships: []
+      }
+      movies_per_year: {
+        Row: {
+          movie_count: number | null
+          release_year: number | null
         }
         Relationships: []
       }
@@ -811,11 +829,68 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: undefined
       }
+      search_movies:
+        | {
+            Args: {
+              search_query: string
+              role_age?: number
+              query_offset?: number
+              query_limit?: number
+            }
+            Returns: {
+              id: number
+              name: string
+              original_name: string
+              dvd_id: string
+              release_date: string
+              front_cover_url: string
+            }[]
+          }
+        | {
+            Args: {
+              search_query: string
+              role_age?: number
+              sort_by?: string
+              sort_order?: string
+            }
+            Returns: {
+              id: number
+              name: string
+              original_name: string
+              dvd_id: string
+              release_date: string
+              front_cover_url: string
+            }[]
+          }
+        | {
+            Args: {
+              search_query: string
+              role_age?: number
+              sort_by?: string
+              sort_order?: string
+              query_offset?: number
+              query_limit?: number
+            }
+            Returns: {
+              id: number
+              name: string
+              original_name: string
+              dvd_id: string
+              release_date: string
+              front_cover_url: string
+            }[]
+          }
       series_movies_count: {
         Args: {
           "": unknown
         }
         Returns: number
+      }
+      set_random_seed: {
+        Args: {
+          seed: number
+        }
+        Returns: undefined
       }
       studio_movies_count: {
         Args: {
