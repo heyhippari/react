@@ -37,7 +37,7 @@ export async function getSeriesById(
     .eq("id", seriesId)
     .order("release_date", {
       ascending: false,
-      foreignTable: "movies",
+      referencedTable: "movies",
     })
     .throwOnError()
     .single();

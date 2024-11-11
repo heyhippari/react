@@ -14,12 +14,12 @@ export function TwoColumnLayout({
   sidebarContent,
   sidebarTitle,
   titleAction,
-}: {
+}: Readonly<{
   children: React.ReactNode;
   sidebarContent?: React.ReactNode;
   sidebarTitle: string;
   titleAction?: React.ReactNode;
-}) {
+}>) {
   return (
     <div className="container flex flex-row gap-2 p-4">
       <Card className="hidden h-fit shrink-0 flex-col overflow-hidden bg-pink-50 dark:bg-pink-950 lg:flex lg:w-64">

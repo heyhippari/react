@@ -38,7 +38,7 @@ export async function getStudioById(
     .eq("id", studioId)
     .order("release_date", {
       ascending: false,
-      foreignTable: "movies",
+      referencedTable: "movies",
     })
     .throwOnError()
     .single();

@@ -24,8 +24,7 @@ export function isMovie(item: unknown): item is MovieDto {
     return false;
   }
 
-  return typeof item === "object" && item !== null &&
-    ("dvd_id" in item || "barcode" in item);
+  return typeof item === "object" && "_type" in item && item._type === "movie";
 }
 
 /**
@@ -38,8 +37,7 @@ export function isPerson(item: unknown): item is PersonDto {
     return false;
   }
 
-  return typeof item === "object" && ("birth_date" in item ||
-    "profile_url" in item);
+  return typeof item === "object" && "_type" in item && item._type === "person";
 }
 
 /**
@@ -49,7 +47,7 @@ export function isPerson(item: unknown): item is PersonDto {
  * @returns A constructed URL for the item, with the path appended.
  */
 export function getUrlForItem(
-  item: LabelDto | MovieDto | PersonDto | SeriesDto | StudioDto,
+  item?: LabelDto | MovieDto | null | PersonDto | SeriesDto | StudioDto,
   path = "/",
 ): string {
   if (!item) {

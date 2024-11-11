@@ -152,7 +152,7 @@ export function fromBaseMovieDto(dto: BaseMovieDto): BaseMovieModel {
 export const baseLabelDtoSchema = z.object({
   _type: z.literal("label").default("label"),
   alternative_name: z.string().nullable().optional(),
-  display_name: z.string().nullable().optional(),
+  display_name: z.string(),
   id: z.number().nullable().optional(),
 });
 
@@ -262,7 +262,7 @@ export function fromBaseStudioDto(dto: BaseStudioDto): BaseStudioModel {
 
 export const basePersonDtoSchema = z.object({
   _type: z.literal("person").default("person"),
-  alternative_name: z.string().nullable(),
+  alternative_name: z.string().nullable().optional(),
   birth_date: z.string().nullable().optional(),
   bust_size: z.number().nullable().optional(),
   cup_size: z.enum([

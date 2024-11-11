@@ -43,9 +43,9 @@ export async function generateMetadata({
  */
 export default async function SeriesPage({
   params,
-}: {
+}: Readonly<{
   params: Promise<{ id: string }>;
-}) {
+}>) {
   const { id } = await params;
 
   // If the id contains anything other than numbers, redirect to 404
