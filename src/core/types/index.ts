@@ -48,7 +48,7 @@ export function isPerson(item: unknown): item is PersonDto {
  */
 export function getUrlForItem(
   item?: LabelDto | MovieDto | null | PersonDto | SeriesDto | StudioDto,
-  path = "/",
+  path?: string,
 ): string {
   if (!item) {
     return "/";
@@ -56,19 +56,19 @@ export function getUrlForItem(
 
   switch (item._type) {
     case "label": {
-      return `/label/${item.id}${path ?? ""}`;
+      return `/label/${item.id}${path ?? "/"}`;
     }
     case "movie": {
-      return `/movie/${item.id}${path ?? ""}`;
+      return `/movie/${item.id}${path ?? "/"}`;
     }
     case "person": {
-      return `/person/${item.id}${path ?? ""}`;
+      return `/person/${item.id}${path ?? "/"}`;
     }
     case "series": {
-      return `/series/${item.id}${path ?? ""}`;
+      return `/series/${item.id}${path ?? "/"}`;
     }
     case "studio": {
-      return `/studio/${item.id}${path ?? ""}`;
+      return `/studio/${item.id}${path ?? "/"}`;
     }
     default: {
       return "/";

@@ -45,3 +45,20 @@ export async function deleteImage(imageId: number) {
     .eq("id", imageId)
     .throwOnError();
 }
+
+/**
+ * Get an image from the database.
+ * @param imageId - The ID of the image to get.
+ * @returns The image.
+ */
+export async function getImage(imageId: number) {
+  const client = await createSupabaseClient();
+
+  const { data } = await client
+    .from("images")
+    .select("*")
+    .eq("id", imageId)
+    .single();
+
+  return data;
+}

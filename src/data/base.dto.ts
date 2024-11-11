@@ -62,7 +62,7 @@ export type ImageVariants = z.infer<typeof imageVariantsSchema>;
  * @param uuid The UUID to convert to image variants.
  * @returns An object containing the image variants.
  */
-export function toImageVariants(uuid: string): ImageVariants {
+export function toImageVariants(uuid: null | string): ImageVariants {
   return {
     card: uuid
       ? `https://kanojodb.com/cdn-cgi/imagedelivery/unbW_XNL55BgTGEc_h7RQA/${uuid}/card`
@@ -98,7 +98,7 @@ export const baseMovieDtoSchema = z.object({
   ]).nullable().optional(),
   front_cover_url: imageVariantsSchema.optional(),
   full_cover_url: imageVariantsSchema.optional(),
-  has_nudity: z.boolean().nullable().optional(),
+  has_nudity: z.boolean().optional(),
   id: z.number().optional(),
   length: z.number().nullable().optional(),
   release_date: z.string().nullable().optional(),
@@ -116,11 +116,15 @@ export function toBaseMovieDto(model: BaseMovieModel): BaseMovieDto {
     _type: "movie",
     alternative_name: model.name ? model.original_name : undefined,
     barcode: model.barcode,
-    display_name: model.name ?? model.original_name ?? "Unknown",
+    display_name: model.name ?? model.original_name,
     dvd_id: model.dvd_id,
     format: model.format,
-    front_cover_url: toImageVariants(model.front_cover_url ?? ""),
-    full_cover_url: toImageVariants(model.full_cover_url ?? ""),
+    front_cover_url: model.front_cover_url
+      ? toImageVariants(model.front_cover_url)
+      : undefined,
+    full_cover_url: model.full_cover_url
+      ? toImageVariants(model.full_cover_url)
+      : undefined,
     has_nudity: model.has_nudity,
     id: model.id,
     length: model.length,
@@ -140,7 +144,7 @@ export function fromBaseMovieDto(dto: BaseMovieDto): BaseMovieModel {
     format: dto.format,
     front_cover_url: dto.front_cover_url?.uuid,
     full_cover_url: dto.full_cover_url?.uuid,
-    has_nudity: dto.has_nudity ?? undefined,
+    has_nudity: dto.has_nudity,
     id: dto.id ?? undefined,
     length: dto.length,
     name: dto.alternative_name ? dto.display_name : undefined,
@@ -181,7 +185,7 @@ export function fromBaseLabelDto(dto: BaseLabelDto): BaseLabelModel {
   return {
     id: dto.id!,
     name: dto.alternative_name ? dto.display_name : undefined,
-    original_name: dto.alternative_name ?? dto.display_name!,
+    original_name: dto.alternative_name ?? dto.display_name,
   };
 }
 
@@ -216,7 +220,7 @@ export function toBaseSeriesDto(model: BaseSeriesModel): BaseSeriesDto {
 export function fromBaseSeriesDto(dto: BaseSeriesDto): BaseSeriesModel {
   return {
     id: dto.id!,
-    name: dto.display_name ?? dto.alternative_name,
+    name: dto.alternative_name ? dto.display_name : undefined,
     original_name: dto.alternative_name ?? dto.display_name!,
   };
 }
@@ -255,7 +259,7 @@ export function fromBaseStudioDto(dto: BaseStudioDto): BaseStudioModel {
   return {
     homepage: dto.homepage,
     id: dto.id!,
-    name: dto.display_name ?? dto.alternative_name,
+    name: dto.alternative_name ? dto.display_name : undefined,
     original_name: dto.alternative_name ?? dto.display_name!,
   };
 }
@@ -299,15 +303,17 @@ export type BasePersonDto = z.infer<typeof basePersonDtoSchema>;
 export function toBasePersonDto(model: BasePersonModel): BasePersonDto {
   return {
     _type: "person",
-    alternative_name: model.name ? model.original_name ?? null : null,
+    alternative_name: model.name ? model.original_name : undefined,
     birth_date: model.birth_date,
     bust_size: model.bust_size,
     cup_size: model.cup_size,
-    display_name: model.name ?? model.original_name ?? "Unknown",
+    display_name: model.name ?? model.original_name,
     height: model.height,
     hips_size: model.hips_size,
     id: model.id,
-    profile_url: toImageVariants(model.profile_url ?? ""),
+    profile_url: model.profile_url
+      ? toImageVariants(model.profile_url)
+      : undefined,
     waist_size: model.waist_size,
   };
 }
@@ -323,6 +329,7 @@ export function fromBasePersonDto(dto: BasePersonDto): BasePersonModel {
     bust_size: dto.bust_size,
     cup_size: dto.cup_size,
     height: dto.height,
+    hips_size: dto.hips_size,
     id: dto.id,
     name: dto.alternative_name ? dto.display_name : undefined,
     original_name: dto.alternative_name ?? dto.display_name,

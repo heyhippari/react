@@ -13,7 +13,7 @@ import {
   baseStudioModelSchema,
 } from "./base.model";
 
-describe("baseModelSchema", () => {
+describe("Models", () => {
   describe("baseLabelModelSchema", () => {
     it("should validate a correct and complete object", () => {
       const data = {

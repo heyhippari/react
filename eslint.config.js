@@ -30,6 +30,7 @@ export default tseslint.config(
     ignores: [
       'next-env.d.ts',
       '.next/**',
+      'coverage/**',
       'node_modules/**',
       'eslint.config.js',
       'lingui.config.js',
