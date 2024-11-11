@@ -1,9 +1,10 @@
-import { isMovie } from "@/core/types";
 import { LabelDto } from "@/data/label.dto";
 import { MovieDto } from "@/data/movie.dto";
 import { PersonDto } from "@/data/person.dto";
 import { SeriesDto } from "@/data/series.dto";
 import { StudioDto } from "@/data/studio.dto";
+
+import { isMovie } from "../types";
 
 /**
  * Get the title for link sharing based on the item.
@@ -14,8 +15,8 @@ export function getShareTitle(
   item: LabelDto | MovieDto | PersonDto | SeriesDto | StudioDto,
 ) {
   return isMovie(item)
-    ? `${item?.dvd_id} (${item?.display_name})`
-    : item?.display_name ?? "";
+    ? `[${item?.dvd_id}] ${item?.display_name}`
+    : item?.display_name;
 }
 
 /**
@@ -26,7 +27,5 @@ export function getShareTitle(
 export function getShareText(
   item: LabelDto | MovieDto | PersonDto | SeriesDto | StudioDto,
 ) {
-  return isMovie(item)
-    ? `Find out more about ${item?.dvd_id} on Kanojo`
-    : `Find out more about ${item?.display_name} on Kanojo`;
+  return `Find out more about ${item?.display_name} on Kanojo`;
 }
