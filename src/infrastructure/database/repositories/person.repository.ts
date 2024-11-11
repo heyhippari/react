@@ -47,6 +47,7 @@ export async function getPersonById(
         ),
         person_images (
           image: images (
+            id,
             created_at,
             uuid,
             type,

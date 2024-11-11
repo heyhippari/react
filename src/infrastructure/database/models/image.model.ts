@@ -8,6 +8,7 @@ import { userModelSchema } from "./user.model";
 
 export const imageModelSchema = z.object({
   created_at: z.string().optional(),
+  id: z.number().nullable().optional(),
   type: z.enum([
     "front_cover",
     "full_cover",

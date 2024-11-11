@@ -31,3 +31,17 @@ export async function addImage(
 
   return data;
 }
+
+/**
+ * Delete an image from the database.
+ * @param imageId - The ID of the image to delete.
+ */
+export async function deleteImage(imageId: number) {
+  const client = await createSupabaseClient();
+
+  await client
+    .from("images")
+    .delete()
+    .eq("id", imageId)
+    .throwOnError();
+}

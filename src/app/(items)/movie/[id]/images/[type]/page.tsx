@@ -63,6 +63,7 @@ export default async function Image({
           {(image, index) => (
             <ImageCard
               image={image}
+              item={movie}
               key={`image-${index}`}
               priority={index < 6}
               wide={isWide}

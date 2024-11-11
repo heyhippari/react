@@ -10,6 +10,7 @@ import { fromUserDto, toUserDto, userDtoSchema } from "./user.dto";
 
 export const imageDtoSchema = z.object({
   create_time: z.string().optional(),
+  id: z.number().nullable().optional(),
   type: z.enum([
     "front_cover",
     "full_cover",
@@ -34,6 +35,7 @@ export type ImageDto = z.infer<typeof imageDtoSchema>;
 export function toImageDto(model: ImageModel): ImageDto {
   return {
     create_time: model.created_at,
+    id: model.id,
     type: model.type,
     uploader: model.uploader ? toUserDto(model.uploader) : null,
     url: toImageVariants(model.uuid ?? ""),
@@ -49,6 +51,7 @@ export function toImageDto(model: ImageModel): ImageDto {
 export function fromImageDto(dto: ImageDto): ImageModel {
   return {
     created_at: dto.create_time,
+    id: dto.id,
     type: dto.type,
     uploader: dto.uploader ? fromUserDto(dto.uploader) : null,
     uuid: dto.uuid,

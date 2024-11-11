@@ -55,6 +55,7 @@ export default async function Image({
             {(image, index) => (
               <ImageCard
                 image={image}
+                item={person}
                 key={`image-${index}`}
                 priority={index < 6}
               />

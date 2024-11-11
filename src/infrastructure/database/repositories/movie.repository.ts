@@ -63,6 +63,7 @@ export async function getMovieById(
         ),
         movie_images (
           image: images (
+            id,
             created_at,
             uuid,
             type,

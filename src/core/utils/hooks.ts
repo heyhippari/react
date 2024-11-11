@@ -8,9 +8,10 @@ type AuthJwtPayload = { user_role: string } & JwtPayload;
 /**
  * Fetches the user role from the JWT token stored in the session.
  * @returns The user role or null if the user is not authenticated.
+ * // TODO: Replace this with Zustand and the user service.
  */
 export function useUserRole() {
-  const [userRole, setUserRole] = useState<null | string>(null);
+  const [userRole, setUserRole] = useState<string>("banned");
   const supabase = createClient();
 
   useEffect(() => {
