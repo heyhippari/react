@@ -49,7 +49,7 @@ export async function deleteImage(imageId: number) {
 /**
  * Get an image from the database.
  * @param imageId - The ID of the image to get.
- * @returns The image.
+ * @returns The information for the image.
  */
 export async function getImage(imageId: number) {
   const client = await createSupabaseClient();

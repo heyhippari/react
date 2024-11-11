@@ -192,7 +192,7 @@ export function fromBaseLabelDto(dto: BaseLabelDto): BaseLabelModel {
 export const baseSeriesDtoSchema = z.object({
   _type: z.literal("series").default("series"),
   alternative_name: z.string().nullable().optional(),
-  display_name: z.string().nullable().optional(),
+  display_name: z.string(),
   id: z.number().nullable().optional(),
 });
 
@@ -221,14 +221,14 @@ export function fromBaseSeriesDto(dto: BaseSeriesDto): BaseSeriesModel {
   return {
     id: dto.id!,
     name: dto.alternative_name ? dto.display_name : undefined,
-    original_name: dto.alternative_name ?? dto.display_name!,
+    original_name: dto.alternative_name ?? dto.display_name,
   };
 }
 
 export const baseStudioDtoSchema = z.object({
   _type: z.literal("studio").default("studio"),
   alternative_name: z.string().nullable().optional(),
-  display_name: z.string().nullable().optional(),
+  display_name: z.string(),
   homepage: z.string().url().nullable().optional(),
   id: z.number().nullable().optional(),
 });
@@ -260,7 +260,7 @@ export function fromBaseStudioDto(dto: BaseStudioDto): BaseStudioModel {
     homepage: dto.homepage,
     id: dto.id!,
     name: dto.alternative_name ? dto.display_name : undefined,
-    original_name: dto.alternative_name ?? dto.display_name!,
+    original_name: dto.alternative_name ?? dto.display_name,
   };
 }
 

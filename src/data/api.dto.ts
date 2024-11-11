@@ -62,7 +62,7 @@ export function toMovieResponse(movie: MovieDto): MovieResponse {
       ? {
         id: movie.series.id!,
         name: movie.series.alternative_name
-          ? movie.series.display_name!
+          ? movie.series.display_name
           : undefined,
         original_name: movie.series.alternative_name ??
           movie.series.display_name ?? "",
@@ -72,7 +72,7 @@ export function toMovieResponse(movie: MovieDto): MovieResponse {
       ? {
         id: movie.studio.id!,
         name: movie.studio.alternative_name
-          ? movie.studio.display_name!
+          ? movie.studio.display_name
           : undefined,
         original_name: movie.studio.alternative_name ??
           movie.studio.display_name ?? "",

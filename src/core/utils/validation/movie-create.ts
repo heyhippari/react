@@ -47,16 +47,19 @@ export function fromMovieCreateForm(form: MovieCreateFormSchema): MovieDto {
     format: form.format === "Unknown" ? undefined : form.format,
     label: {
       _type: "label",
+      display_name: "Unknown", // This doesn't matter for the form
       id: form.label_id,
     },
     length: form.length,
     release_date: form.release_date,
     series: {
       _type: "series",
+      display_name: "Unknown", // This doesn't matter for the form
       id: form.series_id,
     },
     studio: {
       _type: "studio",
+      display_name: "Unknown", // This doesn't matter for the form
       id: form.studio_id,
     },
   };
