@@ -356,4 +356,34 @@ describe("DTO Mappers", () => {
     const newBasePersonModel = fromBasePersonDto(basePersonDto);
     expect(newBasePersonModel).toEqual(basePersonModel);
   });
+
+  it("should convert BasePersonModel to BasePersonDto and back with no images", () => {
+    const basePersonModel: BasePersonModel = {
+      birth_date: "1990-01-01",
+      bust_size: 90,
+      cup_size: "C",
+      height: 170,
+      hips_size: 95,
+      id: 1,
+      name: "Person Name",
+      original_name: "Original Person Name",
+      waist_size: 60,
+    };
+    const basePersonDto = toBasePersonDto(basePersonModel);
+    expect(basePersonDto).toEqual({
+      _type: "person",
+      alternative_name: "Original Person Name",
+      birth_date: "1990-01-01",
+      bust_size: 90,
+      cup_size: "C",
+      display_name: "Person Name",
+      height: 170,
+      hips_size: 95,
+      id: 1,
+      waist_size: 60,
+    });
+
+    const newBasePersonModel = fromBasePersonDto(basePersonDto);
+    expect(newBasePersonModel).toEqual(basePersonModel);
+  });
 });

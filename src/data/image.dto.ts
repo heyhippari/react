@@ -20,9 +20,9 @@ export const imageDtoSchema = z.object({
     "logo",
     "screenshot",
   ]).nullable().optional(),
-  uploader: userDtoSchema.nullable().optional(),
+  uploader: userDtoSchema.optional(),
   url: imageVariantsSchema,
-  uuid: z.string().nullable().optional(),
+  uuid: z.string(),
 });
 
 export type ImageDto = z.infer<typeof imageDtoSchema>;
@@ -37,8 +37,8 @@ export function toImageDto(model: ImageModel): ImageDto {
     create_time: model.created_at,
     id: model.id,
     type: model.type,
-    uploader: model.uploader ? toUserDto(model.uploader) : null,
-    url: toImageVariants(model.uuid ?? ""),
+    uploader: model.uploader ? toUserDto(model.uploader) : undefined,
+    url: toImageVariants(model.uuid),
     uuid: model.uuid,
   };
 }
@@ -53,7 +53,7 @@ export function fromImageDto(dto: ImageDto): ImageModel {
     created_at: dto.create_time,
     id: dto.id,
     type: dto.type,
-    uploader: dto.uploader ? fromUserDto(dto.uploader) : null,
+    uploader: dto.uploader ? fromUserDto(dto.uploader) : undefined,
     uuid: dto.uuid,
   };
 }

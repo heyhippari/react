@@ -18,8 +18,8 @@ export const imageModelSchema = z.object({
     "logo",
     "screenshot",
   ]).nullable().optional(),
-  uploader: userModelSchema.nullable().optional(),
-  uuid: z.string().nullable().optional(),
+  uploader: userModelSchema.optional(),
+  uuid: z.string(),
 });
 
 export type ImageModel = z.infer<typeof imageModelSchema>;

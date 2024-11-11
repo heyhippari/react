@@ -18,7 +18,7 @@ export const imageModelDto = z.object({
     "logo",
     "screenshot",
   ]).nullable().optional(),
-  uuid: z.string().uuid().nullable().optional(),
+  uuid: z.string().uuid(),
 });
 
 export type ImageDto = z.infer<typeof imageModelDto>;
