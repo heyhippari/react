@@ -11,6 +11,7 @@
     "lint:eslint": "eslint",
     "lint:fix": "eslint --fix",
     "test": "vitest",
+    "test:coverage": "vitest run --coverage --coverage.reporter=lcov",
     "eslint:fix": "eslint --fix",
     "i18n:extract": "lingui extract",
     "i18n:compile": "lingui compile --typescript"
@@ -88,6 +89,7 @@
     "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
     "@types/react-virtualized": "^9.21.30",
     "@vitejs/plugin-react": "^4.3.3",
+    "@vitest/coverage-v8": "^2.1.4",
     "@vitest/eslint-plugin": "^1.1.7",
     "autoprefixer": "^10.4.20",
     "eslint": "^9.13.0",

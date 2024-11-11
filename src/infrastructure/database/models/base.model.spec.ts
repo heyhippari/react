@@ -145,7 +145,6 @@ describe("baseModelSchema", () => {
 
     it("should not validate an incomplete object", () => {
       const data = {
-        original_name: "Test",
         // @ts-expect-error -- Purposefully incomplete data
       } satisfies BaseMovieModel;
 
