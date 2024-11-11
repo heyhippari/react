@@ -8,9 +8,11 @@ import { movieService } from '@/services/movie.service';
  * @param properties.params The URL parameters, containing the prefix.
  * @returns A React component for the prefix page.
  */
-export default async function PrefixPage(properties: {
-  params: Promise<{ prefix: string }>;
-}) {
+export default async function PrefixPage(
+  properties: Readonly<{
+    params: Promise<{ prefix: string }>;
+  }>,
+) {
   const { prefix } = await properties.params;
 
   const movies = await movieService.getMoviesByPrefix(prefix);

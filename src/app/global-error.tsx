@@ -12,9 +12,9 @@ import { useEffect } from 'react';
  */
 export default function GlobalError({
   error,
-}: {
+}: Readonly<{
   error: { digest?: string } & Error;
-}) {
+}>) {
   useEffect(() => {
     // If we are in development mode, don't send the error to Sentry.
     if (process.env.NODE_ENV === 'development') {

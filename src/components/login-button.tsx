@@ -15,10 +15,10 @@ import { useActionState } from 'react';
 export default function LoginButton({
   nextUrl,
   provider,
-}: {
+}: Readonly<{
   nextUrl?: string;
   provider: Provider;
-}) {
+}>) {
   const [, action, isProcessing] = useActionState(loginAction, null);
   return (
     <form action={action}>

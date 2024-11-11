@@ -12,9 +12,9 @@ import { redirect } from 'next/navigation';
  */
 export default async function UserProfile({
   params,
-}: {
+}: Readonly<{
   params: Promise<{ username: string }>;
-}) {
+}>) {
   const { username } = await params;
 
   const user = await userService.getUserByUsername(username);
@@ -35,11 +35,12 @@ export default async function UserProfile({
                 ['admin', 'banned', 'moderator'].includes(role.role),
               )
               .map((role) => (
-                <>
-                  <Badge className="mt-2 bg-pink-500 hover:bg-pink-400 dark:bg-pink-400 dark:hover:bg-pink-500">
-                    {role.role}
-                  </Badge>
-                </>
+                <Badge
+                  className="mt-2 bg-pink-500 hover:bg-pink-400 dark:bg-pink-400 dark:hover:bg-pink-500"
+                  key={role.role}
+                >
+                  {role.role}
+                </Badge>
               ))}
           </div>
           {user.create_time && (

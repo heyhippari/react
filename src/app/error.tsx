@@ -13,10 +13,10 @@ import { useEffect } from 'react';
 export default function Error({
   error,
   reset,
-}: {
+}: Readonly<{
   error: { digest?: string } & Error;
   reset: () => void;
-}) {
+}>) {
   useEffect(() => {
     // If we're in development, log the error to the console
     if (process.env.NODE_ENV === 'development') {

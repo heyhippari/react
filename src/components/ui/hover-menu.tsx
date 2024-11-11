@@ -25,10 +25,10 @@ const TouchContext = createContext<boolean | undefined>(undefined);
 const useTouch = () => useContext(TouchContext);
 
 export const HoverMenuProvider = ({ children }: PropsWithChildren<object>) => {
-  const [isTouch, setTouch] = useState<boolean | undefined>();
+  const [isTouch, setIsTouch] = useState<boolean | undefined>();
 
   useEffect(() => {
-    setTouch(globalThis.matchMedia('(pointer: coarse)').matches);
+    setIsTouch(globalThis.matchMedia('(pointer: coarse)').matches);
   }, []);
 
   return (

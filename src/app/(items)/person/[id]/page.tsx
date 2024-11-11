@@ -14,9 +14,11 @@ import { redirect } from 'next/navigation';
  * @param properties.params The URL parameters, containing the person ID.
  * @returns The person page.
  */
-export async function generateMetadata(properties: {
-  params: Promise<{ id: string }>;
-}) {
+export async function generateMetadata(
+  properties: Readonly<{
+    params: Promise<{ id: string }>;
+  }>,
+) {
   const { id } = await properties.params;
 
   try {
@@ -42,9 +44,9 @@ export async function generateMetadata(properties: {
  */
 export default async function PersonPage({
   params,
-}: {
+}: Readonly<{
   params: Promise<{ id: string }>;
-}) {
+}>) {
   const { id } = await params;
   const person = await personService.getPerson(Number(id));
   const movie_count = await personService.getPersonMoviesCount(Number(id));

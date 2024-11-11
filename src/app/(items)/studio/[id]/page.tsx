@@ -15,9 +15,9 @@ import { redirect } from 'next/navigation';
  */
 export async function generateMetadata({
   params,
-}: {
+}: Readonly<{
   params: Promise<{ id: string }>;
-}) {
+}>) {
   const { id } = await params;
 
   try {

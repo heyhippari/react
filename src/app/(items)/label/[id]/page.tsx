@@ -39,9 +39,11 @@ export async function generateMetadata(properties: {
  * @param properties.params - The URL parameter for the label ID.
  * @returns The rendered label page.
  */
-export default async function LabelPage(properties: {
-  params: Promise<{ id: string }>;
-}) {
+export default async function LabelPage(
+  properties: Readonly<{
+    params: Promise<{ id: string }>;
+  }>,
+) {
   const { id } = await properties.params;
 
   // If the id contains anything other than numbers, redirect to 404

@@ -28,20 +28,18 @@ export default function SidebarPersonImages({
   }, [person]);
 
   return (
-    <>
-      <Link
-        className={cn(
-          buttonVariants({ variant: 'ghost' }),
-          'justify-between',
-          pathname === getUrlForItem(person, '/images/profiles')
-            ? 'bg-pink-200 text-pink-900 dark:bg-pink-700 dark:text-pink-300'
-            : null,
-        )}
-        href={getUrlForItem(person, '/images/profiles')}
-      >
-        Profiles
-        <Badge variant="outline">{profileCount ?? 0}</Badge>
-      </Link>
-    </>
+    <Link
+      className={cn(
+        buttonVariants({ variant: 'ghost' }),
+        'justify-between',
+        pathname === getUrlForItem(person, '/images/profiles')
+          ? 'bg-pink-200 text-pink-900 dark:bg-pink-700 dark:text-pink-300'
+          : null,
+      )}
+      href={getUrlForItem(person, '/images/profiles')}
+    >
+      Profiles
+      <Badge variant="outline">{profileCount ?? 0}</Badge>
+    </Link>
   );
 }

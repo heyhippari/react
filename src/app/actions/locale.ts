@@ -1,6 +1,6 @@
-'use server';
+"use server";
 
-import { cookies } from 'next/headers';
+import { cookies } from "next/headers";
 
 /**
  * Switches the current locale.
@@ -9,7 +9,5 @@ import { cookies } from 'next/headers';
 export async function switchLocaleAction(locale: string) {
   const requestCookies = await cookies();
 
-  requestCookies.set('locale', locale);
-
-  return;
+  requestCookies.set("locale", locale);
 }

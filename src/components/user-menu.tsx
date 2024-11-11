@@ -23,7 +23,7 @@ import { buttonVariants } from './ui/button';
  * @param propeties.profile - The profile of the current user.
  * @returns The rendered component.
  */
-export default function UserMenu({ profile }: { profile: UserDto }) {
+export default function UserMenu({ profile }: Readonly<{ profile: UserDto }>) {
   const userRole = useUserRole();
 
   return (

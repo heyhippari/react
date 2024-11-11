@@ -19,19 +19,17 @@ export default function SidebarPersonEdit({
   const pathname = usePathname();
 
   return (
-    <>
-      <Link
-        className={cn(
-          buttonVariants({ variant: 'ghost' }),
-          'justify-start',
-          pathname === `/person/${person?.id}/edit`
-            ? 'bg-pink-200 text-pink-900 dark:bg-pink-700 dark:text-pink-300'
-            : null,
-        )}
-        href={getUrlForItem(person, '/edit')}
-      >
-        Primary Facts
-      </Link>
-    </>
+    <Link
+      className={cn(
+        buttonVariants({ variant: 'ghost' }),
+        'justify-start',
+        pathname === `/person/${person?.id}/edit`
+          ? 'bg-pink-200 text-pink-900 dark:bg-pink-700 dark:text-pink-300'
+          : null,
+      )}
+      href={getUrlForItem(person, '/edit')}
+    >
+      Primary Facts
+    </Link>
   );
 }
