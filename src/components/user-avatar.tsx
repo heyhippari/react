@@ -12,10 +12,10 @@ import { UserDto } from '@/data/user.dto';
 export default function UserAvatar({
   className,
   profile,
-}: {
-  className?: string | undefined;
+}: Readonly<{
+  className?: string;
   profile: UserDto;
-}) {
+}>) {
   return (
     <Avatar
       className={cn(

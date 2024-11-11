@@ -13,14 +13,14 @@ import { movieService } from '@/services/movie.service';
  */
 export default async function MoviePage({
   searchParams,
-}: {
+}: Readonly<{
   searchParams?: Promise<{
     direction?: 'asc' | 'desc';
     order?: 'create_time' | 'dvd_id' | 'popularity' | 'release_date';
     page?: string;
     q?: string;
   }>;
-}) {
+}>) {
   const {
     direction = 'desc',
     order = 'create_time',
@@ -46,7 +46,7 @@ export default async function MoviePage({
       }
       sidebarTitle="Search"
     >
-      {(pageCount ?? 0 > 0) ? (
+      {pageCount > 0 ? (
         <>
           <PaginationLinks page={Number(page)} pageCount={pageCount} />
           <ItemGrid items={movies} sidebar>

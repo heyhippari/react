@@ -45,37 +45,30 @@ import {
 export function ButtonUploadPersonImage({
   imageType,
   item,
-}: {
+}: Readonly<{
   imageType: 'profile';
   item: PersonDto;
-}) {
+}>) {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
   const typeDisplayName = useMemo(() => {
-    switch (imageType) {
-      case 'profile': {
-        return 'Upload Profile';
-      }
+    if (imageType === 'profile') {
+      return 'Upload Profile';
     }
   }, [imageType]);
 
   const uploadRequirements = useMemo(() => {
-    switch (imageType) {
-      case 'profile': {
-        return [
+    return imageType === 'profile'
+      ? [
           'No logo or watermark',
           'Avoid nudity or explicit content if possible',
           'Prefer a portrait (head and shoulders) if possible',
           'A maximum resolution of 2000x3000',
           'A minimum resolution of 300x450',
           'Aspect ratio of 1:1.5 (2:3)',
-        ];
-      }
-      default: {
-        return ['Requirements not specified.'];
-      }
-    }
+        ]
+      : ['Requirements not specified.'];
   }, [imageType]);
 
   const form = useForm<PersonAddImageForm>({
@@ -130,8 +123,8 @@ export function ButtonUploadPersonImage({
             <div className="flex flex-col gap-1">
               <p>Images must meet the following criteria:</p>
               <ul className="list-inside list-disc">
-                {uploadRequirements.map((requirement, index) => (
-                  <li key={index}>{requirement}</li>
+                {uploadRequirements.map((requirement) => (
+                  <li key={requirement}>{requirement}</li>
                 ))}
               </ul>
             </div>

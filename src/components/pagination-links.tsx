@@ -20,10 +20,10 @@ import { usePathname, useSearchParams } from 'next/navigation';
 export function PaginationLinks({
   page,
   pageCount,
-}: {
+}: Readonly<{
   page: number;
   pageCount: number;
-}) {
+}>) {
   const pathname = usePathname();
   const searchParameters = useSearchParams();
 

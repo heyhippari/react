@@ -113,7 +113,7 @@ export const movieService = {
   async getMoviePageCount(query?: string, limit = 25) {
     const pageCount = await getMoviePageCount(query, limit);
 
-    return pageCount ? pageCount - 1 : 1;
+    return pageCount ? pageCount - 1 : 0;
   },
   async getMoviesByPrefix(prefix: string) {
     const movies = await getMoviesByPrefix(prefix);

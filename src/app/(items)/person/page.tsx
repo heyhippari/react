@@ -13,7 +13,7 @@ import { personService } from '@/services/person.service';
  */
 export default async function PersonPage({
   searchParams,
-}: {
+}: Readonly<{
   searchParams?: Promise<{
     direction?: 'asc' | 'desc';
     order?:
@@ -25,7 +25,7 @@ export default async function PersonPage({
     page?: string;
     q?: string;
   }>;
-}) {
+}>) {
   const {
     direction = 'desc',
     order = 'create_time',
@@ -51,7 +51,7 @@ export default async function PersonPage({
       }
       sidebarTitle="Search"
     >
-      {(pageCount ?? 0 > 0) ? (
+      {pageCount > 0 ? (
         <>
           <PaginationLinks page={Number(page)} pageCount={pageCount} />
           <ItemGrid items={persons} sidebar>

@@ -45,10 +45,10 @@ import {
 export function ButtonUploadMovieImage({
   imageType,
   item,
-}: {
+}: Readonly<{
   imageType: 'front_cover' | 'full_cover';
   item: MovieDto;
-}) {
+}>) {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
@@ -138,8 +138,8 @@ export function ButtonUploadMovieImage({
             <div className="flex flex-col gap-1">
               <p>Images must meet the following criteria:</p>
               <ul className="list-inside list-disc">
-                {uploadRequirements.map((requirement, index) => (
-                  <li key={index}>{requirement}</li>
+                {uploadRequirements.map((requirement) => (
+                  <li key={requirement}>{requirement}</li>
                 ))}
               </ul>
             </div>

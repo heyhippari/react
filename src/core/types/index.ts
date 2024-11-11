@@ -58,24 +58,22 @@ export function getUrlForItem(
 
   switch (item._type) {
     case "label": {
-      return `/label/${item.id}${path ? `${path}` : ""}`;
+      return `/label/${item.id}${path ?? ""}`;
     }
     case "movie": {
-      return `/movie/${item.id}${path ? `${path}` : ""}`;
+      return `/movie/${item.id}${path ?? ""}`;
     }
     case "person": {
-      return `/person/${item.id}${path ? `${path}` : ""}`;
+      return `/person/${item.id}${path ?? ""}`;
     }
     case "series": {
-      return `/series/${item.id}${path ? `${path}` : ""}`;
+      return `/series/${item.id}${path ?? ""}`;
     }
     case "studio": {
-      return `/studio/${item.id}${path ? `${path}` : ""}`;
+      return `/studio/${item.id}${path ?? ""}`;
     }
     default: {
       return "/";
     }
   }
-
-  return "/";
 }

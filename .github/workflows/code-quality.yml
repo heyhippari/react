@@ -1,4 +1,4 @@
-name: Build
+name: Code Quality
 on:
   push:
     branches:
