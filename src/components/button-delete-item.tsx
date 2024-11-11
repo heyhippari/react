@@ -18,7 +18,10 @@ import { MovieDto } from '@/data/movie.dto';
 import { PersonDto } from '@/data/person.dto';
 import { SeriesDto } from '@/data/series.dto';
 import { StudioDto } from '@/data/studio.dto';
-import { useActionState, useState } from 'react';
+import { redirect } from 'next/navigation';
+import { useActionState, useEffect, useState } from 'react';
+
+import { useToast } from './ui/use-toast';
 
 /**
  * Button to delete a movie.
@@ -32,10 +35,24 @@ export default function ButtonDeleteItem({
   item: LabelDto | MovieDto | PersonDto | SeriesDto | StudioDto;
 }>) {
   const [isOpen, setIsOpen] = useState(false);
+  const { toast } = useToast();
 
   const action = isMovie(item) ? deleteMovieAction : deletePersonAction;
-  const [, deleteAction, isDeletePending] = useActionState(action, null);
+  const [state, deleteAction, isDeletePending] = useActionState(action, null);
 
+  useEffect(() => {
+    toast({
+      description: state?.message,
+      title: state?.success ? 'Success' : 'Error',
+      variant: state?.success ? 'success' : 'destructive',
+    });
+
+    if (state?.success) {
+      redirect('/');
+    }
+  }, [state, toast]);
+
+  // TODO: Deleting labels, series, and studios is not supported yet.
   if (['label', 'series', 'studio'].includes(item?._type)) {
     return null;
   }

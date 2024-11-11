@@ -2,7 +2,7 @@ import { fromBasePersonDto } from "@/data/base.dto";
 /**
  * Service to handle movie related operations.
  */
-import { PersonDto, toPersonDto } from "@/data/person.dto";
+import { toPersonDto } from "@/data/person.dto";
 import { addImage } from "@/infrastructure/database/repositories/image.repository";
 import {
   addPersonImage,
@@ -16,6 +16,7 @@ import {
 } from "@/infrastructure/database/repositories/person.repository";
 
 import { cloudflareService } from "./cloudflare.service";
+import { ServiceResponse } from "./types";
 
 export const personService = {
   async addPersonImage(image: File, person_id: number, type: "profile") {
@@ -51,11 +52,11 @@ export const personService = {
       await updatePerson(updatedPerson);
     }
   },
-  async deletePerson(person_id: number) {
+  async deletePerson(person_id: number): Promise<ServiceResponse> {
     const person = await this.getPerson(person_id);
 
     if (!person) {
-      throw new Error("Person not found");
+      return { error: true, message: "Person not found" };
     }
 
     try {
@@ -71,6 +72,8 @@ export const personService = {
     }
 
     await deletePerson(person_id);
+
+    return { message: "Person deleted" };
   },
   async getPaginatedPersons(page = 1, perPage = 25, options?: {
     orderBy?: string;
@@ -82,9 +85,18 @@ export const personService = {
     return persons?.map((person) => toPersonDto(person)) ?? [];
   },
   async getPerson(person_id: number) {
-    const person = await getPersonById(person_id);
+    try {
+      const person = await getPersonById(person_id);
 
-    return toPersonDto(person);
+      return {
+        person: toPersonDto(person),
+      };
+    } catch (error) {
+      return {
+        error,
+        message: "Person not found",
+      };
+    }
   },
   async getPersonMoviesCount(person_id: number) {
     const count = await getPersonRolesCount(person_id);

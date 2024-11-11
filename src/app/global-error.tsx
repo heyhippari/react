@@ -18,6 +18,8 @@ export default function GlobalError({
   useEffect(() => {
     // If we are in development mode, don't send the error to Sentry.
     if (process.env.NODE_ENV === 'development') {
+      console.error(error);
+
       return;
     }
 

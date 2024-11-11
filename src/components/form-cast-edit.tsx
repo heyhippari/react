@@ -13,9 +13,12 @@ import {
 import { MovieRoleAddFormSchema } from '@/core/utils/validation/movie-update';
 import { MovieDto } from '@/data/movie.dto';
 import { personService } from '@/services/person.service';
+import { redirect } from 'next/navigation';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useAsync } from 'react-use';
+
+import { useToast } from './ui/use-toast';
 
 /**
  * Form to edit the cast of a movie.
@@ -29,6 +32,7 @@ export function FormCastEdit({
   movie: MovieDto;
 }>) {
   const [personSearchValue, setPersonSearchValue] = useState('');
+  const { toast } = useToast();
 
   const { loading: isPersonLoading, value: persons } = useAsync(
     async () => await personService.searchPersonByName(personSearchValue ?? ''),
@@ -54,7 +58,17 @@ export function FormCastEdit({
         });
       }
 
-      await addMovieRoleAction(movie.id, data);
+      const { message, success } = await addMovieRoleAction(movie.id, data);
+
+      toast({
+        description: message,
+        title: success ? 'Success' : 'Error adding role',
+        variant: success ? 'success' : 'destructive',
+      });
+
+      if (success) {
+        redirect(`/movie/${movie.id}/edit/cast`);
+      }
     }
   };
 

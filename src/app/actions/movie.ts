@@ -14,17 +14,23 @@ import { userService } from "@/services/user.service";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
+export interface DeleteMovieRoleState {
+  message: string;
+  success?: boolean;
+}
+
 /**
  * Delete a role from a movie.
  * @param previousState - Unused.
  * @param formData - Form data containing the movie ID and role ID.
+ * @returns An object containing a message in case of an error.
  */
 export async function deleteMovieRoleAction(
-  previousState: null | void,
+  previousState: DeleteMovieRoleState | null,
   formData: FormData,
-) {
+): Promise<DeleteMovieRoleState> {
   if (!formData.get("movie_id")) {
-    throw new Error("No movie ID provided");
+    return { message: "No movie ID provided" };
   }
 
   const movie_id = Number(formData.get("movie_id"));
@@ -33,115 +39,153 @@ export async function deleteMovieRoleAction(
   const isLoggedIn = await userService.refreshUser();
 
   if (!isLoggedIn) {
-    throw new Error("User not authenticated");
+    return { message: "User not authenticated" };
   }
 
   const movie = await movieService.getMovie(movie_id);
   if (!movie) {
-    throw new Error("Movie not found");
+    return { message: "Movie not found" };
   }
 
-  await movieService.deleteMovieRole(movie_id, role_id);
+  const { error, message } = await movieService.deleteMovieRole(
+    movie_id,
+    role_id,
+  );
+
+  if (error) {
+    return { message };
+  }
 
   // Revalidate the movie page in case the roles were updated
   revalidatePath(`/movie/${movie_id}`, "page");
   revalidatePath(`/movie/${movie_id}/edit/cast`, "page");
-  redirect(`/movie/${movie_id}/edit/cast`);
+
+  return { message: "Role deleted", success: true };
+}
+
+export interface AddMovieRoleState {
+  message: string;
+  success?: boolean;
 }
 
 /**
  * Add a role to a movie.
  * @param movie_id - The ID of the movie to add the role to.
  * @param formData - Form data containing the person ID.
+ * @returns An object containing a message in case of an error.
  */
 export async function addMovieRoleAction(
   movie_id: number,
   formData: MovieRoleAddFormSchema,
-) {
+): Promise<AddMovieRoleState> {
   if (!movie_id) {
-    throw new Error("No movie ID provided");
+    return { message: "No movie ID provided" };
   }
 
   const isLoggedIn = await userService.refreshUser();
 
   if (!isLoggedIn) {
-    throw new Error("User not authenticated");
+    return { message: "User not authenticated" };
   }
 
-  try {
-    const movie = await movieService.getMovie(movie_id);
-    if (!movie) {
-      throw new Error("Movie not found");
-    }
-  } catch (error) {
-    console.error(error);
-    throw new Error("Error fetching movie");
+  const movie = await movieService.getMovie(movie_id);
+  if (!movie) {
+    return { message: "Movie not found" };
   }
 
-  await movieService.addMovieRole(movie_id, formData.person_id);
+  const result = await movieService.addMovieRole(movie_id, formData.person_id);
+
+  if (result?.error) {
+    return { message: result.message };
+  }
 
   // Revalidate the movie page in case the roles were updated
   revalidatePath(`/movie/${movie_id}`, "page");
   revalidatePath(`/movie/${movie_id}/edit/cast`, "page");
-  redirect(`/movie/${movie_id}/edit/cast`);
+
+  return { message: "Role added", success: true };
+}
+
+export interface UpdateMovieRoleState {
+  message: string;
+  success?: boolean;
 }
 
 /**
  * Update a movie in the database.
  * @param formData - Form data containing the movie details.
+ * @returns An object containing a message in case of an error.
  */
 export async function updateMovieAction(
   formData: MovieEditFormSchema,
-) {
+): Promise<UpdateMovieRoleState> {
   if (!formData.id) {
-    throw new Error("No movie ID provided");
+    return { message: "No movie ID provided" };
   }
 
   const isLoggedIn = await userService.refreshUser();
 
   if (!isLoggedIn) {
-    throw new Error("User not authenticated");
+    return { message: "User not authenticated" };
   }
 
   const movie = await movieService.getMovie(formData.id);
   if (!movie) {
-    throw new Error("Movie not found");
+    return { message: "Movie not found" };
   }
 
-  await movieService.updateMovie(fromMovieEditForm(formData));
+  const { error, message } = await movieService.updateMovie(
+    fromMovieEditForm(formData),
+  );
+
+  if (error) {
+    return { message };
+  }
 
   // Revalidate the homepage in case the movie updated was on the homepage
   revalidatePath("/", "page");
-  redirect(`/movie/${movie.id}`);
+
+  return { message: "Movie updated", success: true };
+}
+
+export interface DeleteMovieState {
+  message: string;
+  success?: boolean;
 }
 
 /**
  * Delete a movie from the database.
  * @param previousState - Unused.
  * @param formData - Form data containing the movie ID.
+ * @returns An object containing a message in case of an error.
  */
 export async function deleteMovieAction(
-  previousState: null | void,
+  previousState: DeleteMovieState | null,
   formData: FormData,
-) {
+): Promise<DeleteMovieState> {
   const id = Number(formData.get("item_id"));
 
   if (!id) {
-    throw new Error("No movie ID provided");
+    return { message: "No movie ID provided" };
   }
 
   const isLoggedIn = await userService.refreshUser();
 
   if (!isLoggedIn) {
-    throw new Error("User not authenticated");
+    return { message: "User not authenticated" };
   }
 
   // Delete the movie from the database
-  await movieService.deleteMovie(id);
+  const { error, message } = await movieService.deleteMovie(id);
+
+  if (error) {
+    return { message };
+  }
 
   // Revalidate the homepage in case the movie deleted was on the homepage
   revalidatePath("/", "page");
-  redirect("/");
+
+  return { message: "Movie deleted", success: true };
 }
 
 /**

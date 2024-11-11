@@ -78,18 +78,12 @@ export async function loginWithProvider(provider: Provider) {
     : "http://localhost:3000";
   const client = await createSupabaseClient();
 
-  const { data, error } = await client.auth.signInWithOAuth({
+  return await client.auth.signInWithOAuth({
     options: {
       redirectTo: `${defaultUrl}/auth/callback`,
     },
     provider: provider,
   });
-
-  if (error) {
-    throw error;
-  }
-
-  return data;
 }
 
 /**

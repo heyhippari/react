@@ -3,7 +3,9 @@ import type { Provider } from '@supabase/supabase-js';
 
 import { loginAction } from '@/app/actions/auth';
 import { Button } from '@/components/ui/button';
-import { useActionState } from 'react';
+import { useToast } from '@/components/ui/use-toast';
+import { redirect } from 'next/navigation';
+import { useActionState, useEffect } from 'react';
 
 /**
  * A button that logs in the user using the specified provider.
@@ -19,7 +21,23 @@ export default function LoginButton({
   nextUrl?: string;
   provider: Provider;
 }) {
-  const [, action, isProcessing] = useActionState(loginAction, null);
+  const [state, action, isProcessing] = useActionState(loginAction, null);
+  const { toast } = useToast();
+
+  useEffect(() => {
+    if (state?.redirect) {
+      redirect(state.redirect);
+    }
+
+    if (state?.message) {
+      toast({
+        description: state.message,
+        title: 'Error',
+        variant: 'destructive',
+      });
+    }
+  }, [state, toast]);
+
   return (
     <form action={action}>
       <input name="provider" type="hidden" value={provider} />

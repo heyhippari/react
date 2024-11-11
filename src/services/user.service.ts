@@ -10,7 +10,7 @@ import {
   logoutUser,
   refreshUser,
 } from "@/infrastructure/database/repositories/user.repository";
-import { Provider, User } from "@supabase/supabase-js";
+import { OAuthResponse, Provider, User } from "@supabase/supabase-js";
 
 export const userService = {
   async exchangeCodeForSession(code: string): Promise<void> {
@@ -41,10 +41,7 @@ export const userService = {
 
     return toUserDto(user);
   },
-  async loginWithProvider(provider: Provider): Promise<{
-    provider: Provider;
-    url: string;
-  }> {
+  async loginWithProvider(provider: Provider): Promise<OAuthResponse> {
     return await loginWithProvider(provider);
   },
   async logout(): Promise<void> {
