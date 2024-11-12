@@ -1,10 +1,13 @@
 name: Code Quality
+
 on:
   push:
     branches:
       - main
   pull_request:
     types: [opened, synchronize, reopened]
+  workflow_dispatch:
+
 jobs:
   sonarcloud:
     name: SonarQube Cloud
@@ -13,7 +16,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -26,5 +29,37 @@ jobs:
       - name: SonarQube Cloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  lint-database:
+    name: Lint Database
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Supabase CLI
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+      - name: Link Supabase project
+        run: supabase link --project-ref $SUPABASE_PROJECT_ID
+      - name: Start Supabase database
+        run: supabase db start
+      - name: Lint database
+        run: supabase db lint
+  test-database:
+    name: Test Database
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Supabase CLI
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+      - name: Link Supabase project
+        run: supabase link --project-ref $SUPABASE_PROJECT_ID
+      - name: Start Supabase database
+        run: supabase db start
+      - name: Test database
+        run: supabase db test
