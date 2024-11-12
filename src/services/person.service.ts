@@ -62,7 +62,7 @@ export const personService = {
       await Promise.all(
         person.person_images?.map(async ({ image }) => {
           if (image) {
-            await cloudflareService.deleteImage(image.uuid!);
+            await cloudflareService.deleteImage(image.uuid);
           }
         }) ?? [],
       );

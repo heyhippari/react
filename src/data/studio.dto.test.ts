@@ -1,6 +1,5 @@
 import { StudioModel } from "@/infrastructure/database/models/studio.model";
 import { describe, expect, it } from "vitest";
-import { z } from "zod";
 
 import {
   fromLabelDto,

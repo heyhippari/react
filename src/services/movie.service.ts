@@ -92,7 +92,7 @@ export const movieService = {
       await Promise.all(
         movie.movie_images?.map(async ({ image }) => {
           if (image) {
-            await cloudflareService.deleteImage(image.uuid!);
+            await cloudflareService.deleteImage(image.uuid);
           }
         }) ?? [],
       );
