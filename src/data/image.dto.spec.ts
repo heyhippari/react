@@ -10,7 +10,7 @@ import {
 } from "./image.dto";
 import { fromUserDto } from "./user.dto";
 
-describe("Image DTO Tests", () => {
+describe("Image DTO", () => {
   it("should convert ImageModel to ImageDto", () => {
     const model: ImageModel = {
       created_at: "2023-01-01T00:00:00Z",

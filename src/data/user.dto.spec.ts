@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 
 import { fromUserDto, toUserDto, UserDto, userDtoSchema } from "./user.dto";
 
-describe("User DTO Tests", () => {
+describe("User DTO", () => {
   it("should validate a correct user DTO", () => {
     const validDto: UserDto = {
       avatar_url: "http://example.com/avatar.png",
