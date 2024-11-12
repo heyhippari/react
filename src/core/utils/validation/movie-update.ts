@@ -72,16 +72,19 @@ export function fromMovieEditForm(form: MovieEditFormSchema): MovieDto {
     id: form.id,
     label: {
       _type: "label",
+      display_name: "", // This doesn't matter for the form
       id: form.label_id,
     },
     length: form.length,
     release_date: form.release_date,
     series: {
       _type: "series",
+      display_name: "", // This doesn't matter for the form
       id: form.series_id,
     },
     studio: {
       _type: "studio",
+      display_name: "", // This doesn't matter for the form
       id: form.studio_id,
     },
   };
