@@ -5,8 +5,6 @@ import { MovieDto } from '@/data/movie.dto';
 import { PersonDto } from '@/data/person.dto';
 import { SeriesDto } from '@/data/series.dto';
 import { StudioDto } from '@/data/studio.dto';
-import MdiArrowLeft from '~icons/mdi/arrow-left.jsx';
-import MdiLink from '~icons/mdi/link.jsx';
 import Link from 'next/link';
 
 /**
@@ -33,7 +31,7 @@ export default function ItemHeader({
               {item?.display_name}
             </h1>
             <div className="flex flex-row items-center gap-1 text-pink-600 dark:text-pink-300">
-              <MdiArrowLeft />
+              <span className="iconify mdi--arrow-left" />
               <p className="font-bold">Back to main</p>
             </div>
           </div>
@@ -46,8 +44,8 @@ export default function ItemHeader({
               className="flex flex-row items-center justify-center gap-2 hover:underline"
               href={item.homepage}
             >
-              <MdiLink className="mt-0.5 size-5" />
-              Visit homepage
+              <span className="iconify mt-0.5 size-5 mdi--link" /> Visit
+              homepage
             </Link>
           </div>
         </div>

@@ -1,7 +1,6 @@
 import type { NextConfig } from "next";
 
 import { withSentryConfig } from "@sentry/nextjs";
-import Icons from "unplugin-icons/webpack";
 
 export default withSentryConfig<NextConfig>({
   compress: true,
@@ -12,18 +11,6 @@ export default withSentryConfig<NextConfig>({
     },
   },
   reactStrictMode: true,
-  webpack: (config) => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access -- There seems to be a bug in the types
-    config.plugins.push(
-      Icons({
-        compiler: "jsx",
-        jsx: "react",
-      }),
-    );
-
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return -- There seems to be a bug in the types
-    return config;
-  },
 }, {
   // For all available options, see:
   // https://github.com/getsentry/sentry-webpack-plugin#options

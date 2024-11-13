@@ -2,7 +2,6 @@ import { SearchInput } from '@/components/search-input';
 import SiteMenu from '@/components/site-menu';
 import UserMenuServer from '@/components/user-menu-server';
 import { cn } from '@/core/utils/ui';
-import MdiPlus from '~icons/mdi/plus.jsx';
 import Link from 'next/link';
 
 import { Button, buttonVariants } from './ui/button';
@@ -42,7 +41,7 @@ export default function SiteHeader() {
                   size={'icon'}
                   variant={'secondary'}
                 >
-                  <MdiPlus className="size-5" />
+                  <span className="iconify size-5 mdi--plus" />
                 </Button>
               </HoverMenuTrigger>
               <HoverMenuContent align="center" className="z-50 w-28 p-2">

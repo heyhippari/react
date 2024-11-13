@@ -113,8 +113,6 @@ export default tseslint.config(
       ...nextPlugin.configs['core-web-vitals'].rules,
       ...jsxA11y.configs.recommended.rules,
       ...reactHooks.configs.recommended.rules,
-      // Ignore any module starting with ~icons because they are virtual modules.
-      'import-x/no-unresolved': [2, { ignore: ['^~icons/'] }],
       // Allow custom CSS classes, we barely use them and they come from shadcn.
       'tailwindcss/no-custom-classname': 0,
       // Allow using null, as it is a valid value in TypeScript and is standard in multiple libraries.

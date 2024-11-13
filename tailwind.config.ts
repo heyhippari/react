@@ -5,6 +5,7 @@ import tailwindGradientMaskImage from "tailwind-gradient-mask-image";
 import tailwindCssAnimate from "tailwindcss-animate";
 // @ts-expect-error - TailwindCSS Logical is not typed
 import tailwindLogical from "tailwindcss-logical";
+import { addIconSelectors } from "@iconify/tailwind";
 
 const config = {
   content: [
@@ -14,7 +15,12 @@ const config = {
     "./src/**/*.{ts,tsx}",
   ],
   darkMode: "class",
-  plugins: [tailwindCssAnimate, tailwindLogical, tailwindGradientMaskImage],
+  plugins: [
+    tailwindCssAnimate,
+    tailwindLogical,
+    tailwindGradientMaskImage,
+    addIconSelectors(["mdi", "simple-icons", "lucide"]),
+  ],
   prefix: "",
   theme: {
     container: {

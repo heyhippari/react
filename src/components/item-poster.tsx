@@ -6,7 +6,6 @@ import { MovieDto } from '@/data/movie.dto';
 import { PersonDto } from '@/data/person.dto';
 import { SeriesDto } from '@/data/series.dto';
 import { StudioDto } from '@/data/studio.dto';
-import MdiArrowExpandAll from '~icons/mdi/arrow-expand-all.jsx';
 import Image from 'next/image';
 import { useMemo, useState } from 'react';
 import { Lightbox } from 'yet-another-react-lightbox';
@@ -88,7 +87,7 @@ export default function ItemPoster({
             {/* The extra div here is to work around a bug when combining backdrop blur and overlay blend. */}
             <div className="pointer-events-none absolute inset-0 bg-pink-500/50 opacity-0 bg-blend-overlay transition-opacity duration-300 group-hover:opacity-100" />
             <div className="pointer-events-none absolute inset-0 flex items-center justify-center gap-2 opacity-0 backdrop-blur-md transition-opacity duration-300 group-hover:opacity-100">
-              <MdiArrowExpandAll className="size-8 text-white" />
+              <span className="iconify size-8 text-white mdi--arrow-expand-all" />
               <p className="pb-0.5 text-2xl font-semibold text-white">Expand</p>
             </div>
           </>

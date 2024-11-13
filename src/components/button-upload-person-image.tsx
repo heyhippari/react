@@ -14,7 +14,6 @@ import {
 import { PersonDto } from '@/data/person.dto';
 import { personService } from '@/services/person.service';
 import { zodResolver } from '@hookform/resolvers/zod';
-import MdiPlus from '~icons/mdi/plus.svg';
 import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -101,7 +100,7 @@ export function ButtonUploadPersonImage({
                 size={'icon'}
                 variant={'default'}
               >
-                <MdiPlus className={'size-5'} />
+                <span className="iconify size-5 mdi--plus" />
               </Button>
             </TooltipTrigger>
             <TooltipContent>

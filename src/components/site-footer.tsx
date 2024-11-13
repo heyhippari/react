@@ -1,7 +1,6 @@
 import ThemeToggle from '@/components/theme-toggle';
 import { buttonVariants } from '@/components/ui/button';
 import { cn } from '@/core/utils/ui';
-import SIGithub from '~icons/simple-icons/github';
 
 import HomeStats from './home-stats';
 
@@ -29,7 +28,7 @@ export default function SiteFooter() {
             rel="noopener noreferrer"
             target="_blank"
           >
-            <SIGithub className="size-[1.2rem] text-pink-800 hover:text-pink-900 dark:text-pink-200 dark:hover:text-pink-100" />
+            <span className="iconify size-[1.2rem] text-pink-800 simple-icons--github hover:text-pink-900 dark:text-pink-200 dark:hover:text-pink-100" />
           </a>
           <ThemeToggle />
         </div>

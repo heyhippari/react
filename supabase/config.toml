@@ -154,7 +154,7 @@ skip_nonce_check = false
 enabled = true
 client_id = "env(DISCORD_CLIENT_ID)"
 secret = "env(DISCORD_CLIENT_SECRET)"
-redirect_uri = "http://localhost:54321/auth/v1/callback"
+redirect_uri = "http://127.0.0.1:54321/auth/v1/callback"
 
 [edge_runtime]
 enabled = true

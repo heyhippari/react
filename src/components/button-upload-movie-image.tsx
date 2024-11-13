@@ -14,7 +14,6 @@ import {
 import { MovieDto } from '@/data/movie.dto';
 import { movieService } from '@/services/movie.service';
 import { zodResolver } from '@hookform/resolvers/zod';
-import MdiPlus from '~icons/mdi/plus.svg';
 import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -116,7 +115,7 @@ export function ButtonUploadMovieImage({
                 size={'icon'}
                 variant={'default'}
               >
-                <MdiPlus className={'size-5'} />
+                <span className="iconify size-5 mdi--plus" />
               </Button>
             </TooltipTrigger>
             <TooltipContent>

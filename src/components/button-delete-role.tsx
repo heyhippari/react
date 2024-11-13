@@ -13,7 +13,6 @@ import {
 } from '@/components/ui/dialog';
 import { MovieDto } from '@/data/movie.dto';
 import { RoleDto } from '@/data/role.dto';
-import IconTrash from '~icons/mdi/trash-can-outline.jsx';
 import { useActionState, useState } from 'react';
 
 /**
@@ -38,7 +37,7 @@ export default function ButtonDeleteRole({
     <Dialog onOpenChange={setIsOpen} open={isOpen}>
       <DialogTrigger asChild>
         <Button size="icon" variant="outline">
-          <IconTrash />
+          <span className="iconify mdi--trash-can-outline" />
         </Button>
       </DialogTrigger>
       <DialogContent>

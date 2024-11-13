@@ -1,6 +1,5 @@
 import { cn } from '@/core/utils/ui';
 import { Slot } from '@radix-ui/react-slot';
-import LucideLoader2 from '~icons/lucide/loader-2.jsx';
 import { cva, type VariantProps } from 'class-variance-authority';
 import * as React from 'react';
 
@@ -64,7 +63,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProperties>(
         {...properties}
       >
         {loading ? (
-          <LucideLoader2 className="text-muted size-5 animate-spin" />
+          <span className="text-muted iconify size-5 animate-spin lucide--loader-2" />
         ) : (
           properties.children
         )}

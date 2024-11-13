@@ -12,7 +12,6 @@ import {
   PopoverContent,
 } from '@/components/ui/popover';
 import { cn } from '@/core/utils/ui';
-import MdiCheck from '~icons/mdi/check.svg';
 import { Command as CommandPrimitive } from 'cmdk';
 import { useMemo, useState } from 'react';
 
@@ -122,9 +121,9 @@ export function AutoComplete<T extends string>({
                       onSelect={onSelectItem}
                       value={option.value}
                     >
-                      <MdiCheck
+                      <span
                         className={cn(
-                          'mr-2 h-4 w-4',
+                          'iconify mr-2 h-4 w-4 mdi--check',
                           selectedValue === option.value
                             ? 'opacity-100'
                             : 'opacity-0',
