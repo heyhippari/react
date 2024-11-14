@@ -48,7 +48,7 @@ export default async function Image({ params }: { params: { id: string } }) {
           )}
         </div>
         <div
-          style={{ height: '600px', maxWidth: '740px' }}
+          style={{ height: '600px', maxWidth: '740px', width: '740px' }}
           tw="flex flex-col h-full justify-between"
         >
           <div tw="flex flex-col items-start justify-start">
