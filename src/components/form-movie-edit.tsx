@@ -18,6 +18,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { useUserRole } from '@/core/utils/hooks';
 import {
   MovieEditFormSchema,
   movieEditFormSchema,
@@ -43,6 +44,8 @@ export function FormMovieEdit({
 }: Readonly<{
   movie: MovieDto;
 }>) {
+  const userRole = useUserRole();
+
   const [studioSearchValue, setStudioSearchValue] = useState(
     movie?.studio?.display_name,
   );
@@ -141,7 +144,12 @@ export function FormMovieEdit({
               <FormItem>
                 <FormLabel>DVD ID</FormLabel>
                 <FormControl>
-                  <Input disabled placeholder="DVD ID" readOnly {...field} />
+                  <Input
+                    disabled={!['admin', 'moderator'].includes(userRole ?? '')}
+                    placeholder="DVD ID"
+                    readOnly={!['admin', 'moderator'].includes(userRole ?? '')}
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
