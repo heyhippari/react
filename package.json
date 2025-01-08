@@ -79,7 +79,7 @@
     "@iconify/tailwind": "^1.1.3",
     "@lingui/cli": "^4.13.0",
     "@lingui/swc-plugin": "^4.1.0",
-    "@next/eslint-plugin-next": "^15.0.1",
+    "@next/eslint-plugin-next": "^15.1.4",
     "@svgr/core": "^8.1.0",
     "@svgr/plugin-jsx": "^8.1.0",
     "@testing-library/dom": "^10.4.0",
